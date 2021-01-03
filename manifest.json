@@ -2,9 +2,9 @@
     "name": "prune",
     "version": "1.0",
     "description": "An extension to help you prune your garden of tabs.",
-    "permissions": ["tabs"],
+    "permissions": ["tabs", "storage", "activeTab"],
     "background": {
-        "scripts": ["background.js"],
+        "page": "background.html",
         "persistent": false
     },
     "manifest_version": 2

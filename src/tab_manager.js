@@ -1,17 +1,29 @@
+import { TabPruner } from './tab_pruner.js'
+import { TabTracker } from './tab_tracker.js'
+
 class TabManager {
     constructor() {
         this.lock = new Set()
+        this.tabTracker = new TabTracker()
+        this.tabPruner = new TabPruner(this.tabTracker, 60*1000, 1000*60*60*24*5)
+        this.tabPruner.start()
 
         chrome.tabs.onUpdated.addListener((tabId, updatedInfo, tab) => { this.onTabUpdated(tab)})
+        chrome.tabs.onActivated.addListener((activeInfo) => {this.onTabActivated(activeInfo.tabId)})
+    }
+
+    onTabActivated(tabId) {
+        this.tabTracker.track(tabId)
     }
 
     onTabUpdated(tab) {
+        this.tabTracker.track(tab.id)
 
         if (tab.status != 'loading' || this.lock.has(tab.id)) {
             return
         }
         this.lock.add(tab.id)
-        
+
         // Chromes query pattern matching doesn't seem to work on certain exact matches
         // so we grab all opened tabs and check it ourselves
         chrome.tabs.query({}, (tabs) => {
@@ -43,4 +55,6 @@ class TabManager {
     }
 }
 
-const tabManager = new TabManager()
+export {
+    TabManager
+}
