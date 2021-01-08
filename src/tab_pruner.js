@@ -7,7 +7,9 @@ class TabPruner {
 
     start() {
         this.pruneTabs()
-        setTimeout(this.start, this.interval)
+        setTimeout(() => {
+            this.start()
+        }, this.interval)
     }
 
     pruneTabs() {

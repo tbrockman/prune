@@ -1,10 +1,11 @@
 class TabTracker {
     constructor(tabsStorageKey="tabs") {
         this.tabsStorageKey = tabsStorageKey
+        this.tabs = {}
         // TODO: filter closed tabs
         this.loadState(tabsStorageKey, (tabs) => {
-            
-            if (tabs == {}) {
+
+            if (Object.keys(tabs).length === 0) {
                 this.trackAllOpenTabs()
             }
             else {
@@ -39,7 +40,7 @@ class TabTracker {
 
     track(tabId) {
         this.tabs[tabId] = new Date()
-        console.log(this.tabs)
+
         this.saveState(this.tabsStorageKey, () => {
             var error = chrome.runtime.lastError
 
@@ -63,7 +64,7 @@ class TabTracker {
 
         if (tabs) {
             for(const key in tabs) {
-                deserialized[key] = Date.parse(tabs[key])
+                deserialized[key] = new Date(tabs[key])
             }
         }
         return deserialized
@@ -75,11 +76,17 @@ class TabTracker {
     }
 
     loadState(key, callback) {
-        chrome.storage.local.get(key, (tabs) => {
+        chrome.storage.local.get(key, (data) => {
             var error = chrome.runtime.lastError
-
+            
             if (error) {  
                return console.error(error)
+            }
+
+            let tabs;
+
+            if ('tabs' in data) {
+                tabs = data['tabs']
             }
             callback(this.deserializeTabs(tabs))
         })
