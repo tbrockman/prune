@@ -1,0 +1,47 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    margin: 0.25rem;
+    zoom: 1.25;
+}
+
+.options-container {
+    font-family: 'Ubuntu', sans-serif;
+    height: 100%;
+    max-width: 120ch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+    font-size: 18px;
+    align-self: center;
+}
+
+.auto-prune-block {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.prune-options-logo {
+    width: 12rem;
+    max-width: 100%;
+    padding-bottom: 1rem;
+    align-self: flex-start;
+}
+
+#prune-threshold-input {
+    min-width: 2rem;
+}

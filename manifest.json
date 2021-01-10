@@ -1,11 +1,12 @@
 {
     "name": "prune",
     "version": "1.0",
-    "description": "An extension to help you prune your garden of tabs.",
-    "permissions": ["tabs", "storage", "activeTab"],
+    "description": "An extension to help you trim your garden of tabs.",
+    "permissions": ["tabs", "storage"],
     "background": {
         "page": "background.html",
         "persistent": false
     },
-    "manifest_version": 2
+    "manifest_version": 2,
+    "options_page": "/src/options/index.html"
 }

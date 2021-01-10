@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>prune options</title>
+        <script src="./page.js" type="module"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div class='options-container'>
+            <img class="prune-options-logo" src="../../assets/svg/prune_full.svg"></img>
+            <form name='prune-options'>
+                <div class='auto-prune-block'>
+                    <div>
+                        <input id='auto-prune-checkbox' type='checkbox' name='auto-prune-checkbox' form='prune-options'>
+                        <label for='auto-prune-checkbox'>automatically remove old tabs after</label>        
+                        <input id='prune-threshold-input' type='number' min='1' max='365' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
+                        <label for='prune-threshold-input'>days</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

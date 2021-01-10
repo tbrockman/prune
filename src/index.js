@@ -1,3 +1,5 @@
-import { TabManager } from './tab_manager.js'
+import { TabManager } from './tabs/tab_manager.js'
 
-const tabManager = new TabManager()
+window.addEventListener('load', () => {
+    const tabManager = new TabManager()
+})
