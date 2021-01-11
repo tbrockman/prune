@@ -1,5 +1,5 @@
-import { TabPruner } from './tab_pruner.js'
-import { TabTracker } from './tab_tracker.js'
+import { TabPruner } from './tab-pruner.js'
+import { TabTracker } from './tab-tracker.js'
 
 class TabManager {
     constructor() {

@@ -1,5 +1,8 @@
+# prune specific
+
 *.pem
 *.crx
+release.zip
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
