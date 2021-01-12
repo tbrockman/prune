@@ -1,2 +1,2 @@
 release:
-	zip release.zip assets src background.html manifest.json
+	zip -r release.zip assets src favicon.ico background.html manifest.json

@@ -8,5 +8,10 @@
         "persistent": false
     },
     "manifest_version": 2,
-    "options_page": "/src/options/index.html"
+    "options_page": "/src/options/index.html",
+    "icons": {
+        "16": "/assets/png/prune-icon16.png",
+        "48": "/assets/png/prune-icon48.png",
+        "128": "/assets/png/prune-icon128.png"
+    }
 }

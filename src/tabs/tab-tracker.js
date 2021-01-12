@@ -6,7 +6,7 @@ class TabTracker {
         this.loadState(tabsStorageKey, (tabs) => {
 
             if (Object.keys(tabs).length === 0) {
-                this.trackAllOpenTabs()
+                this.trackAllTabs()
             }
             else {
                 this.tabs = tabs
