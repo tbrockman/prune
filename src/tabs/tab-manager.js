@@ -19,7 +19,7 @@ class TabManager {
     onTabUpdated(tab) {
         this.tabTracker.track(tab.id)
 
-        if (tab.status != 'loading' || this.lock.has(tab.id)) {
+        if (tab.status != 'loading' || this.lock.has(tab.id) || this.tab.url == "chrome://newtab/") {
             return
         }
         this.lock.add(tab.id)
@@ -27,7 +27,7 @@ class TabManager {
         // Chromes query pattern matching doesn't seem to work on certain exact matches
         // so we grab all opened tabs and check it ourselves
         chrome.tabs.query({}, (tabs) => {
-
+        
             const index = tabs.findIndex((t) => t.id != tab.id && tab.url == t.url)
 
             if (index > -1) {
