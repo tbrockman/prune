@@ -1,6 +1,6 @@
 {
     "name": "prune",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "An extension to help you trim your garden of tabs.",
     "permissions": ["tabs", "storage"],
     "background": {
