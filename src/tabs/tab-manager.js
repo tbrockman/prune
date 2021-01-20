@@ -19,7 +19,7 @@ class TabManager {
     onTabUpdated(tab) {
         this.tabTracker.track(tab.id)
 
-        if (tab.status != 'loading' || this.lock.has(tab.id) || this.tab.url == "chrome://newtab/") {
+        if (tab.status != 'loading' || this.lock.has(tab.id) || tab.url == "chrome://newtab/") {
             return
         }
         this.lock.add(tab.id)
