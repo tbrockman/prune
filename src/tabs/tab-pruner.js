@@ -11,7 +11,7 @@ class TabPruner {
 
         getOptions(options => {
             this.autoPrune = options['auto-prune']
-            this.pruneThreshold = options['prune-threshold']
+            this.pruneThreshold = options['prune-threshold'] * 24 * 60 * 60 * 1000
         })
 
         chrome.storage.onChanged.addListener(function(changes, namespace) {
