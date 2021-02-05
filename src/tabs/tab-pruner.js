@@ -5,6 +5,8 @@ class TabPruner {
         this.tabTracker = tabTracker
         this.interval = interval
         this.pruneThreshold = threshold
+        this.start = this.start.bind(this)
+        this.pruneTabs = this.pruneTabs.bind(this)
         this.autoPrune = false
 
         getOptions(options => {
@@ -44,7 +46,7 @@ class TabPruner {
 
         chrome.tabs.query({}, tabs => {
             tabs.forEach(tab => {
-                const tabShouldBePruned = this.tabTracker.tabShouldBePruned(tab.id, this.threshold)
+                const tabShouldBePruned = this.tabTracker.tabShouldBePruned(tab.id, this.pruneThreshold)
 
                 if (tabShouldBePruned) {
 
