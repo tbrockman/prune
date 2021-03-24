@@ -1,7 +1,10 @@
 const getOptions = (callback) => {
     const defaults = {
         'auto-prune': false,
-        'prune-threshold': 5
+        'prune-threshold': 5,
+        'auto-group': false,
+        'auto-group-threshold': 3,
+        'auto-group-name': 'old tabs'
     }
     chrome.storage.sync.get(defaults, callback)
 }

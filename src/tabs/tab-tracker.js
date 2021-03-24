@@ -1,33 +1,44 @@
 class TabTracker {
+
     constructor(tabsStorageKey="tabs") {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
-        // TODO: filter closed tabs
-        this.loadState(tabsStorageKey, (tabs) => {
+        this.trackTabs = this.trackTabs.bind(this)
+        this.saveState = this.saveState.bind(this)
+        this.loadState = this.loadState.bind(this)
+        this.continueTrackingTabs = this.continueTrackingTabs.bind(this)
+        this.getTabLastViewed = this.getTabLastViewed.bind(this)
+        this.remove = this.remove.bind(this)
+        this.track = this.track.bind(this)
+    }
 
-            if (Object.keys(tabs).length === 0) {
-                this.trackAllTabs()
-            }
-            else {
-                this.tabs = tabs
-            }
+    initialize(callback) {
+
+        this.loadState(this.tabsStorageKey, (tabs) => {
+
+            chrome.tabs.query({}, openTabs => {
+                
+                if (Object.keys(tabs).length === 0) {
+                    this.trackTabs(openTabs)
+                }
+                else {
+                    this.tabs = tabs
+                    this.continueTrackingTabs(openTabs)
+                }
+                return callback()
+            })
         })
     }
-    
-    tabShouldBePruned(tabId, threshold) {
-        
-        const now = new Date()
+
+    getTabLastViewed(tabId) {
 
         if (tabId in this.tabs) {
-            return now - this.tabs[tabId] > threshold
+            return this.tabs[tabId]
         }
-        return false
     }
 
-    trackAllTabs() {
-        chrome.tabs.query({}, tabs => {
-            tabs.forEach(tab => this.track(tab.id))
-        })
+    trackTabs(tabs) {
+        tabs.forEach(tab => this.track(tab.id))
     }
 
     remove(tabId) {
@@ -45,6 +56,31 @@ class TabTracker {
             var error = chrome.runtime.lastError
 
             if (error) {  
+               return console.error(error)
+            }
+        })
+    }
+
+    continueTrackingTabs(tabs) {
+
+        for (const tabId in this.tabs) {
+            
+            if (!(tabs.hasOwnProperty(tabId))) {
+                this.remove(tabId)
+            }
+        }
+
+        for (const tabId in tabs) {
+
+            if (!(tabId in this.tabs)) {
+                this.tabs[tabId] = new Date()
+            }
+        }
+
+        this.saveState(this.tabsStorageKey, () => {
+            var error = chrome.runtime.lastError
+
+            if (error) {
                return console.error(error)
             }
         })

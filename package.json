@@ -1,0 +1,38 @@
+{
+  "name": "prune",
+  "version": "1.0.0",
+  "description": "A small Chrome extension to help you manage your garden of tabs.",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "test": "mocha --require esm tests/**/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbrockman/prune.git"
+  },
+  "keywords": [
+    "prune",
+    "tabs",
+    "chrome",
+    "extension"
+  ],
+  "author": "Theodore Brockman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tbrockman/prune/issues"
+  },
+  "homepage": "https://github.com/tbrockman/prune#readme",
+  "devDependencies": {
+    "@webpack-cli/init": "^1.1.3",
+    "esm": "^3.2.25",
+    "mocha": "^8.3.0",
+    "sinon": "^9.2.4",
+    "sinon-chrome": "^3.0.1",
+    "webpack": "^5.27.1",
+    "webpack-cli": "^4.5.0"
+  }
+}

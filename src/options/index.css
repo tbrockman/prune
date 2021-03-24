@@ -45,3 +45,11 @@ input {
 #prune-threshold-input {
     min-width: 2rem;
 }
+
+.auto-group-name-label {
+    margin: 0.25rem;
+}
+
+#auto-group-name {
+    max-width: 12ch;
+}
