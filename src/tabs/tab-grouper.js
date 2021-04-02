@@ -2,6 +2,7 @@
 class TabGrouper {
     constructor(tabTracker) {
         this.tabTracker = tabTracker
+        this.groupTabs = this.groupTabs.bind(this)
     }
 
     groupTabs(tabs, groupProperties, threshold) {
@@ -17,13 +18,15 @@ class TabGrouper {
                 lastViewed = now
             }
             const shouldBeGrouped = (now - lastViewed >= threshold) && tab.groupId == -1
-            
+
             if (shouldBeGrouped) {
                 tabIds.push(tab.id)
             }
         })
 
         if (tabIds.length == 0) return
+
+        console.debug('grouping tabs', tabIds)
 
         chrome.tabGroups.query({title: groupProperties["title"]}, (groups) => {
 

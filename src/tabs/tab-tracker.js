@@ -3,6 +3,7 @@ class TabTracker {
     constructor(tabsStorageKey="tabs") {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
+        this.initialize = this.initialize.bind(this)
         this.trackTabs = this.trackTabs.bind(this)
         this.saveState = this.saveState.bind(this)
         this.loadState = this.loadState.bind(this)
@@ -14,8 +15,10 @@ class TabTracker {
 
     initialize(callback) {
 
-        this.loadState(this.tabsStorageKey, (tabs) => {
+        console.debug('initializing')
 
+        this.loadState(this.tabsStorageKey, (tabs) => {
+            
             chrome.tabs.query({}, openTabs => {
                 
                 if (Object.keys(tabs).length === 0) {
@@ -23,22 +26,40 @@ class TabTracker {
                 }
                 else {
                     this.tabs = tabs
-                    this.continueTrackingTabs(openTabs)
+                    this.filterClosedTabsAndTrackNew(this.tabs, openTabs)
                 }
+                
+                console.debug('resolved tab state', this.tabs)
                 return callback()
             })
         })
     }
 
     getTabLastViewed(tabId) {
-
-        if (tabId in this.tabs) {
-            return this.tabs[tabId]
-        }
+        return this.tabs[tabId]
     }
 
     trackTabs(tabs) {
         tabs.forEach(tab => this.track(tab.id))
+    }
+
+    filterClosedTabsAndTrackNew(tabs, openTabs) {
+        const openTabSet = new Set()
+
+        openTabs.forEach(tab => {
+            openTabSet.add(tab.id.toString())
+
+            if (!tabs.hasOwnProperty(tab.id)) {
+                this.track(tab.id)
+            }
+        })
+
+        for (const tabId in this.tabs) {
+            
+            if (!openTabSet.has(tabId)) {
+                delete tabs[tabId]
+            }
+        }
     }
 
     remove(tabId) {
@@ -50,6 +71,7 @@ class TabTracker {
     }
 
     track(tabId) {
+
         this.tabs[tabId] = new Date()
 
         this.saveState(this.tabsStorageKey, () => {
@@ -89,7 +111,7 @@ class TabTracker {
     serializeTabs(tabs) {
         const serialized = {}
 
-        for(const key in tabs) {
+        for (const key in tabs) {
             serialized[key] = tabs[key].toString()
         }
         return serialized
@@ -99,6 +121,7 @@ class TabTracker {
         const deserialized = {}
 
         if (tabs) {
+
             for(const key in tabs) {
                 deserialized[key] = new Date(tabs[key])
             }

@@ -19,6 +19,9 @@ class TabPruner {
             const tabShouldBePruned = now - lastViewed >= threshold
             
             if (tabShouldBePruned) {
+
+                console.debug('pruning tab', tab.id, tab)
+
                 chrome.tabs.remove(tab.id, () => {
                     var error = chrome.runtime.lastError
 
