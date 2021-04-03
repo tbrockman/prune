@@ -5,7 +5,7 @@ class TabGrouper {
         this.groupTabs = this.groupTabs.bind(this)
     }
 
-    groupTabs(tabs, groupProperties, threshold) {
+    groupTabs(tabs, groupProperties, threshold, callback = () => {}) {
 
         var tabIds = []
 
@@ -30,7 +30,7 @@ class TabGrouper {
 
         chrome.tabGroups.query({title: groupProperties["title"]}, (groups) => {
 
-            const index = groups.findIndex((e) => e.title = groupProperties["title"])
+            const index = groups.findIndex((e) => e.title == groupProperties["title"])
 
             // If the group already exists, just use that
 
@@ -44,6 +44,7 @@ class TabGrouper {
                     if (error) {
                         console.error(error)
                     }
+                    return callback(error)
                 })
             }
             // Otherwise, create a new one
@@ -56,7 +57,10 @@ class TabGrouper {
                     if (error) {
                         console.error(error)
                     }
-                    chrome.tabGroups.update(groupId, groupProperties)
+                    else {
+                        chrome.tabGroups.update(groupId, groupProperties)
+                        return callback(null)
+                    }
                 })
             }
         })

@@ -9,7 +9,7 @@ describe('tab-pruner', () => {
     let tabPruner
     let mockTracker
 
-    before(() => {
+    beforeEach(() => {
         global.chrome = chrome
         mockTracker = {
             track: sinon.stub(),
