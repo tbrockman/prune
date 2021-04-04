@@ -3,9 +3,17 @@ import { getOptions, setOption } from './index.js'
 class OptionsPage {
 
     constructor() {
+        this.initializeAutoDeduplicateInput()
         this.initializeAutoPruneInputs()
         this.initializeAutoGroupInputs()
         this.initializeDefaultValues()
+    }
+
+    initializeAutoDeduplicateInput() {
+        this.autoDeduplicateCheckbox = document.getElementById('auto-deduplicate-checkbox')
+        this.autoDeduplicateCheckbox.addEventListener('change', (e) => {
+            setOption('auto-deduplicate', e.target.checked, () => {})
+        })
     }
 
     initializeAutoPruneInputs() {
@@ -43,6 +51,7 @@ class OptionsPage {
 
     initializeDefaultValues() {
         getOptions(options => {
+            this.autoDeduplicateCheckbox.checked = options['auto-deduplicate']
             this.autoPruneCheckbox.checked = options['auto-prune']
             this.autoPruneThreshold.disabled = !options['auto-prune']
             this.autoPruneThreshold.value = options['prune-threshold']

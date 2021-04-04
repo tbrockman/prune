@@ -13,24 +13,30 @@
         <div class='options-container'>
             <img class="prune-options-logo" src="../../assets/svg/prune-full.svg"></img>
             <form name='prune-options'>
-                <div class='auto-prune-block'>
+                <div class='auto-deduplicate-block'>
                     <div>
-                        <input id='auto-prune-checkbox' type='checkbox' name='auto-prune-checkbox' form='prune-options'>
-                        <label for='auto-prune-checkbox'>automatically remove old tabs after</label>
-                        <input id='auto-prune-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
-                        <label for='auto-prune-threshold'>days</label>
+                        <input id='auto-deduplicate-checkbox' type='checkbox' name='auto-deduplicate-checkbox' form='prune-options'>
+                        <label for='auto-deduplicate-checkbox'>show existing tab instead of opening duplicates</label>
                     </div>
                 </div>
                 <div class='auto-group-block'>
                     <div>
                         <input id='auto-group-checkbox' type='checkbox' name='auto-group-checkbox' form='prune-options'>
-                        <label for='auto-group-checkbox'>automatically group tabs after</label>
+                        <label for='auto-group-checkbox'>group tabs after</label>
                         <input id='auto-group-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
                         <label for='auto-group-threshold'>days</label>
                         <div>
                             <label class='auto-group-name-label' for='auto-group-name'>under a group named</label>
                             <input id='auto-group-name' placeholder='old tabs' type='text' name='auto-group-name' form='prune-options'>
                         </div>
+                    </div>
+                </div>
+                <div class='auto-prune-block'>
+                    <div>
+                        <input id='auto-prune-checkbox' type='checkbox' name='auto-prune-checkbox' form='prune-options'>
+                        <label for='auto-prune-checkbox'>remove old tabs after</label>
+                        <input id='auto-prune-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
+                        <label for='auto-prune-threshold'>days</label>
                     </div>
                 </div>
                 <!-- <div>

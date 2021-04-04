@@ -29,6 +29,10 @@ input {
     align-self: center;
 }
 
+.auto-deduplicate-block {
+    margin: 0.25rem 0;
+}
+
 .auto-prune-block {
     display: flex;
     align-items: center;

@@ -1,5 +1,6 @@
 const getOptions = (callback) => {
     const defaults = {
+        'auto-deduplicate': true,
         'auto-prune': false,
         'prune-threshold': 14,
         'auto-group': true,
