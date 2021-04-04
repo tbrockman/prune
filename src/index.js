@@ -14,6 +14,10 @@ chrome.runtime.onInstalled.addListener((details) => {
             chrome.runtime.openOptionsPage()
         }
     }
+
+    else if (details.reason == 'install') {
+        chrome.runtime.openOptionsPage()
+    }
 });
 
 chrome.alarms.create({ periodInMinutes: 1})
@@ -64,8 +68,14 @@ chrome.tabs.onUpdated.addListener((tabId, updatedInfo, tab) => {
     tracker.initialize(() => {
 
         tracker.track(tab.id)
-        const deduplicator = new TabDeduplicator(lock)
-        deduplicator.deduplicateTab(tab)
+
+        getOptions((options) => {
+
+            if (options['auto-deduplicate']) {
+                const deduplicator = new TabDeduplicator(lock)
+                deduplicator.deduplicateTab(tab)
+            }
+        })
     })
 })
 
