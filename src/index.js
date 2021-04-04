@@ -4,13 +4,17 @@ import { getOptions } from './options/index.js'
 const lock = new Set()
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000
 
-chrome.runtime.onInstalled.addListener(() => {
-    showReadme();
-});
+chrome.runtime.onInstalled.addListener((details) => {
 
-function showReadme() {
-    //chrome.tabs.create({ url:"https://theo.lol" });
-}
+    if (details.reason == 'update') {
+
+        const version = chrome.runtime.getManifest().version;
+
+        if (details.previousVersion[0] == '1' && version[0] == '2') {
+            chrome.runtime.openOptionsPage()
+        }
+    }
+});
 
 chrome.alarms.create({ periodInMinutes: 1})
 

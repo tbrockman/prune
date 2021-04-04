@@ -18,7 +18,7 @@ class OptionsPage {
             })
         })
         this.autoPruneThreshold.addEventListener('change' ,e=> {
-            setOption('prune-threshold', parseInt(e.target.value), () => {})
+            setOption('prune-threshold', parseFloat(e.target.value), () => {})
         })
     }
 
@@ -34,7 +34,7 @@ class OptionsPage {
             })
         })
         this.autoGroupThreshold.addEventListener('change', e => {
-            setOption('auto-group-threshold', parseInt(e.target.value), () => {})
+            setOption('auto-group-threshold', parseFloat(e.target.value), () => {})
         })
         this.autoGroupName.addEventListener('input', e => {
             setOption('auto-group-name', e.input.value)
