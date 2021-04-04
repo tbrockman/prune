@@ -7,7 +7,7 @@ class TabTracker {
         this.trackTabs = this.trackTabs.bind(this)
         this.saveState = this.saveState.bind(this)
         this.loadState = this.loadState.bind(this)
-        this.continueTrackingTabs = this.continueTrackingTabs.bind(this)
+        this.filterClosedTabsAndTrackNew = this.filterClosedTabsAndTrackNew.bind(this)
         this.getTabLastViewed = this.getTabLastViewed.bind(this)
         this.remove = this.remove.bind(this)
         this.track = this.track.bind(this)
@@ -18,14 +18,16 @@ class TabTracker {
         console.debug('initializing')
 
         this.loadState(this.tabsStorageKey, (tabs) => {
-            
+
             chrome.tabs.query({}, openTabs => {
                 
                 if (Object.keys(tabs).length === 0) {
+                    console.debug('no loaded tabs found in storage')
                     this.trackTabs(openTabs)
                 }
                 else {
                     this.tabs = tabs
+                    console.debug('loaded tabs found in storage', tabs)
                     this.filterClosedTabsAndTrackNew(this.tabs, openTabs)
                 }
                 
@@ -60,6 +62,14 @@ class TabTracker {
                 delete tabs[tabId]
             }
         }
+
+        this.saveState(this.tabsStorageKey, () => {
+            var error = chrome.runtime.lastError
+
+            if (error) {  
+               return console.error(error)
+            }
+        })
     }
 
     remove(tabId) {
@@ -71,38 +81,13 @@ class TabTracker {
     }
 
     track(tabId) {
-
+        console.debug('tracking tab', tabId)
         this.tabs[tabId] = new Date()
 
         this.saveState(this.tabsStorageKey, () => {
             var error = chrome.runtime.lastError
 
             if (error) {  
-               return console.error(error)
-            }
-        })
-    }
-
-    continueTrackingTabs(tabs) {
-
-        for (const tabId in this.tabs) {
-            
-            if (!(tabs.hasOwnProperty(tabId))) {
-                this.remove(tabId)
-            }
-        }
-
-        for (const tabId in tabs) {
-
-            if (!(tabId in this.tabs)) {
-                this.tabs[tabId] = new Date()
-            }
-        }
-
-        this.saveState(this.tabsStorageKey, () => {
-            var error = chrome.runtime.lastError
-
-            if (error) {
                return console.error(error)
             }
         })
@@ -122,7 +107,7 @@ class TabTracker {
 
         if (tabs) {
 
-            for(const key in tabs) {
+            for (const key in tabs) {
                 deserialized[key] = new Date(tabs[key])
             }
         }
@@ -130,6 +115,7 @@ class TabTracker {
     }
 
     saveState(key, callback) {
+        console.debug('saving tab state', key)
         const serialized = this.serializeTabs(this.tabs)
         chrome.storage.local.set({[key]: serialized}, callback)
     }

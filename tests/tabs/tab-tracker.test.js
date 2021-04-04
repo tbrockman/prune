@@ -7,9 +7,16 @@ describe('tab-tracker', () => {
 
     let tabTracker
 
-    beforeEach(() => {
+    before(() => {
         global.chrome = chrome
+    })
+
+    beforeEach(() => {
         tabTracker = new TabTracker()
+    })
+
+    afterEach(() => {
+        global.chrome.flush()
     })
 
     it('should initialize empty tab state', (done) => {
@@ -60,9 +67,11 @@ describe('tab-tracker', () => {
         }
         chrome.tabs.query.callsArgWith(1, openTabs)
         chrome.storage.local.get.callsArgWith(1, {tabs: storedTabs})
+        chrome.storage.local.set.callsArgWith(1, {})
         tabTracker.initialize(() => {
             assert.equal(Object.keys(tabTracker.tabs).length, 1)
             assert(tabTracker.tabs.hasOwnProperty(1))
+            assert(chrome.storage.local.set.calledOnce)
             done()
         })
     })
