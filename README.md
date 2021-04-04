@@ -12,4 +12,4 @@ As `prune` grows it might help you do *even* more.
 
 ## Contributions
 
-Check out the [code of conduct](CODE_OF_CONDUCT.md) and [contributing](CONTRIBUTING.MD).
+Check out the [code of conduct](CODE_OF_CONDUCT.md) and [contributing](CONTRIBUTING.md).
