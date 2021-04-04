@@ -59,6 +59,7 @@ class TabGrouper {
                     }
                     else {
                         chrome.tabGroups.update(groupId, groupProperties)
+                        chrome.tabGroups.move(groupId, {index: 0})
                         return callback(null)
                     }
                 })

@@ -115,7 +115,6 @@ class TabTracker {
     }
 
     saveState(key, callback) {
-        console.debug('saving tab state', key)
         const serialized = this.serializeTabs(this.tabs)
         chrome.storage.local.set({[key]: serialized}, callback)
     }

@@ -14,7 +14,8 @@ describe('tab-grouper', () => {
         chrome.tabs.group = sinon.stub()
         chrome.tabGroups = {
             query: sinon.stub(),
-            update: sinon.stub()
+            update: sinon.stub(),
+            move: sinon.stub()
         }
         mockTracker = {
             getTabLastViewed: sinon.stub(),
@@ -127,6 +128,7 @@ describe('tab-grouper', () => {
             assert.equal(Object.keys(groupArgs).length, 1)
             assert.equal(groupArgs.tabIds.length, 3)
             assert(chrome.tabGroups.update.calledOnce)
+            assert(chrome.tabGroups.move.calledOnce)
             done()
         })
     })
