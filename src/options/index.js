@@ -2,7 +2,7 @@ const getOptions = (callback) => {
     const defaults = {
         'auto-prune': false,
         'prune-threshold': 14,
-        'auto-group': false,
+        'auto-group': true,
         'auto-group-threshold': 3,
         'auto-group-name': '🕒 old tabs'
     }
