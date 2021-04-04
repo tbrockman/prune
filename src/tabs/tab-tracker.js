@@ -1,32 +1,74 @@
 class TabTracker {
+
     constructor(tabsStorageKey="tabs") {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
-        // TODO: filter closed tabs
-        this.loadState(tabsStorageKey, (tabs) => {
+        this.initialize = this.initialize.bind(this)
+        this.trackTabs = this.trackTabs.bind(this)
+        this.saveState = this.saveState.bind(this)
+        this.loadState = this.loadState.bind(this)
+        this.filterClosedTabsAndTrackNew = this.filterClosedTabsAndTrackNew.bind(this)
+        this.getTabLastViewed = this.getTabLastViewed.bind(this)
+        this.remove = this.remove.bind(this)
+        this.track = this.track.bind(this)
+    }
 
-            if (Object.keys(tabs).length === 0) {
-                this.trackAllTabs()
-            }
-            else {
-                this.tabs = tabs
-            }
+    initialize(callback) {
+
+        console.debug('initializing')
+
+        this.loadState(this.tabsStorageKey, (tabs) => {
+
+            chrome.tabs.query({}, openTabs => {
+                
+                if (Object.keys(tabs).length === 0) {
+                    console.debug('no loaded tabs found in storage')
+                    this.trackTabs(openTabs)
+                }
+                else {
+                    this.tabs = tabs
+                    console.debug('loaded tabs found in storage', tabs)
+                    this.filterClosedTabsAndTrackNew(this.tabs, openTabs)
+                }
+                
+                console.debug('resolved tab state', this.tabs)
+                return callback()
+            })
         })
     }
-    
-    tabShouldBePruned(tabId, threshold) {
-        
-        const now = new Date()
 
-        if (tabId in this.tabs) {
-            return now - this.tabs[tabId] > threshold
-        }
-        return false
+    getTabLastViewed(tabId) {
+        return this.tabs[tabId]
     }
 
-    trackAllTabs() {
-        chrome.tabs.query({}, tabs => {
-            tabs.forEach(tab => this.track(tab.id))
+    trackTabs(tabs) {
+        tabs.forEach(tab => this.track(tab.id))
+    }
+
+    filterClosedTabsAndTrackNew(tabs, openTabs) {
+        const openTabSet = new Set()
+
+        openTabs.forEach(tab => {
+            openTabSet.add(tab.id.toString())
+
+            if (!tabs.hasOwnProperty(tab.id)) {
+                this.track(tab.id)
+            }
+        })
+
+        for (const tabId in this.tabs) {
+            
+            if (!openTabSet.has(tabId)) {
+                delete tabs[tabId]
+            }
+        }
+
+        this.saveState(this.tabsStorageKey, () => {
+            var error = chrome.runtime.lastError
+
+            if (error) {  
+               return console.error(error)
+            }
         })
     }
 
@@ -39,6 +81,7 @@ class TabTracker {
     }
 
     track(tabId) {
+        console.debug('tracking tab', tabId)
         this.tabs[tabId] = new Date()
 
         this.saveState(this.tabsStorageKey, () => {
@@ -53,7 +96,7 @@ class TabTracker {
     serializeTabs(tabs) {
         const serialized = {}
 
-        for(const key in tabs) {
+        for (const key in tabs) {
             serialized[key] = tabs[key].toString()
         }
         return serialized
@@ -63,7 +106,8 @@ class TabTracker {
         const deserialized = {}
 
         if (tabs) {
-            for(const key in tabs) {
+
+            for (const key in tabs) {
                 deserialized[key] = new Date(tabs[key])
             }
         }

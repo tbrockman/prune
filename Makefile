@@ -1,2 +1,2 @@
 release:
-	zip -r release.zip assets src favicon.ico background.html manifest.json
+	zip -r release.zip assets src dist favicon.ico service-worker.js manifest.json

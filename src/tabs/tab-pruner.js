@@ -1,63 +1,41 @@
-import { getOptions } from '../options/index.js'
-
 class TabPruner {
-    constructor (tabTracker, interval, threshold) {
+    constructor (tabTracker) {
         this.tabTracker = tabTracker
-        this.interval = interval
-        this.pruneThreshold = threshold
-        this.autoPrune = false
+        this.pruneTabs = this.pruneTabs.bind(this)
+    }
 
-        getOptions(options => {
-            this.autoPrune = options['auto-prune']
-            this.pruneThreshold = options['prune-threshold']
-        })
+    pruneTabs(tabs, threshold) {
 
-        chrome.storage.onChanged.addListener(function(changes, namespace) {
+        let remainingTabs = []
+
+        tabs.forEach(tab => {
+            let lastViewed = this.tabTracker.getTabLastViewed(tab.id)
+            const now = new Date()
             
-            if (namespace == 'sync') {
-
-                let change;
-
-                if ('auto-prune' in changes) {
-                    change = changes['auto-prune']
-                    this.autoPrune = change.newValue
-                }
-
-                if ('prune-threshold' in changes) {
-                    change = changes['prune-threshold']
-                    this.pruneThreshold = change.newValue * 24 * 60 * 60 * 1000
-                }
+            if (!lastViewed) {
+                this.tabTracker.track(tab.id)
+                lastViewed = now
             }
-        });
-    }
+            const tabShouldBePruned = now - lastViewed >= threshold
+            
+            if (tabShouldBePruned) {
 
-    start() {
-        this.pruneTabs()
-        setTimeout(() => {
-            this.start()
-        }, this.interval)
-    }
+                console.debug('pruning tab', tab.id, tab)
 
-    pruneTabs() {
+                chrome.tabs.remove(tab.id, () => {
+                    var error = chrome.runtime.lastError
 
-        if (!this.autoPrune) return
-
-        chrome.tabs.query({}, tabs => {
-            tabs.forEach(tab => {
-                const tabShouldBePruned = this.tabTracker.tabShouldBePruned(tab.id, this.threshold)
-
-                if (tabShouldBePruned) {
-
-                    chrome.tabs.remove(tab.id, () => {
-                        var error = chrome.runtime.lastError
-
-                        if (error) {  
-                           return console.error(error)
-                        }
-                    })
-                }
-            })
+                    if (error) {
+                       console.error(error)
+                    }
+                })
+            }
+            else {
+                remainingTabs.push(tab)
+            }
         })
+
+        return remainingTabs
     }
 }
 
