@@ -19,14 +19,25 @@ class OptionsPage {
     initializeAutoPruneInputs() {
         this.autoPruneCheckbox = document.getElementById('auto-prune-checkbox')
         this.autoPruneThreshold = document.getElementById('auto-prune-threshold')
+        this.autoPruneBookmarkCheckbox = document.getElementById('auto-prune-bookmark-checkbox')
+        this.autoPruneBookmarkName= document.getElementById('auto-prune-bookmark-name')
 
         this.autoPruneCheckbox.addEventListener('change', (e) => {
             setOption('auto-prune', e.target.checked, () => {
                 this.autoPruneThreshold.disabled = !e.target.checked
+                this.autoPruneBookmarkCheckbox.disabled = !e.target.checked
             })
         })
         this.autoPruneThreshold.addEventListener('change' ,e=> {
             setOption('prune-threshold', parseFloat(e.target.value), () => {})
+        })
+        this.autoPruneBookmarkCheckbox.addEventListener('change', (e) => {
+            setOption('auto-prune-bookmark', e.target.checked, () => {
+                this.autoPruneBookmarkName.disabled = !e.target.checked
+            })
+        })
+        this.autoPruneBookmarkName.addEventListener('input', e => {
+            setOption('auto-prune-bookmark-name', e.input.value)
         })
     }
 
@@ -60,6 +71,10 @@ class OptionsPage {
             this.autoGroupThreshold.value = options['auto-group-threshold']
             this.autoGroupName.disabled = !options['auto-group']
             this.autoGroupName.value = options['auto-group-name']
+            this.autoPruneBookmarkCheckbox.checked = options['auto-prune-bookmark']
+            this.autoPruneBookmarkCheckbox.disabled = !options['auto-prune']
+            this.autoPruneBookmarkName.disabled = !options['auto-prune-bookmark']
+            this.autoPruneBookmarkName.value = options['auto-prune-bookmark-name']
         })
     }
 }

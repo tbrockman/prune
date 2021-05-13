@@ -5,7 +5,9 @@ const getOptions = (callback) => {
         'prune-threshold': 14,
         'auto-group': true,
         'auto-group-threshold': 3,
-        'auto-group-name': '🕒 old tabs'
+        'auto-group-name': '🕒 old tabs',
+        'auto-prune-bookmark': false,
+        'auto-prune-bookmark-name': '🌱 pruned'
     }
     chrome.storage.sync.get(defaults, callback)
 }

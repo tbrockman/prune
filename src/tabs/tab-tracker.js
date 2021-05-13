@@ -128,7 +128,7 @@ class TabTracker {
             }
 
             let tabs;
-
+            console.debug('raw data', data)
             if ('tabs' in data) {
                 tabs = data['tabs']
             }

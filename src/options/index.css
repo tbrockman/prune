@@ -35,8 +35,13 @@ input {
 
 .auto-prune-block {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.auto-prune-bookmark {
+    display: flex;
+    align-items: center;
 }
 
 .prune-options-logo {
@@ -56,4 +61,8 @@ input {
 
 #auto-group-name {
     max-width: 12ch;
+}
+
+.corner {
+    margin-right: 0.5rem;
 }

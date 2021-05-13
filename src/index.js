@@ -37,17 +37,21 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const tracker = new TabTracker()
         tracker.initialize(() => {
 
+            console.debug('tracker initialized')
             const grouper = new TabGrouper(tracker)
             const pruner = new TabPruner(tracker)
 
             chrome.tabs.query({}, (tabs) => {
                 // Check for tabs to prune
                 let remainingTabs = tabs
+                console.debug('open tabs', tabs)
     
                 if (autoPrune) {
                     remainingTabs = pruner.pruneTabs(tabs, pruneThreshold)
                 }
-    
+                
+                console.debug('remaining tabs', tabs)
+
                 if (autoGroup) {
                     const group = {
                         title: autoGroupName,
