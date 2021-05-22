@@ -8,7 +8,6 @@ class TabBookmarker {
     async bookmarkTabs(tabs) {
         const bookmarks = await chrome.bookmarks.search({title: this.bookmarkFolderName})
         let folder
-        console.log(bookmarks)
 
         if (bookmarks.length == 0) {
             folder = await chrome.bookmarks.create({title: this.bookmarkFolderName})

@@ -151,7 +151,7 @@ const init = () => {
         }
     }
     // TODO: dont be lazy and actually do some sort of build-time replacement of this
-    const env = 'local'
+    const env = 'production'
     const stripeClient = Stripe(config[env].stripe.key)
     const tipClient = new TipClient(config[env].tip.backend)
     const page = new OptionsPage(stripeClient, tipClient)
