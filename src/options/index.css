@@ -9,6 +9,7 @@ body {
     margin: 0;
     display: flex;
     justify-content: center;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 input {
@@ -17,7 +18,6 @@ input {
 }
 
 .options-container {
-    font-family: 'Ubuntu', sans-serif;
     height: 100%;
     max-width: 120ch;
     display: flex;
@@ -65,4 +65,64 @@ input {
 
 .corner {
     margin-right: 0.5rem;
+}
+
+.tip-holder {
+    position: relative;
+}
+
+.tip-input {
+    max-width: 6ch;
+    padding-left: 2ch;
+}
+
+.tip-currency {
+    width: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 1ch;
+}
+
+#tip-button {
+    zoom: 1.25;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    background: #0175ff;
+    color: #fff;
+    border-radius: 2px;
+    border-color: #000;
+    border-width: 1px;
+}
+
+#tip-button:hover {
+    background: #005fd0;
+    cursor: pointer;
+}
+
+#tip-button.loading {
+    background-color: #f8f8f8;
+    border-color: #d4d4d4;
+    border-style: solid;
+    cursor: progress;
+    pointer-events: none;
+}
+
+.tip-button-container {
+    position: relative;
+}
+
+#tip-button.loading > .tip-button-container {
+    visibility: hidden;
+}
+
+#tip-button-spinner {
+    visibility: hidden;
+}
+
+#tip-button.loading #tip-button-spinner {
+    visibility: visible;
 }

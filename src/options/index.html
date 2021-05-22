@@ -2,17 +2,18 @@
 <html>
     <head>
         <title>prune options</title>
-        <meta charset="utf-8">
-        <script src="./page.js" type="module"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./index.css">
-        <link rel="icon" href="../../favicon.ico">
+        <meta charset='utf-8'>
+        <script src='./page.js' type='module'></script>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='preconnect' href='https://fonts.gstatic.com'>
+        <link href='https://fonts.googleapis.com/css2?family=Ubuntu&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='./index.css'>
+        <link rel='stylesheet' href='./spinner.css'>
+        <link rel='icon' href='../../favicon.ico'>
     </head>
     <body>
         <div class='options-container'>
-            <img class="prune-options-logo" src="../../assets/svg/prune-full.svg"></img>
+            <img class='prune-options-logo' src='../../assets/svg/prune-full.svg'></img>
             <form name='prune-options'>
                 <div class='auto-deduplicate-block'>
                     <div>
@@ -50,6 +51,19 @@
                     <input id='auto-prune-prompt' type='checkbox' name='auto-prune-prompt' form='prune-options'>
                     <label for='auto-prune-prompt'>prompt before removing old tabs</label>
                 </div> -->
+                <div>
+                    <label for='support-the-dev-tip'>support the developer: </label>
+                    <span class='tip-holder'>
+                        <span class='tip-currency'>$</span>
+                        <input id='tip-input' class='tip-input' type='number' min='1' step='1' value='5'></input>
+                    </span>
+                    <button id='tip-button' type='button'>
+                        <div class='tip-button-container'>
+                            tip
+                            <div id='tip-button-spinner' class="contained-spinner MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate" role="progressbar"><svg class="MuiCircularProgress-svg" viewBox="22 22 44 44"><circle class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle></svg></div>
+                        </div>
+                    </button>
+                </div>
             </form>
         </div>
     </body>

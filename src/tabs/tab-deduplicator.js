@@ -2,6 +2,7 @@ class TabDeduplicator {
 
     constructor(tabLock) {
         this.tabLock = tabLock
+        this.deduplicateTab = this.deduplicateTab.bind(this)
     }
 
     deduplicateTab(tab) {

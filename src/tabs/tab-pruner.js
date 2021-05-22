@@ -1,12 +1,14 @@
 class TabPruner {
+
     constructor (tabTracker) {
         this.tabTracker = tabTracker
         this.pruneTabs = this.pruneTabs.bind(this)
+        this.findTabsToPrune = this.findTabsToPrune.bind(this)
     }
 
-    pruneTabs(tabs, threshold) {
-
-        let remainingTabs = []
+    findTabsToPrune(tabs, threshold) {
+        let pruned = []
+        let remaining = []
 
         tabs.forEach(tab => {
             let lastViewed = this.tabTracker.getTabLastViewed(tab.id)
@@ -19,23 +21,26 @@ class TabPruner {
             const tabShouldBePruned = now - lastViewed >= threshold
             
             if (tabShouldBePruned) {
-
-                console.debug('pruning tab', tab.id, tab)
-
-                chrome.tabs.remove(tab.id, () => {
-                    var error = chrome.runtime.lastError
-
-                    if (error) {
-                       console.error(error)
-                    }
-                })
+                pruned.push(tab)
             }
             else {
-                remainingTabs.push(tab)
+                remaining.push(tab)
             }
         })
 
-        return remainingTabs
+        return [pruned, remaining]
+    }
+
+    pruneTabs(tabs) {
+        tabs.forEach(tab => {
+            chrome.tabs.remove(tab.id, () => {
+                var error = chrome.runtime.lastError
+
+                if (error) {
+                   console.error(error)
+                }
+            })
+        })
     }
 }
 

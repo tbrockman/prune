@@ -59,7 +59,7 @@ class TabTracker {
         for (const tabId in this.tabs) {
             
             if (!openTabSet.has(tabId)) {
-                delete tabs[tabId]
+                delete this.tabs[tabId]
             }
         }
 

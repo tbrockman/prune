@@ -1,5 +1,5 @@
-
 class TabGrouper {
+
     constructor(tabTracker) {
         this.tabTracker = tabTracker
         this.groupTabs = this.groupTabs.bind(this)

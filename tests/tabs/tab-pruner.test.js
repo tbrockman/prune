@@ -18,7 +18,7 @@ describe('tab-pruner', () => {
         tabPruner = new TabPruner(mockTracker)
     })
 
-    it('should prune one tab', () => {
+    it('should find one tab to prune', () => {
         const tabs = [
             {
                 id: 1,
@@ -30,12 +30,12 @@ describe('tab-pruner', () => {
         const expired = new Date()
         expired.setDate(expired.getDate() - 2)
         mockTracker.getTabLastViewed.returns(expired)
-
-        const remaining = tabPruner.pruneTabs(tabs, threshold)
-        assert.equal(0, remaining.length)
+        const [pruned, remaining] = tabPruner.findTabsToPrune(tabs, threshold)
+        assert.equal(pruned.length, 1)
+        assert.equal(remaining.length, 0)
     })
 
-    it('should prune all tabs', () => {
+    it('should find all tabs prunable', () => {
         const tabs = [
             {
                 id: 1,
@@ -54,11 +54,12 @@ describe('tab-pruner', () => {
         expired.setDate(expired.getDate() - 2)
         mockTracker.getTabLastViewed.returns(expired)
 
-        const remaining = tabPruner.pruneTabs(tabs, threshold)
+        const [pruned, remaining] = tabPruner.findTabsToPrune(tabs, threshold)
+        assert.equal(pruned.length, 3)
         assert.equal(0, remaining.length)
     })
 
-    it('should prune no tabs', () => {
+    it('should find no tabs to prune', () => {
         const tabs = [
             {
                 id: 1,
@@ -77,11 +78,12 @@ describe('tab-pruner', () => {
         notExpired.setDate(notExpired.getDate() - 1)
         mockTracker.getTabLastViewed.returns(notExpired)
 
-        const remaining = tabPruner.pruneTabs(tabs, threshold)
-        assert.equal(3, remaining.length)
+        const [pruned, remaining] = tabPruner.findTabsToPrune(tabs, threshold)
+        assert.equal(pruned.length, 0)
+        assert.equal(remaining.length, 3)
     })
 
-    it('should prune some tabs', () => {
+    it('should find some tabs to prune', () => {
         const tabs = [
             {
                 id: 1,
@@ -104,7 +106,8 @@ describe('tab-pruner', () => {
         mockTracker.getTabLastViewed.withArgs(1).returns(expired)
         mockTracker.getTabLastViewed.withArgs(2).returns(expired)
 
-        const remaining = tabPruner.pruneTabs(tabs, threshold)
-        assert.equal(1, remaining.length)
+        const [pruned, remaining] = tabPruner.findTabsToPrune(tabs, threshold)
+        assert.equal(pruned.length, 2)
+        assert.equal(remaining.length, 1)
     })
 })
