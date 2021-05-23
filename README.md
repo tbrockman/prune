@@ -1,4 +1,4 @@
-# prune
+<img src="./chrome-store-assets/prune-full.jpg" width="200" />
 
 A small Chrome extension to help you manage your garden of tabs.
 
