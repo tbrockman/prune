@@ -1,12 +1,12 @@
 const getOptions = (callback) => {
     const defaults = {
         'auto-deduplicate': true,
-        'auto-prune': false,
-        'prune-threshold': 14,
+        'auto-prune': true,
+        'prune-threshold': 7,
         'auto-group': true,
         'auto-group-threshold': 3,
         'auto-group-name': '🕒 old tabs',
-        'auto-prune-bookmark': false,
+        'auto-prune-bookmark': true,
         'auto-prune-bookmark-name': '🌱 pruned'
     }
     chrome.storage.sync.get(defaults, callback)

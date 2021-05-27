@@ -6,19 +6,7 @@ const lock = new Set()
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000
 
 chrome.runtime.onInstalled.addListener((details) => {
-
-    if (details.reason == 'update') {
-
-        const version = chrome.runtime.getManifest().version;
-
-        if (details.previousVersion[0] == '1' && version[0] == '2') {
-            chrome.runtime.openOptionsPage()
-        }
-    }
-
-    else if (details.reason == 'install') {
-        chrome.runtime.openOptionsPage()
-    }
+    chrome.tabs.create({url : "/src/options/index.html"}); 
 });
 
 chrome.alarms.create({ periodInMinutes: 1})
@@ -34,6 +22,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         const autoGroup = options['auto-group']
         const autoGroupThreshold = options['auto-group-threshold'] * toOneDayInMilliseconds
         const autoGroupName = options['auto-group-name']
+        const autoBookmark = options['auto-prune-bookmark']
         const autoBookmarkName = options['auto-prune-bookmark-name']
 
         const tracker = new TabTracker()
@@ -93,7 +82,6 @@ chrome.tabs.onUpdated.addListener(async(tabId, updatedInfo, tab) => {
 
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener((activeInfo) => {
-
     const tracker = new TabTracker()
     tracker.initialize(() => {
 

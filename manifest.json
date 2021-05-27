@@ -8,7 +8,11 @@
         "service_worker": "service-worker.js"
     },
     "manifest_version": 3,
-    "options_page": "/src/options/index.html",
+    "action": {
+        "default_popup": "/src/options/index.html",
+        "default_title": "test",
+        "default_icon": "/assets/png/prune-icon128.png"
+    },
     "icons": {
         "16": "/assets/png/prune-icon16.png",
         "48": "/assets/png/prune-icon48.png",

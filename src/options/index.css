@@ -18,13 +18,11 @@ input {
 }
 
 .options-container {
-    height: 100%;
     max-width: 120ch;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 1rem;
     font-size: 18px;
     align-self: center;
 }
@@ -47,8 +45,8 @@ input {
 .prune-options-logo {
     width: 12rem;
     max-width: 100%;
-    padding-bottom: 1rem;
     align-self: flex-start;
+    padding: 1rem;
 }
 
 #prune-threshold-input {
@@ -125,4 +123,18 @@ input {
 
 #tip-button.loading #tip-button-spinner {
     visibility: visible;
+}
+
+.prune-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+}
+
+@media(max-height: 600px) {
+    .prune-options-logo {
+        display: none;
+    }
 }

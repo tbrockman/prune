@@ -1,11 +1,9 @@
 import { getOptions, setOption } from './index.js'
 import { TipClient } from '../clients/tip.js'
-import '../clients/stripe.js'
 
 class OptionsPage {
 
-    constructor(stripeClient, tipClient) {
-        this.stripeClient = stripeClient
+    constructor(tipClient) {
         this.tipClient = tipClient
         this.initializeAutoDeduplicateInput()
         this.initializeAutoPruneInputs()
@@ -85,7 +83,9 @@ class OptionsPage {
                 const cents = this.convertToCents(tip)
                 try {
                     const session = await this.tipClient.createSession(cents)
-                    await this.stripeClient.redirectToCheckout({ sessionId: session.id });
+                    console.log('here', session)
+                    chrome.tabs.create({ url: session.url });
+                    //await this.stripeClient.redirectToCheckout({ sessionId: session.id });
                 }
                 finally {
                     this.setTipButtonLoading(false)
@@ -128,33 +128,23 @@ const init = () => {
         local: {
             tip: {
                 backend: 'http://127.0.0.1:8787'
-            },
-            stripe: {
-                key: 'pk_test_51Io0JXI6CmAEHjsyE4lFlkB5fXakW0fDDzIGRIro2nVKtdTcUSPgX1HJD5hssAEQDTMJBNYmi58sZnbSZO6PTV5H00XQWCmcPr'
             }
         },
         dev: {
             tip: {
                 backend: 'https://tip.dev.theo.lol'
-            },
-            stripe: {
-                key: 'pk_test_51Io0JXI6CmAEHjsyE4lFlkB5fXakW0fDDzIGRIro2nVKtdTcUSPgX1HJD5hssAEQDTMJBNYmi58sZnbSZO6PTV5H00XQWCmcPr'
             }
         },
         prod: {
             tip: {
                 backend: 'https://tip.theo.lol'
-            },
-            stripe: {
-                key: 'pk_live_51Io0JXI6CmAEHjsyoJhZ4rtbrEQIs2n8uPt4AwJ4f5gQMPzu9PoNt23qI2a4PCG6ijjaNR1GSpbNGfZc0I0tPyND0058xv82uu'
             }
         }
     }
     // TODO: dont be lazy and actually do some sort of build-time replacement of this
     const env = 'prod'
-    const stripeClient = Stripe(config[env].stripe.key)
     const tipClient = new TipClient(config[env].tip.backend)
-    const page = new OptionsPage(stripeClient, tipClient)
+    const page = new OptionsPage(tipClient)
 }
 
 window.addEventListener('load', init)
