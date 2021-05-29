@@ -15,7 +15,7 @@ Bug reports should be submitted by [creating a bug report issue](https://github.
 # Security issues
 
 Either:
-* Responsibly disclosed via [e-mail](mailto:tmanbrock@gmail.com) with subject line prefixed by `[PRUNE][VULNERABILITY]`.
+* Responsibly disclosed via [e-mail](mailto:iam@theo.lol) with subject line prefixed by `[PRUNE][VULNERABILITY]`.
 * Voluntarily fixed via PR and described in full (accompanied by a proof-of-concept or description of exploit chain).
 
 # Other
