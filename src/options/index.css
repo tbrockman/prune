@@ -1,11 +1,9 @@
 html {
     height: 100%;
-    width: 100%;
 }
 
 body {
     height: 100%;
-    width: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -25,6 +23,7 @@ input {
     align-items: center;
     font-size: 18px;
     align-self: center;
+    min-width: 60ch;
 }
 
 .auto-deduplicate-block {
@@ -38,8 +37,6 @@ input {
 }
 
 .auto-prune-bookmark {
-    display: flex;
-    align-items: center;
 }
 
 .prune-options-logo {
@@ -133,7 +130,22 @@ input {
     padding: 1rem;
 }
 
+select {
+    font-family: 'Ubuntu';
+    margin: 0.25rem;
+    zoom: 1.25;
+}
+
 @media(max-height: 600px) {
+
+    html {
+        height: initial;
+    }
+
+    body {
+        height: initial;
+    }
+
     .prune-options-logo {
         display: none;
     }

@@ -1,47 +1,45 @@
-import { getOptions, setOption } from './index.js'
 import { TipClient } from '../clients/tip.js'
+import State from '../data-structures/state.js'
+
+const defaults = {
+    'auto-deduplicate': true,
+    'auto-prune': true,
+    'prune-threshold': 7,
+    'auto-group': true,
+    'auto-group-threshold': 3,
+    'auto-group-name': '🕒 old tabs',
+    'auto-prune-bookmark': false,
+    'auto-prune-bookmark-name': '🌱 pruned',
+    'tab-lru-enabled': true,
+    'tab-lru-size': 10,
+    'tab-lru-destination': 'group'
+}
 
 class OptionsPage {
 
     constructor(tipClient) {
         this.tipClient = tipClient
+        this.init()
+    }
+
+    async init() {
+        this.state = new State(defaults, true)
         this.initializeAutoDeduplicateInput()
-        this.initializeAutoPruneInputs()
         this.initializeAutoGroupInputs()
-        this.initializeDefaultValues()
+        this.initializeAutoPruneInputs()
+        this.initializeTabLRUInputs()
+        this.initializeAutoPruneBookmarkInputs()
         this.initializeTipButton()
+        this.state.init()
     }
 
     initializeAutoDeduplicateInput() {
         this.autoDeduplicateCheckbox = document.getElementById('auto-deduplicate-checkbox')
-        this.autoDeduplicateCheckbox.addEventListener('change', (e) => {
-            setOption('auto-deduplicate', e.target.checked, () => {})
+        this.state.registerListener('auto-deduplicate', (value) => {
+            this.autoDeduplicateCheckbox.checked = value
         })
-    }
-
-    initializeAutoPruneInputs() {
-        this.autoPruneCheckbox = document.getElementById('auto-prune-checkbox')
-        this.autoPruneThreshold = document.getElementById('auto-prune-threshold')
-        this.autoPruneBookmarkCheckbox = document.getElementById('auto-prune-bookmark-checkbox')
-        this.autoPruneBookmarkName= document.getElementById('auto-prune-bookmark-name')
-
-        this.autoPruneCheckbox.addEventListener('change', (e) => {
-            setOption('auto-prune', e.target.checked, () => {
-                this.autoPruneThreshold.disabled = !e.target.checked
-                this.autoPruneBookmarkCheckbox.disabled = !e.target.checked
-                this.autoPruneBookmarkName.disabled = !e.target.checked || !this.autoPruneBookmarkCheckbox.checked
-            })
-        })
-        this.autoPruneThreshold.addEventListener('change' ,e=> {
-            setOption('prune-threshold', parseFloat(e.target.value), () => {})
-        })
-        this.autoPruneBookmarkCheckbox.addEventListener('change', (e) => {
-            setOption('auto-prune-bookmark', e.target.checked, () => {
-                this.autoPruneBookmarkName.disabled = !e.target.checked
-            })
-        })
-        this.autoPruneBookmarkName.addEventListener('input', e => {
-            setOption('auto-prune-bookmark-name', e.input.value)
+        this.autoDeduplicateCheckbox.addEventListener('change', async e => {
+            await this.state.upsert('auto-deduplicate', e.target.checked)
         })
     }
 
@@ -50,17 +48,105 @@ class OptionsPage {
         this.autoGroupThreshold = document.getElementById('auto-group-threshold')
         this.autoGroupName = document.getElementById('auto-group-name')
 
-        this.autoGroupCheckbox.addEventListener('change', (e) => {
-            setOption('auto-group', e.target.checked, () => {
-                this.autoGroupThreshold.disabled = !e.target.checked
-                this.autoGroupName.disabled = !e.target.checked
-            })
+        this.state.registerListener('auto-group', (bool) => {
+            this.autoGroupThreshold.disabled = !bool
+            this.autoGroupName.disabled = !bool
+            this.autoGroupCheckbox.checked = bool
         })
-        this.autoGroupThreshold.addEventListener('change', e => {
-            setOption('auto-group-threshold', parseFloat(e.target.value), () => {})
+        this.state.registerListener('auto-group-threshold', (value) => {
+            this.autoGroupThreshold.value = value
         })
-        this.autoGroupName.addEventListener('input', e => {
-            setOption('auto-group-name', e.input.value)
+        this.state.registerListener('auto-group-name', (value) => {
+            this.autoGroupName.value = value
+        })
+
+        this.autoGroupCheckbox.addEventListener('change', async e => {
+            await this.state.upsert('auto-group', e.target.checked)
+        })
+        this.autoGroupThreshold.addEventListener('change', async e => {
+            await this.state.upsert('auto-group-threshold', parseFloat(e.target.value))
+        })
+        this.autoGroupName.addEventListener('input', async e => {
+            await this.state.upsert('auto-group-name', e.target.value)
+        })
+    }
+
+    autoPruneBookmarkCheckboxListener() {
+        const tabLRUEnabled = this.state.get('tab-lru-enabled')
+        const tabLRUDestination = this.state.get('tab-lru-destination')
+        const autoPruneEnabled = this.state.get('auto-prune')
+
+        this.autoPruneBookmarkCheckbox.disabled = 
+            !autoPruneEnabled && !(tabLRUEnabled && tabLRUDestination == 'remove')
+    }
+
+    initializeAutoPruneInputs() {
+        this.autoPruneCheckbox = document.getElementById('auto-prune-checkbox')
+        this.autoPruneThreshold = document.getElementById('auto-prune-threshold')
+
+        this.state.registerListener('auto-prune', (enabled) => {
+            this.autoPruneCheckbox.checked = enabled
+            this.autoPruneThreshold.disabled = !enabled
+        })
+        this.state.registerListener('prune-threshold', (value) => {
+            this.autoPruneThreshold.value = value
+        })
+        this.autoPruneCheckbox.addEventListener('change', async e => {
+            await this.state.upsert('auto-prune', e.target.checked)
+        })
+        this.autoPruneThreshold.addEventListener('change' ,async e => {
+            await this.state.upsert('prune-threshold', parseFloat(e.target.value))
+        })
+    }
+
+    initializeTabLRUInputs() {
+        this.tabLRUCheckbox = document.getElementById('tab-lru-checkbox')
+        this.tabLRUDestinationSelect = document.getElementById('tab-lru-destination')
+        this.tabLRUSizeInput = document.getElementById('tab-lru-size-input')
+
+        this.state.registerListener('tab-lru-enabled', (enabled) => {
+            this.tabLRUCheckbox.checked = enabled
+            this.tabLRUDestinationSelect.disabled = !enabled
+            this.tabLRUSizeInput.disabled = !enabled
+        })
+        this.state.registerListener('tab-lru-destination', (dest) => {
+            this.tabLRUDestinationSelect.value = dest
+        })
+        this.state.registerListener('tab-lru-size', (size) => {
+            this.tabLRUSizeInput.value = size
+        })
+
+        this.tabLRUCheckbox.addEventListener('change', async e => {
+            await this.state.upsert('tab-lru-enabled', e.target.checked)
+        })
+        this.tabLRUDestinationSelect.addEventListener('change', async e => {
+            await this.state.upsert('tab-lru-destination', e.target.value)
+        })
+        this.tabLRUSizeInput.addEventListener('change', async e => {
+            await this.state.upsert('tab-lru-size', e.target.value)
+        })
+    }
+
+    initializeAutoPruneBookmarkInputs() {
+        this.autoPruneBookmarkCheckbox = document.getElementById('auto-prune-bookmark-checkbox')
+        this.autoPruneBookmarkName= document.getElementById('auto-prune-bookmark-name')
+
+        this.state.registerListener('tab-lru-enabled', () => this.autoPruneBookmarkCheckboxListener())
+        this.state.registerListener('tab-lru-destination', () => this.autoPruneBookmarkCheckboxListener())
+        this.state.registerListener('auto-prune', () => this.autoPruneBookmarkCheckboxListener())
+        this.state.registerListener('auto-prune-bookmark', (enabled) => {
+            this.autoPruneBookmarkCheckbox.checked = enabled
+            this.autoPruneBookmarkName.disabled = !enabled
+        })
+        this.state.registerListener('auto-prune-bookmark-name', (name) => {
+            this.autoPruneBookmarkName.value = name
+        })
+
+        this.autoPruneBookmarkCheckbox.addEventListener('change', async e => {
+            await this.state.upsert('auto-prune-bookmark', e.target.checked)
+        })
+        this.autoPruneBookmarkName.addEventListener('input', async e => {
+            await this.state.upsert('auto-prune-bookmark-name', e.input.value)
         })
     }
 
@@ -102,24 +188,6 @@ class OptionsPage {
         else {
             this.tipButton.classList.remove('loading')
         }
-    }
-
-    initializeDefaultValues() {
-        getOptions(options => {
-            this.autoDeduplicateCheckbox.checked = options['auto-deduplicate']
-            this.autoPruneCheckbox.checked = options['auto-prune']
-            this.autoPruneThreshold.disabled = !options['auto-prune']
-            this.autoPruneThreshold.value = options['prune-threshold']
-            this.autoGroupCheckbox.checked = options['auto-group']
-            this.autoGroupThreshold.disabled = !options['auto-group']
-            this.autoGroupThreshold.value = options['auto-group-threshold']
-            this.autoGroupName.disabled = !options['auto-group']
-            this.autoGroupName.value = options['auto-group-name']
-            this.autoPruneBookmarkCheckbox.checked = options['auto-prune-bookmark']
-            this.autoPruneBookmarkCheckbox.disabled = !options['auto-prune']
-            this.autoPruneBookmarkName.disabled = !options['auto-prune-bookmark'] || !options['auto-prune']
-            this.autoPruneBookmarkName.value = options['auto-prune-bookmark-name']
-        })
     }
 }
 

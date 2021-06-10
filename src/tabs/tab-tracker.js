@@ -1,8 +1,11 @@
+import LRU from '../data-structures/lru'
+
 class TabTracker {
 
-    constructor(tabsStorageKey="tabs") {
+    constructor(tabsStorageKey="tabs", tabLRU=null) {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
+        this.tabLRU = tabLRU
         this.initialize = this.initialize.bind(this)
         this.trackTabs = this.trackTabs.bind(this)
         this.saveState = this.saveState.bind(this)
@@ -42,7 +45,7 @@ class TabTracker {
     }
 
     trackTabs(tabs) {
-        tabs.forEach(tab => this.track(tab.id))
+        tabs.forEach(tab => this.track(tab))
     }
 
     filterClosedTabsAndTrackNew(tabs, openTabs) {
@@ -80,9 +83,15 @@ class TabTracker {
         return
     }
 
-    track(tabId) {
-        console.debug('tracking tab', tabId)
-        this.tabs[tabId] = new Date()
+    track(tab) {
+        console.debug('tracking tab', tab.id)
+        this.tabs[tab.id] = new Date()
+        console.log(tab)
+
+        if (this.tabLRU) {
+            const evicted = this.tabLRU.add(tab.id)
+            console.log(evicted)
+        }
 
         this.saveState(this.tabsStorageKey, () => {
             var error = chrome.runtime.lastError

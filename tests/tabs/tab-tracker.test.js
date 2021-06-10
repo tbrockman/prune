@@ -37,7 +37,7 @@ describe('tab-tracker', () => {
         chrome.tabs.query.callsArgWith(1, tabs)
         chrome.storage.local.get.callsArgWith(1, { tabs: {}})
         tabTracker.initialize(() => {
-            assert.equal(3, Object.keys(tabTracker.tabs).length)
+            assert.equal(Object.keys(tabTracker.tabs).length, 3)
             done()
         })
     })

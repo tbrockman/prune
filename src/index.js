@@ -1,5 +1,5 @@
 import { TabTracker, TabPruner, TabDeduplicator, TabGrouper } from './tabs/index.js'
-import { getOptions } from './options/index.js'
+import { getOptions, getOptionsAsync } from './options/index.js'
 import { TabBookmarker } from './tabs/tab-bookmarker.js';
 
 const lock = new Set()
@@ -66,25 +66,23 @@ chrome.tabs.onUpdated.addListener(async(tabId, updatedInfo, tab) => {
     if (updatedInfo.status != 'loading') return
 
     const tracker = new TabTracker()
-    tracker.initialize(() => {
+    tracker.initialize(async () => {
 
-        tracker.track(tab.id)
+        tracker.track(tab)
 
-        getOptions((options) => {
+        const options = await getOptionsAsync()
 
-            if (options['auto-deduplicate']) {
-                const deduplicator = new TabDeduplicator(lock)
-                deduplicator.deduplicateTab(tab)
-            }
-        })
+        if (options['auto-deduplicate']) {
+            const deduplicator = new TabDeduplicator(lock)
+            deduplicator.deduplicateTab(tab)
+        }
     })
 })
 
 // Whenever a tab comes into focus
-chrome.tabs.onActivated.addListener((activeInfo) => {
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
     const tracker = new TabTracker()
     tracker.initialize(() => {
-
-        tracker.track(activeInfo.tabId)
+        tracker.track({id: activeInfo.tabId})
     })
 })
