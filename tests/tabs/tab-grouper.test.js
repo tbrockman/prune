@@ -6,7 +6,6 @@ const chrome = require('sinon-chrome/extensions');
 
 describe('tab-grouper', () => {
 
-    let mockTracker
     let tabGrouper
 
     beforeEach(() => {
@@ -17,36 +16,23 @@ describe('tab-grouper', () => {
             update: sinon.stub(),
             move: sinon.stub()
         }
-        mockTracker = {
-            getTabLastViewed: sinon.stub(),
-            track: sinon.stub()
-        }
-        tabGrouper = new TabGrouper(mockTracker)
+        tabGrouper = new TabGrouper()
     })
 
-    it('shouldnt group tabs', () => {
-        const tabs = [{
-            id: 1,
-            groupId: -1
-        }]
-        const notExpired = new Date()
-        mockTracker.getTabLastViewed.returns(notExpired)
-        tabGrouper.groupTabs(tabs, {}, 1000 * 60 * 60 * 24)
-        assert(chrome.tabGroups.query.notCalled)
+    afterEach(() => {
+        global.chrome.flush()
     })
 
-    it('shouldnt group already grouped tabs', () => {
+    it('should return immediately if all tabs already have group', async() => {
         const tabs = [{
             id: 1,
             groupId: 1
         }]
-        const expired = new Date()
-        expired.setDate(expired.getDate() - 2)
-        mockTracker.getTabLastViewed.returns(expired)
+        await tabGrouper.groupTabs(tabs, {title: 'test'})
         assert(chrome.tabGroups.query.notCalled)
     })
 
-    it('should group tabs under existing group', (done) => {
+    it('should group one tab under existing group', async() => {
         const tabs = [
             {
                 id: 1,
@@ -71,24 +57,19 @@ describe('tab-grouper', () => {
                 title: 'mold tabs'
             }
         ]
-        const expired = new Date()
-        expired.setDate(expired.getDate() - 2)
-        mockTracker.getTabLastViewed.returns(expired)
-        chrome.tabGroups.query.callsArgWith(1, groups)
-        chrome.tabs.group.callsArgWith(1, {})
-        tabGrouper.groupTabs(tabs, group, 1000 * 60 * 60 * 24, () => {
-            assert(chrome.tabs.group.calledOnce)
-            const call = chrome.tabs.group.getCall(0)
-            const groupArgs = call.args[0]
-            assert.equal(groupArgs.tabIds.length, 1)
-            assert.equal(groupArgs.tabIds[0], 1)
-            assert.equal(groupArgs.groupId, group.id)
-            assert(chrome.tabGroups.update.notCalled)
-            done()
-        })
+        chrome.tabGroups.query.resolves(groups)
+        chrome.tabs.group.resolves()
+        await tabGrouper.groupTabs(tabs, group)
+        assert(chrome.tabs.group.calledOnce)
+        const call = chrome.tabs.group.getCall(0)
+        const groupArgs = call.args[0]
+        assert.equal(groupArgs.tabIds.length, 1)
+        assert.equal(groupArgs.tabIds[0], 1)
+        assert.equal(groupArgs.groupId, group.id)
+        assert(chrome.tabGroups.update.notCalled)
     })
 
-    it('should group tabs under a new group', (done) => {
+    it('should group tabs under a new group', async() => {
         const tabs = [
             {
                 id: 1,
@@ -116,20 +97,14 @@ describe('tab-grouper', () => {
                 title: 'mold tabs'
             }
         ]
-        const expired = new Date()
-        expired.setDate(expired.getDate() - 2)
-        mockTracker.getTabLastViewed.returns(expired)
-        chrome.tabGroups.query.callsArgWith(1, groups)
-        chrome.tabs.group.callsArgWith(1, 1)
-        tabGrouper.groupTabs(tabs, group, 1000 * 60 * 60 * 24, () => {
-            assert(chrome.tabs.group.calledOnce)
-            const call = chrome.tabs.group.getCall(0)
-            const groupArgs = call.args[0]
-            assert.equal(Object.keys(groupArgs).length, 1)
-            assert.equal(groupArgs.tabIds.length, 3)
-            assert(chrome.tabGroups.update.calledOnce)
-            assert(chrome.tabGroups.move.calledOnce)
-            done()
-        })
+        chrome.tabGroups.query.resolves(groups)
+        chrome.tabs.group.resolves(1)
+        await tabGrouper.groupTabs(tabs, group)
+        const call = chrome.tabs.group.getCall(0)
+        const groupArgs = call.args[0]
+        assert.equal(Object.keys(groupArgs).length, 1)
+        assert.equal(groupArgs.tabIds.length, 3)
+        assert(chrome.tabGroups.update.calledOnce)
+        assert(chrome.tabGroups.move.calledOnce)
     })
 })

@@ -28,4 +28,16 @@ describe('lru', () => {
         assert.isTrue(same.has('b'))
         assert.isTrue(same.has('c'))
     })
+
+    it('should be serializable', () => {
+        const lru = new LRU(new Set(), 3)
+        lru.add('a')
+        lru.add('b')
+        lru.add('c')
+        const string = lru.serialize()
+        const same = LRU.deserialize(string)
+        assert.isTrue(lru.has('a'))
+        assert.isTrue(same.has('b'))
+        assert.isTrue(same.has('c'))
+    })
 })

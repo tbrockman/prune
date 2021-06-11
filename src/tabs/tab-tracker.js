@@ -1,11 +1,11 @@
-import LRU from '../data-structures/lru'
+import { localStorageGetAsync, localStorageSetAsync } from '../util/index.js'
 
 class TabTracker {
 
-    constructor(tabsStorageKey="tabs", tabLRU=null) {
+    constructor(tabsStorageKey="tabs") {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
-        this.tabLRU = tabLRU
+        this.init = this.init.bind(this)
         this.initialize = this.initialize.bind(this)
         this.trackTabs = this.trackTabs.bind(this)
         this.saveState = this.saveState.bind(this)
@@ -14,6 +14,22 @@ class TabTracker {
         this.getTabLastViewed = this.getTabLastViewed.bind(this)
         this.remove = this.remove.bind(this)
         this.track = this.track.bind(this)
+    }
+
+    async init(openTabs) {
+        console.debug('initializing tracker')
+        const tabs = await this.loadStateAsync(this.tabsStorageKey)
+                        
+        if (Object.keys(tabs).length === 0) {
+            console.debug('no loaded tabs found in storage')
+            this.trackTabs(openTabs)
+        }
+        else {
+            this.tabs = tabs
+            console.debug('loaded tabs found in storage', tabs)
+            this.filterClosedTabsAndTrackNew(this.tabs, openTabs)
+        }
+        console.debug('resolved tab state', this.tabs)
     }
 
     initialize(callback) {
@@ -40,6 +56,24 @@ class TabTracker {
         })
     }
 
+    findTabsExceedingThreshold(tabs, threshold) {
+        const exceeds = []
+        const remaining = []
+
+        tabs.forEach(tab => {
+            const now = Date.now()
+            const lastViewed = this.getTabLastViewed(tab.id) || now
+            const passesThreshold = (now - lastViewed >= threshold)
+            if (passesThreshold) {
+                exceeds.push(tab)
+            }
+            else {
+                remaining.push(tab)
+            }
+        })
+        return [exceeds, remaining]
+    }
+
     getTabLastViewed(tabId) {
         return this.tabs[tabId]
     }
@@ -48,14 +82,14 @@ class TabTracker {
         tabs.forEach(tab => this.track(tab))
     }
 
-    filterClosedTabsAndTrackNew(tabs, openTabs) {
+    filterClosedTabsAndTrackNew(tabs, openTabs = []) {
         const openTabSet = new Set()
 
         openTabs.forEach(tab => {
             openTabSet.add(tab.id.toString())
 
             if (!tabs.hasOwnProperty(tab.id)) {
-                this.track(tab.id)
+                this.track(tab)
             }
         })
 
@@ -83,23 +117,14 @@ class TabTracker {
         return
     }
 
-    track(tab) {
+    async track(tab) {
         console.debug('tracking tab', tab.id)
         this.tabs[tab.id] = new Date()
-        console.log(tab)
-
-        if (this.tabLRU) {
-            const evicted = this.tabLRU.add(tab.id)
-            console.log(evicted)
+        try {
+            await this.saveStateAsync(this.tabsStorageKey)            
+        } catch (error) {
+            console.error(error)
         }
-
-        this.saveState(this.tabsStorageKey, () => {
-            var error = chrome.runtime.lastError
-
-            if (error) {  
-               return console.error(error)
-            }
-        })
     }
 
     serializeTabs(tabs) {
@@ -123,9 +148,26 @@ class TabTracker {
         return deserialized
     }
 
+    async saveStateAsync(key) {
+        const serialized = this.serializeTabs(this.tabs)
+        await localStorageSetAsync({[key]: serialized})
+    }
+
     saveState(key, callback) {
         const serialized = this.serializeTabs(this.tabs)
         chrome.storage.local.set({[key]: serialized}, callback)
+    }
+
+    async loadStateAsync(key) {
+        console.debug('await local storage get')
+        const data = await localStorageGetAsync(key)
+        let tabs
+
+        console.debug('raw data', data)
+        if ('tabs' in data) {
+            tabs = data['tabs']
+        }
+        return this.deserializeTabs(tabs)
     }
 
     loadState(key, callback) {

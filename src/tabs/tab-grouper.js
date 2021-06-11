@@ -1,70 +1,43 @@
 class TabGrouper {
 
-    constructor(tabTracker) {
-        this.tabTracker = tabTracker
+    constructor() {
         this.groupTabs = this.groupTabs.bind(this)
     }
 
-    groupTabs(tabs, groupProperties, threshold, callback = () => {}) {
-
-        var tabIds = []
-
-        tabs.forEach(tab => {
-            const lastViewed = this.tabTracker.getTabLastViewed(tab.id)
-            const now = Date.now()
-
-            if (!lastViewed) {
-                this.tabTracker.track(tab.id)
-                lastViewed = now
+    async groupTabs(tabs, groupProperties) {
+        let tabIds = tabs.reduce((acc, tab) => {
+            console.debug('acc', acc, tab)
+            if (tab.groupId == -1) {
+                acc.push(tab.id)
             }
-            const shouldBeGrouped = (now - lastViewed >= threshold) && tab.groupId == -1
+            return acc
+        }, [])
 
-            if (shouldBeGrouped) {
-                tabIds.push(tab.id)
-            }
-        })
+        console.debug('found tabids to group after reduce: ', tabIds)
 
         if (tabIds.length == 0) return
 
-        console.debug('grouping tabs', tabIds)
+        console.debug('grouping tabs async', tabIds)
 
-        chrome.tabGroups.query({title: groupProperties["title"]}, (groups) => {
+        const groups = await chrome.tabGroups.query({title: groupProperties["title"]})
 
-            const index = groups.findIndex((e) => e.title == groupProperties["title"])
+        console.debug('groups found async: ', groups)
 
-            // If the group already exists, just use that
+        const index = groups.findIndex((e) => e.title == groupProperties["title"])
 
-            if (index > -1) {
-                chrome.tabs.group({
-                    tabIds: tabIds,
-                    groupId: groups[index].id
-                }, () => {
-                    const error = chrome.runtime.lastError
-
-                    if (error) {
-                        console.error(error)
-                    }
-                    return callback(error)
-                })
-            }
-            // Otherwise, create a new one
-            else {
-                chrome.tabs.group({
-                    tabIds: tabIds
-                }, (groupId) => {
-                    const error = chrome.runtime.lastError
-
-                    if (error) {
-                        console.error(error)
-                    }
-                    else {
-                        chrome.tabGroups.update(groupId, groupProperties)
-                        chrome.tabGroups.move(groupId, {index: 0})
-                        return callback(null)
-                    }
-                })
-            }
-        })
+        // If the group already exists, just use that
+        if (index > -1) {
+            await chrome.tabs.group({
+                tabIds: tabIds,
+                groupId: groups[index].id
+            })
+        }
+        // Otherwise, create a new one
+        else {
+            const groupId = await chrome.tabs.group({tabIds})
+            chrome.tabGroups.update(groupId, groupProperties)
+            chrome.tabGroups.move(groupId, {index: 0})
+        }
     }
 }
 

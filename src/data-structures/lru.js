@@ -10,7 +10,7 @@ class LRU {
     }
 
     add(value) {
-        const evicted = []
+        let evicted = []
 
         if (this.cache.has(value)) this.cache.delete(value);
         // evict oldest
