@@ -12,11 +12,7 @@ const defaults = {
     'tab-lru-destination': 'group'
 }
 
-const getOptions = (callback) => {
-    chrome.storage.sync.get(defaults, callback)
-}
-
-const getOptionsAsync = async() => {
+const getOptionsAsync = async () => {
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(defaults, (items) => {
             if (chrome.runtime.lastError) {
@@ -27,10 +23,6 @@ const getOptionsAsync = async() => {
             }
         })
     })
-}
-
-const setOption = (key, value, callback) => {
-    chrome.storage.sync.set({[key]: value}, callback)
 }
 
 const setOptionAsync = async (key, value) => {
@@ -47,8 +39,7 @@ const setOptionAsync = async (key, value) => {
 }
 
 export {
-    getOptions,
-    setOption,
+    defaults,
     getOptionsAsync,
     setOptionAsync
 }

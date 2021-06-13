@@ -6,18 +6,15 @@ class TabGrouper {
 
     async groupTabs(tabs, groupProperties) {
         let tabIds = tabs.reduce((acc, tab) => {
-            console.debug('acc', acc, tab)
             if (tab.groupId == -1) {
                 acc.push(tab.id)
             }
             return acc
         }, [])
 
-        console.debug('found tabids to group after reduce: ', tabIds)
-
         if (tabIds.length == 0) return
 
-        console.debug('grouping tabs async', tabIds)
+        console.debug('grouping tabs', tabIds)
 
         const groups = await chrome.tabGroups.query({title: groupProperties["title"]})
 

@@ -3,7 +3,7 @@ import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('tab-deduplicator', () => {
+describe('tab-bookmarker', () => {
 
     let tabBookmarker
 

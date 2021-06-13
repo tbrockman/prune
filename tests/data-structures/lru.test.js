@@ -29,15 +29,17 @@ describe('lru', () => {
         assert.isTrue(same.has('c'))
     })
 
-    it('should be serializable', () => {
+    it('should be able to change capacity and return evicted items', () => {
         const lru = new LRU(new Set(), 3)
         lru.add('a')
         lru.add('b')
         lru.add('c')
-        const string = lru.serialize()
-        const same = LRU.deserialize(string)
-        assert.isTrue(lru.has('a'))
-        assert.isTrue(same.has('b'))
-        assert.isTrue(same.has('c'))
+        lru.capacity = 1
+        const evicted = lru.add('d')
+        assert.isTrue(lru.cache.size == 1)
+        assert(lru.has('d'))
+        assert(evicted.includes('a'))
+        assert(evicted.includes('b'))
+        assert(evicted.includes('c'))
     })
 })

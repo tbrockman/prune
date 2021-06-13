@@ -11,7 +11,7 @@ class State {
     get(key) {
         return this.state[key]
     }
-
+    
     async init(defaults) {
         const options = await getOptionsAsync(defaults)
 

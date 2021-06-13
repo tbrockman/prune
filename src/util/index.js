@@ -1,4 +1,4 @@
-const getAsync = async(key) => {
+const localStorageGetAsync = async(key) => {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(key, (items) => {
             if (chrome.runtime.lastError) {
@@ -11,7 +11,7 @@ const getAsync = async(key) => {
     })
 }
 
-const setAsync = async(items) => {
+const localStorageSetAsync = async(items) => {
     return new Promise((resolve, reject) => {
         chrome.storage.local.set(items, () => {
             if (chrome.runtime.lastError) {
@@ -25,6 +25,6 @@ const setAsync = async(items) => {
 }
 
 export {
-    getAsync as localStorageGetAsync,
-    setAsync as localStorageSetAsync
+    localStorageGetAsync,
+    localStorageSetAsync
 }

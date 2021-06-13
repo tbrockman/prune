@@ -1,19 +1,6 @@
 import { TipClient } from '../clients/tip.js'
 import State from '../data-structures/state.js'
-
-const defaults = {
-    'auto-deduplicate': true,
-    'auto-prune': true,
-    'prune-threshold': 7,
-    'auto-group': true,
-    'auto-group-threshold': 3,
-    'auto-group-name': '🕒 old tabs',
-    'auto-prune-bookmark': false,
-    'auto-prune-bookmark-name': '🌱 pruned',
-    'tab-lru-enabled': true,
-    'tab-lru-size': 10,
-    'tab-lru-destination': 'group'
-}
+import { defaults } from './index.js'
 
 class OptionsPage {
 
@@ -123,7 +110,8 @@ class OptionsPage {
             await this.state.upsert('tab-lru-destination', e.target.value)
         })
         this.tabLRUSizeInput.addEventListener('change', async e => {
-            await this.state.upsert('tab-lru-size', e.target.value)
+            console.log('here', e.target.value)
+            await this.state.upsert('tab-lru-size', parseInt(e.target.value))
         })
     }
 

@@ -88,4 +88,19 @@ describe('tab-tracker', () => {
         assert.equal(exceeds[0].id, 3)
         assert.isTrue(remaining.length == 2)
     })
+
+    // TODO
+    it('should be able to track state across sessions', async () => {
+        const openTabs = [
+            { id: 1, url: 'a' },
+            { id: 2, url: 'b' },
+            { id: 3, url: 'c' }
+        ]
+
+        const stored = {
+            'a': [4],
+            'b': [5],
+            'c': [6]
+        }
+    })
 })
