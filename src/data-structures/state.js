@@ -1,19 +1,23 @@
-import { getOptionsAsync, setOptionAsync } from '../options/index.js'
+import { syncStorageGetAsync, syncStorageSetAsync } from '../util'
 
 class State {
 
-    constructor(state = {}, persist = false) {
+    constructor(state = {}, sync) {
         this.listeners = {}
         this.state = state
-        this.persist = persist
+        this.sync = sync
     }
 
     get(key) {
         return this.state[key]
     }
-    
+
     async init(defaults) {
-        const options = await getOptionsAsync(defaults)
+        let options = defaults
+
+        if (this.sync) {
+            options = await syncStorageGetAsync(defaults)
+        }
 
         for (const [key, value] of Object.entries(options)) {
             this.upsert(key, value)
@@ -23,8 +27,8 @@ class State {
     async upsert(key, value) {
         this.state[key] = value
 
-        if (this.persist) {
-            await setOptionAsync(key, value)
+        if (this.sync) {
+            await syncStorageSetAsync(key, value)
         }
 
         if (key in this.listeners) {

@@ -24,7 +24,35 @@ const localStorageSetAsync = async(items) => {
     })
 }
 
+const syncStorageGetAsync = async (defaults) => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(defaults, (items) => {
+            if (chrome.runtime.lastError) {
+                reject(chrome.runtime.lastError)
+            }
+            else {
+                resolve(items)
+            }
+        })
+    })
+}
+
+const syncStorageSetAsync = async (key, value) => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.set({[key]: value}, () => {
+            if (chrome.runtime.lastError) {
+                reject(chrome.runtime.lastError)
+            }
+            else {
+                resolve(value)
+            }
+        })
+    })
+}
+
 export {
     localStorageGetAsync,
-    localStorageSetAsync
+    localStorageSetAsync,
+    syncStorageGetAsync,
+    syncStorageSetAsync
 }

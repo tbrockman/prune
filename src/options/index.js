@@ -1,3 +1,5 @@
+import { syncStorageGetAsync, syncStorageSetAsync } from '../util'
+
 const defaults = {
     'auto-deduplicate': true,
     'auto-prune': true,
@@ -13,29 +15,11 @@ const defaults = {
 }
 
 const getOptionsAsync = async () => {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.get(defaults, (items) => {
-            if (chrome.runtime.lastError) {
-                reject(chrome.runtime.lastError)
-            }
-            else {
-                resolve(items)
-            }
-        })
-    })
+    return await syncStorageGetAsync(defaults)
 }
 
 const setOptionAsync = async (key, value) => {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.set({[key]: value}, () => {
-            if (chrome.runtime.lastError) {
-                reject(chrome.runtime.lastError)
-            }
-            else {
-                resolve(value)
-            }
-        })
-    })
+    return await syncStorageSetAsync(key, value)
 }
 
 export {

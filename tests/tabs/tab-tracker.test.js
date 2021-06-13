@@ -44,6 +44,7 @@ describe('tab-tracker', () => {
             3: new Date().toString()
         }
         chrome.storage.local.get.callsArgWith(1, { tabs: tabs})
+        chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init([])
         assert.equal(Object.keys(tabTracker.tabs).length, 0)
     })
@@ -82,6 +83,7 @@ describe('tab-tracker', () => {
             3: lastWeek.toString()
         }
         chrome.storage.local.get.callsArgWith(1, {tabs: storedTabs})
+        chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
         const [exceeds, remaining] = tabTracker.findTabsExceedingThreshold(openTabs, 42*60*60*1000)
         assert.isTrue(exceeds.length == 1)
