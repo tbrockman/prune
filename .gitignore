@@ -97,3 +97,4 @@ lerna-debug.log
 Thumbs.db
 
 /release
+/lib

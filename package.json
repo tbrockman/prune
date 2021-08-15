@@ -7,8 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "test": "mocha --require esm tests/**/*"
+    "build": "tsc && webpack",
+    "test": "mocha --require esm tests/**/*",
+    "release": "make release"
   },
   "repository": {
     "type": "git",
@@ -27,12 +28,13 @@
   },
   "homepage": "https://github.com/tbrockman/prune#readme",
   "devDependencies": {
-    "@webpack-cli/init": "^1.0.3",
+    "@tsconfig/recommended": "^1.0.1",
     "chai": "^4.3.4",
     "esm": "^3.2.25",
     "mocha": "^8.3.0",
     "sinon": "^9.2.4",
     "sinon-chrome": "^3.0.1",
+    "typescript": "^4.3.5",
     "webpack": "^5.27.1",
     "webpack-cli": "^4.5.0"
   }

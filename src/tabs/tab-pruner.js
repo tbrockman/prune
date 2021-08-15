@@ -7,6 +7,8 @@ class TabPruner {
 
     async pruneTabs(tabs) {
 
+        if (tabs.length == 0) return
+
         if (this.tabBookmarker) {
             this.tabBookmarker.bookmarkTabs(tabs)
         }

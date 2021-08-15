@@ -1,4 +1,4 @@
-import { syncStorageGetAsync, syncStorageSetAsync } from '../util'
+import { syncStorageGetAsync, syncStorageSetAsync } from '../util/index.js'
 
 const defaults = {
     'auto-deduplicate': true,
@@ -11,7 +11,8 @@ const defaults = {
     'auto-prune-bookmark-name': '🌱 pruned',
     'tab-lru-enabled': true,
     'tab-lru-size': 10,
-    'tab-lru-destination': 'group'
+    'tab-lru-destination': 'group',
+    'tab-lru-viewed': false
 }
 
 const getOptionsAsync = async () => {

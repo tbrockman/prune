@@ -1,4 +1,4 @@
-import { syncStorageGetAsync, syncStorageSetAsync } from '../util'
+import { syncStorageGetAsync, syncStorageSetAsync } from '../util/index.js'
 
 class State {
 

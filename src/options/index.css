@@ -7,12 +7,37 @@ body {
     margin: 0;
     display: flex;
     justify-content: center;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.75px;
 }
 
-input {
+input, select {
     margin: 0.25rem;
+    padding: 0.25rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.75px;
+}
+
+input:focus, select:focus {
+    margin-bottom: calc(0.25rem - 1px);
+    border-bottom: 2px solid #0175ff;
+    background-color: #ddecff;
+}
+
+input[type=text] {
+    padding-bottom: 0.5rem;
+}
+
+input[type=checkbox] {
     zoom: 1.25;
+}
+
+input:disabled {
+    background-color: #eee;
 }
 
 .options-container {
@@ -20,10 +45,9 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     font-size: 18px;
     align-self: center;
-    min-width: 60ch;
+    min-width: 64ch;
 }
 
 .auto-deduplicate-block {
@@ -71,26 +95,28 @@ input {
     padding-left: 2ch;
 }
 
+.tip-input:focus {
+    background-color: hsl(213deg 100% 89%);
+}
+
 .tip-currency {
-    width: fit-content;
     position: absolute;
+    width: 0;
     top: 0;
     bottom: 0;
     right: 0;
-    left: 1ch;
+    left: 0.5ch;
 }
 
 #tip-button {
-    zoom: 1.25;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.125rem;
-    padding-bottom: 0.125rem;
+    padding: 0.25rem 1.5rem;
     background: #0175ff;
     color: #fff;
-    border-radius: 2px;
-    border-color: #000;
+    border: none;
+    border-bottom: 1px solid black;
     border-width: 1px;
+    margin-left: 0.5rem;
+    font-size: 1rem;
 }
 
 #tip-button:hover {
@@ -130,10 +156,21 @@ input {
     padding: 1rem;
 }
 
-select {
-    font-family: 'Ubuntu';
-    margin: 0.25rem;
-    zoom: 1.25;
+.new-icon {
+    border: 1px solid #767676;
+    padding: 0 4px;
+    background-color: #ffeb3b;
+    border-radius: 2px;
+    width: fit-content;
+    margin-right: 0.25rem;
+    display: inline-block;
+}
+
+.support-the-dev-container {
+    margin-bottom: 0;
+    padding: 1rem;
+    background-color: #eee;
+    margin-top: 1rem;
 }
 
 @media(max-height: 600px) {
@@ -147,6 +184,6 @@ select {
     }
 
     .prune-options-logo {
-        display: none;
+        padding-bottom: 0;
     }
 }

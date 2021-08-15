@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>prune options</title>
+        <title>prune</title>
         <meta charset='utf-8'>
         <script src='./page.js' type='module'></script>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='preconnect' href='https://fonts.gstatic.com'>
-        <link href='https://fonts.googleapis.com/css2?family=Ubuntu&display=swap' rel='stylesheet'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
         <link rel='stylesheet' href='./index.css'>
         <link rel='stylesheet' href='./spinner.css'>
         <link rel='icon' href='../../favicon.ico'>
@@ -15,13 +17,13 @@
         <div class='options-container'>
             <img class='prune-options-logo' src='../../assets/svg/prune-full.svg'></img>
             <form class='prune-form' name='prune-options'>
-                <div class='auto-deduplicate-block'>
+                <div class='auto-deduplicate-block options-box'>
                     <div>
                         <input id='auto-deduplicate-checkbox' type='checkbox' name='auto-deduplicate-checkbox' form='prune-options'>
                         <label for='auto-deduplicate-checkbox'>show existing tabs instead of opening duplicates</label>
                     </div>
                 </div>
-                <div class='auto-group-block'>
+                <div class='auto-group-block options-box'>
                     <div>
                         <input id='auto-group-checkbox' type='checkbox' name='auto-group-checkbox' form='prune-options'>
                         <label for='auto-group-checkbox'>move tabs after</label>
@@ -32,13 +34,13 @@
                     </div>
                 </div>
                 <div class='auto-prune-block'>
-                    <div>
+                    <div class='options-box'>
                         <input id='auto-prune-checkbox' type='checkbox' name='auto-prune-checkbox' form='prune-options'>
                         <label for='auto-prune-checkbox'>remove old tabs after</label>
                         <input id='auto-prune-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
                         <label for='auto-prune-threshold'>days</label>
                     </div>
-                    <div class='tab-lru-block'>
+                    <div class='tab-lru-block options-box'>
                         <input id='tab-lru-checkbox' type='checkbox' name='tab-lru-checkbox' form='prune-options'>
                         <select style="margin-left:0;" id='tab-lru-destination' name='tab-lru-destination'>
                             <option>remove</option>
@@ -48,7 +50,7 @@
                         <input id='tab-lru-size-input' type='number' min='1' max='4096' step='1' name='tab-lru-size' form='prune-options' value='15'></input>
                         <label for='tab-lru-size-input'>tabs are open</label>
                     </div>
-                    <div class='auto-prune-bookmark'>
+                    <div class='auto-prune-bookmark options-box'>
                         <input id='auto-prune-bookmark-checkbox' type='checkbox' name='auto-prune-bookmark-checkbox' form='prune-options' disabled='true'>
                         <label for='auto-prune-bookmark-checkbox'>bookmark removed tabs under</label>
                         <input id='auto-prune-bookmark-name' type='text' name='auto-prune-bookmark-name' form='prune-options' disabled='true'>
@@ -58,7 +60,7 @@
                     <input id='auto-prune-prompt' type='checkbox' name='auto-prune-prompt' form='prune-options'>
                     <label for='auto-prune-prompt'>prompt before removing old tabs</label>
                 </div> -->
-                <div>
+                <div class='support-the-dev-container' style='margin-bottom: 0;'> 
                     <label for='support-the-dev-tip'>support the developer: </label>
                     <span class='tip-holder'>
                         <span class='tip-currency'>$</span>

@@ -2,7 +2,7 @@ import { localStorageGetAsync, localStorageSetAsync } from '../util/index.js'
 
 class TabTracker {
 
-    constructor(tabsStorageKey="tabs") {
+    constructor(tabsStorageKey='tabs')  {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = {}
         this.init = this.init.bind(this)
@@ -18,7 +18,7 @@ class TabTracker {
     async init(openTabs) {
         console.debug('initializing tracker')
         const tabs = await this.loadStateAsync(this.tabsStorageKey)
-                        
+                     
         if (Object.keys(tabs).length === 0) {
             console.debug('no loaded tabs found in storage')
             await this.trackTabs(openTabs)

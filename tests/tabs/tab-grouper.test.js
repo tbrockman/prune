@@ -8,8 +8,12 @@ describe('tab-grouper', () => {
 
     let tabGrouper
 
-    beforeEach(() => {
+    before(() => {
         global.chrome = chrome
+        global.chrome.flush()
+    })
+
+    beforeEach(() => {
         chrome.tabs.group = sinon.stub()
         chrome.tabGroups = {
             query: sinon.stub(),

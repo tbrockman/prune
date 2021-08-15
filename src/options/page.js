@@ -62,9 +62,11 @@ class OptionsPage {
         const tabLRUEnabled = this.state.get('tab-lru-enabled')
         const tabLRUDestination = this.state.get('tab-lru-destination')
         const autoPruneEnabled = this.state.get('auto-prune')
+        const autoPruneBookmark = this.state.get('auto-prune-bookmark')
 
         this.autoPruneBookmarkCheckbox.disabled = 
             !autoPruneEnabled && !(tabLRUEnabled && tabLRUDestination == 'remove')
+        this.autoPruneBookmarkName.disabled = this.autoPruneBookmarkCheckbox.disabled || !autoPruneBookmark
     }
 
     initializeAutoPruneInputs() {

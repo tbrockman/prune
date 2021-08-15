@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: './lib/index.js',
   plugins: [new webpack.ProgressPlugin()],
   output: {
     filename: 'bundle.js',
