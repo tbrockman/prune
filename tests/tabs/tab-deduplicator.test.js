@@ -16,23 +16,22 @@ describe('tab-deduplicator', () => {
 
     it('shouldnt do anything if lock cannot be acquired', async () => {
         tabLock.add(1)
-        await tabDeduplicator.deduplicateTab({ id: 1 })
-        assert(chrome.tabs.query.notCalled)
+        await tabDeduplicator.deduplicateTab({ id: 1 }, [])
+        assert(chrome.tabs.remove.notCalled)
     })
 
     it('shouldnt do anything if opening blank new tab', async () => {
-        await tabDeduplicator.deduplicateTab({ id: 1, 'url':'chrome://newtab/'})
-        assert(chrome.tabs.query.notCalled)
+        await tabDeduplicator.deduplicateTab({ id: 1, 'url':'chrome://newtab/'}, [])
+        assert(chrome.tabs.remove.notCalled)
     })
 
     it('shouldnt do anything if not opening new tab', async () => {
-        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol'})
-        assert(chrome.tabs.query.notCalled)
+        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol'}, [])
+        assert(chrome.tabs.remove.notCalled)
     })
 
     it('should deduplicate tab', async () => {
-        chrome.tabs.query.resolves([{ id: 2, url:'theo.lol'}])
-        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol', status: 'loading'})
+        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol', status: 'loading'}, [{ id: 2, url:'theo.lol'}])
         assert(chrome.tabs.highlight.calledOnceWith)
         assert(chrome.windows.update.calledOnce)
         assert(chrome.tabs.remove.calledOnce)
