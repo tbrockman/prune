@@ -91,7 +91,7 @@ describe('tab-tracker', () => {
         assert.isTrue(remaining.length == 2)
     })
 
-    it.only('should reorder internal map on tab track', async() => {
+    it('should reorder internal map on tab track', async() => {
         chrome.storage.local.get.callsArgWith(1, {tabs: []})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init([])
