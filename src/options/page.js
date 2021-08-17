@@ -17,7 +17,7 @@ class OptionsPage {
         this.initializeTabLRUInputs()
         this.initializeAutoPruneBookmarkInputs()
         this.initializeTipButton()
-        this.state.init()
+        await this.state.init(defaults)
     }
 
     initializeAutoDeduplicateInput() {
@@ -112,7 +112,6 @@ class OptionsPage {
             await this.state.upsert('tab-lru-destination', e.target.value)
         })
         this.tabLRUSizeInput.addEventListener('change', async e => {
-            console.log('here', e.target.value)
             await this.state.upsert('tab-lru-size', parseInt(e.target.value))
         })
     }

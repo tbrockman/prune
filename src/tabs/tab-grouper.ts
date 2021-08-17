@@ -1,16 +1,18 @@
+import { Tab } from "../types"
+
 class TabGrouper {
 
     constructor() {
         this.groupTabs = this.groupTabs.bind(this)
     }
 
-    async groupTabs(tabs, groupProperties) {
+    async groupTabs(tabs: Tab[], groupProperties: any) {
         let tabIds = tabs.reduce((acc, tab) => {
-            if (tab.groupId == -1) {
+            if (tab.groupId == -1 && tab.id) {
                 acc.push(tab.id)
             }
             return acc
-        }, [])
+        }, [] as number[])
 
         if (tabIds.length == 0) return
 

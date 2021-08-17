@@ -1,13 +1,17 @@
+import { Tab } from "../types"
+
 class TabBookmarker {
 
-    constructor(bookmarkFolderName) {
+    bookmarkFolderName: string
+
+    constructor(bookmarkFolderName: string) {
         this.bookmarkFolderName = bookmarkFolderName
         this.bookmarkTabs = this.bookmarkTabs.bind(this)
     }
 
-    async bookmarkTabs(tabs) {
+    async bookmarkTabs(tabs: Tab[]) {
         const bookmarks = await chrome.bookmarks.search({title: this.bookmarkFolderName})
-        let folder
+        let folder: chrome.bookmarks.BookmarkTreeNode
 
         if (bookmarks.length == 0) {
             folder = await chrome.bookmarks.create({title: this.bookmarkFolderName})
@@ -16,7 +20,7 @@ class TabBookmarker {
             folder = bookmarks[0]
         }
 
-        await tabs.forEach(async tab => {
+        tabs.forEach(async tab => {
             await chrome.bookmarks.create({title: tab.title, url: tab.url, parentId: folder.id})
         })
     }

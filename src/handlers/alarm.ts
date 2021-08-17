@@ -1,7 +1,27 @@
+import { TabGrouper, TabPruner, TabTracker } from "../tabs"
+import { Tab } from "../types"
+
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000
 
+type AlarmHandlerArgs = {
+    tracker: TabTracker
+    grouper: TabGrouper
+    pruner: TabPruner
+    options: any
+}
+
 class AlarmHandler {
-    constructor(tracker, grouper, pruner, options) {
+    tracker: TabTracker
+    grouper: TabGrouper
+    pruner: TabPruner
+    autoPrune: boolean
+    pruneThreshold: number
+    autoGroup: boolean
+    autoGroupThreshold: number
+    autoGroupName: string
+    autoBookmark: boolean
+
+    constructor({tracker, grouper, pruner, options}: AlarmHandlerArgs) {
         this.tracker = tracker
         this.grouper = grouper
         this.pruner = pruner
@@ -15,13 +35,13 @@ class AlarmHandler {
 
     async execute() {
         let openTabs = await chrome.tabs.query({})
+        let candidates: Tab[] = []
         await this.tracker.init(openTabs)
-        let candidates
         console.debug('open tabs', openTabs)
     
         if (this.autoPrune) {
             [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(openTabs, this.pruneThreshold)
-            await this.pruner.pruneTabs(candidates, this.pruneThreshold)
+            await this.pruner.pruneTabs(candidates)
         }
         console.debug('remaining tabs', openTabs)
     
@@ -31,7 +51,8 @@ class AlarmHandler {
                 color: "yellow",
                 collapsed: true
             }
-            [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(openTabs, this.autoGroupThreshold)
+            // @ts-ignore
+            [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(openTabs, this.autoGroupThreshold) 
             await this.grouper.groupTabs(candidates, group)
         }
     }

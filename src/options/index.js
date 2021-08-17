@@ -10,7 +10,7 @@ const defaults = {
     'auto-prune-bookmark': false,
     'auto-prune-bookmark-name': '🌱 pruned',
     'tab-lru-enabled': true,
-    'tab-lru-size': 10,
+    'tab-lru-size': 20,
     'tab-lru-destination': 'group',
     'tab-lru-viewed': false
 }

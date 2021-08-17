@@ -36,8 +36,10 @@ input[type=checkbox] {
     zoom: 1.25;
 }
 
-input:disabled {
+select:disabled, input:disabled {
+    color: #a6a6a6;
     background-color: #eee;
+    border-bottom: 1px solid #a6a6a6;
 }
 
 .options-container {
@@ -168,9 +170,8 @@ input:disabled {
 
 .support-the-dev-container {
     margin-bottom: 0;
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     background-color: #eee;
-    margin-top: 1rem;
 }
 
 @media(max-height: 600px) {
