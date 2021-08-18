@@ -1,0 +1,21 @@
+{
+    "name": "prune",
+    "author": "Theodore Brockman",
+    "version": "2.0.3",
+    "description": "An extension to help you trim your garden of tabs.",
+    "permissions": ["alarms", "tabs", "storage", "tabGroups", "bookmarks"],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "/src/options/index.html",
+        "default_title": "options",
+        "default_icon": "/assets/png/prune-icon128.png"
+    },
+    "icons": {
+        "16": "/assets/png/prune-icon16.png",
+        "48": "/assets/png/prune-icon48.png",
+        "128": "/assets/png/prune-icon128.png"
+    }
+}

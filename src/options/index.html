@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>prune</title>
+        <meta charset='utf-8'>
+        <script src='./page.js' type='module'></script>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='preconnect' href='https://fonts.gstatic.com'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+        <link rel='stylesheet' href='./index.css'>
+        <link rel='stylesheet' href='./spinner.css'>
+        <link rel='icon' href='../../favicon.ico'>
+    </head>
+    <body>
+        <div class='options-container'>
+            <img class='prune-options-logo' src='../../assets/svg/prune-full.svg'></img>
+            <form class='prune-form' name='prune-options'>
+                <div class='auto-deduplicate-block options-box'>
+                    <div>
+                        <input id='auto-deduplicate-checkbox' type='checkbox' name='auto-deduplicate-checkbox' form='prune-options'>
+                        <label for='auto-deduplicate-checkbox'>show existing tabs instead of opening duplicates</label>
+                    </div>
+                </div>
+                <div class='auto-group-block options-box'>
+                    <div>
+                        <input id='auto-group-checkbox' type='checkbox' name='auto-group-checkbox' form='prune-options'>
+                        <label for='auto-group-checkbox'>move tabs after</label>
+                        <input id='auto-group-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
+                        <label for='auto-group-threshold'>days</label>
+                        <label class='auto-group-name-label' for='auto-group-name'>to a group named</label>
+                        <input id='auto-group-name' placeholder='old tabs' type='text' name='auto-group-name' form='prune-options'>
+                    </div>
+                </div>
+                <div class='auto-prune-block'>
+                    <div class='options-box'>
+                        <input id='auto-prune-checkbox' type='checkbox' name='auto-prune-checkbox' form='prune-options'>
+                        <label for='auto-prune-checkbox'>remove old tabs after</label>
+                        <input id='auto-prune-threshold' type='number' min='1' max='3650' step='1' name='prune-threshold' form='prune-options' disabled='true' placeholder='5'>
+                        <label for='auto-prune-threshold'>days</label>
+                    </div>
+                    <div class='tab-lru-block options-box'>
+                        <input id='tab-lru-checkbox' type='checkbox' name='tab-lru-checkbox' form='prune-options'>
+                        <select style="margin-left:0;" id='tab-lru-destination' name='tab-lru-destination'>
+                            <option>remove</option>
+                            <option>group</option>
+                        </select>
+                        <label for='tab-lru-destination'>least recently used tabs after</label>
+                        <input id='tab-lru-size-input' type='number' min='1' max='4096' step='1' name='tab-lru-size' form='prune-options' value='15'></input>
+                        <label for='tab-lru-size-input'>tabs are open</label>
+                    </div>
+                    <div class='auto-prune-bookmark options-box'>
+                        <input id='auto-prune-bookmark-checkbox' type='checkbox' name='auto-prune-bookmark-checkbox' form='prune-options' disabled='true'>
+                        <label for='auto-prune-bookmark-checkbox'>bookmark removed tabs under</label>
+                        <input id='auto-prune-bookmark-name' type='text' name='auto-prune-bookmark-name' form='prune-options' disabled='true'>
+                    </div>
+                </div>
+                <!-- <div>
+                    <input id='auto-prune-prompt' type='checkbox' name='auto-prune-prompt' form='prune-options'>
+                    <label for='auto-prune-prompt'>prompt before removing old tabs</label>
+                </div> -->
+            </form>
+            <div class='support-the-dev-container' style='margin-bottom: 0;'> 
+                <label for='support-the-dev-tip'>support the developer: </label>
+                <span class='tip-holder'>
+                    <span class='tip-currency'>$</span>
+                    <input id='tip-input' class='tip-input' type='number' min='1' step='1' value='2'></input>
+                </span>
+                <button id='tip-button' type='button'>
+                    <div class='tip-button-container'>
+                        tip
+                        <div id='tip-button-spinner' class="contained-spinner MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate" role="progressbar"><svg class="MuiCircularProgress-svg" viewBox="22 22 44 44"><circle class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle></svg></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </body>
+</html>
