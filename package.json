@@ -24,7 +24,7 @@
     "extension"
   ],
   "author": "Theodore Brockman",
-  "license": "MIT",
+  "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/tbrockman/prune/issues"
   },
