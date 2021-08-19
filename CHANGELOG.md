@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.4] - 2021-08-19
+
+### Changed
+- Changed visible tab limiting feature to disabled by default
+
 ## [2.0.3] - 2021-08-17
 
 ### Added

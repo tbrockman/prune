@@ -9,10 +9,9 @@ const defaults = {
     'auto-group-name': '🕒 old tabs',
     'auto-prune-bookmark': false,
     'auto-prune-bookmark-name': '🌱 pruned',
-    'tab-lru-enabled': true,
-    'tab-lru-size': 20,
-    'tab-lru-destination': 'group',
-    'tab-lru-viewed': false
+    'tab-lru-enabled': false,
+    'tab-lru-size': 30,
+    'tab-lru-destination': 'group'
 }
 
 const getOptionsAsync = async () => {
