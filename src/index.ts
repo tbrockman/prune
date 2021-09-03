@@ -12,7 +12,6 @@ chrome.alarms.create({ periodInMinutes: 1})
 chrome.alarms.onAlarm.addListener(async (alarm) => {
     let bookmarker
     const options = await getOptionsAsync()
-
     const tracker = new TabTracker()
     const grouper = new TabGrouper()
 

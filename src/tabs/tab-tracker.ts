@@ -58,7 +58,7 @@ class TabTracker {
 
         tabs.forEach(tab => {
             const now = Date.now()
-            const lastViewed = this.getTabLastViewed(tab.id ?? -1) || now
+            const lastViewed = this.getTabLastViewed(tab.id ?? -1) ?? now
             const passesThreshold = (now - lastViewed >= threshold)
 
             if (passesThreshold) {

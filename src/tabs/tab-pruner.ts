@@ -18,16 +18,14 @@ class TabPruner {
             this.bookmarker.bookmarkTabs(tabs)
         }
 
-        tabs.forEach(async tab => {
+        const tabIds: number[] = []
+        tabs.forEach(tab => tab.id && tabIds.push(tab.id))
 
-            if (tab.id) {
-                try {
-                    await chrome.tabs.remove(tab.id)
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-        })
+        try {
+            await chrome.tabs.remove(tabIds)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 

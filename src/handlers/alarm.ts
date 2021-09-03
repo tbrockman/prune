@@ -52,8 +52,8 @@ class AlarmHandler {
                 collapsed: true
             }
             // @ts-ignore
-            [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(openTabs, this.autoGroupThreshold) 
-            await this.grouper.groupTabs(candidates, group)
+            const [toGroup, ] = this.tracker.findTabsExceedingThreshold(openTabs, this.autoGroupThreshold)
+            await this.grouper.groupTabs(toGroup, group)
         }
     }
 }

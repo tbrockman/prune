@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.5] - 2021-09-02
+
+### Fixed
+- Fixed regression in auto-grouping functionality
+
 ## [2.0.4] - 2021-08-19
 
 ### Changed

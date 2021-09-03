@@ -1,6 +1,6 @@
 {
   "name": "prune",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A small Chrome extension to help you manage your garden of tabs.",
   "main": "src/index.js",
   "directories": {
