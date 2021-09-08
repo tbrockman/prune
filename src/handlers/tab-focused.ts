@@ -22,16 +22,12 @@ class TabFocusedHandler {
         this.options = options
     }
 
-    async execute(activeInfo: any) {
+    async execute(activeInfo: chrome.tabs.TabActiveInfo) {
         const openTabs = await chrome.tabs.query({})
+        console.debug('tab focused open tabs: ', openTabs)
+
         await this.tracker.init(openTabs)
         await this.tracker.track({ id: activeInfo.tabId } as Tab)
-        
-        const group = {
-            title: this.options['auto-group-name'],
-            color: "yellow",
-            collapsed: true
-        }
     }
 }
 

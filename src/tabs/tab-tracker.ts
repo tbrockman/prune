@@ -19,7 +19,7 @@ class TabTracker {
         this.track = this.track.bind(this)
     }
 
-    async init(openTabs: any) {
+    async init(openTabs: Tab[]) {
         console.debug('initializing tracker')
         const tabs = await this.loadStateAsync(this.tabsStorageKey)
                      
@@ -30,7 +30,7 @@ class TabTracker {
         else {
             this.tabs = tabs
             console.debug('loaded tabs found in storage', tabs)
-            await this.filterClosedTabsAndTrackNew(this.tabs, openTabs)
+            await this.filterClosedTabsAndTrackNew(openTabs)
         }
         console.debug('resolved tab state', this.tabs)
     }
@@ -59,6 +59,7 @@ class TabTracker {
         tabs.forEach(tab => {
             const now = Date.now()
             const lastViewed = this.getTabLastViewed(tab.id ?? -1) ?? now
+            console.debug('threshold', threshold, 'now - lastViewed', now - lastViewed)
             const passesThreshold = (now - lastViewed >= threshold)
 
             if (passesThreshold) {
@@ -79,19 +80,29 @@ class TabTracker {
         tabs.forEach(async tab => await this.track(tab))
     }
 
-    async filterClosedTabsAndTrackNew(tabs: Map<number, number>, openTabs: Tab[] = []) {
-        const openTabSet = new Set()
+    async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
+        const openTabSet: Set<number> = new Set()
+
+        console.debug('currently open tabs when filtering: ', openTabs)
 
         openTabs.forEach(async tab => {
-            openTabSet.add(tab.id)
 
-            if (!tabs.has(tab.id ?? -1)) {
-                await this.track(tab)
+            if (tab.id) {
+                openTabSet.add(tab.id)
+
+                if (!this.tabs.has(tab.id)) {
+                    await this.track(tab)
+                }
             }
         })
 
+        console.debug('open tabs set: ', openTabSet)
+
         this.tabs.forEach((val, key) => {
+
             if (!openTabSet.has(key)) {
+                console.debug('removing non-open tab', key)
+
                 this.remove(key)
             }
         })
@@ -137,12 +148,13 @@ class TabTracker {
         let deserialized = new Map<number, number>()
 
         if (typeof tabs == 'object') {
-
+            console.debug('deserializing tabs from object')
             for (const key in tabs) {
                 deserialized.set(parseInt(key), new Date(tabs[key]).getTime())
             }
         }
         else if (typeof tabs == 'string') {
+            console.debug('deserializing tabs from string')
             deserialized = new Map(JSON.parse(tabs))
         }
         return deserialized

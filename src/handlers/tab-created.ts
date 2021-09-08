@@ -25,12 +25,13 @@ class TabCreatedHandler {
 
     async execute(tab: any) {
     
-        let openTabs = await chrome.tabs.query({})    
+        let openTabs = await chrome.tabs.query({})
         let deduplicated = false
 
         if (this.options['auto-deduplicate']) {
             deduplicated = await this.deduplicator.deduplicateTab(tab, openTabs)
-            openTabs = deduplicated ? openTabs.filter(t => t.id == tab.id) : openTabs
+            // TODO: write test since we regressed here
+            openTabs = deduplicated ? openTabs.filter(t => t.id != tab.id) : openTabs
         }
 
         await this.tracker.init(openTabs)
