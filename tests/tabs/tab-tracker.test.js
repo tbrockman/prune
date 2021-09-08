@@ -142,6 +142,28 @@ describe('tab-tracker', () => {
         }
     })
 
+    it('should retain tracked tab times from storage parsed as string if tabs still open', async() => {
+        const openTabs = [
+            { id: 47 },
+            { id: 48 },
+            { id: 51 },
+            { id: 54 },
+            { id: 58 },
+            { id: 60 },
+            { id: 61 }
+        ]
+        const string = '[[47,1631084725274],[48,1631084725274],[51,1631084725274],[54,1631084725274],[58,1631084725274],[60,1631084725274],[61,1631084725274]]'
+        const expected = new Map(JSON.parse(string))
+        chrome.storage.local.get.callsArgWith(1, {tabs: string})
+        chrome.storage.local.set.callsArgWith(1, {})
+        await tabTracker.init(openTabs)
+        assert.equal(openTabs.length, tabTracker.tabs.size)
+
+        expected.forEach((val, key) => {
+            assert.equal(val, tabTracker.tabs.get(key))
+        })
+    })
+
     it('should return a list of tabs to show and tabs to hide given a visible limit', async() => {
         const openTabs = [
             { id: 1},
@@ -154,9 +176,9 @@ describe('tab-tracker', () => {
         const lastWeek = new Date()
         lastWeek.setDate(today.getDate() - 7)
         const storedTabs = new Map([
-            [3, lastWeek],
-            [2, yesterday],
-            [1, today]
+            [3, lastWeek.getTime()],
+            [2, yesterday.getTime()],
+            [1, today.getTime()]
         ])
         chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(Array.from(storedTabs.entries()))})
         chrome.storage.local.set.callsArgWith(1, {})

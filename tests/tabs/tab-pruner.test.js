@@ -34,7 +34,7 @@ describe('tab-pruner', () => {
         ]
         chrome.tabs.remove.resolves()
         await tabPruner.pruneTabs(tabs)
-        assert.equal(chrome.tabs.remove.callCount, 3)
+        assert.equal(chrome.tabs.remove.callCount, 1)
     })
 
     it('should catch errors', async() => {
@@ -51,6 +51,6 @@ describe('tab-pruner', () => {
         ]
         chrome.tabs.remove.rejects()
         await tabPruner.pruneTabs(tabs)
-        assert.equal(chrome.tabs.remove.callCount, 3)
+        assert.equal(chrome.tabs.remove.callCount, 1)
     })
 })

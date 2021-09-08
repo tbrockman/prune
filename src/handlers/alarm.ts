@@ -41,6 +41,7 @@ class AlarmHandler {
     
         if (this.autoPrune) {
             [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(openTabs, this.pruneThreshold)
+            console.debug('should be pruning', candidates)
             await this.pruner.pruneTabs(candidates)
         }
         console.debug('remaining tabs', openTabs)
@@ -51,8 +52,8 @@ class AlarmHandler {
                 color: "yellow",
                 collapsed: true
             }
-            // @ts-ignore
             const [toGroup, ] = this.tracker.findTabsExceedingThreshold(openTabs, this.autoGroupThreshold)
+            console.debug('should be grouping', toGroup)
             await this.grouper.groupTabs(toGroup, group)
         }
     }
