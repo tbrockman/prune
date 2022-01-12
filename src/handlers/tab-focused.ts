@@ -25,9 +25,10 @@ class TabFocusedHandler {
     async execute(activeInfo: chrome.tabs.TabActiveInfo) {
         const openTabs = await chrome.tabs.query({})
         console.debug('tab focused open tabs: ', openTabs)
+        const tab = await chrome.tabs.get(activeInfo.tabId)
 
         await this.tracker.init(openTabs)
-        await this.tracker.track({ id: activeInfo.tabId } as Tab)
+        await this.tracker.track(tab)
     }
 }
 

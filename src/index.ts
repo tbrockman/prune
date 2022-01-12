@@ -6,6 +6,17 @@ import TabFocusedHandler from './handlers/tab-focused'
 
 const lock = new Set<number>()
 
+chrome.runtime.onInstalled.addListener(async (details: any) => {
+    if (details.reason == "update"){
+
+        const thisVersion = chrome.runtime.getManifest().version;
+        console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+
+        if (thisVersion == '3.0.0') {
+            await chrome.storage.local.clear()
+        }
+    }
+})
 chrome.alarms.create({ periodInMinutes: 1})
 
 // Ran every minute

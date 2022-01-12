@@ -158,8 +158,7 @@ class OptionsPage {
                 const cents = this.convertToCents(tip)
                 try {
                     const session = await this.tipClient.createSession(cents)
-                    chrome.tabs.create({ url: session.url });
-                    //await this.stripeClient.redirectToCheckout({ sessionId: session.id });
+                    chrome.tabs.create({ url: session.url })
                 }
                 finally {
                     this.setTipButtonLoading(false)

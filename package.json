@@ -31,7 +31,10 @@
   "homepage": "https://github.com/tbrockman/prune#readme",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
+    "@types/chai": "^4.2.22",
     "@types/chrome": "^0.0.154",
+    "@types/mocha": "^9.0.0",
+    "@types/sinon-chrome": "^2.2.11",
     "chai": "^4.3.4",
     "esm": "^3.2.25",
     "mocha": "^8.3.0",

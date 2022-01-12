@@ -1,7 +1,7 @@
 import { TabTracker } from '../../src/tabs/tab-tracker'
 import { assert } from 'chai'
 
-const chrome = require('sinon-chrome/extensions');
+import chrome from 'sinon-chrome/extensions'
 
 describe('tab-tracker', () => {
 
@@ -21,29 +21,29 @@ describe('tab-tracker', () => {
     })
 
     it('should initialize empty tab state', async () => {
-        chrome.storage.local.get.callsArgWith(1, { tabs: {}})
+        chrome.storage.local.get.callsArgWith(1, { tabs: '[]'})
         await tabTracker.init([])
         assert.equal(0, Object.keys(tabTracker.tabs).length)
     })
 
     it('should initialize populated tab state with no stored information', async () => {
         const tabs = [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 }
+            { url: 'a' },
+            { url: 'b' },
+            { url: 'c' }
         ]
-        chrome.storage.local.get.callsArgWith(1, { tabs: {}})
+        chrome.storage.local.get.callsArgWith(1, { tabs: '[]'})
         await tabTracker.init(tabs)
-        assert.equal(3, tabTracker.tabs.size)
+        assert.equal(tabTracker.tabs.size, 3)
     })
 
     it('should replace loaded local storage tab state', async () => {
-        const tabs = {
-            1: new Date().toString(),
-            2: new Date().toString(),
-            3: new Date().toString()
-        }
-        chrome.storage.local.get.callsArgWith(1, { tabs: tabs})
+        const tabs = [
+            ['a', new Date().getTime()],
+            ['b', new Date().getTime()],
+            ['c', new Date().getTime()]
+        ]
+        chrome.storage.local.get.callsArgWith(1, { tabs: JSON.stringify(tabs)})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init([])
         assert.equal(0, tabTracker.tabs.size)
@@ -51,80 +51,76 @@ describe('tab-tracker', () => {
 
     it('should consolidate existing tab state with open tabs', async () => {
         const openTabs = [
-            { id: 1 }
+            { url: 'a' }
         ]
-        const storedTabs = {
-            1: new Date().toString(),
-            2: new Date().toString(),
-            3: new Date().toString()
-        }
-        chrome.storage.local.get.callsArgWith(1, {tabs: storedTabs})
+        const storedTabs = [
+            ['a', new Date().getTime()],
+            ['b', new Date().getTime()],
+            ['c', new Date().getTime()]
+        ]
+        chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(storedTabs)})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
         assert.equal(1, tabTracker.tabs.size)
-        assert(tabTracker.tabs.has(1))
-        assert(chrome.storage.local.set.calledOnce)
+        assert(tabTracker.tabs.has('a'))
+        assert(chrome.storage.local.set.called)
     })
 
     it('should retain existing tab state with tabs still open', async () => {
         const openTabs = [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 }
+            { url: 'a' },
+            { url: 'b' },
+            { url: 'c' }
         ]
-        const storedTabs = {
-            1: new Date().toString(),
-            2: new Date().toString(),
-            3: new Date().toString()
-        }
-        chrome.storage.local.get.callsArgWith(1, {tabs: storedTabs})
+        const storedTabs = [
+            ['a', new Date().getTime()],
+            ['b', new Date().getTime()],
+            ['c', new Date().getTime()]
+        ]
+        chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(storedTabs)})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
         assert.equal(3, tabTracker.tabs.size)
-        assert(tabTracker.tabs.has(1))
-        assert(tabTracker.tabs.has(2))
-        assert(tabTracker.tabs.has(3))
-        assert(chrome.storage.local.set.calledOnce)
+        assert(tabTracker.tabs.has('a'))
+        assert(tabTracker.tabs.has('b'))
+        assert(tabTracker.tabs.has('c'))
+        assert(chrome.storage.local.set.called)
     })
 
-    it('should indicate tabs whose last viwed exceeds threshold', async () => {
+    it('should indicate tabs whose last viewed exceeds threshold', async () => {
         const openTabs = [
-            { id: 1},
-            { id: 2},
-            { id: 3}
+            { url: 'a'},
+            { url: 'b'},
+            { url: 'c'}
         ]
         const today = new Date()
-        const yesterday = new Date()
-        yesterday.setDate(today.getDate() - 1)
-        const lastWeek = new Date()
-        lastWeek.setDate(today.getDate() - 7)
-        const storedTabs = {
-            1: today.toString(),
-            2: yesterday.toString(),
-            3: lastWeek.toString()
-        }
-        chrome.storage.local.get.callsArgWith(1, {tabs: storedTabs})
+        const storedTabs = [
+            ['a', today.getTime()],
+            ['b', today.setDate(today.getDate() - 1)],
+            ['c', today.setDate(today.getDate() - 7)]
+        ]
+        chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(storedTabs)})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
         const [exceeds, remaining] = tabTracker.findTabsExceedingThreshold(openTabs, 42*60*60*1000)
-        assert.isTrue(exceeds.length == 1)
-        assert.equal(exceeds[0].id, 3)
-        assert.isTrue(remaining.length == 2)
+        assert.equal(exceeds.length, 1)
+        assert.equal(exceeds[0].url, 'c')
+        assert.equal(remaining.length, 2)
     })
 
     it('should reorder internal map on tab track', async() => {
-        chrome.storage.local.get.callsArgWith(1, {tabs: []})
+        chrome.storage.local.get.callsArgWith(1, {tabs: '[]'})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init([])
-        await tabTracker.track({id: 1})
-        await tabTracker.track({id: 2})
+        await tabTracker.track({url: 'a'})
+        await tabTracker.track({url: 'b'})
         let trackedTabs = Array.from(tabTracker.tabs.entries())
-        assert.equal(1, trackedTabs[0][0])
-        assert.equal(2, trackedTabs[1][0])
-        await tabTracker.track({id: 1})
+        assert.equal('a', trackedTabs[0][0])
+        assert.equal('b', trackedTabs[1][0])
+        await tabTracker.track({url: 'a'})
         trackedTabs = Array.from(tabTracker.tabs.entries())
-        assert.equal(2, trackedTabs[0][0])
-        assert.equal(1, trackedTabs[1][0])
+        assert.equal('b', trackedTabs[0][0])
+        assert.equal('a', trackedTabs[1][0])
     })
 
     // TODO
@@ -144,15 +140,15 @@ describe('tab-tracker', () => {
 
     it('should retain tracked tab times from storage parsed as string if tabs still open', async() => {
         const openTabs = [
-            { id: 47 },
-            { id: 48 },
-            { id: 51 },
-            { id: 54 },
-            { id: 58 },
-            { id: 60 },
-            { id: 61 }
+            { url: '47' },
+            { url: '48' },
+            { url: '51' },
+            { url: '54' },
+            { url: '58' },
+            { url: '60' },
+            { url: '61' }
         ]
-        const string = '[[47,1631084725274],[48,1631084725274],[51,1631084725274],[54,1631084725274],[58,1631084725274],[60,1631084725274],[61,1631084725274]]'
+        const string = '[["47",1631084725274],["48",1631084725274],["51",1631084725274],["54",1631084725274],["58",1631084725274],["60",1631084725274],["61",1631084725274]]'
         const expected = new Map(JSON.parse(string))
         chrome.storage.local.get.callsArgWith(1, {tabs: string})
         chrome.storage.local.set.callsArgWith(1, {})
@@ -166,21 +162,17 @@ describe('tab-tracker', () => {
 
     it('should return a list of tabs to show and tabs to hide given a visible limit', async() => {
         const openTabs = [
-            { id: 1},
-            { id: 2},
-            { id: 3}
+            { id: 1, url: 'a'},
+            { id: 2, url: 'b'},
+            { id: 3, url: 'c'}
         ]
         const today = new Date()
-        const yesterday = new Date()
-        yesterday.setDate(today.getDate() - 1)
-        const lastWeek = new Date()
-        lastWeek.setDate(today.getDate() - 7)
-        const storedTabs = new Map([
-            [3, lastWeek.getTime()],
-            [2, yesterday.getTime()],
-            [1, today.getTime()]
-        ])
-        chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(Array.from(storedTabs.entries()))})
+        const storedTabs = [
+            ['a', today.setDate(today.getDate() - 7)],
+            ['b', today.setDate(today.getDate() - 1)],
+            ['c', today.getTime()]
+        ]
+        chrome.storage.local.get.callsArgWith(1, {tabs: JSON.stringify(storedTabs)})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
         const limitTabs = [{id: 1}, {id:2}]
@@ -193,15 +185,15 @@ describe('tab-tracker', () => {
 
     it('should return a list of tabs to show and tabs to hide given a visible limit (without stored state)', async() => {
         const openTabs = []
-        chrome.storage.local.get.callsArgWith(1, {tabs: []})
+        chrome.storage.local.get.callsArgWith(1, {tabs: '[]'})
         chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(openTabs)
-        await tabTracker.track({id: 2})
-        await tabTracker.track({id: 1})
-        await tabTracker.track({id: 3})
-        await tabTracker.track({id: 4})
+        await tabTracker.track({id: 2, url: 'a'})
+        await tabTracker.track({id: 1, url: 'b'})
+        await tabTracker.track({id: 3, url: 'c'})
+        await tabTracker.track({id: 4, url: 'd'})
 
-        const limitTabs = [{id: 1}, {id:2}, {id:3}, {id:4}]
+        const limitTabs = [{id: 2, url: 'a'}, {id:1, url: 'b'}, {id:3, url: 'c'}, {id:4, url: 'd'}]
         const [visible, hidden] = tabTracker.limitNumberOfVisibleTabs(limitTabs, 2)
         assert.equal(2, visible.length)
         assert.equal(2, hidden.length)

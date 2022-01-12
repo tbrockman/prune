@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed map storage for tracking time a tab was last interacted with. Map key was altered from `tab id` (which is guaranteed to be unique, but can change on Chrome reloading), to `tab url` (which is static and will remain the same on session reloads, but is not gauranteed to be unique). Value was altered from Date object to Unix timestamp.
+
+## [3.0.0] - 2021-12-05
+
+
 ## [2.0.5] - 2021-09-02
 
 ### Fixed
