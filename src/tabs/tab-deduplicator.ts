@@ -24,7 +24,7 @@ class TabDeduplicator {
 
             console.debug('deduplicating tab', tab.id, tab)
 
-            if (tab.active !== true) {
+            if (tab.active) {
                 const highlightInfo = {
                     tabs: openTabs[index].index,
                     windowId: openTabs[index].windowId
@@ -35,7 +35,6 @@ class TabDeduplicator {
                     focused: true
                 })
             }
-
             await chrome.tabs.remove(tab.id)
         }
         this.tabLock.delete(tab.id)
