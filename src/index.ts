@@ -7,12 +7,12 @@ import TabFocusedHandler from './handlers/tab-focused'
 const lock = new Set<number>()
 
 chrome.runtime.onInstalled.addListener(async (details: any) => {
+
     if (details.reason == "update"){
-
         const thisVersion = chrome.runtime.getManifest().version;
-        console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+        console.debug("Updated from " + details.previousVersion + " to " + thisVersion + "!");
 
-        if (thisVersion == '3.0.0') {
+        if (thisVersion[0] == '3' && thisVersion[0] > details.previousVersion[0]) {
             await chrome.storage.local.clear()
         }
     }
