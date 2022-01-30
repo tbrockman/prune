@@ -19,20 +19,22 @@ class TabDeduplicator {
         // Chromes query pattern matching doesn't seem to work on certain exact matches
         // so we grab all opened tabs and check it ourselves
         const index = openTabs.findIndex((t) => t.id != tab.id && tab.url == t.url)
-    
+
         if (index > -1) {
 
             console.debug('deduplicating tab', tab.id, tab)
 
-            const highlightInfo = {
-                tabs: openTabs[index].index,
-                windowId: openTabs[index].windowId
-            }
+            if (tab.active) {
+                const highlightInfo = {
+                    tabs: openTabs[index].index,
+                    windowId: openTabs[index].windowId
+                }
 
-            await chrome.tabs.highlight(highlightInfo)
-            await chrome.windows.update(openTabs[index].windowId, {
-                focused: true
-            })
+                await chrome.tabs.highlight(highlightInfo)
+                await chrome.windows.update(openTabs[index].windowId, {
+                    focused: true
+                })
+            }
             await chrome.tabs.remove(tab.id)
         }
         this.tabLock.delete(tab.id)

@@ -14,6 +14,10 @@ describe('tab-deduplicator', () => {
         tabDeduplicator = new TabDeduplicator(tabLock)
     })
 
+    afterEach(() => {
+        global.chrome.flush()
+    })
+
     it('shouldnt do anything if lock cannot be acquired', async () => {
         tabLock.add(1)
         await tabDeduplicator.deduplicateTab({ id: 1 }, [])
@@ -31,9 +35,16 @@ describe('tab-deduplicator', () => {
     })
 
     it('should deduplicate tab', async () => {
-        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol', status: 'loading'}, [{ id: 2, url:'theo.lol'}])
+        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol', status: 'loading', active: true}, [{ id: 2, url:'theo.lol'}])
         assert(chrome.tabs.highlight.calledOnceWith)
         assert(chrome.windows.update.calledOnce)
+        assert(chrome.tabs.remove.calledOnce)
+    })
+
+    it('shouldnt focus tab if not active (command+click)', async () => {
+        await tabDeduplicator.deduplicateTab({ id: 1, url:'theo.lol', status: 'loading', active: false}, [{ id: 2, url:'theo.lol'}])
+        assert(chrome.tabs.highlight.notCalled)
+        assert(chrome.windows.update.notCalled)
         assert(chrome.tabs.remove.calledOnce)
     })
 })
