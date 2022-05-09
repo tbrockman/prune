@@ -1,10 +1,14 @@
+import { TipConfig } from "../config"
+
 class TipClient {
 
-    constructor(backend) {
+    backend: string
+
+    constructor({ backend }: TipConfig) {
         this.backend = backend
     }
-    
-    async createSession(tip) {
+
+    async createSession(tip: number) {
         let response = await fetch(this.backend, {
             method: 'post',
             headers: {

@@ -1,0 +1,19 @@
+.main-form-group {
+    padding: 1rem;
+}
+
+.main-form-group>.form-option {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-option.lru-options {
+    padding-left: 0;
+}
+
+.form-option>.lru-options-control {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
