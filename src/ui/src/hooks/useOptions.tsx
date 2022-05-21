@@ -1,28 +1,17 @@
-import { useEffect, useState } from "react";
-import { getOptionsAsync, Options, setOptionAsync } from "../util";
+import { setOptionAsync, Options } from '../util';
+import { useStore } from './useStore';
 
-export default function useOptions(): [Options | undefined, Function] {
+export default function useOptions(): {
+	options: Options;
+	setOptionAsync: Function;
+} {
+	const options = useStore((state) => state.options);
+	const setOption = useStore((state) => state.setOption);
 
-    const [options, setOptions] = useState<Options>()
-    console.log('got options', options)
+	const setOptionProxy = async (key: string, value: any) => {
+		setOption(key, value);
+		await setOptionAsync(key, value);
+	};
 
-    const setOptionProxy = async (key: string, value: any) => {
-        setOptions((prevState: any) => ({
-            ...prevState,
-            [key]: value
-        }));
-        await setOptionAsync(key, value)
-    }
-
-    useEffect(() => {
-        console.log('loading???')
-        const init = async () => {
-            const asyncOptions = await getOptionsAsync()
-            console.log('found asyncOptions', asyncOptions)
-            setOptions(asyncOptions)
-        }
-        init()
-    }, [])
-
-    return [options, setOptionProxy]
+	return { options, setOptionAsync: setOptionProxy };
 }

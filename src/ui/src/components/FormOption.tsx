@@ -1,19 +1,17 @@
-import { Paper } from '@mui/material';
 import React from 'react';
 
-import './FormOption.css'
+import './FormOption.css';
 
 export function FormOption(props: any) {
+	let className = 'form-option';
 
-    let className = 'form-option'
+	if (Object.prototype.hasOwnProperty.call(props, 'className')) {
+		className += ' ' + props.className;
+	}
 
-    if (props.hasOwnProperty('className')) {
-        className += ' ' + props.className
-    }
+	let without = Object.assign({}, props);
+	without.className = className;
+	delete without.children;
 
-    return (
-        <div {...props} className={className}>
-            {props.children}
-        </div>
-    );
+	return <div {...without}>{props.children}</div>;
 }
