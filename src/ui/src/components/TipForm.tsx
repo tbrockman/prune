@@ -5,14 +5,18 @@ import { FormGroup, FormLabel, InputAdornment, TextField } from '@mui/material';
 import { FormOption } from './FormOption';
 import './TipForm.css';
 import _useTipClient from '../hooks/useTipClient';
+import LabelWithHint from './LabelWithHint';
 
 export default function TipForm({ useTipClient = _useTipClient }) {
 	const [tip, setTip] = useState(2);
 	const [isTipping, setTipping] = useState(false);
 	const tipClient = useTipClient();
+	const tipHint =
+		'the developer will survive without it, but still appreciates your support';
+	const tipLabel = 'support the developer:';
 
 	const onTipChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setTip(parseInt(event.target.value));
+		setTip(parseFloat(event.target.value));
 	};
 
 	const tipButtonClicked = async () => {
@@ -27,8 +31,10 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 
 	return (
 		<FormOption>
+			<FormLabel>
+				<LabelWithHint hint={tipHint} label={tipLabel} />
+			</FormLabel>
 			<FormGroup className="tip-form-group">
-				<FormLabel>support the developer: </FormLabel>
 				<TextField
 					margin="dense"
 					hiddenLabel
@@ -37,10 +43,12 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					type="number"
 					value={tip}
 					onChange={onTipChange}
+					color="secondary"
 					InputProps={{
 						inputProps: {
 							min: 1,
 							max: 1000,
+							step: 'any',
 						},
 						startAdornment: (
 							<InputAdornment position="start">$</InputAdornment>
@@ -48,7 +56,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					}}
 				/>
 				<LoadingButton
-					color="primary"
+					color="secondary"
 					variant="contained"
 					loading={isTipping}
 					onClick={tipButtonClicked}

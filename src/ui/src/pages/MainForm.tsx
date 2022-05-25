@@ -10,8 +10,20 @@ import TipForm from '../components/TipForm';
 import { FormOption } from '../components/FormOption';
 import _useOptions from '../hooks/useOptions';
 import OptionsPersistedInput from '../components/PersistedInput';
+import LabelWithHint from '../components/LabelWithHint';
+import { ReactComponent as PruneLogo } from '../assets/prune-banner.svg';
+import LinkSection from '../components/LinkSection';
 
-function DeduplicateBlock({ useOptions = _useOptions }) {
+function DeduplicateBlock() {
+	// const tooltipRef = useRef();
+	// TODO: make toggleable by pressing 'h'
+	// const showFooter = true;
+	const dedupHint =
+		'when turned on, if you try to navigate to a website you already have open, prune will just show you the original tab instead';
+	const label = 'show existing tabs instead of opening duplicates';
+	// const footer = showFooter ? '\n\n\n press "h" to toggle option hints' : '';
+	const text = `${dedupHint}`;
+
 	return (
 		<FormOption>
 			<FormControlLabel
@@ -21,7 +33,13 @@ function DeduplicateBlock({ useOptions = _useOptions }) {
 						storageKey="auto-deduplicate"
 					/>
 				}
-				label="focus existing tabs instead of opening duplicates"
+				label={
+					<LabelWithHint
+						hint={text}
+						label={label}
+						tooltipProps={{ placement: 'top' }}
+					/>
+				}
 			/>
 		</FormOption>
 	);
@@ -29,6 +47,13 @@ function DeduplicateBlock({ useOptions = _useOptions }) {
 
 function GroupTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
+
+	const hideLabel = 'hide tabs after';
+	const hideHint =
+		"you can choose to tuck away your neglected tabs until you're ready to see them again";
+	const groupHint =
+		"if the group doesn't already exist, it will be created for you";
+	const groupLabel = 'days in a group named';
 
 	return (
 		<FormOption>
@@ -39,7 +64,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 						storageKey="auto-group"
 					/>
 				}
-				label="hide tabs after"
+				label={<LabelWithHint hint={hideHint} label={hideLabel} />}
 			/>
 			<FormControlLabel
 				control={
@@ -50,6 +75,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 						size="small"
 						variant="filled"
 						type="number"
+						color="secondary"
 						InputProps={{
 							inputProps: {
 								max: 100,
@@ -60,7 +86,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 						value={options['auto-group-threshold']}
 					/>
 				}
-				label="days in a group named"
+				label={<LabelWithHint hint={groupHint} label={groupLabel} />}
 			/>
 			<FormControlLabel
 				control={
@@ -70,6 +96,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 						hiddenLabel
 						size="small"
 						variant="filled"
+						color="secondary"
 						disabled={!options['auto-group']}
 						value={options['auto-group-name']}
 					/>
@@ -83,6 +110,10 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 function RemoveTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
 
+	const closeTabsHint =
+		"prune can also clean up any pages you haven't looked at in awhile. trust me, you won't miss them";
+	const closeTabsLabel = 'close old tabs after';
+
 	return (
 		<FormOption>
 			<FormControlLabel
@@ -92,7 +123,12 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 						storageKey="auto-prune"
 					/>
 				}
-				label="close old tabs after"
+				label={
+					<LabelWithHint
+						hint={closeTabsHint}
+						label={closeTabsLabel}
+					/>
+				}
 			/>
 			<FormControlLabel
 				control={
@@ -102,14 +138,15 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 						size="small"
 						variant="filled"
 						type="number"
+						color="secondary"
+						storageKey="prune-threshold"
+						disabled={!options['auto-prune']}
 						InputProps={{
 							inputProps: {
 								max: 1024,
 								min: 0,
 							},
 						}}
-						storageKey="prune-threshold"
-						disabled={!options['auto-prune']}
 					/>
 				}
 				label="days"
@@ -120,6 +157,10 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 
 function LRUBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
+
+	const lruTabsHint =
+		'you can let prune group or close your oldest tabs once you go over your limit';
+	const lruTabsLabel = 'least recently used tabs once';
 
 	return (
 		<FormOption className="lru-options">
@@ -141,7 +182,12 @@ function LRUBlock({ useOptions = _useOptions }) {
 							</OptionsPersistedInput>
 						</>
 					}
-					label="least recently used tabs after"
+					label={
+						<LabelWithHint
+							hint={lruTabsHint}
+							label={lruTabsLabel}
+						/>
+					}
 					disabled={!options['tab-lru-enabled']}
 				/>
 				<FormControlLabel
@@ -154,6 +200,7 @@ function LRUBlock({ useOptions = _useOptions }) {
 							type="number"
 							storageKey="tab-lru-size"
 							disabled={!options['tab-lru-enabled']}
+							color="secondary"
 							InputProps={{
 								inputProps: {
 									max: 255,
@@ -162,7 +209,7 @@ function LRUBlock({ useOptions = _useOptions }) {
 							}}
 						/>
 					}
-					label=""
+					label="tabs are open"
 				/>
 			</FormControl>
 		</FormOption>
@@ -173,6 +220,9 @@ function StorageBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
 	const tabStorageEnabled =
 		options['auto-prune'] || options['tab-lru-destination'] === 'close';
+	const bookmarkHint =
+		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before closing";
+	const bookmarkLabel = 'bookmark closed tabs under';
 
 	return (
 		<FormOption>
@@ -184,7 +234,9 @@ function StorageBlock({ useOptions = _useOptions }) {
 						disabled={!tabStorageEnabled}
 					/>
 				}
-				label="bookmark closed tabs under"
+				label={
+					<LabelWithHint hint={bookmarkHint} label={bookmarkLabel} />
+				}
 				disabled={!tabStorageEnabled}
 			/>
 			<FormControlLabel
@@ -195,6 +247,7 @@ function StorageBlock({ useOptions = _useOptions }) {
 						size="small"
 						placeholder="pruned"
 						variant="filled"
+						color="secondary"
 						fullWidth={false}
 						storageKey="auto-prune-bookmark-name"
 						disabled={
@@ -212,12 +265,14 @@ function StorageBlock({ useOptions = _useOptions }) {
 export default function MainForm() {
 	return (
 		<FormGroup className="main-form-group">
+			<PruneLogo width="200px" />
 			<DeduplicateBlock />
 			<GroupTabsBlock />
 			<RemoveTabsBlock />
 			<LRUBlock />
 			<StorageBlock />
 			<TipForm />
+			<LinkSection />
 		</FormGroup>
 	);
 }

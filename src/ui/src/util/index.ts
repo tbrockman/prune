@@ -58,6 +58,7 @@ class Options {
 	'tab-lru-enabled' = false;
 	'tab-lru-size' = 30;
 	'tab-lru-destination' = 'group';
+	'show-hints' = true;
 }
 
 const defaults = new Options();

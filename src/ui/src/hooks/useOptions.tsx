@@ -1,7 +1,7 @@
 import { setOptionAsync, Options } from '../util';
-import { useStore } from './useStore';
+import { useStore as _useStore } from './useStore';
 
-export default function useOptions(): {
+export default function useOptions(useStore = _useStore): {
 	options: Options;
 	setOptionAsync: Function;
 } {

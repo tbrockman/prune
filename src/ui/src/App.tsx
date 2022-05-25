@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import MainForm from './pages/MainForm';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useStore } from './hooks/useStore';
+import { useStore as _useStore } from './hooks/useStore';
 
-function App() {
+function App({ useStore = _useStore }) {
 	const init = useStore((state) => state.init);
 	const theme = createTheme({
 		palette: {
 			primary: {
-				main: 'rgb(72, 185, 70)',
+				main: '#48b946',
+			},
+			secondary: {
+				main: '#673b97',
 			},
 		},
 		typography: {
@@ -57,7 +60,22 @@ function App() {
 			MuiInputBase: {
 				styleOverrides: {
 					root: {
-						maxWidth: '14ch',
+						maxWidth: '12ch',
+					},
+				},
+			},
+			MuiFormLabel: {
+				styleOverrides: {
+					root: {
+						color: '#000',
+					},
+				},
+			},
+			MuiTooltip: {
+				styleOverrides: {
+					tooltip: {
+						fontSize: '1rem',
+						padding: '0.5rem',
 					},
 				},
 			},

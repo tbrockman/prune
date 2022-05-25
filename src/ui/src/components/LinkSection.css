@@ -1,0 +1,8 @@
+.link-section {
+	padding-top: 1rem;
+}
+
+.link-section > a {
+	color: #000;
+	margin-right: 2rem;
+}
