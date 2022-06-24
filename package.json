@@ -9,7 +9,7 @@
 	"scripts": {
 		"build": "npm run build:ui && npm run build:extension",
 		"build:extension": "tsc && webpack",
-		"build:ui": "npm run --prefix src/ui build && cp -R src/ui/build dist",
+		"build:ui": "npm run --prefix src/ui build && mkdir -p dist && cp -R src/ui/build/ dist",
 		"test": "mocha -r ts-node/register -r esm tests/**/*",
 		"zip": "zip -r release.zip assets dist favicon.ico service-worker.js manifest.json",
 		"clean": "rm -fr dist/ && rm -fr lib && rm -f release.zip",

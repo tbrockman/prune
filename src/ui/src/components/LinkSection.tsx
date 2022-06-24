@@ -1,13 +1,20 @@
-import { Grid, Icon, IconButton, Tooltip } from '@mui/material';
+import { Grid, Icon, IconButton, Snackbar, Tooltip } from '@mui/material';
 import { ReactComponent as GitHubLogo } from '../assets/github-logo.svg';
 import PaletteIcon from '@mui/icons-material/Palette';
 import ShareIcon from '@mui/icons-material/Share';
 // import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 import './LinkSection.css';
+import { useState } from 'react';
 
 export default function LinkSection() {
-	const test = (e: any) => {
+	const [snackOpen, setSnackOpen] = useState(false);
+
+	const handleSnackClose = () => {
+		setSnackOpen(false);
+	};
+
+	const shareClicked = async (e: any) => {
 		console.log(navigator, window.navigator, navigator.share);
 
 		// TODO: extract to config
@@ -22,17 +29,24 @@ export default function LinkSection() {
 			});
 		} else if (navigator.clipboard && navigator.clipboard.writeText) {
 			navigator.clipboard.writeText(chromeShopUrl);
+			setSnackOpen(true);
 		}
 	};
 
 	return (
 		<Grid className="link-section">
+			<Snackbar
+				open={snackOpen}
+				autoHideDuration={1000}
+				onClose={handleSnackClose}
+				message="Link copied to clipboard!"
+			/>
 			<Tooltip title="share">
-				<IconButton href="#share" onClick={test}>
+				<IconButton href="#share" onClick={shareClicked}>
 					<ShareIcon />
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="source code">
+			<Tooltip title="github">
 				<IconButton
 					target="_blank"
 					href="https://github.com/tbrockman/prune"

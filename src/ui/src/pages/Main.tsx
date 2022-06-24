@@ -3,9 +3,10 @@ import {
 	FormControl,
 	FormControlLabel,
 	FormGroup,
+	Grid,
 	MenuItem,
 } from '@mui/material';
-import './MainForm.css';
+import './Main.css';
 import TipForm from '../components/TipForm';
 import { FormOption } from '../components/FormOption';
 import _useOptions from '../hooks/useOptions';
@@ -111,7 +112,7 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
 
 	const closeTabsHint =
-		"prune can also clean up any pages you haven't looked at in awhile. trust me, you won't miss them";
+		"prune can also clean up any pages you haven't looked at in awhile. don't worry, you won't miss them";
 	const closeTabsLabel = 'close old tabs after';
 
 	return (
@@ -262,17 +263,33 @@ function StorageBlock({ useOptions = _useOptions }) {
 	);
 }
 
-export default function MainForm() {
+function PruneHeader() {
 	return (
-		<FormGroup className="main-form-group">
+		<Grid
+			xs
+			container
+			padding="2rem"
+			alignItems="center"
+			justifyContent="space-between"
+		>
 			<PruneLogo width="200px" />
-			<DeduplicateBlock />
-			<GroupTabsBlock />
-			<RemoveTabsBlock />
-			<LRUBlock />
-			<StorageBlock />
-			<TipForm />
 			<LinkSection />
-		</FormGroup>
+		</Grid>
+	);
+}
+
+export default function Main() {
+	return (
+		<Grid>
+			<PruneHeader />
+			<FormGroup className="main-form-group">
+				<DeduplicateBlock />
+				<GroupTabsBlock />
+				<RemoveTabsBlock />
+				<LRUBlock />
+				<StorageBlock />
+				<TipForm />
+			</FormGroup>
+		</Grid>
 	);
 }

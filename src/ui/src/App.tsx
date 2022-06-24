@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MainForm from './pages/MainForm';
+import Main from './pages/Main';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useStore as _useStore } from './hooks/useStore';
@@ -24,6 +24,7 @@ function App({ useStore = _useStore }) {
 					root: {
 						textTransform: 'lowercase',
 						color: '#fff',
+						borderRadius: 0,
 					},
 				},
 			},
@@ -89,7 +90,7 @@ function App({ useStore = _useStore }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="app">
-				<MainForm />
+				<Main />
 			</div>
 		</ThemeProvider>
 	);
