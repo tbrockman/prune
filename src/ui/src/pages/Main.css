@@ -1,0 +1,26 @@
+.main-form-group {
+	border: 2px solid;
+	box-shadow: -8px 8px 0 0px #000;
+	margin: 0 2rem 3rem;
+	padding: 1rem;
+}
+
+.main-form-group > .form-option {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.form-option.lru-options {
+	padding-left: 0;
+}
+
+.form-option > .lru-options-control {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.prune-header-container {
+	padding: 1rem;
+}

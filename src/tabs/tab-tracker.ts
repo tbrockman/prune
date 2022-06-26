@@ -1,4 +1,4 @@
-import { localStorageGetAsync, localStorageSetAsync } from '../util/index.js'
+import { localStorageGetAsync, localStorageSetAsync } from '../ui/src/util/index' // TODO: extract common code
 import { Tab } from '../types'
 
 class TabTracker {
@@ -6,7 +6,7 @@ class TabTracker {
     tabsStorageKey: string
     tabs: Map<string, number>
 
-    constructor(tabsStorageKey='tabs')  {
+    constructor(tabsStorageKey = 'tabs') {
         this.tabsStorageKey = tabsStorageKey
         this.tabs = new Map()
         this.init = this.init.bind(this)
@@ -22,7 +22,7 @@ class TabTracker {
     async init(openTabs: Tab[]) {
         console.debug('initializing tracker')
         const tabs = await this.loadStateAsync(this.tabsStorageKey)
-                     
+
         if (tabs.size === 0) {
             console.debug('no loaded tabs found in storage')
             await this.trackTabs(openTabs)
@@ -109,7 +109,7 @@ class TabTracker {
     }
 
     remove(tabUrl: string) {
-        
+
         if (this.tabs.has(tabUrl)) {
             this.tabs.delete(tabUrl)
         }
@@ -117,7 +117,7 @@ class TabTracker {
     }
 
     async track(tab: Tab) {
-        
+
         if (tab.url) {
             console.debug('tracking tab', tab.url)
 
@@ -125,9 +125,9 @@ class TabTracker {
                 this.tabs.delete(tab.url)
             }
             this.tabs.set(tab.url, new Date().getTime())
-    
+
             try {
-                await this.saveStateAsync(this.tabsStorageKey)            
+                await this.saveStateAsync(this.tabsStorageKey)
             } catch (error) {
                 console.error(error)
             }
@@ -152,7 +152,7 @@ class TabTracker {
 
     async saveStateAsync(key: string) {
         const serialized = this.serializeTabs(this.tabs)
-        await localStorageSetAsync({[key]: serialized})
+        await localStorageSetAsync({ [key]: serialized })
     }
 
     async loadStateAsync(key: string) {

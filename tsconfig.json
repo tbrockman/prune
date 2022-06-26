@@ -4,5 +4,10 @@
         "outDir": "lib"
     },
     "extends": "@tsconfig/recommended/tsconfig.json",
-    "include": ["src"],
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "src/ui"
+    ]
 }

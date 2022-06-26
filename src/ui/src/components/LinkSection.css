@@ -1,0 +1,8 @@
+.link-section > a {
+	color: #000;
+	margin-right: 2rem;
+}
+
+.link-section > a:last-child {
+	margin-right: 0;
+}
