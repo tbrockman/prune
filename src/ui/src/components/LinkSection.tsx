@@ -1,4 +1,4 @@
-import { Grid, Icon, IconButton, Snackbar, Tooltip } from '@mui/material';
+import { Grid, Icon, IconButton, Tooltip } from '@mui/material';
 import { ReactComponent as GitHubLogo } from '../assets/github-logo.svg';
 import PaletteIcon from '@mui/icons-material/Palette';
 import ShareIcon from '@mui/icons-material/Share';
@@ -6,52 +6,84 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import './LinkSection.css';
 import { useState } from 'react';
+import _useConfig from '../hooks/useConfig';
 
-export default function LinkSection() {
-	const [snackOpen, setSnackOpen] = useState(false);
+export default function LinkSection({ useConfig = _useConfig }) {
+	const { config } = useConfig();
+	const [shareTooltipOpen, setShareTooltipOpen] = useState(false);
+	const [copiedTooltipOpen, setCopiedTooltipOpen] = useState(false);
+	const [storedTimeout, setStoredTimeout] = useState<any>();
 
-	const handleSnackClose = () => {
-		setSnackOpen(false);
+	const shareTooltipOpened = () => {
+		setShareTooltipOpen(true);
+	};
+
+	const shareTooltipClosed = () => {
+		setShareTooltipOpen(false);
+	};
+
+	const copiedTooltipOpened = () => {
+		setCopiedTooltipOpen(true);
+	};
+
+	const copiedTooltipClosed = () => {
+		setCopiedTooltipOpen(false);
 	};
 
 	const shareClicked = async (e: any) => {
-		console.log(navigator, window.navigator, navigator.share);
-
-		// TODO: extract to config
-		const chromeShopUrl =
-			'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en';
-
 		if (navigator.share) {
 			navigator.share({
 				title: 'Share',
 				text: 'Help a friend prune their tabs',
-				url: chromeShopUrl,
+				url: config.share?.url,
 			});
 		} else if (navigator.clipboard && navigator.clipboard.writeText) {
-			navigator.clipboard.writeText(chromeShopUrl);
-			setSnackOpen(true);
+			navigator.clipboard.writeText(config.share?.url ?? '');
+			setShareTooltipOpen(false);
+			setCopiedTooltipOpen(true);
+
+			if (storedTimeout) {
+				clearTimeout(storedTimeout);
+			}
+			const timeout = setTimeout(() => {
+				setCopiedTooltipOpen(false);
+			}, 1250);
+			setStoredTimeout(timeout);
 		}
 	};
 
 	return (
 		<Grid className="link-section">
-			<Snackbar
-				open={snackOpen}
-				autoHideDuration={1000}
-				onClose={handleSnackClose}
-				message="Link copied to clipboard!"
-			/>
-			<Tooltip title="share">
-				<IconButton href="#share" onClick={shareClicked}>
-					<ShareIcon />
-				</IconButton>
-			</Tooltip>
+			{!copiedTooltipOpen && (
+				<Tooltip
+					open={shareTooltipOpen}
+					onOpen={shareTooltipOpened}
+					onClose={shareTooltipClosed}
+					title="share"
+				>
+					<IconButton href="#share" onClick={shareClicked}>
+						<ShareIcon />
+					</IconButton>
+				</Tooltip>
+			)}
+			{copiedTooltipOpen && (
+				<Tooltip
+					open={copiedTooltipOpen}
+					onOpen={copiedTooltipOpened}
+					onClose={copiedTooltipClosed}
+					title="link copied to clipboard!"
+				>
+					<IconButton href="#share" onClick={shareClicked}>
+						<ShareIcon />
+					</IconButton>
+				</Tooltip>
+			)}
 			<Tooltip title="github">
 				<IconButton
 					target="_blank"
 					href="https://github.com/tbrockman/prune"
 				>
-					<Icon classes={{ root: '' }}>
+					<Icon>
 						<GitHubLogo />
 					</Icon>
 				</IconButton>

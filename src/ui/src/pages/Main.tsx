@@ -16,13 +16,9 @@ import { ReactComponent as PruneLogo } from '../assets/prune-banner.svg';
 import LinkSection from '../components/LinkSection';
 
 function DeduplicateBlock() {
-	// const tooltipRef = useRef();
-	// TODO: make toggleable by pressing 'h'
-	// const showFooter = true;
 	const dedupHint =
 		'when turned on, if you try to navigate to a website you already have open, prune will just show you the original tab instead';
 	const label = 'show existing tabs instead of opening duplicates';
-	// const footer = showFooter ? '\n\n\n press "h" to toggle option hints' : '';
 	const text = `${dedupHint}`;
 
 	return (
@@ -220,7 +216,9 @@ function LRUBlock({ useOptions = _useOptions }) {
 function StorageBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
 	const tabStorageEnabled =
-		options['auto-prune'] || options['tab-lru-destination'] === 'close';
+		options['auto-prune'] ||
+		(options['tab-lru-destination'] === 'close' &&
+			options['tab-lru-enabled']);
 	const bookmarkHint =
 		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before closing";
 	const bookmarkLabel = 'bookmark closed tabs under';
