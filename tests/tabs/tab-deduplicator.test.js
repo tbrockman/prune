@@ -41,7 +41,7 @@ describe('tab-deduplicator', () => {
 			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
 			[{ id: 2, url: 'theo.lol' }],
 		);
-		assert(chrome.tabs.highlight.calledOnceWith);
+		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
 		assert(chrome.tabs.remove.calledOnce);
 	});
@@ -51,7 +51,7 @@ describe('tab-deduplicator', () => {
 			{ id: 1, url: 'theo.lol', status: 'loading', active: false },
 			[{ id: 2, url: 'theo.lol' }],
 		);
-		assert(chrome.tabs.highlight.calledOnceWith);
+		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
 		assert(chrome.tabs.remove.calledOnce);
 	});

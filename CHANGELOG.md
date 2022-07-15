@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.1] - 2022-07-15
+
+### Changed
+
+-   Prune will no longer prune already grouped tabs
+
+### Added
+
+-   Added some alarm handler tests
+
 ## [3.2.0] - 2022-05-22
 
 ### Changed
