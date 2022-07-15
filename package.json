@@ -1,6 +1,6 @@
 {
 	"name": "prune",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"description": "A small Chrome extension to help you manage your garden of tabs.",
 	"main": "src/index.js",
 	"directories": {
@@ -12,7 +12,7 @@
 		"build:ui": "npm run --prefix src/ui build && mkdir -p dist && cp -R src/ui/build/ dist",
 		"test": "mocha -r ts-node/register -r esm tests/**/*",
 		"zip": "zip -r release.zip assets dist favicon.ico service-worker.js manifest.json",
-		"clean": "rm -fr dist/ && rm -fr lib && rm -f release.zip",
+		"clean": "rm -fr dist/ && rm -fr lib && rm -fr release && rm -f release.zip",
 		"release": "npm run clean && npm run build && npm run zip",
 		"start:ui": "npm run --prefix src/ui start"
 	},
