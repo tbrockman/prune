@@ -7,6 +7,12 @@
 	"background": {
 		"service_worker": "service-worker.js"
 	},
+	"content_scripts": [
+		{
+			"matches": ["*"],
+			"js": ["/dist/content-script.js"]
+		}
+	],
 	"manifest_version": 3,
 	"action": {
 		"default_popup": "/dist/index.html",

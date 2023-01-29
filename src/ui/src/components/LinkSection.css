@@ -1,8 +1,8 @@
-.link-section > a {
-	color: #000;
-	margin-right: 2rem;
+.link-section > * {
+	color: #000 !important;
+	margin-right: 2rem !important;
 }
 
-.link-section > a:last-child {
-	margin-right: 0;
+.link-section > *:last-child {
+	margin-right: 0 !important;
 }

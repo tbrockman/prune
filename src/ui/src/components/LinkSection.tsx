@@ -2,7 +2,6 @@ import { Grid, Icon, IconButton, Tooltip } from '@mui/material';
 import { ReactComponent as GitHubLogo } from '../assets/github-logo.svg';
 import PaletteIcon from '@mui/icons-material/Palette';
 import ShareIcon from '@mui/icons-material/Share';
-// import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 import './LinkSection.css';
 import { useState } from 'react';
