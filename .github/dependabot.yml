@@ -9,7 +9,11 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    labels:
+      - automerge
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/src/ui" # Location of package manifests
     schedule:
       interval: "weekly"
+    labels:
+      - automerge
