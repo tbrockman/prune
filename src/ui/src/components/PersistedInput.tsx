@@ -3,22 +3,24 @@ import {
 	CheckboxProps,
 	Select,
 	SelectProps,
+	Switch,
 	TextField,
 	TextFieldProps,
+	SwitchProps,
 } from '@mui/material';
 import useOptions from '../hooks/useOptions';
 import { Options } from '../util/';
 
-type OptionsPersistedInputProps = {
-	component: 'checkbox' | 'select' | 'textfield';
+type PersistedInputProps = {
+	component: 'checkbox' | 'select' | 'textfield' | 'switch';
 	storageKey: keyof Options;
-} & (CheckboxProps | SelectProps | TextFieldProps);
+} & (CheckboxProps | SelectProps | TextFieldProps | SwitchProps);
 
-export default function OptionsPersistedInput({
+export default function PersistedInput({
 	component,
 	storageKey,
 	...props
-}: OptionsPersistedInputProps) {
+}: PersistedInputProps) {
 	const { options, setOptionAsync } = useOptions();
 
 	const onChangeProxy = async (event: any, ...rest: any) => {
@@ -69,6 +71,15 @@ export default function OptionsPersistedInput({
 				>
 					{(props as SelectProps).children}
 				</Select>
+			);
+		}
+		case 'switch': {
+			return (
+				<Switch
+					{...without}
+					onChange={onChangeProxy}
+					value={options[storageKey]}
+				/>
 			);
 		}
 	}

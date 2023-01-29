@@ -1,7 +1,7 @@
 .main-form-group {
 	border: 2px solid;
 	box-shadow: -8px 8px 0 0px #000;
-	margin: 0 2rem 3rem;
+	margin: 0 2rem 2rem;
 	padding: 1rem;
 }
 
@@ -23,4 +23,19 @@
 
 .prune-header-container {
 	padding: 1rem;
+}
+
+.MuiTypography-root.section-title {
+	margin-left: 2.5rem;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: -22px;
+	z-index: 2;
+	position: relative;
+	padding: 0 0.5rem;
+	width: fit-content;
+	font-size: 2rem;
+}
+
+.MuiFormGroup-root > .form-option:first-child {
+	margin-top: 0.25rem;
 }

@@ -5,27 +5,41 @@ import {
 	FormGroup,
 	Grid,
 	MenuItem,
+	Typography,
 } from '@mui/material';
 import './Main.css';
 import TipForm from '../components/TipForm';
 import { FormOption } from '../components/FormOption';
 import _useOptions from '../hooks/useOptions';
-import OptionsPersistedInput from '../components/PersistedInput';
+import PersistedInput from '../components/PersistedInput';
 import LabelWithHint from '../components/LabelWithHint';
 import { ReactComponent as PruneLogo } from '../assets/prune-banner.svg';
 import LinkSection from '../components/LinkSection';
+import ProductivityBlock from '../components/ProductivityBlock';
+
+type SectionTitleProps = {
+	title: String;
+};
+
+function SectionTitle({ title }: SectionTitleProps) {
+	return (
+		<Typography component="h1" className="section-title">
+			{title}
+		</Typography>
+	);
+}
 
 function DeduplicateBlock() {
 	const dedupHint =
 		'when turned on, if you try to navigate to a website you already have open, prune will just show you the original tab instead';
-	const label = 'show existing tabs instead of opening duplicates';
+	const label = 'show existing tabs instead of opening duplicates  ♻️';
 	const text = `${dedupHint}`;
 
 	return (
 		<FormOption>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="checkbox"
 						storageKey="auto-deduplicate"
 					/>
@@ -56,7 +70,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 		<FormOption>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="checkbox"
 						storageKey="auto-group"
 					/>
@@ -65,7 +79,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 			/>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="textfield"
 						storageKey="auto-group-threshold"
 						hiddenLabel
@@ -87,7 +101,7 @@ function GroupTabsBlock({ useOptions = _useOptions }) {
 			/>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="textfield"
 						storageKey="auto-group-name"
 						hiddenLabel
@@ -115,7 +129,7 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 		<FormOption>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="checkbox"
 						storageKey="auto-prune"
 					/>
@@ -129,7 +143,7 @@ function RemoveTabsBlock({ useOptions = _useOptions }) {
 			/>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="textfield"
 						hiddenLabel
 						size="small"
@@ -165,18 +179,18 @@ function LRUBlock({ useOptions = _useOptions }) {
 				<FormControlLabel
 					control={
 						<>
-							<OptionsPersistedInput
+							<PersistedInput
 								component="checkbox"
 								storageKey="tab-lru-enabled"
 							/>
-							<OptionsPersistedInput
+							<PersistedInput
 								component="select"
 								storageKey="tab-lru-destination"
 								disabled={!options['tab-lru-enabled']}
 							>
 								<MenuItem value={'group'}>group</MenuItem>
 								<MenuItem value={'close'}>close</MenuItem>
-							</OptionsPersistedInput>
+							</PersistedInput>
 						</>
 					}
 					label={
@@ -189,7 +203,7 @@ function LRUBlock({ useOptions = _useOptions }) {
 				/>
 				<FormControlLabel
 					control={
-						<OptionsPersistedInput
+						<PersistedInput
 							component="textfield"
 							hiddenLabel
 							size="small"
@@ -227,7 +241,7 @@ function StorageBlock({ useOptions = _useOptions }) {
 		<FormOption>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="checkbox"
 						storageKey="auto-prune-bookmark"
 						disabled={!tabStorageEnabled}
@@ -240,7 +254,7 @@ function StorageBlock({ useOptions = _useOptions }) {
 			/>
 			<FormControlLabel
 				control={
-					<OptionsPersistedInput
+					<PersistedInput
 						component="textfield"
 						hiddenLabel
 						size="small"
@@ -280,12 +294,18 @@ export default function Main() {
 	return (
 		<Grid>
 			<PruneHeader />
+			<SectionTitle title="options" />
 			<FormGroup className="main-form-group">
+				<ProductivityBlock />
 				<DeduplicateBlock />
 				<GroupTabsBlock />
 				<RemoveTabsBlock />
 				<LRUBlock />
 				<StorageBlock />
+			</FormGroup>
+
+			<SectionTitle title="other stuff" />
+			<FormGroup className="main-form-group">
 				<TipForm />
 			</FormGroup>
 		</Grid>
