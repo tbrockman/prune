@@ -33,7 +33,7 @@
 	},
 	"homepage": "https://github.com/tbrockman/prune#readme",
 	"devDependencies": {
-		"@tsconfig/recommended": "^1.0.1",
+		"@tsconfig/recommended": "^1.0.2",
 		"@types/chai": "^4.2.22",
 		"@types/chrome": "^0.0.154",
 		"@types/mocha": "^9.0.0",
