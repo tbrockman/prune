@@ -60,6 +60,7 @@ class Options {
 	'tab-lru-destination' = 'group';
 	'show-hints' = true;
 	'productivity-mode-enabled' = false;
+	'productivity-suspend-domains' = ['youtube', 'facebook', 'instagram', 'reddit', 'tiktok', 'buzzfeed', 'amazon', 'netflix', 'news.ycombinator', 'hbomax'];
 }
 
 const defaults = new Options();

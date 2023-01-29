@@ -31,7 +31,8 @@ function App({ useStore = _useStore }) {
 			MuiFormControlLabel: {
 				styleOverrides: {
 					root: {
-						paddingRight: '0.5rem',
+						// paddingRight: '0.5rem',
+						margin: 0,
 					},
 				},
 			},
@@ -61,7 +62,7 @@ function App({ useStore = _useStore }) {
 			MuiInputBase: {
 				styleOverrides: {
 					root: {
-						maxWidth: '12ch',
+						maxWidth: '16ch',
 					},
 				},
 			},

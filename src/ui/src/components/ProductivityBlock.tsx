@@ -4,6 +4,10 @@ import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
 
 export default function ProductivityBlock() {
+
+	const hint = 'helps keep your browsing productive by pausing use of typical time wasting websites. turn it on manually or declare a schedule.'
+	const label = 'turn on productivity mode 👨‍💻'
+
 	return (
 		<FormOption>
 			<FormControlLabel
@@ -15,8 +19,8 @@ export default function ProductivityBlock() {
 				}
 				label={
 					<LabelWithHint
-						hint={'text'}
-						label={'turn on productivity mode 👨‍💻'}
+						hint={hint}
+						label={label}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}

@@ -8,7 +8,7 @@ import _useTipClient from '../hooks/useTipClient';
 import LabelWithHint from './LabelWithHint';
 
 export default function TipForm({ useTipClient = _useTipClient }) {
-	const [tip, setTip] = useState(2);
+	const [tip, setTip] = useState(3);
 	const [isTipping, setTipping] = useState(false);
 	const tipClient = useTipClient();
 	const tipHint =
@@ -30,7 +30,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 	};
 
 	return (
-		<FormOption>
+		<FormOption style={{marginLeft: '0px'}}>
 			<FormLabel>
 				<LabelWithHint hint={tipHint} label={tipLabel} />
 			</FormLabel>
@@ -45,10 +45,11 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					onChange={onTipChange}
 					color="secondary"
 					InputProps={{
+						className: 'tip-input',
 						inputProps: {
 							min: 1,
 							max: 1000,
-							step: 'any',
+							step: 'any'
 						},
 						startAdornment: (
 							<InputAdornment position="start">$</InputAdornment>

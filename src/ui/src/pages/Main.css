@@ -3,12 +3,14 @@
 	box-shadow: -8px 8px 0 0px #000;
 	margin: 0 2rem 2rem;
 	padding: 1rem;
+	max-width: fit-content;
 }
 
 .main-form-group > .form-option {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
+	margin-left: -11px;
 }
 
 .form-option.lru-options {
