@@ -53,7 +53,7 @@
 		]
 	},
 	"devDependencies": {
-		"@types/chrome": "^0.0.210",
+		"@types/chrome": "^0.0.211",
 		"eslint": "^8.33.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.27.5",
