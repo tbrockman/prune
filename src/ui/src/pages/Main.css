@@ -6,11 +6,15 @@
 	max-width: fit-content;
 }
 
+.main-form-group.options-form-group {
+	max-width: 100%;
+}
+
 .main-form-group > .form-option {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	margin-left: -11px;
+	max-width: 100%;
 }
 
 .form-option.lru-options {

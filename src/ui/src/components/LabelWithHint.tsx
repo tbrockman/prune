@@ -25,7 +25,7 @@ export default function LabelWithHint({
 	return (
 		<Tooltip
 			placement="top"
-			arrow="true"
+			arrow={true}
 			enterDelay={1500}
 			enterNextDelay={750}
 			{...tooltipProps}

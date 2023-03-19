@@ -1,12 +1,20 @@
-import { FormControlLabel } from '@mui/material';
+import { FormControlLabel, IconButton, Tooltip } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { FormOption } from './FormOption';
 import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
+import { useStore, Page } from '../hooks/useStore';
 
 export default function ProductivityBlock() {
+	const { setPage } = useStore();
 
-	const hint = 'helps keep your browsing productive by pausing use of typical time wasting websites. turn it on manually or declare a schedule.'
-	const label = 'turn on productivity mode 👨‍💻'
+	const hint =
+		'helps keep your browsing productive by pausing use of typical time wasting websites. turn it on manually or declare a schedule.';
+	const label = 'turn on productivity mode 👨‍💻';
+
+	const settingsIconClicked = () => {
+		setPage(Page.ProductivitySettings);
+	};
 
 	return (
 		<FormOption>
@@ -25,6 +33,15 @@ export default function ProductivityBlock() {
 					/>
 				}
 			/>
+			<Tooltip
+				placement="top"
+				arrow={true}
+				title="update productivity mode settings"
+			>
+				<IconButton aria-label="settings" onClick={settingsIconClicked}>
+					<SettingsIcon />
+				</IconButton>
+			</Tooltip>
 		</FormOption>
 	);
 }

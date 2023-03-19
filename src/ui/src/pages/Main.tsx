@@ -16,6 +16,8 @@ import LabelWithHint from '../components/LabelWithHint';
 import { ReactComponent as PruneLogo } from '../assets/prune-banner.svg';
 import LinkSection from '../components/LinkSection';
 import ProductivityBlock from '../components/ProductivityBlock';
+import { Page, useStore } from '../hooks/useStore';
+import ProductivitySettingsPage from './ProductivitySettings';
 
 type SectionTitleProps = {
 	title: String;
@@ -290,18 +292,35 @@ function PruneHeader() {
 	);
 }
 
-export default function Main() {
+const OptionsHomePage = () => {
 	return (
-		<Grid>
+		<>
+			<ProductivityBlock />
+			<DeduplicateBlock />
+			<GroupTabsBlock />
+			<RemoveTabsBlock />
+			<LRUBlock />
+			<StorageBlock />
+		</>
+	);
+};
+
+export default function Main() {
+	const { page } = useStore();
+	let pageComponent;
+
+	if (page == Page.Home) {
+		pageComponent = <OptionsHomePage />;
+	} else if (page == Page.ProductivitySettings) {
+		pageComponent = <ProductivitySettingsPage />;
+	}
+
+	return (
+		<Grid width="100%">
 			<PruneHeader />
 			<SectionTitle title="options" />
-			<FormGroup className="main-form-group">
-				<ProductivityBlock />
-				<DeduplicateBlock />
-				<GroupTabsBlock />
-				<RemoveTabsBlock />
-				<LRUBlock />
-				<StorageBlock />
+			<FormGroup className="main-form-group options-form-group">
+				{pageComponent}
 			</FormGroup>
 
 			<SectionTitle title="other stuff" />

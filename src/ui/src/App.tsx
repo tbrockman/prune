@@ -36,6 +36,14 @@ function App({ useStore = _useStore }) {
 					},
 				},
 			},
+			MuiCheckbox: {
+				styleOverrides: {
+					root: {
+						marginLeft: '-2px',
+						paddingLeft: 0,
+					},
+				},
+			},
 			MuiOutlinedInput: {
 				styleOverrides: {
 					notchedOutline: {
@@ -47,6 +55,7 @@ function App({ useStore = _useStore }) {
 				styleOverrides: {
 					root: {
 						backgroundColor: 'transparent !important',
+						maxWidth: '16ch',
 					},
 				},
 			},
@@ -61,9 +70,7 @@ function App({ useStore = _useStore }) {
 			},
 			MuiInputBase: {
 				styleOverrides: {
-					root: {
-						maxWidth: '16ch',
-					},
+					root: {},
 				},
 			},
 			MuiFormLabel: {
