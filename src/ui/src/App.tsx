@@ -88,6 +88,25 @@ function App({ useStore = _useStore }) {
 					},
 				},
 			},
+			MuiChip: {
+				styleOverrides: {
+					root: {
+						borderRadius: 0,
+						borderColor: 'black',
+						margin: '4px',
+					},
+					deleteIcon: {
+						color: 'black',
+					},
+				},
+			},
+			MuiAutocomplete: {
+				styleOverrides: {
+					tag: {
+						margin: '4px',
+					},
+				},
+			},
 		},
 	});
 
