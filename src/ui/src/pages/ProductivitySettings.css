@@ -1,0 +1,14 @@
+.productivity-settings {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 9px;
+}
+
+.productivity-settings > .MuiIconButton-root {
+	align-self: flex-start;
+}
+
+.productivity-settings > .MuiAutocomplete-root {
+	min-width: 16ch;
+}
