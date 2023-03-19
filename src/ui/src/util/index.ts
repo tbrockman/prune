@@ -1,3 +1,5 @@
+import { config } from '../config';
+
 const localStorageGetAsync = async (key: string): Promise<any> => {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.get(key, (items) => {
@@ -60,18 +62,7 @@ class Options {
 	'tab-lru-destination' = 'group';
 	'show-hints' = true;
 	'productivity-mode-enabled' = false;
-	'productivity-suspend-domains' = [
-		'youtube',
-		'facebook',
-		'instagram',
-		'reddit',
-		'tiktok',
-		'buzzfeed',
-		'amazon',
-		'netflix',
-		'ycombinator',
-		'hbomax',
-	];
+	'productivity-suspend-domains' = config.productivity?.domains;
 }
 
 const defaults = new Options();

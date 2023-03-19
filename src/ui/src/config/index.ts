@@ -6,9 +6,14 @@ interface ShareConfig {
 	url: string;
 }
 
+interface ProductivityConfig {
+	domains: string[];
+}
+
 interface PruneConfig {
 	tip?: TipConfig;
 	share?: ShareConfig;
+	productivity?: ProductivityConfig;
 }
 
 const configs: { [key: string]: PruneConfig } = {
@@ -18,6 +23,20 @@ const configs: { [key: string]: PruneConfig } = {
 		},
 		share: {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+		},
+		productivity: {
+			domains: [
+				'youtube',
+				'facebook',
+				'instagram',
+				'reddit',
+				'tiktok',
+				'buzzfeed',
+				'amazon',
+				'netflix',
+				'ycombinator',
+				'hbomax',
+			],
 		},
 	},
 	development: {

@@ -1,9 +1,11 @@
 import React from 'react';
 import {
+	Breadcrumbs,
 	FormControl,
 	FormControlLabel,
 	FormGroup,
 	Grid,
+	Link,
 	MenuItem,
 	Typography,
 } from '@mui/material';
@@ -18,18 +20,6 @@ import LinkSection from '../components/LinkSection';
 import ProductivityBlock from '../components/ProductivityBlock';
 import { Page, useStore } from '../hooks/useStore';
 import ProductivitySettingsPage from './ProductivitySettings';
-
-type SectionTitleProps = {
-	title: String;
-};
-
-function SectionTitle({ title }: SectionTitleProps) {
-	return (
-		<Typography component="h1" className="section-title">
-			{title}
-		</Typography>
-	);
-}
 
 function DeduplicateBlock() {
 	const dedupHint =
@@ -305,8 +295,38 @@ const OptionsHomePage = () => {
 	);
 };
 
+function buildBreadcrumbs(page: Page, setPage: (a: Page) => void) {
+	let stack: [Page, string][] = [];
+	let hierarchy = {
+		[Page.ProductivitySettings]: Page.Home,
+		[Page.Home]: null,
+	};
+	let titles = {
+		[Page.ProductivitySettings]: 'productivity',
+		[Page.Home]: 'options',
+	};
+	let node: Page | null = page;
+
+	while (node != null) {
+		stack.push([node, titles[node]]);
+		node = hierarchy[node];
+	}
+
+	return stack.reverse().map(([page, title]) => (
+		<Link
+			underline="none"
+			color="black"
+			href={'#' + title}
+			onClick={() => setPage(page)}
+		>
+			{title}
+		</Link>
+	));
+}
+
 export default function Main() {
-	const { page } = useStore();
+	const page = useStore((state) => state.page);
+	const setPage = useStore((state) => state.setPage);
 	let pageComponent;
 
 	if (page == Page.Home) {
@@ -318,12 +338,16 @@ export default function Main() {
 	return (
 		<Grid width="100%">
 			<PruneHeader />
-			<SectionTitle title="options" />
+			<Breadcrumbs className="section-title">
+				{buildBreadcrumbs(page, setPage)}
+			</Breadcrumbs>
 			<FormGroup className="main-form-group options-form-group">
 				{pageComponent}
 			</FormGroup>
 
-			<SectionTitle title="other stuff" />
+			<Typography component="h1" className="section-title">
+				other stuff
+			</Typography>
 			<FormGroup className="main-form-group">
 				<TipForm />
 			</FormGroup>

@@ -1,18 +1,13 @@
 import React from 'react';
-import { Autocomplete, Chip, Grid, IconButton, TextField } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { Page, useStore } from '../hooks/useStore';
+import { Autocomplete, Chip, Grid, TextField } from '@mui/material';
 import useOptions from '../hooks/useOptions';
 import './ProductivitySettings.css';
+import useConfig from '../hooks/useConfig';
 
 export default function ProductivitySettingsPage() {
 	const { options, setOptionAsync } = useOptions();
+	const { config } = useConfig();
 	const suspendedDomains = options['productivity-suspend-domains'];
-	const { setPage } = useStore();
-
-	const backButtonClicked = () => {
-		setPage(Page.Home);
-	};
 
 	return (
 		<Grid className="productivity-settings">
@@ -23,13 +18,15 @@ export default function ProductivitySettingsPage() {
 				}}
 				multiple
 				freeSolo
-				options={suspendedDomains}
+				options={config.productivity?.domains ?? []}
 				disableClearable
 				autoSelect
 				filterSelectedOptions
 				autoHighlight
 				getOptionLabel={(option) => option}
-				defaultValue={[suspendedDomains[0]]}
+				defaultValue={[
+					suspendedDomains ? suspendedDomains[0] : 'youtube',
+				]}
 				renderTags={(value: string[], getTagProps) =>
 					value.map((option: string, index: number) => (
 						<Chip
@@ -47,9 +44,6 @@ export default function ProductivitySettingsPage() {
 					/>
 				)}
 			/>
-			<IconButton aria-label="settings" onClick={backButtonClicked}>
-				<CloseIcon />
-			</IconButton>
 		</Grid>
 	);
 }
