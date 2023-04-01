@@ -4,6 +4,7 @@ import {
 	TabDeduplicator,
 	TabGrouper,
 	TabBookmarker,
+	TabSuspender,
 } from './tabs/index';
 import AlarmHandler from './handlers/alarm';
 import { getOptionsAsync } from './ui/src/util';
@@ -81,6 +82,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
 	const grouper = new TabGrouper();
+	const suspender = new TabSuspender();
 
 	if (options['auto-prune-bookmark']) {
 		bookmarker = new TabBookmarker(options['auto-prune-bookmark-name']);
@@ -91,6 +93,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 		grouper,
 		pruner,
 		options,
+		suspender,
 	});
 	await handler.execute(activeInfo);
 });

@@ -1,5 +1,12 @@
 import React from 'react';
-import { Autocomplete, Chip, Grid, TextField } from '@mui/material';
+import {
+	Autocomplete,
+	Chip,
+	Grid,
+	Link,
+	TextField,
+	Typography,
+} from '@mui/material';
 import useOptions from '../hooks/useOptions';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
@@ -10,7 +17,23 @@ export default function ProductivitySettingsPage() {
 	const suspendedDomains = options['productivity-suspend-domains'];
 
 	return (
-		<Grid className="productivity-settings">
+		<Grid className="productivity-settings" flexDirection={'column'}>
+			<Typography>
+				Productivity mode helps you keep yourself accountable for
+				staying focused.
+			</Typography>
+			<Typography gutterBottom>
+				{' '}
+				Add additional filters below, which you can specify by name or
+				by using&nbsp;
+				<Link
+					underline="hover"
+					href="https://en.wikipedia.org/wiki/Regular_expression"
+				>
+					{'regular expressions'}
+				</Link>
+				:
+			</Typography>
 			<Autocomplete
 				value={suspendedDomains}
 				onChange={(_, newValue) => {
@@ -40,7 +63,7 @@ export default function ProductivitySettingsPage() {
 					<TextField
 						{...params}
 						variant="standard"
-						label="Unproductive websites"
+						label="Pause the following websites when turned on"
 					/>
 				)}
 			/>

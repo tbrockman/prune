@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { getOptionsAsync, Options } from '../util';
 
 export enum Page {

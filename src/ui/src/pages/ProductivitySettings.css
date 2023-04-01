@@ -1,8 +1,8 @@
 .productivity-settings {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
 	padding-top: 9px;
+	display: flex;
+	flex-direction: column;
 }
 
 .productivity-settings > .MuiIconButton-root {

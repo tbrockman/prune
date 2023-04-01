@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
-import Main from './pages/Main';
-import './App.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useStore as _useStore } from './hooks/useStore';
+import { createTheme as muiCreateTheme } from '@mui/material/styles';
 
-function App({ useStore = _useStore }) {
-	const init = useStore((state) => state.init);
-	const theme = createTheme({
+export default function createTheme() {
+	return muiCreateTheme({
 		palette: {
 			primary: {
 				main: '#48b946',
@@ -109,18 +104,4 @@ function App({ useStore = _useStore }) {
 			},
 		},
 	});
-
-	useEffect(() => {
-		init();
-	}, [init]);
-
-	return (
-		<ThemeProvider theme={theme}>
-			<div className="app">
-				<Main />
-			</div>
-		</ThemeProvider>
-	);
 }
-
-export default App;

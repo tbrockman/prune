@@ -1,0 +1,15 @@
+#root {
+	display: flex;
+	justify-content: center;
+}
+
+.app {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #a6a6a6ba;
+}
