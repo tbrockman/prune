@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormControlLabel, IconButton, Tooltip } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { FormOption } from './FormOption';
@@ -9,7 +10,7 @@ export default function ProductivityBlock() {
 	const { setPage } = useStore();
 
 	const hint =
-		'helps keep your browsing productive by pausing use of typical time wasting websites. turn it on manually or declare a schedule.';
+		'helps keep your browsing productive by pausing use of typical time wasting websites.';
 	const label = 'turn on productivity mode 👨‍💻';
 
 	const settingsIconClicked = () => {
@@ -36,7 +37,7 @@ export default function ProductivityBlock() {
 			<Tooltip
 				placement="top"
 				arrow={true}
-				title="update productivity mode settings"
+				title="change productivity mode settings"
 			>
 				<IconButton aria-label="settings" onClick={settingsIconClicked}>
 					<SettingsIcon />

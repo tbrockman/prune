@@ -39,6 +39,7 @@
 		"@types/mocha": "^9.0.0",
 		"@types/sinon-chrome": "^2.2.11",
 		"chai": "^4.3.4",
+		"eslint-plugin-react": "^7.32.2",
 		"esm": "^3.2.25",
 		"mocha": "^8.3.0",
 		"sinon": "^9.2.4",

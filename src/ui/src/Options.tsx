@@ -4,6 +4,7 @@ import './Options.css';
 import { ThemeProvider } from '@mui/material/styles';
 import createTheme from './styles/theme';
 import { useStore as _useStore } from './hooks/useStore';
+import { Context } from './types';
 
 function Options({ useStore = _useStore }) {
 	const init = useStore((state) => state.init);
@@ -16,7 +17,7 @@ function Options({ useStore = _useStore }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="app">
-				<Main />
+				<Main context={Context.Options} />
 			</div>
 		</ThemeProvider>
 	);

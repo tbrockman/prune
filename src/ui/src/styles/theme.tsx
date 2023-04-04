@@ -9,6 +9,9 @@ export default function createTheme() {
 			secondary: {
 				main: '#673b97',
 			},
+			info: {
+				main: '#000',
+			},
 		},
 		typography: {
 			fontFamily: 'Times New Roman, serif',
@@ -20,6 +23,9 @@ export default function createTheme() {
 						textTransform: 'lowercase',
 						color: '#fff',
 						borderRadius: 0,
+					},
+					outlinedInfo: {
+						color: '#000',
 					},
 				},
 			},

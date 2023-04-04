@@ -1,3 +1,4 @@
+import React from 'react';
 import { Grid, Icon, IconButton, Tooltip } from '@mui/material';
 import { ReactComponent as GitHubLogo } from '../assets/github-logo.svg';
 import PaletteIcon from '@mui/icons-material/Palette';

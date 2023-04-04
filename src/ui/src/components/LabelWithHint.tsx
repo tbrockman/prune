@@ -1,3 +1,4 @@
+import React from 'react';
 import { Tooltip } from '@mui/material';
 import _useOptions from '../hooks/useOptions';
 import { Options } from '../util';
