@@ -24,9 +24,9 @@
 		"zustand": "^4.0.0-rc.1"
 	},
 	"scripts": {
-		"start": "npm run start:options & npm run start:content-script",
-		"start:options": "REACT_APP_BUILD_TARGET=./Options PORT=3000 react-scripts start",
-		"start:content-script": "REACT_APP_BUILD_TARGET=./ContentScript PORT=3001 react-scripts start",
+		"start": "concurrently --kill-others \"npm run start:options\" \"npm run start:content-script\"",
+		"start:options": "cross-env REACT_APP_BUILD_TARGET=./apps/Options PORT=3000 react-scripts start",
+		"start:content-script": "cross-env REACT_APP_BUILD_TARGET=./apps/ContentScript PORT=3001 react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"

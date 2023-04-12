@@ -11,6 +11,7 @@ export default function createTheme() {
 			},
 			info: {
 				main: '#000',
+				
 			},
 		},
 		typography: {
@@ -60,6 +61,19 @@ export default function createTheme() {
 					},
 				},
 			},
+			MuiMenuItem: {
+				styleOverrides: {
+					root: {
+						"&.Mui-selected, &:hover, &:visited": {
+							backgroundColor: "#eeeeee",
+						},
+						"&:focus": {
+							backgroundColor: "black !important",
+							color: 'white'
+						}
+					}
+				}
+			},
 			MuiSelect: {
 				styleOverrides: {
 					select: {
@@ -92,13 +106,21 @@ export default function createTheme() {
 			MuiChip: {
 				styleOverrides: {
 					root: {
-						borderRadius: 0,
 						borderColor: 'black',
 						margin: '4px',
+						"&.Mui-focusVisible": {
+							boxShadow: "-4px 4px black",
+							top: "-4px",
+							right: "-4px",
+							backgroundColor: "white",
+						}
 					},
 					deleteIcon: {
-						color: 'black',
-					},
+						color: '#dc2e2e',
+						":hover": {
+							color: "#581111"
+						}
+					}
 				},
 			},
 			MuiAutocomplete: {

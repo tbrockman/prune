@@ -39,6 +39,8 @@
 		"@types/mocha": "^9.0.0",
 		"@types/sinon-chrome": "^2.2.11",
 		"chai": "^4.3.4",
+		"concurrently": "^8.0.1",
+		"cross-env": "^7.0.3",
 		"eslint-plugin-react": "^7.32.2",
 		"esm": "^3.2.25",
 		"mocha": "^8.3.0",

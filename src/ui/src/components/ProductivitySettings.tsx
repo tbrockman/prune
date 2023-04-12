@@ -3,15 +3,15 @@ import {
 	Autocomplete,
 	Chip,
 	Grid,
-	Link,
 	TextField,
 	Typography,
 } from '@mui/material';
 import useOptions from '../hooks/useOptions';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
+import ProductivityBlock from './ProductivityBlock';
 
-export default function ProductivitySettingsPage() {
+export default function ProductivitySettings() {
 	const { options, setOptionAsync } = useOptions();
 	const { config } = useConfig();
 	const suspendedDomains = options['productivity-suspend-domains'];
@@ -22,22 +22,10 @@ export default function ProductivitySettingsPage() {
 			className="productivity-settings"
 			flexDirection={'column'}
 		>
-			<Grid item marginBottom={'1rem'}>
+			<ProductivityBlock/>
+			<Grid item marginBottom='0.75rem' marginTop='0.5rem'>
 				<Typography>
-					<b>Productivity mode</b> helps you keep yourself accountable
-					for staying focused.
-				</Typography>
-				<Typography gutterBottom>
-					{' '}
-					Block websites below, which you can specify by name or by
-					using&nbsp;
-					<Link
-						underline="hover"
-						href="https://en.wikipedia.org/wiki/Regular_expression"
-					>
-						{'regular expressions'}
-					</Link>
-					:
+					<b>Productivity mode</b> helps you stay focused by temporarily disabling access to unproductive websites. 
 				</Typography>
 			</Grid>
 			<Grid>
@@ -74,7 +62,7 @@ export default function ProductivitySettingsPage() {
 						<TextField
 							{...params}
 							variant="standard"
-							label="Pause the following websites when turned on"
+							helperText="Enter websites to block when you're trying to be productive."
 						/>
 					)}
 				/>

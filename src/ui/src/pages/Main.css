@@ -34,14 +34,14 @@
 .MuiTypography-root.section-title {
 	margin-left: 2.5rem;
 	background-color: rgb(255, 255, 255);
-	margin-bottom: -22px;
+	margin-bottom: -2rem;
 	z-index: 2;
 	position: relative;
 	padding: 0 0.5rem;
 	width: fit-content;
-	font-size: 2rem;
+	font-size: 3rem;
 }
 
 .MuiFormGroup-root > .form-option:first-child {
-	margin-top: 0.25rem;
+	margin-top: 0.5rem;
 }

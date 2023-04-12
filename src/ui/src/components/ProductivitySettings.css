@@ -1,6 +1,5 @@
 .productivity-settings {
-	display: flex;
-	padding-top: 9px;
+	margin-top: 0.25rem;
 	display: flex;
 	flex-direction: column;
 }

@@ -1,70 +1,82 @@
-import React from 'react';
-import { Breadcrumbs, FormGroup, Grid, Link, Typography } from '@mui/material';
-import TipForm from '../components/TipForm';
-import { Page, useStore } from '../hooks/useStore';
-import ProductivitySettingsPage from './ProductivitySettings';
-import { PruneHeader } from '../components/PruneHeader';
-import { OptionsHomePage } from './Main';
+import React from "react";
+import { Breadcrumbs, FormGroup, Grid, Link, Typography } from "@mui/material";
+import TipForm from "../components/TipForm";
+import { Page, useStore } from "../hooks/useStore";
+import ProductivitySettings from "../components/ProductivitySettings";
+import { PruneHeader } from "../components/PruneHeader";
+import { OptionsHomePage } from "./Main";
 
 function buildBreadcrumbs(page: Page, setPage: (_: Page) => void) {
-	let stack: [Page, string][] = [];
-	let hierarchy = {
-		[Page.ProductivitySettings]: Page.Home,
-		[Page.Home]: null,
-	};
-	let titles = {
-		[Page.ProductivitySettings]: 'productivity',
-		[Page.Home]: 'options',
-	};
-	let node: Page | null = page;
+  // let stack: [Page, string][] = [];
+  // let hierarchy = {
+  // 	[Page.ProductivitySettings]: Page.Home,
+  // 	[Page.Home]: null,
+  // };
+  let titles = {
+    [Page.ProductivitySettings]: "options 🛠️",
+    [Page.Home]: "options 🛠️",
+  };
+  // let node: Page | null = page;
 
-	while (node != null) {
-		stack.push([node, titles[node]]);
-		node = hierarchy[node];
-	}
+  // while (node != null) {
+  // 	stack.push([node, titles[node]]);
+  // 	node = hierarchy[node];
+  // }
 
-	return stack.reverse().map(([page, title]) => (
-		<Link
-			key={title}
-			underline="none"
-			color="black"
-			href={'#' + title}
-			onClick={() => setPage(page)}
-		>
-			{title}
-		</Link>
-	));
+  // return stack.reverse().map(([page, title]) => (
+  // 	<Link
+  // 		key={title}
+  // 		underline="none"
+  // 		color="black"
+  // 		href={'#' + title}
+  // 		onClick={() => setPage(page)}
+  // 	>
+  // 		{title}
+  // 	</Link>
+  // ));
+  const title = titles[page];
+  return (
+    <Link
+      key={title}
+      underline="none"
+      color="black"
+      href={"#" + title}
+      onClick={() => setPage(page)}
+    >
+      {title}
+    </Link>
+  );
 }
 
 export function OptionsMain() {
-	const page = useStore((state) => state.page);
-	const setPage = useStore((state) => state.setPage);
-	let pageComponent;
+  const page = useStore((state) => state.page);
+  const setPage = useStore((state) => state.setPage);
+  let pageComponent;
 
-	switch (page) {
-		case Page.Home:
-			pageComponent = <OptionsHomePage />;
-			break;
-		case Page.ProductivitySettings:
-			pageComponent = <ProductivitySettingsPage />;
-	}
+  switch (page) {
+    case Page.Home:
+      pageComponent = <OptionsHomePage />;
+      break;
+    case Page.ProductivitySettings:
+      pageComponent = <ProductivitySettings />;
+  }
 
-	return (
-		<Grid width="100%">
-			<PruneHeader />
-			<Breadcrumbs className="section-title">
-				{buildBreadcrumbs(page, setPage)}
-			</Breadcrumbs>
-			<FormGroup className="main-form-group options-form-group">
-				{pageComponent}
-			</FormGroup>
+  return (
+    <Grid width="100%">
+      <PruneHeader />
+      <Breadcrumbs className="section-title">
+        {buildBreadcrumbs(page, setPage)}
+      </Breadcrumbs>
+      <FormGroup className="main-form-group options-form-group">
+        {pageComponent}
+      </FormGroup>
 
-			<Typography component="h1" className="section-title">
-				other stuff
-			</Typography>
-			<FormGroup className="main-form-group">
-				<TipForm />
-			</FormGroup>
-		</Grid>
-	);
+      <Typography component="h1" className="section-title">
+        about 📝
+      </Typography>
+      <FormGroup className="main-form-group">
+        <TipForm />
+      </FormGroup>
+    </Grid>
+  );
 }

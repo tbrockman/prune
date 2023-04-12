@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import Main from './pages/Main';
+import Main from '../pages/Main';
 import './Options.css';
 import { ThemeProvider } from '@mui/material/styles';
-import createTheme from './styles/theme';
-import { useStore as _useStore } from './hooks/useStore';
-import { Context } from './types';
+import createTheme from '../styles/theme';
+import { useStore as _useStore } from '../hooks/useStore';
+import { Context } from '../types';
 
 function Options({ useStore = _useStore }) {
 	const init = useStore((state) => state.init);

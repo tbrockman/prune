@@ -1,0 +1,9 @@
+.snooze-container {
+    display: flex !important;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.snooze-container > div {
+    background-color: transparent !important;
+}
