@@ -1,9 +1,13 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 enum Context {
-	// eslint-disable-next-line no-unused-vars
 	ContentScript,
-	// eslint-disable-next-line no-unused-vars
 	Options,
 }
 
-export { Context };
+enum BuildTargets {
+	Options = './apps/Options',
+	ContentScript = './apps/ContentScript',
+}
+
+export { Context, BuildTargets };
+/* eslint-enable no-unused-vars */

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { BuildTargets } from './types';
 
 function importBuildTarget() {
 	if (process.env.REACT_APP_BUILD_TARGET) {
@@ -16,9 +17,17 @@ function importBuildTarget() {
 }
 
 importBuildTarget().then(({ default: Environment }) => {
-	const root = ReactDOM.createRoot(
-		document.getElementById('root') as HTMLElement,
-	);
+	let rootElement;
+
+	if (process.env.REACT_APP_BUILD_TARGET === BuildTargets.Options) {
+		rootElement = document.getElementById('root') as HTMLElement;
+	} else {
+		const element = document.createElement('div');
+		element.className = 'content-script';
+		document.body.prepend(element);
+		rootElement = element;
+	}
+	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<React.StrictMode>
 			<Environment />

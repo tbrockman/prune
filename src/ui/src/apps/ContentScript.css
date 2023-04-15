@@ -3,6 +3,13 @@
 	justify-content: center;
 }
 
+.content-script {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
 .app {
 	width: 620px;
 	display: flex;

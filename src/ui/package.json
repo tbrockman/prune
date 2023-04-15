@@ -25,11 +25,13 @@
 	},
 	"scripts": {
 		"start": "concurrently --kill-others \"npm run start:options\" \"npm run start:content-script\"",
-		"start:options": "cross-env REACT_APP_BUILD_TARGET=./apps/Options PORT=3000 react-scripts start",
-		"start:content-script": "cross-env REACT_APP_BUILD_TARGET=./apps/ContentScript PORT=3001 react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"start:options": "cross-env REACT_APP_BUILD_TARGET=./apps/Options PORT=3000 react-app-rewired start",
+		"start:content-script": "cross-env REACT_APP_BUILD_TARGET=./apps/ContentScript PORT=3001 react-app-rewired start",
+		"build:options": "cross-env REACT_APP_BUILD_TARGET=./apps/Options BUILD_PATH='./build/options' react-app-rewired build",
+		"build:content-script": "cross-env REACT_APP_BUILD_TARGET=./apps/ContentScript BUILD_PATH='./build/content-script' react-app-rewired build",
+		"build": "npm run build:options && npm run build:content-script",
+		"test": "react-app-rewired test",
+		"eject": "react-app-rewired eject"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -56,11 +58,13 @@
 	},
 	"devDependencies": {
 		"@types/chrome": "^0.0.188",
+		"customize-cra-5": "^5.0.0",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-react": "^7.32.2",
-		"eslint-plugin-react-hooks": "^4.5.0"
+		"eslint-plugin-react-hooks": "^4.5.0",
+		"react-app-rewired": "^2.2.1"
 	}
 }

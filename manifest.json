@@ -23,5 +23,11 @@
 		"16": "/assets/png/prune-icon16.png",
 		"48": "/assets/png/prune-icon48.png",
 		"128": "/assets/png/prune-icon128.png"
-	}
+	},
+	"web_accessible_resources": [
+		{
+			"resources": ["test1.png", "test2.png"],
+			"matches": ["https://web-accessible-resources-1.glitch.me/*"]
+		}
+	]
 }

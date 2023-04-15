@@ -51,7 +51,10 @@ const configs: { [key: string]: PruneConfig } = {
 	},
 };
 
-const config = { ...configs.default, ...configs[process.env.NODE_ENV] };
+const config = {
+	...configs.default,
+	...configs[process.env.NODE_ENV ?? 'development'],
+};
 
 export { config };
 
