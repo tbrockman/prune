@@ -1,13 +1,11 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "outDir": "lib"
+  "extends": "plasmo/templates/tsconfig.base",
+  "exclude": ["node_modules"],
+  "include": [".plasmo/index.d.ts", ".plasmo/**/*", "./**/*.ts", "./**/*.tsx"],
+  "compilerOptions": {
+    "paths": {
+      "~*": ["./src/*"]
     },
-    "extends": "@tsconfig/recommended/tsconfig.json",
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "src/ui"
-    ]
+    "baseUrl": "."
+  }
 }
