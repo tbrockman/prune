@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.126",
     "@mui/material": "^5.12.0",
-    "plasmo": "0.68.0",
+    "plasmo": "0.68.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zustand": "^4.3.7"

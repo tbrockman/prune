@@ -1,6 +1,6 @@
 import React from "react"
 
-import Context from "~enums/context"
+import { Context } from "~enums"
 
 import { DeduplicateBlock } from "../components/DeduplicateBlock"
 import { GroupTabsBlock } from "../components/GroupTabsBlock"
@@ -8,24 +8,11 @@ import { LRUBlock } from "../components/LRUBlock"
 import ProductivityBlock from "../components/ProductivityBlock"
 import { RemoveTabsBlock } from "../components/RemoveTabsBlock"
 import { StorageBlock } from "../components/StorageBlock"
-import { OptionsMain } from "./OptionsMain"
+import { PopupMain } from "./PopupMain"
 
 import "./Main.css"
 
 import { ContentScriptMain } from "./ContentScriptMain"
-
-export const OptionsHomePage = () => {
-  return (
-    <>
-      <ProductivityBlock />
-      <DeduplicateBlock />
-      <GroupTabsBlock />
-      <RemoveTabsBlock />
-      <LRUBlock />
-      <StorageBlock />
-    </>
-  )
-}
 
 type MainProps = {
   context: Context
@@ -34,7 +21,7 @@ type MainProps = {
 export default function Main({ context }: MainProps) {
   switch (context) {
     case Context.Options:
-      return <OptionsMain />
+      return <PopupMain />
     case Context.ContentScript:
       return <ContentScriptMain />
   }

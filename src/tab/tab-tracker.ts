@@ -84,14 +84,16 @@ class TabTracker {
   }
 
   async trackTabs(tabs: Tab[]) {
-    tabs.forEach(async (tab) => await this.track(tab))
+    await Promise.all(tabs.map(async (tab) => {
+      await this.track(tab)
+    }))
   }
 
   async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
     const openTabSet: Set<string> = new Set()
     console.debug("currently open tabs when filtering: ", openTabs)
 
-    openTabs.forEach(async (tab) => {
+    await Promise.all(openTabs.map(async (tab) => {
       if (tab.url) {
         openTabSet.add(tab.url)
 
@@ -99,7 +101,8 @@ class TabTracker {
           await this.track(tab)
         }
       }
-    })
+    }))
+    
     console.debug("open tabs set: ", openTabSet)
 
     this.tabs.forEach((val, key) => {

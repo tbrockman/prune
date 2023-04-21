@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { type ChangeEvent, useState } from 'react';
 
 import { LoadingButton } from '@mui/lab';
 import { FormGroup, FormLabel, InputAdornment, TextField } from '@mui/material';

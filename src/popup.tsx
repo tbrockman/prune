@@ -1,7 +1,7 @@
-import Options from "~apps/Options"
+import Popup from "~apps/Popup"
 
-function OptionsIndex() {
-  return <Options />
+function PopupIndex() {
+  return <Popup />
 }
 
-export default OptionsIndex
+export default PopupIndex

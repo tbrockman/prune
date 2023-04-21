@@ -3,7 +3,7 @@ import {
   TabGrouper,
   TabPruner,
   TabTracker
-} from "../tab-utils"
+} from "../tab"
 
 type TabCreatedHandlerArgs = {
   tracker: TabTracker

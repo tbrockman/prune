@@ -1,4 +1,4 @@
-import { TabGrouper, TabPruner, TabTracker } from "../tab-utils"
+import { TabGrouper, TabPruner, TabTracker } from "../tab"
 import { Tab } from "../types"
 
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000

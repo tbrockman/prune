@@ -4,7 +4,12 @@ import TipForm from "../components/TipForm";
 import { Page, useStore } from "../hooks/useStore";
 import ProductivitySettings from "../components/ProductivitySettings";
 import { PruneHeader } from "../components/PruneHeader";
-import { OptionsHomePage } from "./Main";
+import ProductivityBlock from "~components/ProductivityBlock";
+import { DeduplicateBlock } from "~components/DeduplicateBlock";
+import { GroupTabsBlock } from "~components/GroupTabsBlock";
+import { RemoveTabsBlock } from "~components/RemoveTabsBlock";
+import { LRUBlock } from "~components/LRUBlock";
+import { StorageBlock } from "~components/StorageBlock";
 
 function buildBreadcrumbs(page: Page, setPage: (_: Page) => void) {
   // let stack: [Page, string][] = [];
@@ -48,7 +53,20 @@ function buildBreadcrumbs(page: Page, setPage: (_: Page) => void) {
   );
 }
 
-export function OptionsMain() {
+const OptionsHomePage = () => {
+  return (
+    <>
+      <ProductivityBlock />
+      <DeduplicateBlock />
+      <GroupTabsBlock />
+      <RemoveTabsBlock />
+      <LRUBlock />
+      <StorageBlock />
+    </>
+  )
+}
+
+export function PopupMain() {
   const page = useStore((state) => state.page);
   const setPage = useStore((state) => state.setPage);
   let pageComponent;

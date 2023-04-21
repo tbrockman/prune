@@ -1,4 +1,4 @@
-import { TabGrouper, TabPruner, TabSuspender, TabTracker } from "../tab-utils"
+import { TabGrouper, TabPruner, TabSuspender, TabTracker } from "../tab"
 import { Tab } from "../types"
 
 type TabFocusedHandlerArgs = {

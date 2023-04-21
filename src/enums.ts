@@ -3,4 +3,4 @@ enum Context {
   Options
 }
 
-export default Context
+export { Context } 

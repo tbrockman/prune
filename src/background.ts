@@ -1,12 +1,12 @@
 import AlarmHandler from "~src/handlers/alarm"
 import TabCreatedHandler from "~src/handlers/tab-created"
 import TabFocusedHandler from "~src/handlers/tab-focused"
-import TabBookmarker from "~src/tab-utils/tab-bookmarker"
-import TabDeduplicator from "~src/tab-utils/tab-deduplicator"
-import TabGrouper from "~src/tab-utils/tab-grouper"
-import TabPruner from "~src/tab-utils/tab-pruner"
-import TabSuspender from "~src/tab-utils/tab-suspender"
-import TabTracker from "~src/tab-utils/tab-tracker"
+import TabBookmarker from "~src/tab/tab-bookmarker"
+import TabDeduplicator from "~src/tab/tab-deduplicator"
+import TabGrouper from "~src/tab/tab-grouper"
+import TabPruner from "~src/tab/tab-pruner"
+import TabSuspender from "~src/tab/tab-suspender"
+import TabTracker from "~src/tab/tab-tracker"
 
 import { getOptionsAsync } from "./src/util"
 

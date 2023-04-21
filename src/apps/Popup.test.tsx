@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Options from './Options';
+import Popup from './Popup';
 
 test('renders learn react link', () => {
-	render(<Options />);
+	render(<Popup />);
 	const linkElement = screen.getByText(/learn react/i);
 	expect(linkElement).toBeInTheDocument();
 });
