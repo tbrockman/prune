@@ -1,9 +1,7 @@
-import {
-  TabDeduplicator,
-  TabGrouper,
-  TabPruner,
-  TabTracker
-} from "../tab"
+import TabDeduplicator from "~tab/tab-deduplicator"
+import TabGrouper from "~tab/tab-grouper"
+import TabPruner from "~tab/tab-pruner"
+import TabTracker from "~tab/tab-tracker"
 
 type TabCreatedHandlerArgs = {
   tracker: TabTracker

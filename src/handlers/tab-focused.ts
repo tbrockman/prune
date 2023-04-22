@@ -1,5 +1,7 @@
-import { TabGrouper, TabPruner, TabSuspender, TabTracker } from "../tab"
-import { Tab } from "../types"
+import TabGrouper from "~tab/tab-grouper"
+import TabPruner from "~tab/tab-pruner"
+import TabSuspender from "~tab/tab-suspender"
+import TabTracker from "~tab/tab-tracker"
 
 type TabFocusedHandlerArgs = {
   tracker: TabTracker

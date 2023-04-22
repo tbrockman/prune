@@ -1,5 +1,7 @@
-import { TabGrouper, TabPruner, TabTracker } from "../tab"
-import { Tab } from "../types"
+import TabGrouper from "~tab/tab-grouper"
+import TabPruner from "~tab/tab-pruner"
+import TabTracker from "~tab/tab-tracker"
+import { type Tab } from "../types"
 
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000
 
@@ -46,7 +48,7 @@ class AlarmHandler {
     }
 
     if (this.autoPrune) {
-      ;[candidates, openTabs] = this.tracker.findTabsExceedingThreshold(
+      [candidates, openTabs] = this.tracker.findTabsExceedingThreshold(
         openTabs,
         this.pruneThreshold
       )
@@ -65,7 +67,7 @@ class AlarmHandler {
       // leave any tabs which have a groupId
       // that isn't our autoGroup alone
       candidates = candidates.filter((tab) =>
-        filter.includes(tab.groupId ?? -1)
+        filter.includes(tab.groupId ? tab.groupId : -1)
       )
       console.debug("should be pruning", candidates)
       await this.pruner.pruneTabs(candidates)

@@ -1,5 +1,5 @@
 type Tab = chrome.tabs.Tab
 
-export {
+export type {
     Tab
 }

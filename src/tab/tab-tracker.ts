@@ -87,6 +87,7 @@ class TabTracker {
     await Promise.all(tabs.map(async (tab) => {
       await this.track(tab)
     }))
+    console.debug('done tracking tabs')
   }
 
   async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
