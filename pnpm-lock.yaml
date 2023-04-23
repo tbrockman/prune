@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@emotion/cache':
+    specifier: ^11.10.7
+    version: 11.10.7
   '@emotion/react':
     specifier: ^11.10.6
     version: 11.10.6(@types/react@18.0.21)(react@18.2.0)
@@ -16,6 +19,9 @@ dependencies:
   '@mui/material':
     specifier: ^5.12.0
     version: 5.12.0(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@types/react@18.0.21)(react-dom@18.2.0)(react@18.2.0)
+  '@plasmohq/messaging':
+    specifier: ^0.2.0
+    version: 0.2.0(react@18.2.0)
   plasmo:
     specifier: 0.68.3
     version: 0.68.3(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)
@@ -2142,6 +2148,18 @@ packages:
 
   /@plasmohq/init@0.6.3:
     resolution: {integrity: sha512-TdeisHX+Z0Rfez4251eCX0czcqnWO1OfurQhSQDijcmcjVU7r+IXh0svg7s+UVpCiHTagQ/JY+bnweuqnGPFHQ==}
+    dev: false
+
+  /@plasmohq/messaging@0.2.0(react@18.2.0):
+    resolution: {integrity: sha512-lOuZdknoNzccM3E1VzZmEBFL7u7nOqx4U+1dnC9o1tkstP3O+xSh8xQpjMZw8toA9SAjnuKaQetObjLq8P8G4Q==}
+    peerDependencies:
+      react: ^16.8.6 || ^17 || ^18
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      nanoid: 4.0.2
+      react: 18.2.0
     dev: false
 
   /@plasmohq/parcel-bundler@0.4.9:
@@ -4763,6 +4781,12 @@ packages:
   /nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
+
+  /nanoid@4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
     hasBin: true
     dev: false
 

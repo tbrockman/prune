@@ -1,0 +1,79 @@
+#root {
+	display: flex;
+	justify-content: center;
+}
+
+.content-script {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.app {
+    justify-content: center;
+    display: flex;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+}
+
+
+.snooze-container {
+    display: flex !important;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.snooze-container > div {
+    background-color: transparent !important;
+}
+
+.main-form-group {
+	border: 2px solid;
+	box-shadow: -8px 8px 0 0px #000;
+	margin: 0 2rem 2rem;
+	padding: 1rem;
+	max-width: fit-content;
+}
+
+.main-form-group.options-form-group {
+	max-width: 100%;
+}
+
+.main-form-group > .form-option {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 100%;
+}
+
+.form-option.lru-options {
+	padding-left: 0;
+}
+
+.form-option > .lru-options-control {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.prune-header-container {
+	padding: 1rem;
+}
+
+.MuiTypography-root.section-title {
+	margin-left: 2.5rem;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: -2rem;
+	z-index: 2;
+	position: relative;
+	padding: 0 0.5rem;
+	width: fit-content;
+	font-size: 3rem;
+}
+
+.MuiFormGroup-root > .form-option:first-child {
+	margin-top: 0.5rem;
+}

@@ -8,7 +8,9 @@ import TabPruner from "~src/tab/tab-pruner"
 import TabSuspender from "~src/tab/tab-suspender"
 import TabTracker from "~src/tab/tab-tracker"
 
-import { getOptionsAsync } from './util'
+import "@plasmohq/messaging/background"
+
+import { getOptionsAsync } from '../util'
 
 const lock = new Set<number>()
 

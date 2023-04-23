@@ -11,11 +11,13 @@
     "test": "mocha -r ts-node/register -r tsconfig-paths/register -r esm tests/**/*"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.126",
     "@mui/material": "^5.12.0",
+    "@plasmohq/messaging": "^0.2.0",
     "plasmo": "0.68.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -41,6 +43,13 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
+    ],
+    "permissions": [
+      "alarms",
+      "tabs",
+      "storage",
+      "tabGroups",
+      "bookmarks"
     ]
   }
 }

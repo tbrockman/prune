@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import './ContentScript.css';
 import { ThemeProvider } from '@mui/material/styles';
 import createTheme from '../styles/theme';
 import { useStore as _useStore } from '../hooks/useStore';
-import { Context } from '../types';
+import { Context } from '../enums';
 import Main from '../pages/Main';
+import { ContentScriptMain } from '~pages/ContentScriptMain';
 
 function ContentScript({ useStore = _useStore }) {
 	const init = useStore((state) => state.init);
@@ -17,7 +17,7 @@ function ContentScript({ useStore = _useStore }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="app">
-				<Main context={Context.ContentScript} />
+				<ContentScriptMain/>
 			</div>
 		</ThemeProvider>
 	);

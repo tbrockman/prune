@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Grid, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
+import { Button, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useState } from 'react';
-import "./PauseDialog.css";
+import styleText from "data-text:./PauseDialog.css";
+import type { PlasmoGetStyle } from "plasmo"
 
 export default function PausedDialog() {
 	const [snoozeMinutes, setSnoozeMinutes] = useState('15');
@@ -45,6 +47,9 @@ export default function PausedDialog() {
 						value={snoozeMinutes}
 						label="Time"
 						autoWidth={false}
+						MenuProps={{
+							anchorEl: document.getElementById('plasmo-shadow-container')
+						}}
 						onChange={handleSnoozeTimeChange}
 						className='snooze-container'
 					>
