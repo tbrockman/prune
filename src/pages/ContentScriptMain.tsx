@@ -5,11 +5,11 @@ import { PruneHeader } from '../components/PruneHeader';
 
 export function ContentScriptMain() {
 	return (
-		<Grid width="100%">
+		<Grid width="620px">
 			<PruneHeader></PruneHeader>
 			<Breadcrumbs className="section-title">
 				<Link underline="none" color="black">
-					{'tab locked 🔒'}
+					{'page locked 🔒'}
 				</Link>
 			</Breadcrumbs>
 			<FormGroup className="main-form-group options-form-group">

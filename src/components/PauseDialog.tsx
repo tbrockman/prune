@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import type { SelectChangeEvent } from '@mui/material';
 import { Button, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useState } from 'react';
-import styleText from "data-text:./PauseDialog.css";
-import type { PlasmoGetStyle } from "plasmo"
 
 export default function PausedDialog() {
-	const [snoozeMinutes, setSnoozeMinutes] = useState('15');
+	const [unlockMinutes, setUnlockMinutes] = useState('15');
+	const [current, setCurrent] = useState<HTMLElement>(null);
+	const ref = useRef<HTMLElement>();
 
-	const handleSnoozeTimeChange = (event: SelectChangeEvent) => {
-		setSnoozeMinutes(event.target.value as string)
+	const handleUnlockTimeChange = (event: SelectChangeEvent) => {
+		setUnlockMinutes(event.target.value as string)
 	}
+
+	useLayoutEffect(() => {
+		setCurrent(ref.current)
+	})
 
 	return (
 		<>
@@ -31,27 +35,28 @@ export default function PausedDialog() {
 					</Button>
 				</Grid>
 				<Grid item>
-					<Button color="info" variant="outlined" endIcon={<>⏰</>}>
-						snooze
+					<Button color="info" variant="outlined" endIcon={<>🔓</>}>
+						unlock
 					</Button>
 				</Grid>
 				<Grid item>
 					<Typography>for</Typography>
 				</Grid>
-				<Grid item width={'10ch'} height={'100%'}>
+				<Grid item width={'12ch'} height={'100%'}>
 					<Select
 						variant='filled'
 						color='info'
-						labelId="snooze-time-select-label"
-						id="snooze-time-select"
-						value={snoozeMinutes}
+						labelId="unlock-time-select-label"
+						id="unlock-time-select"
+						value={unlockMinutes}
 						label="Time"
 						autoWidth={false}
+						onChange={handleUnlockTimeChange}
+						className='unlock-container'
+						ref={ref}
 						MenuProps={{
-							anchorEl: document.getElementById('plasmo-shadow-container')
+							container: current
 						}}
-						onChange={handleSnoozeTimeChange}
-						className='snooze-container'
 					>
 						<MenuItem value={15}>15 min</MenuItem>
 						<MenuItem value={60}>1 hour</MenuItem>

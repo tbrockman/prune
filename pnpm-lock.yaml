@@ -22,6 +22,9 @@ dependencies:
   '@plasmohq/messaging':
     specifier: ^0.2.0
     version: 0.2.0(react@18.2.0)
+  '@plasmohq/storage':
+    specifier: ^1.5.0
+    version: 1.5.0(react@18.2.0)
   plasmo:
     specifier: 0.68.3
     version: 0.68.3(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.1)
@@ -2502,6 +2505,18 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@plasmohq/storage@1.5.0(react@18.2.0):
+    resolution: {integrity: sha512-OJ9w5Umen/zD9Oba2G7xiLNBSiJhuD+Zshi+iQZq6HQmRfmT3NM+xq41CP0v/PE3tutRZZR+oxp4fszvxUi3vQ==}
+    peerDependencies:
+      react: ^16.8.6 || ^17 || ^18
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      pify: 6.1.0
+      react: 18.2.0
+    dev: false
 
   /@pnpm/config.env-replace@1.1.0:
     resolution: {integrity: sha512-htyl8TWnKL7K/ESFa1oW2UB5lVDxuF5DpM7tBi6Hu2LNL3mWkIzNLG6N4zoCUP1lCKNxWy/3iu8mS8MvToGd6w==}
@@ -5062,6 +5077,11 @@ packages:
     engines: {node: '>=6'}
     dev: false
     optional: true
+
+  /pify@6.1.0:
+    resolution: {integrity: sha512-KocF8ve28eFjjuBKKGvzOBGzG8ew2OqOOSxTTZhirkzH7h3BI1vyzqlR0qbfcDBve1Yzo3FVlWUAtCRrbVN8Fw==}
+    engines: {node: '>=14.16'}
+    dev: false
 
   /pirates@4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}

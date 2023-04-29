@@ -1,14 +1,14 @@
 import createCache from "@emotion/cache"
 import { CacheProvider } from "@emotion/react"
-import { usePort } from '@plasmohq/messaging/hook'
+import { useStorage } from "@plasmohq/storage/hook"
 import ContentScript from "~apps/ContentScript";
-import cssText from "data-text:~/contents/locked.css"
+import cssText from "data-text:~/contents/Locked.css"
 
 import type { PlasmoCSConfig } from "plasmo"
- 
+import useConfig from "~hooks/useConfig";
+
 const styleElement = document.createElement("style")
 styleElement.textContent = cssText
-console.log(cssText)
 const styleCache = createCache({
   key: "plasmo-mui-cache",
   prepend: true,
@@ -22,16 +22,30 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
+function matchDomain(domain, filters) {
+  const some = filters.some((filter) => {
+    const regex = new RegExp('^' + filter)
+    return domain.match(regex)
+  })
+  return some
+}
+
 const Locked = () => {
-    const port = usePort("lock-status")
+  const { config } = useConfig()
+  const [productivityModeEnabled] = useStorage('productivity-mode-enabled')
+  const [suspendedDomains] = useStorage('productivity-suspend-domains', config.productivity?.domains)
+  const match = matchDomain(window.location.host, suspendedDomains)
 
-    console.log('are we here at elast?')
-
+  if (match && productivityModeEnabled) {
     return (
-        <CacheProvider value={styleCache}>
-            <ContentScript/>
-        </CacheProvider>
+      <CacheProvider value={styleCache}>
+        <ContentScript/>
+      </CacheProvider>
     )
+  }
+  else {
+    return (<></>)
+  }
 }
 
 export default Locked

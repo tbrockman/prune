@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import createTheme from '../styles/theme';
 import { useStore as _useStore } from '../hooks/useStore';
-import { Context } from '../enums';
-import Main from '../pages/Main';
 import { ContentScriptMain } from '~pages/ContentScriptMain';
 
 function ContentScript({ useStore = _useStore }) {
 	const init = useStore((state) => state.init);
+
 	const theme = createTheme();
 
 	useEffect(() => {

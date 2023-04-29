@@ -1,15 +1,12 @@
 import React, { useEffect } from "react"
 
-import Main from "../pages/Main"
-
 import "./Popup.css"
 
 import { ThemeProvider } from "@mui/material/styles"
 
-import { Context } from "~enums"
-
 import { useStore as _useStore } from "../hooks/useStore"
 import createTheme from "../styles/theme"
+import { PopupMain } from "~pages/PopupMain"
 
 function Popup({ useStore = _useStore }) {
   const init = useStore((state) => state.init)
@@ -22,7 +19,7 @@ function Popup({ useStore = _useStore }) {
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
-        <Main context={Context.Options} />
+        <PopupMain/>
       </div>
     </ThemeProvider>
   )

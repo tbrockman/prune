@@ -1,3 +1,21 @@
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	  sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+  
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}
+
+#plasmo-shadow-container > .plasmo-csui-container {
+	position: fixed !important;
+}
+  
 #root {
 	display: flex;
 	justify-content: center;
@@ -19,14 +37,13 @@
     background-color: white;
 }
 
-
-.snooze-container {
+.unlock-container {
     display: flex !important;
     height: 100%;
     justify-content: space-evenly;
 }
 
-.snooze-container > div {
+.unlock-container > div {
     background-color: transparent !important;
 }
 
@@ -66,14 +83,24 @@
 .MuiTypography-root.section-title {
 	margin-left: 2.5rem;
 	background-color: rgb(255, 255, 255);
-	margin-bottom: -2rem;
+	margin-bottom: -1.5rem;
 	z-index: 2;
 	position: relative;
 	padding: 0 0.5rem;
 	width: fit-content;
-	font-size: 3rem;
+	font-size: 2rem !important;
 }
 
 .MuiFormGroup-root > .form-option:first-child {
 	margin-top: 0.5rem;
 }
+
+.link-section > * {
+	color: #000 !important;
+	margin-right: 2rem !important;
+}
+
+.link-section > *:last-child {
+	margin-right: 0 !important;
+}
+

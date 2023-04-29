@@ -6,15 +6,14 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import useOptions from '../hooks/useOptions';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
+import { useStorage } from '@plasmohq/storage/hook';
 
 export default function ProductivitySettings() {
-	const { options, setOptionAsync } = useOptions();
 	const { config } = useConfig();
-	const suspendedDomains = options['productivity-suspend-domains'];
+	const [suspendedDomains, setSuspendedDomains] = useStorage('productivity-suspend-domains', config.productivity.domains)
 
 	return (
 		<Grid
@@ -32,10 +31,7 @@ export default function ProductivitySettings() {
 				<Autocomplete
 					value={suspendedDomains}
 					onChange={(_, newValue) => {
-						setOptionAsync(
-							'productivity-suspend-domains',
-							newValue,
-						);
+						setSuspendedDomains(newValue)
 					}}
 					multiple
 					freeSolo
