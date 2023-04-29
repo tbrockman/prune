@@ -3,6 +3,7 @@ import { FormControlLabel } from '@mui/material';
 import { FormOption } from '../components/FormOption';
 import PersistedInput from '../components/PersistedInput';
 import LabelWithHint from '../components/LabelWithHint';
+import { StorageKeys } from '~enums';
 
 export function DeduplicateBlock() {
 	const dedupHint =
@@ -16,7 +17,7 @@ export function DeduplicateBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey="auto-deduplicate"
+						storageKey={StorageKeys.AUTO_DEDUPLICATE}
 					/>
 				}
 				label={

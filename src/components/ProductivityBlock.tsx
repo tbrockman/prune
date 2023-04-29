@@ -6,6 +6,7 @@ import { FormOption } from "./FormOption";
 import LabelWithHint from "./LabelWithHint";
 import PersistedInput from "./PersistedInput";
 import { useStore, Page } from "../hooks/useStore";
+import { StorageKeys } from "~enums";
 
 export default function ProductivityBlock() {
   const setPage = useStore((state) => state.setPage);
@@ -29,7 +30,7 @@ export default function ProductivityBlock() {
         control={
           <PersistedInput
             component="checkbox"
-            storageKey="productivity-mode-enabled"
+            storageKey={StorageKeys.PRODUCTIVITY_MODE_ENABLED}
           />
         }
         label={

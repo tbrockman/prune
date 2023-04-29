@@ -4,6 +4,7 @@ import { FormOption } from './FormOption';
 import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
+import { StorageKeys } from '~enums';
 
 export function LRUBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
@@ -20,12 +21,12 @@ export function LRUBlock({ useOptions = _useOptions }) {
 						<>
 							<PersistedInput
 								component="checkbox"
-								storageKey="tab-lru-enabled"
+								storageKey={StorageKeys.TAB_LRU_ENABLED}
 							/>
 							<PersistedInput
 								component="select"
-								storageKey="tab-lru-destination"
-								disabled={!options['tab-lru-enabled']}
+								storageKey={StorageKeys.TAB_LRU_DESTINATION}
+								disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 							>
 								<MenuItem value={'group'}>group</MenuItem>
 								<MenuItem value={'close'}>close</MenuItem>
@@ -38,7 +39,7 @@ export function LRUBlock({ useOptions = _useOptions }) {
 							label={lruTabsLabel}
 						/>
 					}
-					disabled={!options['tab-lru-enabled']}
+					disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 				/>
 				<FormControlLabel
 					control={
@@ -48,8 +49,8 @@ export function LRUBlock({ useOptions = _useOptions }) {
 							size="small"
 							variant="filled"
 							type="number"
-							storageKey="tab-lru-size"
-							disabled={!options['tab-lru-enabled']}
+							storageKey={StorageKeys.TAB_LRU_SIZE}
+							disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 							color="secondary"
 							InputProps={{
 								inputProps: {

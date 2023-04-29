@@ -4,6 +4,7 @@ import { FormOption } from './FormOption';
 import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
+import { StorageKeys } from '~enums';
 
 export function GroupTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
@@ -21,7 +22,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey="auto-group"
+						storageKey={StorageKeys.AUTO_GROUP}
 					/>
 				}
 				label={<LabelWithHint hint={hideHint} label={hideLabel} />}
@@ -30,7 +31,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="textfield"
-						storageKey="auto-group-threshold"
+						storageKey={StorageKeys.AUTO_GROUP_THRESHOLD}
 						hiddenLabel
 						size="small"
 						variant="filled"
@@ -42,8 +43,8 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 								min: 0,
 							},
 						}}
-						disabled={!options['auto-group']}
-						value={options['auto-group-threshold']}
+						disabled={!options[StorageKeys.AUTO_GROUP]}
+						value={options[StorageKeys.AUTO_GROUP_THRESHOLD]}
 					/>
 				}
 				label={<LabelWithHint hint={groupHint} label={groupLabel} />}
@@ -52,13 +53,13 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="textfield"
-						storageKey="auto-group-name"
+						storageKey={StorageKeys.AUTO_GROUP_NAME}
 						hiddenLabel
 						size="small"
 						variant="filled"
 						color="secondary"
-						disabled={!options['auto-group']}
-						value={options['auto-group-name']}
+						disabled={!options[StorageKeys.AUTO_GROUP]}
+						value={options[StorageKeys.AUTO_GROUP_NAME]}
 					/>
 				}
 				label=""

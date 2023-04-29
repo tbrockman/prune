@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip } from '@mui/material';
 import _useOptions from '../hooks/useOptions';
 import { Options } from '../util';
+import { StorageKeys } from '~enums';
 
 type useOptionsReturn = {
 	options: Options;
@@ -30,7 +31,7 @@ export default function LabelWithHint({
 			enterDelay={1500}
 			enterNextDelay={750}
 			{...tooltipProps}
-			title={options['show-hints'] ? hint : ''}
+			title={options[StorageKeys.SHOW_HINTS] ? hint : ''}
 		>
 			<div>{label}</div>
 		</Tooltip>

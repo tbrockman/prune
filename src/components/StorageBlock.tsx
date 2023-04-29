@@ -4,13 +4,14 @@ import { FormOption } from './FormOption';
 import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
+import { StorageKeys } from '~enums';
 
 export function StorageBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
 	const tabStorageEnabled =
-		options['auto-prune'] ||
-		(options['tab-lru-destination'] === 'close' &&
-			options['tab-lru-enabled']);
+		options[StorageKeys.AUTO_PRUNE] ||
+		(options[StorageKeys.TAB_LRU_DESTINATION] === 'close' &&
+			options[StorageKeys.TAB_LRU_ENABLED]);
 	const bookmarkHint =
 		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before closing";
 	const bookmarkLabel = 'bookmark closed tabs under';
@@ -21,7 +22,7 @@ export function StorageBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey="auto-prune-bookmark"
+						storageKey={StorageKeys.AUTO_PRUNE_BOOKMARK}
 						disabled={!tabStorageEnabled}
 					/>
 				}
@@ -40,9 +41,9 @@ export function StorageBlock({ useOptions = _useOptions }) {
 						variant="filled"
 						color="secondary"
 						fullWidth={false}
-						storageKey="auto-prune-bookmark-name"
+						storageKey={StorageKeys.AUTO_PRUNE_BOOKMARK_NAME}
 						disabled={
-							!options['auto-prune-bookmark'] ||
+							!options[StorageKeys.AUTO_PRUNE_BOOKMARK] ||
 							!tabStorageEnabled
 						}
 					/>

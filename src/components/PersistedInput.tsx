@@ -1,13 +1,13 @@
 import React from 'react';
 import {
 	Checkbox,
-	CheckboxProps,
+	type CheckboxProps,
 	Select,
-	SelectProps,
+	type SelectProps,
 	Switch,
 	TextField,
-	TextFieldProps,
-	SwitchProps,
+	type TextFieldProps,
+	type SwitchProps,
 } from '@mui/material';
 import useOptions from '../hooks/useOptions';
 import { Options } from '../util/';

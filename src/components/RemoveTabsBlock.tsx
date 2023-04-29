@@ -4,6 +4,7 @@ import { FormOption } from './FormOption';
 import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
+import { StorageKeys } from '~enums';
 
 export function RemoveTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions();
@@ -18,7 +19,7 @@ export function RemoveTabsBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey="auto-prune"
+						storageKey={StorageKeys.AUTO_PRUNE}
 					/>
 				}
 				label={
@@ -37,8 +38,8 @@ export function RemoveTabsBlock({ useOptions = _useOptions }) {
 						variant="filled"
 						type="number"
 						color="secondary"
-						storageKey="prune-threshold"
-						disabled={!options['auto-prune']}
+						storageKey={StorageKeys.PRUNE_THRESHOLD}
+						disabled={!options[StorageKeys.AUTO_PRUNE]}
 						InputProps={{
 							inputProps: {
 								max: 1024,

@@ -38,6 +38,9 @@ describe('alarm-handler', () => {
 			'tab-lru-size': 30,
 			'tab-lru-destination': 'group',
 			'show-hints': true,
+			'productivity-mode-enabled': true,
+			'productivity-suspend-domains': [],
+			'productivity-suspend-exemptions': {}
 		};
 		return { ...options, ...overrides };
 	};

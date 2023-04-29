@@ -6,6 +6,7 @@ import cssText from "data-text:~/contents/Locked.css"
 
 import type { PlasmoCSConfig } from "plasmo"
 import useConfig from "~hooks/useConfig";
+import { StorageKeys } from "~enums";
 
 const styleElement = document.createElement("style")
 styleElement.textContent = cssText
@@ -22,24 +23,32 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
-function matchDomain(domain, filters) {
-  const some = filters.some((filter) => {
+function getMatchingFilters(domain, filters: string[]): string[] {
+  return filters.filter((filter) => {
     const regex = new RegExp('^' + filter)
     return domain.match(regex)
   })
-  return some
+}
+
+function allMatchingFiltersExempt(filters: string[], exemptions: { [key: string]: any }) {
+  return !filters.some((filter) => { exemptions.hasOwnProperty(filter)})
 }
 
 const Locked = () => {
   const { config } = useConfig()
-  const [productivityModeEnabled] = useStorage('productivity-mode-enabled')
-  const [suspendedDomains] = useStorage('productivity-suspend-domains', config.productivity?.domains)
-  const match = matchDomain(window.location.host, suspendedDomains)
+  const [productivityModeEnabled] = useStorage(StorageKeys.PRODUCTIVITY_MODE_ENABLED)
+  const [domainFilters] = useStorage(StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS, config.productivity?.domains)
+  const [exemptions] = useStorage<{ [key: string]: string }>(StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS, {})
+  // Get an array of matched filters, this is probably always length 1 but let's make
+  // sure we're handling power users that use regexes properly
+  const matchingFilters = getMatchingFilters(window.location.host, domainFilters)
+  // In order to be exempt, we have to have created an exemption for all matching filters
+  const isExempt = allMatchingFiltersExempt(matchingFilters, exemptions)
 
-  if (match && productivityModeEnabled) {
+  if (productivityModeEnabled && matchingFilters.length > 0 && !isExempt) {
     return (
       <CacheProvider value={styleCache}>
-        <ContentScript/>
+        <ContentScript matchingFilters={matchingFilters}/>
       </CacheProvider>
     )
   }

@@ -4,7 +4,7 @@ import createTheme from '../styles/theme';
 import { useStore as _useStore } from '../hooks/useStore';
 import { ContentScriptMain } from '~pages/ContentScriptMain';
 
-function ContentScript({ useStore = _useStore }) {
+function ContentScript({ matchingFilters, useStore = _useStore }) {
 	const init = useStore((state) => state.init);
 
 	const theme = createTheme();
@@ -16,7 +16,7 @@ function ContentScript({ useStore = _useStore }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="app">
-				<ContentScriptMain/>
+				<ContentScriptMain matchingFilters={matchingFilters}/>
 			</div>
 		</ThemeProvider>
 	);
