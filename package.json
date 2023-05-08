@@ -46,6 +46,6 @@
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4",
 		"webpack": "^5.78.0",
-		"webpack-cli": "^5.0.1"
+		"webpack-cli": "^5.1.0"
 	}
 }
