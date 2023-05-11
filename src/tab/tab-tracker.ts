@@ -1,179 +1,188 @@
 // TODO: extract common code
-import { type Tab } from "../types"
-import { localStorageGetAsync, localStorageSetAsync } from "../util"
+import { type Tab } from '../types';
+import { localStorageGetAsync, localStorageSetAsync } from '../util';
 
 class TabTracker {
-  tabsStorageKey: string
-  tabs: Map<string, number>
+	tabsStorageKey: string;
+	tabs: Map<string, number>;
 
-  constructor(tabsStorageKey = "tabs") {
-    this.tabsStorageKey = tabsStorageKey
-    this.tabs = new Map()
-    this.init = this.init.bind(this)
-    this.saveStateAsync = this.saveStateAsync.bind(this)
-    this.loadStateAsync = this.loadStateAsync.bind(this)
-    this.trackTabs = this.trackTabs.bind(this)
-    this.filterClosedTabsAndTrackNew =
-      this.filterClosedTabsAndTrackNew.bind(this)
-    this.getTabLastViewed = this.getTabLastViewed.bind(this)
-    this.remove = this.remove.bind(this)
-    this.track = this.track.bind(this)
-  }
+	constructor(tabsStorageKey = 'tabs') {
+		this.tabsStorageKey = tabsStorageKey;
+		this.tabs = new Map();
+		this.init = this.init.bind(this);
+		this.saveStateAsync = this.saveStateAsync.bind(this);
+		this.loadStateAsync = this.loadStateAsync.bind(this);
+		this.trackTabs = this.trackTabs.bind(this);
+		this.filterClosedTabsAndTrackNew =
+			this.filterClosedTabsAndTrackNew.bind(this);
+		this.getTabLastViewed = this.getTabLastViewed.bind(this);
+		this.remove = this.remove.bind(this);
+		this.track = this.track.bind(this);
+	}
 
-  async init(openTabs: Tab[]) {
-    console.debug("initializing tracker")
-    const tabs = await this.loadStateAsync(this.tabsStorageKey)
+	async init(openTabs: Tab[]) {
+		console.debug('initializing tracker');
+		const tabs = await this.loadStateAsync(this.tabsStorageKey);
 
-    if (tabs.size === 0) {
-      console.debug("no loaded tabs found in storage")
-      await this.trackTabs(openTabs)
-    } else {
-      this.tabs = tabs
-      console.debug("loaded tabs found in storage", tabs)
-      await this.filterClosedTabsAndTrackNew(openTabs)
-    }
-    console.debug("resolved tab state", this.tabs)
-  }
+		if (tabs.size === 0) {
+			console.debug('no loaded tabs found in storage');
+			await this.trackTabs(openTabs);
+		} else {
+			this.tabs = tabs;
+			console.debug('loaded tabs found in storage', tabs);
+			await this.filterClosedTabsAndTrackNew(openTabs);
+		}
+		console.debug('resolved tab state', this.tabs);
+	}
 
-  limitNumberOfVisibleTabs(tabs: Tab[], limit: number): [Tab[], Tab[]] {
-    // order the tabs we're given by their position in our tracked map
-    const orderBy = new Map<string, number>()
-    let index = 0
-    this.tabs.forEach((val, key) => {
-      // sort in descending order
-      orderBy.set(key, this.tabs.size - index - 1)
-      index += 1
-    })
-    const sorted = tabs.sort(
-      (a, b) =>
-        (orderBy.get(a.url ?? "") ?? 0) - (orderBy.get(b.url ?? "") ?? 0)
-    )
-    // slice [0,limit) for visible, [limit+1 - tabs.length) for hidden
-    const visible = sorted.slice(0, limit)
-    const hidden = sorted.slice(limit, tabs.length)
+	limitNumberOfVisibleTabs(tabs: Tab[], limit: number): [Tab[], Tab[]] {
+		// order the tabs we're given by their position in our tracked map
+		const orderBy = new Map<string, number>();
+		let index = 0;
+		this.tabs.forEach((val, key) => {
+			// sort in descending order
+			orderBy.set(key, this.tabs.size - index - 1);
+			index += 1;
+		});
+		const sorted = tabs.sort(
+			(a, b) =>
+				(orderBy.get(a.url ?? '') ?? 0) -
+				(orderBy.get(b.url ?? '') ?? 0),
+		);
+		// slice [0,limit) for visible, [limit+1 - tabs.length) for hidden
+		const visible = sorted.slice(0, limit);
+		const hidden = sorted.slice(limit, tabs.length);
 
-    return [visible, hidden]
-  }
+		return [visible, hidden];
+	}
 
-  findTabsExceedingThreshold(tabs: Tab[], threshold: number): [Tab[], Tab[]] {
-    const exceeds: Tab[] = []
-    const remaining: Tab[] = []
+	findTabsExceedingThreshold(tabs: Tab[], threshold: number): [Tab[], Tab[]] {
+		const exceeds: Tab[] = [];
+		const remaining: Tab[] = [];
 
-    tabs.forEach((tab) => {
-      const now = Date.now()
-      const lastViewed = this.getTabLastViewed(tab.url ?? "") ?? now
-      console.debug(
-        "threshold",
-        threshold,
-        "now - lastViewed",
-        now - lastViewed
-      )
-      const passesThreshold = now - lastViewed >= threshold
+		tabs.forEach((tab) => {
+			const now = Date.now();
+			const lastViewed = this.getTabLastViewed(tab.url ?? '') ?? now;
+			console.debug(
+				'threshold',
+				threshold,
+				'now - lastViewed',
+				now - lastViewed,
+			);
+			const passesThreshold = now - lastViewed >= threshold;
 
-      if (passesThreshold) {
-        exceeds.push(tab)
-      } else {
-        remaining.push(tab)
-      }
-    })
-    return [exceeds, remaining]
-  }
+			if (passesThreshold) {
+				exceeds.push(tab);
+			} else {
+				remaining.push(tab);
+			}
+		});
+		return [exceeds, remaining];
+	}
 
-  getTabLastViewed(tabUrl: string): number | undefined {
-    return this.tabs.get(tabUrl)
-  }
+	getTabLastViewed(tabUrl: string): number | undefined {
+		return this.tabs.get(tabUrl);
+	}
 
-  async trackTabs(tabs: Tab[]) {
-    await Promise.all(tabs.map(async (tab) => {
-      await this.track(tab)
-    }))
-    console.debug('done tracking tabs')
-  }
+	getTabLastViewedWithDefault(tabUrl: string, def: number = 0) {
+		return this.tabs.get(tabUrl) ?? def;
+	}
 
-  async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
-    const openTabSet: Set<string> = new Set()
-    console.debug("currently open tabs when filtering: ", openTabs)
+	async trackTabs(tabs: Tab[]) {
+		await Promise.all(
+			tabs.map(async (tab) => {
+				await this.track(tab);
+			}),
+		);
+		console.debug('done tracking tabs');
+	}
 
-    await Promise.all(openTabs.map(async (tab) => {
-      if (tab.url) {
-        openTabSet.add(tab.url)
+	async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
+		const openTabSet: Set<string> = new Set();
+		console.debug('currently open tabs when filtering: ', openTabs);
 
-        if (!this.tabs.has(tab.url)) {
-          await this.track(tab)
-        }
-      }
-    }))
-    
-    console.debug("open tabs set: ", openTabSet)
+		await Promise.all(
+			openTabs.map(async (tab) => {
+				if (tab.url) {
+					openTabSet.add(tab.url);
 
-    this.tabs.forEach((val, key) => {
-      if (!openTabSet.has(key)) {
-        console.debug("removing non-open tab", key)
+					if (!this.tabs.has(tab.url)) {
+						await this.track(tab);
+					}
+				}
+			}),
+		);
 
-        this.remove(key)
-      }
-    })
+		console.debug('open tabs set: ', openTabSet);
 
-    await this.saveStateAsync(this.tabsStorageKey)
-  }
+		this.tabs.forEach((val, key) => {
+			if (!openTabSet.has(key)) {
+				console.debug('removing non-open tab', key);
 
-  remove(tabUrl: string) {
-    if (this.tabs.has(tabUrl)) {
-      this.tabs.delete(tabUrl)
-    }
-    return
-  }
+				this.remove(key);
+			}
+		});
 
-  async track(tab: Tab) {
-    if (tab.url) {
-      console.debug("tracking tab", tab.url)
+		await this.saveStateAsync(this.tabsStorageKey);
+	}
 
-      if (this.tabs.has(tab.url)) {
-        this.tabs.delete(tab.url)
-      }
-      this.tabs.set(tab.url, new Date().getTime())
+	remove(tabUrl: string) {
+		if (this.tabs.has(tabUrl)) {
+			this.tabs.delete(tabUrl);
+		}
+		return;
+	}
 
-      try {
-        await this.saveStateAsync(this.tabsStorageKey)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
+	async track(tab: Tab) {
+		if (tab.url) {
+			console.debug('tracking tab', tab.url);
 
-  serializeTabs(tabs: Map<string, number>) {
-    let serialized: [string, number][] = []
-    tabs.forEach((val, key) => {
-      serialized.push([key, val])
-    })
-    return JSON.stringify(serialized)
-  }
+			if (this.tabs.has(tab.url)) {
+				this.tabs.delete(tab.url);
+			}
+			this.tabs.set(tab.url, new Date().getTime());
 
-  deserializeTabs(tabs: [string, number][]) {
-    let deserialized = new Map<string, number>()
-    tabs.forEach(([url, date]: [string, number]) => {
-      deserialized.set(url, date)
-    })
-    return deserialized
-  }
+			try {
+				await this.saveStateAsync(this.tabsStorageKey);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	}
 
-  async saveStateAsync(key: string) {
-    const serialized = this.serializeTabs(this.tabs)
-    await localStorageSetAsync({ [key]: serialized })
-  }
+	serializeTabs(tabs: Map<string, number>) {
+		let serialized: [string, number][] = [];
+		tabs.forEach((val, key) => {
+			serialized.push([key, val]);
+		});
+		return JSON.stringify(serialized);
+	}
 
-  async loadStateAsync(key: string) {
-    console.debug("await local storage get")
-    const data = await localStorageGetAsync(key)
-    let tabs = []
+	deserializeTabs(tabs: [string, number][]) {
+		let deserialized = new Map<string, number>();
+		tabs.forEach(([url, date]: [string, number]) => {
+			deserialized.set(url, date);
+		});
+		return deserialized;
+	}
 
-    console.debug("raw data", data)
+	async saveStateAsync(key: string) {
+		const serialized = this.serializeTabs(this.tabs);
+		await localStorageSetAsync({ [key]: serialized });
+	}
 
-    if ("tabs" in data) {
-      tabs = JSON.parse(data["tabs"])
-    }
-    return this.deserializeTabs(tabs)
-  }
+	async loadStateAsync(key: string) {
+		console.debug('await local storage get');
+		const data = await localStorageGetAsync(key);
+		let tabs = [];
+
+		console.debug('raw data', data);
+
+		if ('tabs' in data) {
+			tabs = JSON.parse(data['tabs']);
+		}
+		return this.deserializeTabs(tabs);
+	}
 }
 
-export default TabTracker
+export default TabTracker;

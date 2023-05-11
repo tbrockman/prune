@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-	Autocomplete,
-	Chip,
-	Grid,
-	TextField,
-	Typography,
-} from '@mui/material';
+import { Autocomplete, Chip, Grid, TextField } from '@mui/material';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
@@ -13,7 +7,10 @@ import { useStorage } from '@plasmohq/storage/hook';
 
 export default function ProductivitySettings() {
 	const { config } = useConfig();
-	const [suspendedDomains, setSuspendedDomains] = useStorage('productivity-suspend-domains', config.productivity.domains)
+	const [suspendedDomains, setSuspendedDomains] = useStorage(
+		'productivity-suspend-domains',
+		config.productivity.domains,
+	);
 
 	return (
 		<Grid
@@ -21,23 +18,17 @@ export default function ProductivitySettings() {
 			className="productivity-settings"
 			flexDirection={'column'}
 		>
-			<ProductivityBlock/>
-			<Grid item marginBottom='0.75rem' marginTop='0.5rem'>
-				<Typography>
-					<b>Productivity mode</b> helps you stay focused by temporarily disabling access to unproductive websites. 
-				</Typography>
-			</Grid>
+			<ProductivityBlock />
 			<Grid>
 				<Autocomplete
 					value={suspendedDomains}
 					onChange={(_, newValue) => {
-						setSuspendedDomains(newValue)
+						setSuspendedDomains(newValue);
 					}}
 					multiple
 					freeSolo
 					options={config.productivity?.domains ?? []}
 					disableClearable
-					autoSelect
 					filterSelectedOptions
 					autoHighlight
 					getOptionLabel={(option) => option}
@@ -46,7 +37,6 @@ export default function ProductivitySettings() {
 					]}
 					renderTags={(value: string[], getTagProps) =>
 						value.map((option: string, index: number) => (
-							// eslint-disable-next-line react/jsx-key
 							<Chip
 								variant="outlined"
 								label={option}
@@ -57,8 +47,11 @@ export default function ProductivitySettings() {
 					renderInput={(params) => (
 						<TextField
 							{...params}
-							variant="standard"
-							helperText="Enter websites to block when you're trying to be productive."
+							variant="outlined"
+							placeholder="add a website"
+							InputProps={{
+								...params.InputProps,
+							}}
 						/>
 					)}
 				/>

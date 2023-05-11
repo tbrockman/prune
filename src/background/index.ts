@@ -1,100 +1,112 @@
-import AlarmHandler from "~src/handlers/alarm"
-import TabCreatedHandler from "~src/handlers/tab-created"
-import TabFocusedHandler from "~src/handlers/tab-focused"
-import TabBookmarker from "~src/tab/tab-bookmarker"
-import TabDeduplicator from "~src/tab/tab-deduplicator"
-import TabGrouper from "~src/tab/tab-grouper"
-import TabPruner from "~src/tab/tab-pruner"
-import TabSuspender from "~src/tab/tab-suspender"
-import TabTracker from "~src/tab/tab-tracker"
+import AlarmHandler from '~src/handlers/alarm';
+import TabCreatedHandler from '~src/handlers/tab-created';
+import TabFocusedHandler from '~src/handlers/tab-focused';
+import TabBookmarker from '~src/tab/tab-bookmarker';
+import TabDeduplicator from '~src/tab/tab-deduplicator';
+import TabGrouper from '~src/tab/tab-grouper';
+import TabPruner from '~src/tab/tab-pruner';
+import TabSuspender from '~src/tab/tab-suspender';
+import TabTracker from '~src/tab/tab-tracker';
 
-import "@plasmohq/messaging/background"
+import '@plasmohq/messaging/background';
 
-import { getOptionsAsync } from '../util'
+import { getOptionsAsync } from '../util';
+import { Storage } from '@plasmohq/storage';
+import { StorageKeys } from '~enums';
 
-const lock = new Set<number>()
+const lock = new Set<number>();
 
+// Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(async (details: any) => {
-  if (details.reason == "update") {
-    const version = chrome.runtime.getManifest().version
-    let split = version.split(".")
-    const major = parseInt(split[0])
-    split = details.previousVersion.split(".")
-    const prevMajor = parseInt(split[0])
+	if (details.reason == 'update') {
+		const version = chrome.runtime.getManifest().version;
+		let split = version.split('.');
+		const major = parseInt(split[0]);
+		split = details.previousVersion.split('.');
+		const prevMajor = parseInt(split[0]);
 
-    console.debug(
-      "Updated from " + details.previousVersion + " to " + version + "!"
-    )
+		console.debug(
+			'Updated from ' + details.previousVersion + ' to ' + version + '!',
+		);
 
-    if (major >= 3 && major > prevMajor) {
-      await chrome.storage.local.clear()
-    }
-  }
-})
-chrome.alarms.create({ periodInMinutes: 1 })
+		if (major >= 3 && major > prevMajor) {
+			await chrome.storage.local.clear();
+		}
+	}
+});
+chrome.alarms.create({ periodInMinutes: 1 });
 
 // Ran every minute
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-  let bookmarker
-  const options = await getOptionsAsync()
-  const tracker = new TabTracker()
-  const grouper = new TabGrouper()
+	let bookmarker;
+	const options = await getOptionsAsync();
+	const tracker = new TabTracker();
+	const grouper = new TabGrouper();
 
-  if (options["auto-prune-bookmark"]) {
-    bookmarker = new TabBookmarker(options["auto-prune-bookmark-name"])
-  }
-  const pruner = new TabPruner(bookmarker)
-  const handler = new AlarmHandler({ tracker, grouper, pruner, options })
-  await handler.execute()
-})
+	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
+		bookmarker = new TabBookmarker(
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		);
+	}
+	const pruner = new TabPruner(bookmarker);
+	const handler = new AlarmHandler({ tracker, grouper, pruner, options });
+	await handler.execute();
+});
 
 // When a new tab might be created
 chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
-  console.debug("tab updated", updatedInfo, tab)
+	console.debug('tab updated', updatedInfo, tab);
 
-  // TODO: handle when updatedInfo is tab being ungrouped
-  if (updatedInfo.status != "loading") return
+	// TODO: handle when updatedInfo is tab being ungrouped
+	if (updatedInfo.status != 'loading') return;
 
-  let bookmarker
-  const options = await getOptionsAsync()
+	let bookmarker;
+	const options = await getOptionsAsync();
 
-  const tracker = new TabTracker()
-  const grouper = new TabGrouper()
+	const tracker = new TabTracker();
+	const grouper = new TabGrouper();
 
-  if (options["auto-prune-bookmark"]) {
-    bookmarker = new TabBookmarker(options["auto-prune-bookmark-name"])
-  }
-  const pruner = new TabPruner(bookmarker)
-  const deduplicator = new TabDeduplicator(lock)
-  const handler = new TabCreatedHandler({
-    tracker,
-    grouper,
-    pruner,
-    deduplicator,
-    options
-  })
-  await handler.execute(tab)
-})
+	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
+		bookmarker = new TabBookmarker(
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		);
+	}
+	const pruner = new TabPruner(bookmarker);
+	const deduplicator = new TabDeduplicator(lock);
+	const handler = new TabCreatedHandler({
+		tracker,
+		grouper,
+		pruner,
+		deduplicator,
+		options,
+	});
+	await handler.execute(tab);
+});
 
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
-  let bookmarker
+	let bookmarker;
 
-  const options = await getOptionsAsync()
-  const tracker = new TabTracker()
-  const grouper = new TabGrouper()
-  const suspender = new TabSuspender()
+	const storage = new Storage({
+		area: 'local',
+	});
+	const options = await getOptionsAsync();
+	const tracker = new TabTracker();
+	const grouper = new TabGrouper();
+	const suspender = new TabSuspender(storage);
 
-  if (options["auto-prune-bookmark"]) {
-    bookmarker = new TabBookmarker(options["auto-prune-bookmark-name"])
-  }
-  const pruner = new TabPruner(bookmarker)
-  const handler = new TabFocusedHandler({
-    tracker,
-    grouper,
-    pruner,
-    options,
-    suspender
-  })
-  await handler.execute(activeInfo)
-})
+	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
+		bookmarker = new TabBookmarker(
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		);
+	}
+	const pruner = new TabPruner(bookmarker);
+	const handler = new TabFocusedHandler({
+		tracker,
+		grouper,
+		pruner,
+		options,
+		suspender,
+	});
+	await handler.execute(activeInfo);
+});

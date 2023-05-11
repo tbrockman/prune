@@ -11,11 +11,16 @@ export default function createTheme() {
 			},
 			info: {
 				main: '#000',
-				
 			},
 		},
 		typography: {
 			fontFamily: 'Times New Roman, serif',
+			body1: {
+				fontSize: '16px',
+			},
+			button: {
+				fontSize: '14px',
+			},
 		},
 		components: {
 			MuiButton: {
@@ -33,7 +38,6 @@ export default function createTheme() {
 			MuiFormControlLabel: {
 				styleOverrides: {
 					root: {
-						// paddingRight: '0.5rem',
 						margin: 0,
 					},
 				},
@@ -43,6 +47,7 @@ export default function createTheme() {
 					root: {
 						marginLeft: '-2px',
 						paddingLeft: 0,
+						color: 'black',
 					},
 				},
 			},
@@ -64,15 +69,15 @@ export default function createTheme() {
 			MuiMenuItem: {
 				styleOverrides: {
 					root: {
-						"&.Mui-selected, &:hover, &:visited": {
-							backgroundColor: "#eeeeee",
+						'&.Mui-selected, &:hover, &:visited': {
+							backgroundColor: '#eeeeee',
 						},
-						"&:focus": {
-							backgroundColor: "black !important",
-							color: 'white'
-						}
-					}
-				}
+						'&:focus': {
+							backgroundColor: 'black !important',
+							color: 'white',
+						},
+					},
+				},
 			},
 			MuiSelect: {
 				styleOverrides: {
@@ -98,8 +103,8 @@ export default function createTheme() {
 			MuiTooltip: {
 				styleOverrides: {
 					tooltip: {
-						fontSize: '1rem',
-						padding: '0.5rem',
+						fontSize: '16px',
+						padding: '8px',
 					},
 				},
 			},
@@ -107,26 +112,39 @@ export default function createTheme() {
 				styleOverrides: {
 					root: {
 						borderColor: 'black',
+						borderWidth: '2px',
 						margin: '4px',
-						"&.Mui-focusVisible": {
-							boxShadow: "-4px 4px black",
-							top: "-4px",
-							right: "-4px",
-							backgroundColor: "white",
-						}
+						'&.Mui-focusVisible': {
+							boxShadow: '-4px 4px black',
+							top: '-4px',
+							right: '-4px',
+							backgroundColor: 'white',
+						},
 					},
 					deleteIcon: {
 						color: '#dc2e2e',
-						":hover": {
-							color: "#581111"
-						}
-					}
+						':hover': {
+							color: '#581111',
+						},
+					},
 				},
 			},
 			MuiAutocomplete: {
 				styleOverrides: {
 					tag: {
-						margin: '4px',
+						marginRight: '4px',
+						marginBottom: '4px',
+						marginLeft: '0',
+						marginTop: '0',
+					},
+				},
+			},
+			MuiSvgIcon: {
+				styleOverrides: {
+					root: {
+						'&.MuiSvgIcon-fontSizeMedium': {
+							fontSize: '24px',
+						},
 					},
 				},
 			},

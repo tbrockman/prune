@@ -2,23 +2,50 @@ import React, { useLayoutEffect, useRef } from 'react';
 import type { SelectChangeEvent } from '@mui/material';
 import { Button, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useStorage as _useStorage } from '@plasmohq/storage/hook';
+import { usePort as _usePort } from '@plasmohq/messaging/hook';
+import { Ports, StorageKeys } from '~enums';
 
-export default function PausedDialog() {
+export default function PausedDialog({
+	matchingFilters,
+	useStorage = _useStorage,
+	usePort = _usePort,
+}) {
+	const productivityPort = usePort(Ports.PRODUCTIVITY);
+	const [exemptions, setExemptions] = useStorage<{ [key: string]: string }>(
+		StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS,
+		{},
+	);
 	const [unlockMinutes, setUnlockMinutes] = useState('15');
 	const [current, setCurrent] = useState<HTMLElement>(null);
 	const ref = useRef<HTMLElement>();
 
 	const handleUnlockTimeChange = (event: SelectChangeEvent) => {
-		setUnlockMinutes(event.target.value as string)
-	}
+		setUnlockMinutes(event.target.value as string);
+	};
+
+	const unlockClicked = () => {
+		const end =
+			new Date().getTime() + Number.parseInt(unlockMinutes) * 60 * 1000;
+		const newExemptions = {};
+		matchingFilters.forEach((filter) => {
+			newExemptions[filter] = end;
+		});
+		setExemptions({ ...exemptions, ...newExemptions });
+	};
+
+	const beProductiveClicked = () => {
+		console.log('clicked', productivityPort);
+		productivityPort.send({ message: 'test' });
+	};
 
 	useLayoutEffect(() => {
-		setCurrent(ref.current)
-	})
+		setCurrent(ref.current);
+	});
 
 	return (
 		<>
-			<Typography gutterBottom padding={'1rem 0'}>
+			<Typography gutterBottom padding={'16px 0'}>
 				This website can't be accessed right now because you're in{' '}
 				<b>productivity mode</b>. You can make a temporary exception if
 				you <i>really</i> want to, but you should probably just go back
@@ -30,32 +57,38 @@ export default function PausedDialog() {
 						color="secondary"
 						variant="contained"
 						endIcon={<>👨‍💻</>}
+						onClick={beProductiveClicked}
 					>
 						be productive
 					</Button>
 				</Grid>
 				<Grid item>
-					<Button color="info" variant="outlined" endIcon={<>🔓</>}>
+					<Button
+						onClick={unlockClicked}
+						color="info"
+						variant="outlined"
+						endIcon={<>🔓</>}
+					>
 						unlock
 					</Button>
 				</Grid>
 				<Grid item>
 					<Typography>for</Typography>
 				</Grid>
-				<Grid item width={'12ch'} height={'100%'}>
+				<Grid item width={'87px'} height={'100%'}>
 					<Select
-						variant='filled'
-						color='info'
+						variant="filled"
+						color="info"
 						labelId="unlock-time-select-label"
 						id="unlock-time-select"
 						value={unlockMinutes}
 						label="Time"
 						autoWidth={false}
 						onChange={handleUnlockTimeChange}
-						className='unlock-container'
+						className="unlock-container"
 						ref={ref}
 						MenuProps={{
-							container: current
+							container: current,
 						}}
 					>
 						<MenuItem value={15}>15 min</MenuItem>

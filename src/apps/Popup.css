@@ -12,13 +12,14 @@
 .main-form-group {
 	border: 2px solid;
 	box-shadow: -8px 8px 0 0px #000;
-	margin: 0 2rem 2rem;
-	padding: 1rem;
+	margin: 0 32px 32px;
+	padding: 16px;
 	max-width: fit-content;
 }
 
 .main-form-group.options-form-group {
 	max-width: 100%;
+	padding-left: 4px;
 }
 
 .main-form-group > .form-option {
@@ -39,20 +40,20 @@
 }
 
 .prune-header-container {
-	padding: 1rem;
+	padding: 16px;
 }
 
 .MuiTypography-root.section-title {
-	margin-left: 2.5rem;
+	margin-left: 40px;
 	background-color: rgb(255, 255, 255);
-    margin-bottom: -1.5rem;
+	margin-bottom: -24px;
 	z-index: 2;
 	position: relative;
-	padding: 0 0.5rem;
+	padding: 0 8px;
 	width: fit-content;
-	font-size: 2rem !important;
+	font-size: 32px !important;
 }
 
 .MuiFormGroup-root > .form-option:first-child {
-	margin-top: 0.5rem;
+	margin-top: 8px;
 }

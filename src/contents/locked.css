@@ -1,12 +1,12 @@
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-	  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-	  sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-  
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
@@ -15,7 +15,7 @@ code {
 #plasmo-shadow-container > .plasmo-csui-container {
 	position: fixed !important;
 }
-  
+
 #root {
 	display: flex;
 	justify-content: center;
@@ -29,34 +29,35 @@ code {
 }
 
 .app {
-    justify-content: center;
-    display: flex;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
+	justify-content: center;
+	display: flex;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	background-color: white;
 }
 
 .unlock-container {
-    display: flex !important;
-    height: 100%;
-    justify-content: space-evenly;
+	display: flex !important;
+	height: 100%;
+	justify-content: space-evenly;
 }
 
 .unlock-container > div {
-    background-color: transparent !important;
+	background-color: transparent !important;
 }
 
 .main-form-group {
 	border: 2px solid;
 	box-shadow: -8px 8px 0 0px #000;
-	margin: 0 2rem 2rem;
-	padding: 1rem;
+	margin: 0 32px 32px;
+	padding: 16px;
 	max-width: fit-content;
 }
 
 .main-form-group.options-form-group {
 	max-width: 100%;
+	padding-left: 4px;
 }
 
 .main-form-group > .form-option {
@@ -77,30 +78,29 @@ code {
 }
 
 .prune-header-container {
-	padding: 1rem;
+	padding: 16px;
 }
 
 .MuiTypography-root.section-title {
-	margin-left: 2.5rem;
+	margin-left: 40px;
 	background-color: rgb(255, 255, 255);
-	margin-bottom: -1.5rem;
+	margin-bottom: -24px;
 	z-index: 2;
 	position: relative;
-	padding: 0 0.5rem;
+	padding: 0 8px;
 	width: fit-content;
-	font-size: 2rem !important;
+	font-size: 32px !important;
 }
 
 .MuiFormGroup-root > .form-option:first-child {
-	margin-top: 0.5rem;
+	margin-top: 8px;
 }
 
 .link-section > * {
 	color: #000 !important;
-	margin-right: 2rem !important;
+	margin-right: 32px !important;
 }
 
 .link-section > *:last-child {
 	margin-right: 0 !important;
 }
-

@@ -1,4 +1,4 @@
-import { config, PruneConfig } from '../config/index';
+import { config, type PruneConfig } from '../config';
 
 type useConfigType = {
 	config: PruneConfig;
