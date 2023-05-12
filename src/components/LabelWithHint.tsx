@@ -10,7 +10,7 @@ type useOptionsReturn = {
 };
 
 type LabelWithHintProps = {
-	label: string;
+	label: string | JSX.Element;
 	hint: string;
 	tooltipProps?: any;
 	useOptions?: () => useOptionsReturn;

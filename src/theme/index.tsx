@@ -148,6 +148,15 @@ export default function createTheme() {
 					},
 				},
 			},
+			MuiIcon: {
+				styleOverrides: {
+					root: {
+						'&.MuiIcon-fontSizeMedium': {
+							fontSize: '24px'
+						}
+					}
+				}
+			}
 		},
 	});
 }
