@@ -26,7 +26,7 @@ const styleCache = createCache({
 export const getStyle = () => styleElement;
 
 export const config: PlasmoCSConfig = {
-	matches: ['<all_urls>'],
+	matches: ['https://theo.lol/*'],
 	all_frames: true,
 };
 

@@ -66,7 +66,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					arrow={true}
 					enterDelay={1500}
 					enterNextDelay={750}
-			 		title="please don't make fun of how much i like box drop shadows 🥺">
+			 		title="please don't make fun of how much i like box shadows 🥺">
 					<Button target="_blank" href='https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh' style={{marginLeft: '8px'}} variant='outlined' color='info'>
 						🌟 leave a review
 					</Button>
