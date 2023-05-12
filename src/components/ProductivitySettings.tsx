@@ -51,6 +51,10 @@ export default function ProductivitySettings() {
 							placeholder="add a website"
 							InputProps={{
 								...params.InputProps,
+								style: {
+									paddingLeft: 0,
+									minWidth: '14ch'
+								}
 							}}
 						/>
 					)}

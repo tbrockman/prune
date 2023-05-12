@@ -5,7 +5,7 @@ import "./Popup.css"
 import { ThemeProvider } from "@mui/material/styles"
 
 import { useStore as _useStore } from "../hooks/useStore"
-import createTheme from "../styles/theme"
+import createTheme from "../theme"
 import { PopupMain } from "~pages/PopupMain"
 
 function Popup({ useStore = _useStore }) {

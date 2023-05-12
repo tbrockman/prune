@@ -1,7 +1,7 @@
 import React, { type ChangeEvent, useState } from 'react';
 
 import { LoadingButton } from '@mui/lab';
-import { FormGroup, FormLabel, InputAdornment, TextField } from '@mui/material';
+import { Button, FormGroup, FormLabel, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import { FormOption } from './FormOption';
 import './TipForm.css';
 import _useTipClient from '../hooks/useTipClient';
@@ -31,9 +31,6 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 
 	return (
 		<FormOption style={{marginLeft: '0px'}}>
-			<FormLabel>
-				<LabelWithHint hint={tipHint} label={tipLabel} />
-			</FormLabel>
 			<FormGroup className="tip-form-group">
 				<TextField
 					margin="dense"
@@ -62,8 +59,18 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					loading={isTipping}
 					onClick={tipButtonClicked}
 				>
-					💰 tip
+					❤️ tip the author
 				</LoadingButton>
+				<Tooltip 
+					placement="top"
+					arrow={true}
+					enterDelay={1500}
+					enterNextDelay={750}
+			 		title="please don't make fun of how much i like box drop shadows 🥺">
+					<Button target="_blank" href='https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh' style={{marginLeft: '8px'}} variant='outlined' color='info'>
+						🌟 leave a review
+					</Button>
+				</Tooltip>
 			</FormGroup>
 		</FormOption>
 	);

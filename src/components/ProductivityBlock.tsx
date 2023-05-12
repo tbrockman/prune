@@ -14,7 +14,23 @@ export default function ProductivityBlock() {
 
   const hint =
     "helps keep your browsing productive by pausing use of typical time wasting websites.";
-  const label = "turn on productivity mode 👨‍💻";
+  // const label = "turn on productivity mode 👨‍💻";
+  const label = (
+    <div style={{display: 'flex'}}>
+
+      <span>turn on productivity mode 👨‍💻</span>
+      <span style={{
+        fontFamily: 'monospace',
+            backgroundColor: '#673b97',
+            fontSize: '12px',
+            color: 'yellow',
+            borderRadius: '1rem',
+            padding: '2px 4px',
+            marginLeft: '6px',
+            border: '2px solid black',
+      }}>beta🧪</span>
+    </div>
+  )
 
   const settingsIconClicked = () => {
     setPage(Page.ProductivitySettings);
@@ -53,7 +69,7 @@ export default function ProductivityBlock() {
         </Tooltip>
       ) : (
         <Tooltip placement="top" arrow={true} title="back to main options">
-          <IconButton aria-label="settings" onClick={backButtonClicked}>
+          <IconButton aria-label="main options" onClick={backButtonClicked}>
             <ArrowBackIcon />
           </IconButton>
         </Tooltip>

@@ -1,5 +1,5 @@
-import React from "react";
-import { FormGroup, Grid, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { FormGroup, Grid, Link, Typography } from "@mui/material";
 import TipForm from "../components/TipForm";
 import { Page, useStore } from "../hooks/useStore";
 import ProductivitySettings from "../components/ProductivitySettings";
@@ -27,7 +27,16 @@ const OptionsHomePage = () => {
 
 export function PopupMain() {
   const page = useStore((state) => state.page);
+  const ref = useRef<HTMLFormElement>();
+  const [minHeight, setMinHeight] = useState(0);
+
   let pageComponent;
+
+  useEffect(() => {
+    if (ref.current) {
+      setMinHeight(Math.max(parseFloat(getComputedStyle(ref.current).getPropertyValue('height')), minHeight))
+    }
+  }, [page])
 
   switch (page) {
     case Page.Home:
@@ -41,9 +50,9 @@ export function PopupMain() {
     <Grid width="100%">
       <PruneHeader />
       <Typography className="section-title">
-        options 🛠️
+        options 🔧
       </Typography>
-      <FormGroup className="main-form-group options-form-group">
+      <FormGroup ref={ref} style={{ minHeight }} className="main-form-group options-form-group">
         {pageComponent}
       </FormGroup>
 
@@ -51,6 +60,10 @@ export function PopupMain() {
         about 📝
       </Typography>
       <FormGroup className="main-form-group">
+        <Typography marginTop={'8px'} marginBottom={'16px'}>
+          <b>prune</b> is an open-source browser extension developed by <Link href='mailto:iam@theo.lol'>@theo</Link>.
+          it's free, doesn't send any of your data anywhere, and doesn't even track your usage for analytical purposes. support isn't necessary, but makes the author feel pretty nice about working on it.
+        </Typography>
         <TipForm />
       </FormGroup>
     </Grid>

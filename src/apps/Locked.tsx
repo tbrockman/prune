@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import createTheme from '../styles/theme';
+import createTheme from '../theme';
 import { useStore as _useStore } from '../hooks/useStore';
 import { LockedMain } from '~pages/LockedMain';
 
