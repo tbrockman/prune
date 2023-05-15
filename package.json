@@ -35,7 +35,7 @@
 	"devDependencies": {
 		"@tsconfig/recommended": "^1.0.2",
 		"@types/chai": "^4.3.4",
-		"@types/chrome": "^0.0.228",
+		"@types/chrome": "^0.0.236",
 		"@types/mocha": "^9.0.0",
 		"@types/sinon-chrome": "^2.2.11",
 		"chai": "^4.3.7",
