@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, FormControlLabel, IconButton, Tooltip } from "@mui/material";
+import { FormControlLabel, IconButton, Tooltip } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { FormOption } from "./FormOption";
@@ -14,18 +14,7 @@ export default function ProductivityBlock() {
 
   const hint =
     "helps keep your browsing productive by blocking use of typical time wasting websites.";
-  // const label = "turn on productivity mode 👨‍💻";
-  const label = (
-    <div style={{display: 'flex', alignItems: 'center'}}>
-
-      <span>turn on productivity mode 👨‍💻</span>
-      <Chip variant='outlined' label='beta🧪' style={{
-        fontFamily: 'monospace',
-            backgroundColor: '#673b97',
-            color: 'yellow'
-      }}/>
-    </div>
-  )
+  const label = "turn on productivity mode 👨‍💻";
 
   const settingsIconClicked = () => {
     setPage(Page.ProductivitySettings);

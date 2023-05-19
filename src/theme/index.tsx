@@ -120,6 +120,7 @@ export default function createTheme() {
 							right: '-4px',
 							backgroundColor: 'white',
 						},
+						fontSize: '16px'
 					},
 					deleteIcon: {
 						color: '#dc2e2e',

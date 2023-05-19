@@ -61,7 +61,7 @@ export function PopupMain() {
       </Typography>
       <FormGroup className="main-form-group">
         <Typography marginTop={'8px'} marginBottom={'16px'}>
-          <b>prune</b> is an open-source extension made with ☕ by <Link href='mailto:iam@theo.lol'>@tbrockman</Link> to help make your browsing less cluttered and more productive.
+          <b>prune</b> is a free, open-source extension made by <Link href='mailto:iam@theo.lol'>@tbrockman</Link> meant to help make your browsing less cluttered and more productive.
         </Typography>
         <TipForm />
       </FormGroup>

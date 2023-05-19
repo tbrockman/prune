@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, Chip, Grid, TextField } from '@mui/material';
+import { Autocomplete, Chip, Grid, TextField, Typography } from '@mui/material';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
@@ -45,18 +45,25 @@ export default function ProductivitySettings() {
 						))
 					}
 					renderInput={(params) => (
-						<TextField
-							{...params}
-							variant="outlined"
-							placeholder="add a website"
-							InputProps={{
-								...params.InputProps,
-								style: {
-									paddingLeft: 0,
-									minWidth: '14ch'
-								}
-							}}
-						/>
+						<>
+							<TextField
+								{...params}
+								variant="outlined"
+								placeholder="block unproductive websites"
+								inputProps={{
+									...params.inputProps,
+									style: {
+										minWidth: '27ch'
+									}
+								}}
+								InputProps={{
+									...params.InputProps,
+									style: {
+										paddingLeft: 0
+									}
+								}}
+							/>
+						</>
 					)}
 				/>
 			</Grid>
