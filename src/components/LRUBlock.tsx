@@ -1,17 +1,34 @@
 import React from 'react';
-import { FormControl, FormControlLabel, MenuItem } from '@mui/material';
+import {
+	FormControl,
+	FormControlLabel,
+	MenuItem,
+	Typography,
+} from '@mui/material';
 import { FormOption } from './FormOption';
 import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
 import { StorageKeys } from '~enums';
 
-export function LRUBlock({ useOptions = _useOptions }) {
+export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 	const { options } = useOptions();
 
 	const lruTabsHint =
 		'you can let prune group or close your oldest tabs once you go over your limit';
 	const lruTabsLabel = 'least recently used tabs once';
+	const lruOptionsComponent = isFirefox ? (
+		<Typography>close</Typography> // TODO: fix styling later
+	) : (
+		<PersistedInput
+			component="select"
+			storageKey={StorageKeys.TAB_LRU_DESTINATION}
+			disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
+		>
+			<MenuItem value={'group'}>group</MenuItem>
+			<MenuItem value={'close'}>close</MenuItem>
+		</PersistedInput>
+	);
 
 	return (
 		<FormOption className="lru-options">
@@ -23,14 +40,7 @@ export function LRUBlock({ useOptions = _useOptions }) {
 								component="checkbox"
 								storageKey={StorageKeys.TAB_LRU_ENABLED}
 							/>
-							<PersistedInput
-								component="select"
-								storageKey={StorageKeys.TAB_LRU_DESTINATION}
-								disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
-							>
-								<MenuItem value={'group'}>group</MenuItem>
-								<MenuItem value={'close'}>close</MenuItem>
-							</PersistedInput>
+							{lruOptionsComponent}
 						</>
 					}
 					label={

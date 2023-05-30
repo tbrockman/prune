@@ -46,7 +46,6 @@ export default function createTheme() {
 				styleOverrides: {
 					root: {
 						marginLeft: '-2px',
-						paddingLeft: 0,
 						color: 'black',
 					},
 				},
@@ -120,7 +119,7 @@ export default function createTheme() {
 							right: '-4px',
 							backgroundColor: 'white',
 						},
-						fontSize: '16px'
+						fontSize: '16px',
 					},
 					deleteIcon: {
 						color: '#dc2e2e',
@@ -153,11 +152,11 @@ export default function createTheme() {
 				styleOverrides: {
 					root: {
 						'&.MuiIcon-fontSizeMedium': {
-							fontSize: '24px'
-						}
-					}
-				}
-			}
+							fontSize: '24px',
+						},
+					},
+				},
+			},
 		},
 	});
 }

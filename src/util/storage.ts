@@ -12,6 +12,7 @@ export async function syncStorageSetAsync(key: string, value: any) {
 
 export async function syncStorageGetAsync(defaults: any): Promise<any> {
 	return new Promise((resolve, reject) => {
+		console.debug('getting sync storage', defaults);
 		chrome.storage.sync.get(defaults, (items) => {
 			if (chrome.runtime.lastError) {
 				reject(chrome.runtime.lastError);

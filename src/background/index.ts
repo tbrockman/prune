@@ -41,7 +41,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 	let bookmarker;
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper();
+	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
 
 	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
 		bookmarker = new TabBookmarker(
@@ -64,7 +64,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	const options = await getOptionsAsync();
 
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper();
+	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
 
 	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
 		bookmarker = new TabBookmarker(
@@ -85,16 +85,21 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
+	console.debug('tab activated listener', activeInfo);
 	let bookmarker;
 
 	const storage = new Storage({
 		area: 'local',
 	});
+	console.debug('created storage');
 	const options = await getOptionsAsync();
+	console.debug('got options');
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper();
+	console.debug('made tracker');
+	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
+	console.debug('created grouper');
 	const suspender = new TabSuspender(storage);
-
+	console.debug('created suspender');
 	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
 		bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -108,5 +113,6 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 		options,
 		suspender,
 	});
+	console.debug('created handler', handler);
 	await handler.execute(activeInfo);
 });

@@ -28,6 +28,7 @@ class Options {
 const defaults = new Options();
 
 const getOptionsAsync = async (): Promise<Options> => {
+	console.debug('getting options async');
 	return await syncStorageGetAsync(defaults);
 };
 

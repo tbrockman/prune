@@ -49,18 +49,12 @@ export default function ProductivitySettings() {
 							<TextField
 								{...params}
 								variant="outlined"
-								placeholder="block unproductive websites"
+								placeholder="block unproductive websites ↩"
 								inputProps={{
 									...params.inputProps,
 									style: {
-										minWidth: '27ch'
-									}
-								}}
-								InputProps={{
-									...params.InputProps,
-									style: {
-										paddingLeft: 0
-									}
+										minWidth: '27ch',
+									},
 								}}
 							/>
 						</>
