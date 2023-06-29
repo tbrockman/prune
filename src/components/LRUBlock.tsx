@@ -16,11 +16,9 @@ export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 
 	const lruTabsHint =
 		'you can let prune group or close your oldest tabs once you go over your limit';
-	const lruTabsLabel = 'least recently used tabs once';
-	const lruOptionsComponent = isFirefox ? (
-		<Typography>close</Typography> // TODO: fix styling later
-	) : (
-		<PersistedInput
+	let lruTabsLabel = 'least recently used tabs once';
+	lruTabsLabel = isFirefox ? 'close ' + lruTabsLabel : lruTabsLabel; 
+	const lruOptionsComponent = <PersistedInput
 			component="select"
 			storageKey={StorageKeys.TAB_LRU_DESTINATION}
 			disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
@@ -28,8 +26,7 @@ export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 			<MenuItem value={'group'}>group</MenuItem>
 			<MenuItem value={'close'}>close</MenuItem>
 		</PersistedInput>
-	);
-
+		
 	return (
 		<FormOption className="lru-options">
 			<FormControl className="lru-options-control">
@@ -40,7 +37,7 @@ export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 								component="checkbox"
 								storageKey={StorageKeys.TAB_LRU_ENABLED}
 							/>
-							{lruOptionsComponent}
+							{!isFirefox && lruOptionsComponent}
 						</>
 					}
 					label={

@@ -63,6 +63,9 @@ export default function createTheme() {
 						backgroundColor: 'transparent !important',
 						maxWidth: '16ch',
 					},
+					input: {
+						paddingBottom: '8px'
+					}
 				},
 			},
 			MuiMenuItem: {

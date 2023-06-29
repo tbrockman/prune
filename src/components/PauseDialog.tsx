@@ -63,6 +63,9 @@ export default function PausedDialog({
 					</Button>
 				</Grid>
 				<Grid item>
+					<Typography>or</Typography>
+				</Grid>
+				<Grid item>
 					<Button
 						onClick={unlockClicked}
 						color="info"
