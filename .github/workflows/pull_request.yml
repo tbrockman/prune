@@ -13,6 +13,12 @@ jobs:
           node-version: '14'
       - run: npm install
       - run: npm test
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "GITHUB_ACTOR: ${{ github.actor }}"
+          echo "GITHUB_EVENT_USER: ${{ github.event.pull_request.user.login }}"
   auto-approve:
     runs-on: ubuntu-latest
     needs: test
