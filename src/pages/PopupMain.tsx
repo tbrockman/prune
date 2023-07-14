@@ -23,7 +23,7 @@ const OptionsHomePage = ({ isFirefox }: OptionsHomePageProps) => {
 			{!isFirefox && <GroupTabsBlock />}
 			<RemoveTabsBlock />
 			<LRUBlock isFirefox={isFirefox} />
-			<StorageBlock />
+			<StorageBlock isFirefox={isFirefox} />
 		</>
 	);
 };
@@ -39,11 +39,7 @@ export function PopupMain() {
 		if (ref.current) {
 			setMinHeight(
 				Math.max(
-					parseFloat(
-						getComputedStyle(ref.current).getPropertyValue(
-							'height',
-						),
-					),
+					parseFloat(getComputedStyle(ref.current).getPropertyValue('height')),
 					minHeight,
 				),
 			);
@@ -84,8 +80,7 @@ export function PopupMain() {
 					<Link href="https://theo.lol/resume" target="_blank">
 						@tbrockman
 					</Link>{' '}
-					to help make your browsing less cluttered and more
-					productive.
+					to help make your browsing less cluttered and more productive.
 				</Typography>
 				<TipForm />
 			</FormGroup>

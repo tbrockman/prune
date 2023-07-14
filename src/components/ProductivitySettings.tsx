@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, Chip, Grid, TextField, Typography } from '@mui/material';
+import { Autocomplete, Chip, Grid, TextField } from '@mui/material';
 import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
@@ -13,11 +13,7 @@ export default function ProductivitySettings() {
 	);
 
 	return (
-		<Grid
-			container
-			className="productivity-settings"
-			flexDirection={'column'}
-		>
+		<Grid container className="productivity-settings" flexDirection={'column'}>
 			<ProductivityBlock />
 			<Grid>
 				<Autocomplete
@@ -32,9 +28,7 @@ export default function ProductivitySettings() {
 					filterSelectedOptions
 					autoHighlight
 					getOptionLabel={(option) => option}
-					defaultValue={[
-						suspendedDomains ? suspendedDomains[0] : 'youtube',
-					]}
+					defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
 					renderTags={(value: string[], getTagProps) =>
 						value.map((option: string, index: number) => (
 							<Chip
