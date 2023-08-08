@@ -43,7 +43,6 @@ class TabCreatedHandler {
 				tab,
 				openTabs,
 			);
-			// TODO: write test since we regressed here
 			openTabs = deduplicated
 				? openTabs.filter((t) => t.id != tab.id)
 				: openTabs;

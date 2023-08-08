@@ -1,4 +1,4 @@
-<img src="./chrome-store-assets/prune-full.jpg" width="200" />
+# prune
 
 A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you manage your garden of tabs.
 
@@ -12,7 +12,7 @@ A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you ma
 - Tips! Help support `prune`'s developer
 - `🎉 new! 🎉` Productivity mode, `prune` can prevent you from wasting time on unproductive websites.
 
-As `prune` grows it might help you do *even* more.
+As `prune` grows it might help you do _even_ more.
 
 ## Contributions
 
@@ -42,4 +42,4 @@ npm run build
 
 ## Submit to the webstores
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/workflows/submit) and you should be on your way for automated submission!
+Execute the `publish` workflow

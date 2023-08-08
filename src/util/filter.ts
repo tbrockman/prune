@@ -6,11 +6,11 @@ export function getMatchingFilters(host, filters: string[]): string[] {
 	});
 }
 
-export function allMatchingFiltersExempt(
+export function getExemptFilters(
 	filters: string[],
 	exemptions: { [key: string]: any },
 ) {
-	return filters.every((filter) => {
+	return filters.filter((filter) => {
 		const now = new Date().getTime();
 		return exemptions.hasOwnProperty(filter) && exemptions[filter] > now;
 	});

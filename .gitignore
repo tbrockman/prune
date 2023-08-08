@@ -104,3 +104,4 @@ build
 build/
 /build
 node_modules
+key.json

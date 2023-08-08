@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { FormGroup, Grid, Link, Typography } from '@mui/material';
 import TipForm from '../components/TipForm';
 import { Page, useStore } from '../hooks/useStore';
@@ -31,27 +31,14 @@ const OptionsHomePage = ({ isFirefox }: OptionsHomePageProps) => {
 export function PopupMain() {
 	const page = useStore((state) => state.page);
 	const ref = useRef<HTMLFormElement>();
-	const [minHeight, setMinHeight] = useState(0);
 
 	let pageComponent;
-
-	useEffect(() => {
-		if (ref.current) {
-			setMinHeight(
-				Math.max(
-					parseFloat(getComputedStyle(ref.current).getPropertyValue('height')),
-					minHeight,
-				),
-			);
-		}
-	}, [page]);
 
 	switch (page) {
 		case Page.Home:
 			pageComponent = (
 				<OptionsHomePage
-					// isFirefox={process.env.PLASMO_BROWSER == 'firefox'}
-					isFirefox={true}
+					isFirefox={process.env.PLASMO_BROWSER == 'firefox'}
 				/>
 			);
 			break;
@@ -65,12 +52,10 @@ export function PopupMain() {
 			<Typography className="section-title">options 🔧</Typography>
 			<FormGroup
 				ref={ref}
-				style={{ minHeight }}
 				className="main-form-group options-form-group"
 			>
 				{pageComponent}
 			</FormGroup>
-
 			<Typography component="h1" className="section-title">
 				about 📝
 			</Typography>

@@ -1,47 +1,46 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import type { SelectChangeEvent } from '@mui/material';
-import { Button, Grid, MenuItem, Select, Typography } from '@mui/material';
-import { useState } from 'react';
-import { useStorage as _useStorage } from '@plasmohq/storage/hook';
-import { usePort as _usePort } from '@plasmohq/messaging/hook';
-import { Ports, StorageKeys } from '~enums';
+import React, { useLayoutEffect, useRef } from 'react'
+import type { SelectChangeEvent } from '@mui/material'
+import { Button, Grid, MenuItem, Select, Typography } from '@mui/material'
+import { useState } from 'react'
+import { useStorage as _useStorage } from '@plasmohq/storage/hook'
+import { usePort as _usePort } from '@plasmohq/messaging/hook'
+import { Ports, StorageKeys } from '~enums'
 
 export default function PausedDialog({
 	matchingFilters,
 	useStorage = _useStorage,
 	usePort = _usePort,
 }) {
-	const productivityPort = usePort(Ports.PRODUCTIVITY);
+	const productivityPort = usePort(Ports.PRODUCTIVITY)
 	const [exemptions, setExemptions] = useStorage<{ [key: string]: string }>(
 		StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS,
 		{},
-	);
-	const [unlockMinutes, setUnlockMinutes] = useState('15');
-	const [current, setCurrent] = useState<HTMLElement>(null);
-	const ref = useRef<HTMLElement>();
+	)
+	const [unlockMinutes, setUnlockMinutes] = useState('15')
+	const [current, setCurrent] = useState<HTMLElement>(null)
+	const ref = useRef<HTMLElement>()
 
 	const handleUnlockTimeChange = (event: SelectChangeEvent) => {
-		setUnlockMinutes(event.target.value as string);
-	};
+		setUnlockMinutes(event.target.value as string)
+	}
 
 	const unlockClicked = () => {
 		const end =
-			new Date().getTime() + Number.parseInt(unlockMinutes) * 60 * 1000;
-		const newExemptions = {};
+			new Date().getTime() + Number.parseInt(unlockMinutes) * 60 * 1000
+		const newExemptions = {}
 		matchingFilters.forEach((filter) => {
-			newExemptions[filter] = end;
-		});
-		setExemptions({ ...exemptions, ...newExemptions });
-	};
+			newExemptions[filter] = end
+		})
+		setExemptions({ ...exemptions, ...newExemptions })
+	}
 
 	const beProductiveClicked = () => {
-		console.log('clicked', productivityPort);
-		productivityPort.send({ message: 'test' });
-	};
+		productivityPort.send({})
+	}
 
 	useLayoutEffect(() => {
-		setCurrent(ref.current);
-	});
+		setCurrent(ref.current)
+	})
 
 	return (
 		<>
@@ -101,5 +100,5 @@ export default function PausedDialog({
 				</Grid>
 			</Grid>
 		</>
-	);
+	)
 }

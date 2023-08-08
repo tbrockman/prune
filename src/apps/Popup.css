@@ -3,6 +3,10 @@
 	justify-content: center;
 }
 
+body {
+	padding-right: 0 !important;
+}
+
 .app {
 	width: 620px;
 	display: flex;

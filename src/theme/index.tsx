@@ -1,13 +1,13 @@
-import { createTheme as muiCreateTheme } from '@mui/material/styles';
+import { createTheme as muiCreateTheme } from '@mui/material/styles'
 
 export default function createTheme() {
 	return muiCreateTheme({
 		palette: {
 			primary: {
-				main: '#48b946',
+				main: '#51bc4e',
 			},
 			secondary: {
-				main: '#673b97',
+				main: '#472966',
 			},
 			info: {
 				main: '#000',
@@ -62,9 +62,13 @@ export default function createTheme() {
 					root: {
 						backgroundColor: 'transparent !important',
 						maxWidth: '16ch',
+						'&:after': {
+							borderColor: 'black'
+						}
 					},
 					input: {
-						paddingBottom: '8px'
+						paddingBottom: '8px',
+						height: 'initial'
 					}
 				},
 			},
@@ -160,6 +164,14 @@ export default function createTheme() {
 					},
 				},
 			},
+			MuiList: {
+				styleOverrides: {
+					root: {
+						paddingTop: '0',
+						paddingBottom: '0',
+					}
+				}
+			}
 		},
-	});
+	})
 }
