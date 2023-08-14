@@ -21,7 +21,7 @@
 		"react-scripts": "5.0.1",
 		"typescript": "^5.1.6",
 		"web-vitals": "^3.4.0",
-		"zustand": "^4.3.7"
+		"zustand": "^4.4.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",
