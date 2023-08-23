@@ -1,62 +1,77 @@
 {
-  "name": "prune-plasmo",
-  "displayName": "prune",
-  "version": "0.0.0",
-  "description": "An extension to help you trim your garden of tabs.",
-  "author": "theodore brockman",
-  "packageManager": "pnpm@6.11.0",
-  "scripts": {
-    "dev": "plasmo dev",
-    "build": "npm-run-all build:chrome build:firefox build:edge",
-    "build:chrome": "plasmo build --target=chrome-mv3 --zip --hoist",
-    "build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
-    "build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
-    "build:safari": "",
-    "test": "mocha -r ts-node/register -r tsconfig-paths/register -r esm tests/**/*"
-  },
-  "dependencies": {
-    "@emotion/cache": "^11.10.7",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.126",
-    "@mui/material": "^5.12.0",
-    "@plasmohq/messaging": "^0.2.1",
-    "@plasmohq/storage": "^1.5.0",
-    "plasmo": "0.68.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "zustand": "^4.3.7"
-  },
-  "devDependencies": {
-    "@plasmohq/prettier-plugin-sort-imports": "3.5.2",
-    "@types/chai": "^4.3.4",
-    "@types/chrome": "0.0.197",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "18.8.3",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
-    "chai": "^4.3.7",
-    "esm": "^3.2.25",
-    "mocha": "^8.3.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "2.7.1",
-    "sinon": "^9.2.4",
-    "sinon-chrome": "^3.0.1",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "5.0.4"
-  },
-  "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ],
-    "permissions": [
-      "alarms",
-      "tabs",
-      "storage",
-      "tabGroups",
-      "bookmarks"
-    ]
-  }
+	"name": "prune-plasmo",
+	"displayName": "prune",
+	"version": "0.0.0",
+	"description": "An extension to help you trim your garden of tabs.",
+	"author": "theodore brockman",
+	"license": "GPLv3",
+	"bugs": {
+		"url": "https://github.com/tbrockman/prune/issues"
+	},
+	"homepage": "https://github.com/tbrockman/prune#readme",
+	"packageManager": "pnpm@6.11.0",
+	"scripts": {
+		"dev": "plasmo dev",
+		"build": "npm-run-all build:chrome build:firefox build:edge",
+		"build:chrome": "plasmo build --target=chrome-mv3 --zip --hoist",
+		"build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
+		"build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
+		"build:safari": "",
+		"test": "mocha -r ts-node/register -r tsconfig-paths/register -r esm tests/**/*"
+	},
+	"dependencies": {
+		"@emotion/cache": "^11.10.7",
+		"@emotion/react": "^11.10.6",
+		"@emotion/styled": "^11.10.6",
+		"@mui/icons-material": "^5.11.16",
+		"@mui/lab": "^5.0.0-alpha.126",
+		"@mui/material": "^5.12.0",
+		"@plasmohq/messaging": "^0.2.1",
+		"@plasmohq/storage": "^1.5.0",
+		"plasmo": "0.68.3",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"zustand": "^4.3.7"
+	},
+	"devDependencies": {
+		"@plasmohq/prettier-plugin-sort-imports": "3.5.2",
+		"@types/chai": "^4.3.4",
+		"@types/chrome": "0.0.197",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "18.8.3",
+		"@types/react": "18.0.21",
+		"@types/react-dom": "18.0.6",
+		"chai": "^4.3.7",
+		"esm": "^3.2.25",
+		"mocha": "^8.3.0",
+		"npm-run-all": "^4.1.5",
+		"prettier": "2.7.1",
+		"sinon": "^9.2.4",
+		"sinon-chrome": "^3.0.1",
+		"ts-node": "^10.9.1",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "5.0.4"
+	},
+	"manifest": {
+		"host_permissions": [
+			"https://*/*"
+		],
+		"permissions": [
+			"alarms",
+			"tabs",
+			"storage",
+			"tabGroups",
+			"bookmarks"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tbrockman/prune.git"
+	},
+	"keywords": [
+		"prune",
+		"tabs",
+		"browser",
+		"extension"
+	]
 }
