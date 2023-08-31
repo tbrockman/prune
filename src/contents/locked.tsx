@@ -2,9 +2,9 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { useStorage as _useStorage } from '@plasmohq/storage/hook';
 import LockedApp from '~apps/Locked';
-// IMPORTANT: all css must currently be specified in Locked.css
+// IMPORTANT: all css must currently be specified in locked.css
 // as traditional css-import functionality seems to be unavailable in content-scripts
-import cssText from 'data-text:~/contents/Locked.css';
+import cssText from 'data-text:~/contents/locked.css';
 
 import type { PlasmoCSConfig } from 'plasmo';
 import _useConfig from '~hooks/useConfig';
@@ -63,19 +63,17 @@ export default function Locked({
 	console.debug('window is exempt', isExempt);
 
 	if (productivityModeEnabled && matchingFilters.length > 0) {
-
 		if (!isExempt) {
 			return (
 				<CacheProvider value={styleCache}>
 					<LockedApp matchingFilters={matchingFilters} />
 				</CacheProvider>
 			);
-		}
-		else {
+		} else {
 			// For each exempt filter, set a timeout to force updating (rendering the lock screen) when the exemption expires
 			exemptFilters.forEach((filter) => {
 				setTimeout(() => {
-					forceUpdate(update+1)
+					forceUpdate(update + 1);
 				}, Number.parseInt(exemptions[filter]) - new Date().getTime() + 1000);
 			});
 		}
