@@ -15,7 +15,7 @@ jobs:
           path: build
       - uses: PlasmoHQ/bpp@v3
         with:
-          keys: ${{ secrets.BPP_KEYS }}
+          keys: ${{ secrets.SUBMIT_KEYS }}
           chrome-file: 'build/chrome-mv3-prod.zip'
           verbose: true
   # upload-firefox:
