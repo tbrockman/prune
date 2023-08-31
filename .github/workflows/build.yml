@@ -32,4 +32,5 @@ jobs:
         with:
           # we probably want to produce versioned artifacts
           # ... if we ever make enough money to pay for storage
-          path: prune/dist
+          path: build
+          name: prune
