@@ -1,4 +1,4 @@
-import { TabTracker } from '../../src/tabs/tab-tracker'
+import TabTracker from '../../src/tab/tab-tracker'
 import { assert } from 'chai'
 
 import chrome from 'sinon-chrome/extensions'
@@ -33,6 +33,7 @@ describe('tab-tracker', () => {
             { url: 'c' }
         ]
         chrome.storage.local.get.callsArgWith(1, { tabs: '[]'})
+        chrome.storage.local.set.callsArgWith(1, {})
         await tabTracker.init(tabs)
         assert.equal(tabTracker.tabs.size, 3)
     })

@@ -1,7 +1,9 @@
 // TODO
 
 import AlarmHandler from '../../src/handlers/alarm';
-import { TabGrouper, TabPruner, TabTracker } from '../../src/tabs';
+import TabGrouper from '../../src/tab/tab-grouper';
+import TabPruner from '../../src/tab/tab-pruner';
+import TabTracker from '../../src/tab/tab-tracker';
 import sinon from 'sinon/pkg/sinon-esm';
 const chrome = require('sinon-chrome/extensions');
 
@@ -36,6 +38,9 @@ describe('alarm-handler', () => {
 			'tab-lru-size': 30,
 			'tab-lru-destination': 'group',
 			'show-hints': true,
+			'productivity-mode-enabled': true,
+			'productivity-suspend-domains': [],
+			'productivity-suspend-exemptions': {}
 		};
 		return { ...options, ...overrides };
 	};

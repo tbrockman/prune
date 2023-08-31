@@ -1,66 +1,87 @@
-import { TabDeduplicator, TabGrouper, TabPruner, TabTracker } from "../tabs"
+import { StorageKeys } from '~enums';
+import TabDeduplicator from '~tab/tab-deduplicator';
+import TabGrouper from '~tab/tab-grouper';
+import TabPruner from '~tab/tab-pruner';
+import TabTracker from '~tab/tab-tracker';
+import type { Options } from '~util';
 
 type TabCreatedHandlerArgs = {
-    tracker: TabTracker
-    grouper: TabGrouper
-    pruner: TabPruner
-    deduplicator: TabDeduplicator
-    options: any
-}
+	tracker: TabTracker;
+	grouper: TabGrouper;
+	pruner: TabPruner;
+	deduplicator: TabDeduplicator;
+	options: any;
+};
 
 class TabCreatedHandler {
-    tracker: TabTracker
-    grouper: TabGrouper
-    pruner: TabPruner
-    deduplicator: TabDeduplicator
-    options: any
-    
-    constructor({ tracker, grouper, pruner, deduplicator, options }: TabCreatedHandlerArgs) {
-        this.tracker = tracker
-        this.grouper = grouper
-        this.pruner = pruner
-        this.deduplicator = deduplicator
-        this.options = options
-    }
+	tracker: TabTracker;
+	grouper: TabGrouper;
+	pruner: TabPruner;
+	deduplicator: TabDeduplicator;
+	options: Options;
 
-    async execute(tab: any) {
-    
-        let openTabs = await chrome.tabs.query({})
-        let deduplicated = false
+	constructor({
+		tracker,
+		grouper,
+		pruner,
+		deduplicator,
+		options,
+	}: TabCreatedHandlerArgs) {
+		this.tracker = tracker;
+		this.grouper = grouper;
+		this.pruner = pruner;
+		this.deduplicator = deduplicator;
+		this.options = options;
+	}
 
-        if (this.options['auto-deduplicate']) {
-            deduplicated = await this.deduplicator.deduplicateTab(tab, openTabs)
-            // TODO: write test since we regressed here
-            openTabs = deduplicated ? openTabs.filter(t => t.id != tab.id) : openTabs
-        }
+	async execute(tab: any) {
+		let openTabs = await chrome.tabs.query({});
+		let deduplicated = false;
 
-        await this.tracker.init(openTabs)
-        
-        if (deduplicated) return
+		if (this.options[StorageKeys.AUTO_DEDUPLICATE]) {
+			deduplicated = await this.deduplicator.deduplicateTab(
+				tab,
+				openTabs,
+			);
+			openTabs = deduplicated
+				? openTabs.filter((t) => t.id != tab.id)
+				: openTabs;
+		}
 
-        await this.tracker.track(tab)
+		await this.tracker.init(openTabs);
 
-        if (this.options['tab-lru-enabled']) {
-            // TODO: this is incorrect if tab deduplicated
-            const group = {
-                title: this.options['auto-group-name'],
-                color: "yellow",
-                collapsed: true
-            }
-            console.debug('open tabs to filter: ', openTabs)
-            openTabs = openTabs.filter(tab => tab.groupId === -1)
-            console.debug('open tabs post-filter:' , openTabs)
-            const size = this.options['tab-lru-size']
-            const [open, hidden] = this.tracker.limitNumberOfVisibleTabs(openTabs, size)
+		if (deduplicated) return;
 
-            if (this.options['tab-lru-destination'] === 'remove') {
-                await this.pruner.pruneTabs(hidden)
-            }
-            else if (this.options['tab-lru-destination']  === 'group') {
-                await this.grouper.groupTabs(hidden, group)
-            }
-        }
-    }
+		await this.tracker.track(tab);
+
+		if (this.options[StorageKeys.TAB_LRU_ENABLED]) {
+			// TODO: this is incorrect if tab deduplicated
+			const group = {
+				title: this.options[StorageKeys.AUTO_GROUP_NAME],
+				color: 'yellow',
+				collapsed: true,
+			};
+			console.debug('open tabs to filter: ', openTabs);
+			openTabs = openTabs.filter((tab) => tab.groupId === -1);
+			console.debug('open tabs post-filter:', openTabs);
+			const size = this.options[StorageKeys.TAB_LRU_SIZE];
+			const [open, hidden] = this.tracker.limitNumberOfVisibleTabs(
+				openTabs,
+				size,
+			);
+
+			if (
+				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'remove' ||
+				process.env.PLASMO_BROWSER == 'firefox' // TODO: kinda hacky
+			) {
+				await this.pruner.pruneTabs(hidden);
+			} else if (
+				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'group'
+			) {
+				await this.grouper.groupTabs(hidden, group);
+			}
+		}
+	}
 }
 
-export default TabCreatedHandler
+export default TabCreatedHandler;

@@ -1,0 +1,18 @@
+div.tip-form-group {
+	flex-direction: row;
+	align-items: center;
+}
+
+.tip-form-group > .MuiFormControl-root {
+	margin: 0;
+}
+
+div.tip-input {
+	margin-right: 8px;
+	max-width: 72px;
+	padding-left: 0;
+}
+
+.tip-input > input {
+	padding: 7px 7px 7px 0;
+}

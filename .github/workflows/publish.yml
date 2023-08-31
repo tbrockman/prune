@@ -1,0 +1,57 @@
+on: workflow_dispatch
+
+jobs:
+  upload-chrome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: chrome
+          path: prune/dist/chrome-mv3-prod.zip
+      - uses: PlasmoHQ/bpp@v3
+        with:
+          keys: ${{ secrets.BPP_KEYS }}
+          chrome-file: 'prune/dist/chrome-mv3-prod.zip'
+          verbose: true
+  # upload-firefox:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: firefox
+  #         path: prune/dist/firefox-mv3-prod.zip
+  #     - uses: PlasmoHQ/bpp@v3
+  #       with:
+  #         keys: ${{ secrets.BPP_KEYS }}
+  #         firefox-file: "prune/dist/firefox-mv3-prod.zip"
+  #         verbose: true
+  # upload-edge:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: edge
+  #         path: prune/dist/edge-mv3-prod.zip
+  #     - uses: PlasmoHQ/bpp@v3
+  #       with:
+  #         keys: ${{ secrets.BPP_KEYS }}
+  #         edge-file: "prune/dist/edge-mv3-prod.zip"
+  #         verbose: true
+  # upload-safari:
+  #   runs-on: macos-10.15
+  #   timeout-minutes: 15
+  #   steps:
+  #     - name: Git - Checkout
+  #       uses: actions/checkout@v3.0.0
+  #       with:
+  #         ref: ${{ github.ref }}
+  #     - name: Setup - Xcode
+  #       run: xcode-select -s /Applications/Xcode_13.2.app
+  #     - name: Setup - Ruby and bundler dependencies
+  #       uses: ruby/setup-ruby@v1.99.0
+  #       with:
+  #         bundler-cache: true
+  #     - name: Safari Webstore Upload via Browser Platform Publish
+  #       uses: PlasmoHQ/bpp@v2
+  #       with:
+  #         keys: ${{ secrets.BPP_KEYS }}

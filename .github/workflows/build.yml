@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+      - run: pnpm install
+      - run: pnpm build
+      - uses: actions/upload-artifact@v3
+        with:
+          # we probably want to produce versioned artifacts
+          # ... if we ever make enough money to pay for storage
+          path: prune/dist

@@ -1,0 +1,13 @@
+.productivity-settings {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+}
+
+.productivity-settings > .MuiIconButton-root {
+	align-self: flex-start;
+}
+
+.productivity-settings > .MuiAutocomplete-root {
+	min-width: 16ch;
+}

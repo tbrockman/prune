@@ -1,4 +1,4 @@
-import { TabPruner } from '../../src/tabs/tab-pruner'
+import TabPruner from '../../src/tab/tab-pruner'
 import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');

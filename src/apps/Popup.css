@@ -1,0 +1,63 @@
+#root {
+	display: flex;
+	justify-content: center;
+}
+
+body {
+	padding-right: 0 !important;
+}
+
+.app {
+	width: 620px;
+	display: flex;
+	justify-content: center;
+}
+
+.main-form-group {
+	border: 2px solid;
+	box-shadow: -8px 8px 0 0px #000;
+	margin: 0 32px 32px;
+	padding: 16px;
+	max-width: fit-content;
+}
+
+.main-form-group.options-form-group {
+	max-width: 100%;
+	padding-left: 6px;
+}
+
+.main-form-group > .form-option {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 100%;
+}
+
+.form-option.lru-options {
+	padding-left: 0;
+}
+
+.form-option > .lru-options-control {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.prune-header-container {
+	padding: 16px;
+}
+
+.MuiTypography-root.section-title {
+	margin-left: 40px;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: -24px;
+	z-index: 2;
+	position: relative;
+	padding: 0 8px;
+	width: fit-content;
+	font-size: 32px !important;
+}
+
+.MuiFormGroup-root > .form-option:first-child {
+	margin-top: 8px;
+}

@@ -1,4 +1,4 @@
-import { TabDeduplicator } from '../../src/tabs/tab-deduplicator';
+import TabDeduplicator from '../../src/tab/tab-deduplicator';
 import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
