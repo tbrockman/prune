@@ -6,8 +6,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: prune/chrome
-          path: build/chrome-mv3-prod.zip
+          name: prune
+          path: build
       - uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.BPP_KEYS }}
