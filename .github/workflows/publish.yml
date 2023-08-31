@@ -4,8 +4,13 @@ jobs:
   upload-chrome:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: build.yml
+          workflow_conclusion: success
+          branch: master
+          event: push
           name: prune
           path: build
       - uses: PlasmoHQ/bpp@v3
