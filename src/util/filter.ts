@@ -1,7 +1,7 @@
 export function getMatchingFilters(host, filters: string[]): string[] {
 	console.debug('trying to match filters on host', host, filters);
 	return filters.filter((f) => {
-		const regex = new RegExp(/^(?:www\.)?/ + f);
+		const regex = new RegExp(`^(?:www\\.)?${f}`);
 		return host.match(regex);
 	});
 }
