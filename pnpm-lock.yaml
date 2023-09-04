@@ -13,7 +13,7 @@ specifiers:
   '@types/chai': ^4.3.4
   '@types/chrome': 0.0.197
   '@types/mocha': ^10.0.1
-  '@types/node': 18.8.3
+  '@types/node': 20.5.9
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
   chai: ^4.3.7
@@ -50,7 +50,7 @@ devDependencies:
   '@types/chai': 4.3.5
   '@types/chrome': 0.0.197
   '@types/mocha': 10.0.1
-  '@types/node': 18.8.3
+  '@types/node': 20.5.9
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
   chai: 4.3.7
@@ -60,7 +60,7 @@ devDependencies:
   prettier: 2.7.1
   sinon: 9.2.4
   sinon-chrome: 3.0.1
-  ts-node: 10.9.1_279129bc4b1049b2e722e5068c1aef4b
+  ts-node: 10.9.1_84d21c1c3cf9d2ecad6f18bc8be8e77d
   tsconfig-paths: 4.2.0
   typescript: 5.0.4
 
@@ -2715,8 +2715,8 @@ packages:
     resolution: {integrity: sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==}
     dev: true
 
-  /@types/node/18.8.3:
-    resolution: {integrity: sha512-0os9vz6BpGwxGe9LOhgP/ncvYN5Tx1fNcd2TM3rD/aCGBkysb+ZWpXEocG24h6ZzOi13+VB8HndAQFezsSOw1w==}
+  /@types/node/20.5.9:
+    resolution: {integrity: sha512-PcGNd//40kHAS3sTlzKB9C9XL4K0sTup8nbG5lC14kzEteTNuAFh9u5nA0o5TWnSG2r/JNPRXFVcHJIIeRlmqQ==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -5494,7 +5494,7 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.1.0
-      ts-node: 10.9.1_279129bc4b1049b2e722e5068c1aef4b
+      ts-node: 10.9.1_84d21c1c3cf9d2ecad6f18bc8be8e77d
       yaml: 1.10.2
     dev: false
 
@@ -6385,7 +6385,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: false
 
-  /ts-node/10.9.1_279129bc4b1049b2e722e5068c1aef4b:
+  /ts-node/10.9.1_84d21c1c3cf9d2ecad6f18bc8be8e77d:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -6404,7 +6404,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.8.3
+      '@types/node': 20.5.9
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3
