@@ -29,7 +29,7 @@ specifiers:
   ts-node: ^10.9.1
   tsconfig-paths: ^4.2.0
   typescript: 5.0.4
-  zustand: ^4.3.7
+  zustand: ^4.4.1
 
 dependencies:
   '@emotion/cache': 11.10.7
@@ -43,7 +43,7 @@ dependencies:
   plasmo: 0.68.3_b7f89ec34c87fd7638d9c7443c6acedc
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  zustand: 4.3.7_react@18.2.0
+  zustand: 4.4.1_401f4652bc279224e5b6a5de5e4e7ad1
 
 devDependencies:
   '@plasmohq/prettier-plugin-sort-imports': 3.5.2_prettier@2.7.1
@@ -6783,18 +6783,22 @@ packages:
       readable-stream: 3.6.2
     dev: false
 
-  /zustand/4.3.7_react@18.2.0:
-    resolution: {integrity: sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==}
+  /zustand/4.4.1_401f4652bc279224e5b6a5de5e4e7ad1:
+    resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
+      '@types/react': '>=16.8'
       immer: '>=9.0'
       react: '>=16.8'
     peerDependenciesMeta:
+      '@types/react':
+        optional: true
       immer:
         optional: true
       react:
         optional: true
     dependencies:
+      '@types/react': 18.0.21
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
