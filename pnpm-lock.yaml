@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@emotion/cache': ^11.10.7
+  '@emotion/cache': ^11.11.0
   '@emotion/react': ^11.11.1
   '@emotion/styled': ^11.10.6
   '@mui/icons-material': ^5.14.7
@@ -32,7 +32,7 @@ specifiers:
   zustand: ^4.4.1
 
 dependencies:
-  '@emotion/cache': 11.10.7
+  '@emotion/cache': 11.11.0
   '@emotion/react': 11.11.1_3439121291b5e89e1eb824656ce6133e
   '@emotion/styled': 11.10.6_8c41d907693fb2d1ff357a3f9b3c0456
   '@mui/icons-material': 5.14.7_c02022fd19b779b2949e6e3f8352d781
