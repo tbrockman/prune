@@ -28,7 +28,7 @@
 		"@mui/material": "^5.12.0",
 		"@plasmohq/messaging": "^0.5.0",
 		"@plasmohq/storage": "^1.7.2",
-		"plasmo": "0.68.3",
+		"plasmo": "0.82.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"zustand": "^4.4.1"
