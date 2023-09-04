@@ -7,7 +7,7 @@ specifiers:
   '@mui/icons-material': ^5.11.16
   '@mui/lab': ^5.0.0-alpha.126
   '@mui/material': ^5.12.0
-  '@plasmohq/messaging': ^0.2.1
+  '@plasmohq/messaging': ^0.5.0
   '@plasmohq/prettier-plugin-sort-imports': 3.5.2
   '@plasmohq/storage': ^1.5.0
   '@types/chai': ^4.3.4
@@ -38,7 +38,7 @@ dependencies:
   '@mui/icons-material': 5.11.16_ddb03979e9719d9f3b3e6bbb5ec12662
   '@mui/lab': 5.0.0-alpha.126_384e7df67f674a8f52cc38b9ddeac31b
   '@mui/material': 5.12.0_a2ffd340cbd71879c991f876a74918f5
-  '@plasmohq/messaging': 0.2.1_react@18.2.0
+  '@plasmohq/messaging': 0.5.0_react@18.2.0
   '@plasmohq/storage': 1.5.0_react@18.2.0
   plasmo: 0.68.3_b7f89ec34c87fd7638d9c7443c6acedc
   react: 18.2.0
@@ -2073,8 +2073,8 @@ packages:
     resolution: {integrity: sha512-TdeisHX+Z0Rfez4251eCX0czcqnWO1OfurQhSQDijcmcjVU7r+IXh0svg7s+UVpCiHTagQ/JY+bnweuqnGPFHQ==}
     dev: false
 
-  /@plasmohq/messaging/0.2.1_react@18.2.0:
-    resolution: {integrity: sha512-1x569S9NRbm6l7jVnJtmLPpYQxRRx5E7/kCKbqEZbIVuqKECWjOGfuONr3wSYqZUoys1TUIF7GQ8Tf9EceKL6w==}
+  /@plasmohq/messaging/0.5.0_react@18.2.0:
+    resolution: {integrity: sha512-cYF750rguJDvnyJls2IHVAJTPVFtCEaMHMhnRsENfGaNqcRfXVfzwBGOABPg3k1iSBWBYLySh3Ht7QvFSnB3RQ==}
     peerDependencies:
       react: ^16.8.6 || ^17 || ^18
     peerDependenciesMeta:
