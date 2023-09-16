@@ -50,6 +50,7 @@ export default function ProductivitySettings() {
 										minWidth: '27ch',
 									},
 								}}
+								autoFocus
 							/>
 						</>
 					)}

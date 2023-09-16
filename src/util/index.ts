@@ -7,7 +7,7 @@ import {
 	localStorageSetAsync,
 } from './storage';
 
-class Options {
+class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
 	[StorageKeys.AUTO_PRUNE] = true;
 	[StorageKeys.PRUNE_THRESHOLD] = 7;

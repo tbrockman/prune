@@ -1,14 +1,15 @@
+import type { StorageKeys } from '~enums';
 import { setOptionAsync, Options } from '../util';
 import { useStore as _useStore } from './useStore';
 
 export default function useOptions(useStore = _useStore): {
 	options: Options;
-	setOptionAsync: Function;
+	setOptionAsync: (a: StorageKeys, b: any) => Promise<void>;
 } {
 	const options = useStore((state) => state.options);
 	const setOption = useStore((state) => state.setOption);
 
-	const setOptionProxy = async (key: string, value: any) => {
+	const setOptionProxy = async (key: StorageKeys, value: any) => {
 		setOption(key, value);
 		await setOptionAsync(key, value);
 	};
