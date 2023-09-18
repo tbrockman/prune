@@ -9,7 +9,7 @@ specifiers:
   '@mui/material': ^5.14.8
   '@plasmohq/messaging': ^0.5.0
   '@plasmohq/prettier-plugin-sort-imports': 4.0.1
-  '@plasmohq/storage': ^1.7.2
+  '@plasmohq/storage': ^1.8.0
   '@types/chai': ^4.3.6
   '@types/chrome': 0.0.197
   '@types/mocha': ^10.0.1
@@ -39,7 +39,7 @@ dependencies:
   '@mui/lab': 5.0.0-alpha.143_577b7deecdfafd4c2e64ac4e6952169b
   '@mui/material': 5.14.8_817649061eb299fa216e77291fab03e2
   '@plasmohq/messaging': 0.5.0_react@18.2.0
-  '@plasmohq/storage': 1.7.2_react@18.2.0
+  '@plasmohq/storage': 1.8.0_react@18.2.0
   plasmo: 0.83.0_b7f89ec34c87fd7638d9c7443c6acedc
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -2445,8 +2445,8 @@ packages:
       - supports-color
     dev: true
 
-  /@plasmohq/storage/1.7.2_react@18.2.0:
-    resolution: {integrity: sha512-N8hliSa3XJftAA5gZASKVVMbZ+jxTlNIehRTNT7rIgYhm+PNGXa1xZkuAlv+JDFIUuYMI84/xvVqivKedld73Q==}
+  /@plasmohq/storage/1.8.0_react@18.2.0:
+    resolution: {integrity: sha512-8VEVKq2takNaR6SBpRaS2KdLMwsoH91eekap1QA2M4B2CcyprSbsEMuK6HogfcD5gRBzHJAhHqwBGL9PdUJm7w==}
     peerDependencies:
       react: ^16.8.6 || ^17 || ^18
     peerDependenciesMeta:
