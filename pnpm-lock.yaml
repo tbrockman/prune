@@ -4,7 +4,7 @@ specifiers:
   '@emotion/cache': ^11.11.0
   '@emotion/react': ^11.11.1
   '@emotion/styled': ^11.10.6
-  '@mui/icons-material': ^5.14.8
+  '@mui/icons-material': ^5.14.9
   '@mui/lab': ^5.0.0-alpha.145
   '@mui/material': ^5.14.10
   '@plasmohq/messaging': ^0.5.0
@@ -35,7 +35,7 @@ dependencies:
   '@emotion/cache': 11.11.0
   '@emotion/react': 11.11.1_1bd8c3c13ba662ad7529cbbe08d51557
   '@emotion/styled': 11.10.6_a2fee2458c571b34bb900eaa7f2dc768
-  '@mui/icons-material': 5.14.8_e413bfc765383f81244177aa57ed1388
+  '@mui/icons-material': 5.14.9_e413bfc765383f81244177aa57ed1388
   '@mui/lab': 5.0.0-alpha.145_910c2d001fc4b969835b6d6ff4d52431
   '@mui/material': 5.14.10_5dae278bbcd3283b7daba4e08efc3ab6
   '@plasmohq/messaging': 0.5.0_react@18.2.0
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-kPHu/NhZq1k+vSZR5wq3AyUfD4bnfWAeuKpps0+8PS7ZHQ2Lyv1cXJh+PlFdCIOa0PK98rk3JPwMzS8BMhdHwQ==}
     dev: false
 
-  /@mui/icons-material/5.14.8_e413bfc765383f81244177aa57ed1388:
-    resolution: {integrity: sha512-YXcReLydTuNWb1/PxduAH5LgnHNH6spSQBaA0JOz9HD4J+vwst0IanAQgsXy9KKCJSjCsHywE3DB8X+w/b4eeQ==}
+  /@mui/icons-material/5.14.9_e413bfc765383f81244177aa57ed1388:
+    resolution: {integrity: sha512-xTRQbDsogsJo7tY5Og8R9zbuG2q+KIPVIM6JQoKxtJlz9DPOw1u0T2fGrvwD+XAOVifQf6epNMcGCDLfJAz4Nw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@mui/material': ^5.0.0
@@ -892,7 +892,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.22.15
       '@mui/material': 5.14.10_5dae278bbcd3283b7daba4e08efc3ab6
       '@types/react': 18.2.22
       react: 18.2.0
