@@ -2,9 +2,7 @@ import React, { useRef } from 'react';
 import { FormGroup, Grid, Link, Typography } from '@mui/material';
 import TipForm from '../components/TipForm';
 import { Page, useStore } from '../hooks/useStore';
-import ProductivitySettings from '../components/ProductivitySettings';
 import { PruneHeader } from '../components/PruneHeader';
-import ProductivityBlock from '~components/ProductivityBlock';
 import { DeduplicateBlock } from '~components/DeduplicateBlock';
 import { GroupTabsBlock } from '~components/GroupTabsBlock';
 import { RemoveTabsBlock } from '~components/RemoveTabsBlock';
@@ -18,7 +16,6 @@ type OptionsHomePageProps = {
 const OptionsHomePage = ({ isFirefox }: OptionsHomePageProps) => {
 	return (
 		<>
-			<ProductivityBlock />
 			<DeduplicateBlock />
 			{!isFirefox && <GroupTabsBlock />}
 			<RemoveTabsBlock />
@@ -29,32 +26,14 @@ const OptionsHomePage = ({ isFirefox }: OptionsHomePageProps) => {
 };
 
 export function PopupMain() {
-	const page = useStore((state) => state.page);
 	const ref = useRef<HTMLFormElement>();
-
-	let pageComponent;
-
-	switch (page) {
-		case Page.Home:
-			pageComponent = (
-				<OptionsHomePage
-					isFirefox={process.env.PLASMO_BROWSER == 'firefox'}
-				/>
-			);
-			break;
-		case Page.ProductivitySettings:
-			pageComponent = <ProductivitySettings />;
-	}
 
 	return (
 		<Grid width="100%">
 			<PruneHeader />
 			<Typography className="section-title">options 🔧</Typography>
-			<FormGroup
-				ref={ref}
-				className="main-form-group options-form-group"
-			>
-				{pageComponent}
+			<FormGroup ref={ref} className="main-form-group options-form-group">
+				<OptionsHomePage isFirefox={process.env.PLASMO_BROWSER == 'firefox'} />
 			</FormGroup>
 			<Typography component="h1" className="section-title">
 				about 📝
