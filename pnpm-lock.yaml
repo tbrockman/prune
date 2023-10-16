@@ -15,7 +15,7 @@ specifiers:
   '@types/mocha': ^10.0.1
   '@types/node': 20.8.6
   '@types/react': 18.2.28
-  '@types/react-dom': 18.2.8
+  '@types/react-dom': 18.2.13
   chai: ^4.3.8
   esm: ^3.2.25
   mocha: ^8.3.0
@@ -52,7 +52,7 @@ devDependencies:
   '@types/mocha': 10.0.2
   '@types/node': 20.8.6
   '@types/react': 18.2.28
-  '@types/react-dom': 18.2.8
+  '@types/react-dom': 18.2.13
   chai: 4.3.10
   esm: 3.2.25
   mocha: 8.4.0
@@ -2971,10 +2971,10 @@ packages:
   /@types/prop-types/15.7.8:
     resolution: {integrity: sha512-kMpQpfZKSCBqltAJwskgePRaYRFukDkm1oItcAbC3gNELR20XIBcN9VRgg4+m8DKsTfkWeA4m4Imp4DDuWy7FQ==}
 
-  /@types/react-dom/18.2.8:
-    resolution: {integrity: sha512-bAIvO5lN/U8sPGvs1Xm61rlRHHaq5rp5N3kp9C+NJ/Q41P8iqjkXSu0+/qu8POsjH9pNWb0OYabFez7taP7omw==}
+  /@types/react-dom/18.2.13:
+    resolution: {integrity: sha512-eJIUv7rPP+EC45uNYp/ThhSpE16k22VJUknt5OLoH9tbXoi8bMhwLf5xRuWMywamNbWzhrSmU7IBJfPup1+3fw==}
     dependencies:
-      '@types/react': 18.2.22
+      '@types/react': 18.2.28
     dev: true
 
   /@types/react-transition-group/4.4.7:
@@ -2989,6 +2989,7 @@ packages:
       '@types/prop-types': 15.7.8
       '@types/scheduler': 0.16.4
       csstype: 3.1.2
+    dev: false
 
   /@types/react/18.2.28:
     resolution: {integrity: sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==}
