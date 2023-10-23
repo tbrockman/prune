@@ -29,7 +29,7 @@ specifiers:
   ts-node: ^10.9.1
   tsconfig-paths: ^4.2.0
   typescript: 5.0.4
-  zustand: ^4.4.3
+  zustand: ^4.4.4
 
 dependencies:
   '@emotion/cache': 11.11.0
@@ -43,7 +43,7 @@ dependencies:
   plasmo: 0.83.0_b7f89ec34c87fd7638d9c7443c6acedc
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  zustand: 4.4.3_a4699fd93d6d4286ced289fc5b403c8a
+  zustand: 4.4.4_a4699fd93d6d4286ced289fc5b403c8a
 
 devDependencies:
   '@plasmohq/prettier-plugin-sort-imports': 4.0.1_prettier@3.0.3
@@ -7091,8 +7091,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand/4.4.3_a4699fd93d6d4286ced289fc5b403c8a:
-    resolution: {integrity: sha512-oRy+X3ZazZvLfmv6viIaQmtLOMeij1noakIsK/Y47PWYhT8glfXzQ4j0YcP5i0P0qI1A4rIB//SGROGyZhx91A==}
+  /zustand/4.4.4_a4699fd93d6d4286ced289fc5b403c8a:
+    resolution: {integrity: sha512-5UTUIAiHMNf5+mFp7/AnzJXS7+XxktULFN0+D1sCiZWyX7ZG+AQpqs2qpYrynRij4QvoDdCD+U+bmg/cG3Ucxw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
