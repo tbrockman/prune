@@ -25,7 +25,7 @@
 		"@emotion/styled": "^11.11.0",
 		"@mui/icons-material": "^5.14.14",
 		"@mui/lab": "^5.0.0-alpha.148",
-		"@mui/material": "^5.14.13",
+		"@mui/material": "^5.14.14",
 		"@plasmohq/messaging": "^0.5.0",
 		"@plasmohq/storage": "^1.8.0",
 		"plasmo": "0.83.0",
