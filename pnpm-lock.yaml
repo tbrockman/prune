@@ -11,7 +11,7 @@ specifiers:
   '@plasmohq/prettier-plugin-sort-imports': 4.0.1
   '@plasmohq/storage': ^1.8.0
   '@types/chai': ^4.3.8
-  '@types/chrome': 0.0.246
+  '@types/chrome': 0.0.248
   '@types/mocha': ^10.0.1
   '@types/node': 20.8.7
   '@types/react': 18.2.31
@@ -48,7 +48,7 @@ dependencies:
 devDependencies:
   '@plasmohq/prettier-plugin-sort-imports': 4.0.1_prettier@3.0.3
   '@types/chai': 4.3.8
-  '@types/chrome': 0.0.246
+  '@types/chrome': 0.0.248
   '@types/mocha': 10.0.2
   '@types/node': 20.8.7
   '@types/react': 18.2.31
@@ -2991,8 +2991,8 @@ packages:
     resolution: {integrity: sha512-yW/qTM4mRBBcsA9Xw9FbcImYtFPY7sgr+G/O5RDYVmxiy9a+pE5FyoFUi8JYCZY5nicj8atrr1pcfPiYpeNGOA==}
     dev: true
 
-  /@types/chrome/0.0.246:
-    resolution: {integrity: sha512-MxGxEomGxsJiL9xe/7ZwVgwdn8XVKWbPvxpVQl3nWOjrS0Ce63JsfzxUc4aU3GvRcUPYsfufHmJ17BFyKxeA4g==}
+  /@types/chrome/0.0.248:
+    resolution: {integrity: sha512-qtBzxZD1v3eWZn8XxH1i07pAhzJDHnxJBBVy7bmntXxXKxjzNXYxD41teqa5yOcX/Yy8brRFGZESEzGoINvBDg==}
     dependencies:
       '@types/filesystem': 0.0.33
       '@types/har-format': 1.2.13
