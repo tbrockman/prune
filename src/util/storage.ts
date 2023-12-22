@@ -1,6 +1,6 @@
 import { Storage } from '@plasmohq/storage';
 
-// Fix this so you can inject a storage object
+// Fix this so you can DI a storage object
 const syncStorage = new Storage();
 const localStorage = new Storage({
 	area: 'local',
@@ -84,7 +84,7 @@ export async function storageGet(
 	}
 
 	try {
-		let results = await Promise.all(promises.map((p) => p()));
+		let results = await Promise.all(promises);
 		results.forEach(([key, value]) => {
 			result[key] = value;
 		});
