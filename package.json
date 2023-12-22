@@ -59,7 +59,12 @@
 			"storage",
 			"tabGroups",
 			"bookmarks"
-		]
+		],
+		"browser_specific_settings": {
+			"gecko": {
+				"id": "your-id@example.com"
+			}
+		}
 	},
 	"repository": {
 		"type": "git",
