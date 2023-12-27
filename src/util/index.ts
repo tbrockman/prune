@@ -1,11 +1,6 @@
 import { config } from '../config';
 import { StorageKeys } from '~enums';
-import {
-	syncStorageSetAsync,
-	syncStorageGetAsync,
-	localStorageGetAsync,
-	localStorageSetAsync,
-} from './storage';
+import { syncStorage } from './storage';
 
 class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
@@ -29,20 +24,11 @@ const defaults = new Options();
 
 const getOptionsAsync = async (): Promise<Options> => {
 	console.debug('getting options async');
-	return (await syncStorageGetAsync(defaults)) as Options;
+	return (await syncStorage.getManyOrDefault(defaults)) as Options;
 };
 
 const setOptionAsync = async (key: string, value: any) => {
-	return await syncStorageSetAsync({ [key]: value });
+	return await syncStorage.set(key, value);
 };
 
-export {
-	defaults,
-	getOptionsAsync,
-	setOptionAsync,
-	localStorageGetAsync,
-	localStorageSetAsync,
-	syncStorageGetAsync,
-	syncStorageSetAsync,
-	Options,
-};
+export { defaults, getOptionsAsync, setOptionAsync, Options };

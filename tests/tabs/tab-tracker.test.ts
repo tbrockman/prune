@@ -21,15 +21,15 @@ describe('tab-tracker', () => {
 	});
 
 	it('should initialize empty tab state', async () => {
-		chrome.storage.local.get.callsArgWith(1, { tabs: '[]' });
+		chrome.storage.local.get.resolves({ tabs: '[]' });
 		await tabTracker.init([]);
 		assert.equal(0, Object.keys(tabTracker.tabs).length);
 	});
 
 	it('should initialize populated tab state with no stored information', async () => {
 		const tabs = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
-		chrome.storage.local.get.callsArgWith(1, { tabs: '[]' });
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.get.resolves({ tabs: '[]' });
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(tabs);
 		assert.equal(tabTracker.tabs.size, 3);
 	});
@@ -40,8 +40,8 @@ describe('tab-tracker', () => {
 			['b', new Date().getTime()],
 			['c', new Date().getTime()],
 		];
-		chrome.storage.local.get.callsArgWith(1, { tabs: JSON.stringify(tabs) });
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.get.resolves({ tabs: JSON.stringify(tabs) });
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init([]);
 		assert.equal(0, tabTracker.tabs.size);
 	});
@@ -53,10 +53,10 @@ describe('tab-tracker', () => {
 			['b', new Date().getTime()],
 			['c', new Date().getTime()],
 		];
-		chrome.storage.local.get.callsArgWith(1, {
+		chrome.storage.local.get.resolves({
 			tabs: JSON.stringify(storedTabs),
 		});
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		assert.equal(1, tabTracker.tabs.size);
 		assert(tabTracker.tabs.has('a'));
@@ -70,10 +70,10 @@ describe('tab-tracker', () => {
 			['b', new Date().getTime()],
 			['c', new Date().getTime()],
 		];
-		chrome.storage.local.get.callsArgWith(1, {
+		chrome.storage.local.get.resolves({
 			tabs: JSON.stringify(storedTabs),
 		});
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		assert.equal(3, tabTracker.tabs.size);
 		assert(tabTracker.tabs.has('a'));
@@ -90,10 +90,10 @@ describe('tab-tracker', () => {
 			['b', today.setDate(today.getDate() - 1)],
 			['c', today.setDate(today.getDate() - 7)],
 		];
-		chrome.storage.local.get.callsArgWith(1, {
+		chrome.storage.local.get.resolves({
 			tabs: JSON.stringify(storedTabs),
 		});
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		const [exceeds, remaining] = tabTracker.findTabsExceedingThreshold(
 			openTabs,
@@ -105,8 +105,8 @@ describe('tab-tracker', () => {
 	});
 
 	it('should reorder internal map on tab track', async () => {
-		chrome.storage.local.get.callsArgWith(1, { tabs: '[]' });
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.get.resolves({ tabs: '[]' });
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init([]);
 		await tabTracker.track({ url: 'a' });
 		await tabTracker.track({ url: 'b' });
@@ -147,8 +147,8 @@ describe('tab-tracker', () => {
 		const string =
 			'[["47",1631084725274],["48",1631084725274],["51",1631084725274],["54",1631084725274],["58",1631084725274],["60",1631084725274],["61",1631084725274]]';
 		const expected = new Map(JSON.parse(string));
-		chrome.storage.local.get.callsArgWith(1, { tabs: string });
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.get.resolves({ tabs: string });
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		assert.equal(openTabs.length, tabTracker.tabs.size);
 
@@ -169,10 +169,10 @@ describe('tab-tracker', () => {
 			['b', today.setDate(today.getDate() - 1)],
 			['c', today.getTime()],
 		];
-		chrome.storage.local.get.callsArgWith(1, {
+		chrome.storage.local.get.resolves({
 			tabs: JSON.stringify(storedTabs),
 		});
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		const limitTabs = [{ id: 1 }, { id: 2 }];
 		const [visible, hidden] = tabTracker.limitNumberOfVisibleTabs(limitTabs, 1);
@@ -184,8 +184,8 @@ describe('tab-tracker', () => {
 
 	it('should return a list of tabs to show and tabs to hide given a visible limit (without stored state)', async () => {
 		const openTabs = [];
-		chrome.storage.local.get.callsArgWith(1, { tabs: '[]' });
-		chrome.storage.local.set.callsArgWith(1, {});
+		chrome.storage.local.get.resolves({ tabs: '[]' });
+		chrome.storage.local.set.resolves({});
 		await tabTracker.init(openTabs);
 		await tabTracker.track({ id: 2, url: 'a' });
 		await tabTracker.track({ id: 1, url: 'b' });

@@ -88,9 +88,11 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('tab activated listener', activeInfo);
 	let bookmarker;
 
-	const storage = new Storage({
+	const localStorage = new Storage({
 		area: 'local',
 	});
+	const syncStorage = new Storage();
+
 	console.debug('created storage');
 	const options = await getOptionsAsync();
 	console.debug('got options');
@@ -98,7 +100,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('made tracker');
 	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
 	console.debug('created grouper');
-	const suspender = new TabSuspender(storage);
+	const suspender = new TabSuspender(localStorage);
 	console.debug('created suspender');
 	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
 		bookmarker = new TabBookmarker(

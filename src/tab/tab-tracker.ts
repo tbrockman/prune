@@ -1,13 +1,18 @@
 // TODO: extract common code
+import { PruneStorage } from '~util/storage';
 import { type Tab } from '../types';
-import { localStorageGetAsync, localStorageSetAsync } from '../util';
 
 class TabTracker {
 	tabsStorageKey: string;
 	tabs: Map<string, number>;
+	localStorage: PruneStorage;
 
-	constructor(tabsStorageKey = 'tabs') {
+	constructor(
+		tabsStorageKey = 'tabs',
+		localStorage = new PruneStorage({ area: 'local' }),
+	) {
 		this.tabsStorageKey = tabsStorageKey;
+		this.localStorage = localStorage;
 		this.tabs = new Map();
 		this.init = this.init.bind(this);
 		this.saveStateAsync = this.saveStateAsync.bind(this);
@@ -161,20 +166,13 @@ class TabTracker {
 
 	async saveStateAsync(key: string) {
 		const serialized = this.serializeTabs(this.tabs);
-		await localStorageSetAsync({ [key]: serialized });
+		await this.localStorage.set(key, serialized);
 	}
 
 	async loadStateAsync(key: string) {
 		console.debug('await local storage get');
-		const data = await localStorageGetAsync(key);
-		let tabs = [];
-
-		console.debug('raw data', data);
-
-		if ('tabs' in data) {
-			tabs = JSON.parse(data['tabs']);
-		}
-		return this.deserializeTabs(tabs);
+		const data: any = await this.localStorage.get(key);
+		return this.deserializeTabs(data);
 	}
 }
 

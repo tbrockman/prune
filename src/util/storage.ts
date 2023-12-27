@@ -64,24 +64,4 @@ const localStorage = new PruneStorage({
 	area: 'local',
 });
 
-export async function syncStorageSetAsync(kvs: Record<string, any>) {
-	return await syncStorage.setMany(kvs);
-}
-
-export async function localStorageSetAsync(kvs: Record<string, any>) {
-	return await localStorage.setMany(kvs);
-}
-
-export async function localStorageGetAsync(
-	defaults: Record<string, any> | string,
-	default_value: any = null,
-): Promise<any> {
-	return await localStorage.getManyOrDefault(defaults, default_value);
-}
-
-export async function syncStorageGetAsync(
-	defaults: Record<string, any> | string,
-	default_value: any = null,
-): Promise<any> {
-	return await syncStorage.getManyOrDefault(defaults, default_value);
-}
+export { PruneStorage, syncStorage, localStorage };
