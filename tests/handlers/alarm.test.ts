@@ -7,6 +7,8 @@ import TabTracker from '../../src/tab/tab-tracker';
 import sinon from 'sinon/pkg/sinon-esm';
 const chrome = require('sinon-chrome/extensions');
 
+declare var global: any;
+
 describe('alarm-handler', () => {
 	let handler;
 	let tracker;
@@ -40,7 +42,7 @@ describe('alarm-handler', () => {
 			'show-hints': true,
 			'productivity-mode-enabled': true,
 			'productivity-suspend-domains': [],
-			'productivity-suspend-exemptions': {}
+			'productivity-suspend-exemptions': {},
 		};
 		return { ...options, ...overrides };
 	};
