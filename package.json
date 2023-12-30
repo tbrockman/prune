@@ -1,7 +1,7 @@
 {
 	"name": "prune-plasmo",
 	"displayName": "prune",
-	"version": "3.3.0",
+	"version": "3.3.1",
 	"description": "An extension to help you trim your garden of tabs.",
 	"author": "theodore brockman",
 	"license": "GPLv3",
@@ -28,7 +28,7 @@
 		"@mui/material": "^5.14.15",
 		"@plasmohq/messaging": "^0.5.0",
 		"@plasmohq/storage": "^1.9.0",
-		"plasmo": "0.83.0",
+		"plasmo": "0.84.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"zustand": "^4.4.4"
@@ -58,12 +58,12 @@
 			"alarms",
 			"tabs",
 			"storage",
-			"tabGroups",
-			"bookmarks"
+			"bookmarks",
+			"tabGroups"
 		],
 		"browser_specific_settings": {
 			"gecko": {
-				"id": "your-id@example.com"
+				"id": "iam@theo.lol"
 			}
 		}
 	},

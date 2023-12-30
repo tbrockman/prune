@@ -1,5 +1,6 @@
 // TODO: extract common code
-import { PruneStorage } from '~util/storage';
+import { localStorage as defaultLocalStorage } from '~util/storage';
+import { type PruneStorage } from '~util/storage';
 import { type Tab } from '../types';
 
 class TabTracker {
@@ -7,10 +8,7 @@ class TabTracker {
 	tabs: Map<string, number>;
 	localStorage: PruneStorage;
 
-	constructor(
-		tabsStorageKey = 'tabs',
-		localStorage = new PruneStorage({ area: 'local' }),
-	) {
+	constructor(tabsStorageKey = 'tabs', localStorage = defaultLocalStorage) {
 		this.tabsStorageKey = tabsStorageKey;
 		this.localStorage = localStorage;
 		this.tabs = new Map();
@@ -145,6 +143,8 @@ class TabTracker {
 			} catch (error) {
 				console.error(error);
 			}
+		} else {
+			console.debug('tab has no url', tab);
 		}
 	}
 
@@ -158,6 +158,7 @@ class TabTracker {
 
 	deserializeTabs(tabs: [string, number][]) {
 		let deserialized = new Map<string, number>();
+		console.debug('deserializing tabs', tabs, 'typeof tabs', typeof tabs);
 		tabs.forEach(([url, date]: [string, number]) => {
 			deserialized.set(url, date);
 		});
@@ -166,13 +167,24 @@ class TabTracker {
 
 	async saveStateAsync(key: string) {
 		const serialized = this.serializeTabs(this.tabs);
-		await this.localStorage.set(key, serialized);
+		console.debug('saving state', key, serialized);
+		try {
+			await this.localStorage.set(key, serialized);
+		} catch (error) {
+			console.debug('error saving state', error);
+		}
+		console.debug('saved state');
 	}
 
 	async loadStateAsync(key: string) {
-		console.debug('await local storage get');
 		const data: any = await this.localStorage.get(key);
-		return this.deserializeTabs(data);
+		console.debug('got local storage data', data);
+
+		if (data) {
+			console.debug('deserializing data', data);
+			return this.deserializeTabs(JSON.parse(data));
+		}
+		return new Map();
 	}
 }
 

@@ -21,7 +21,7 @@ class PruneStorage extends Storage {
 		} catch (e) {
 			console.error('error getting key', key, e);
 		}
-		console.debug('got key', key, 'value', result, 'default', default_value);
+		// console.debug('got key', key, 'value', result, 'default', default_value);
 		return result ?? default_value;
 	}
 
@@ -40,6 +40,7 @@ class PruneStorage extends Storage {
 		} else {
 			promises = promises.concat(
 				Object.entries(defaults).map(async ([key, default_value]) => {
+					// console.debug('getting key', key, 'default', default_value);
 					let value = await this.getOrDefault(key, default_value);
 					return [key, value];
 				}),
