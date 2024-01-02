@@ -15,6 +15,7 @@ import { Storage } from '@plasmohq/storage';
 import { StorageKeys } from '~enums';
 
 const lock = new Set<number>();
+const isFirefox = process.env.PLASMO_BROWSER == 'firefox';
 
 // Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(async (details: any) => {
@@ -36,22 +37,29 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 });
 chrome.alarms.create({ periodInMinutes: 1 });
 
-// Ran every minute
-chrome.alarms.onAlarm.addListener(async (alarm) => {
-	let bookmarker;
+async function alarmHandler() {
+	console.debug('alarm handler executing');
+
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
-
-	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
-		bookmarker = new TabBookmarker(
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		);
-	}
+	const grouper = new TabGrouper(!isFirefox);
+	const bookmarker = new TabBookmarker(
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+	);
 	const pruner = new TabPruner(bookmarker);
-	const handler = new AlarmHandler({ tracker, grouper, pruner, options });
+	const handler = new AlarmHandler({
+		tracker,
+		grouper,
+		pruner,
+		options,
+		isFirefox,
+	});
 	await handler.execute();
-});
+}
+
+// Ran every minute
+chrome.alarms.onAlarm.addListener(alarmHandler);
 
 // When a new tab might be created
 chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
@@ -60,17 +68,14 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	// TODO: handle when updatedInfo is tab being ungrouped
 	if (updatedInfo.status != 'loading') return;
 
-	let bookmarker;
 	const options = await getOptionsAsync();
 
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
-
-	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
-		bookmarker = new TabBookmarker(
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		);
-	}
+	const grouper = new TabGrouper(!isFirefox);
+	const bookmarker = new TabBookmarker(
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+	);
 	const pruner = new TabPruner(bookmarker);
 	const deduplicator = new TabDeduplicator(lock);
 	const handler = new TabCreatedHandler({
@@ -86,25 +91,19 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('tab activated listener', activeInfo);
-	let bookmarker;
 
-	const storage = new Storage({
+	const localStorage = new Storage({
 		area: 'local',
 	});
-	console.debug('created storage');
+
 	const options = await getOptionsAsync();
-	console.debug('got options');
 	const tracker = new TabTracker();
-	console.debug('made tracker');
-	const grouper = new TabGrouper(process.env.PLASMO_BROWSER != 'firefox');
-	console.debug('created grouper');
-	const suspender = new TabSuspender(storage);
-	console.debug('created suspender');
-	if (options[StorageKeys.AUTO_PRUNE_BOOKMARK]) {
-		bookmarker = new TabBookmarker(
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		);
-	}
+	const grouper = new TabGrouper(!isFirefox);
+	const suspender = new TabSuspender(localStorage);
+	const bookmarker = new TabBookmarker(
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+	);
 	const pruner = new TabPruner(bookmarker);
 	const handler = new TabFocusedHandler({
 		tracker,
@@ -113,6 +112,5 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 		options,
 		suspender,
 	});
-	console.debug('created handler', handler);
 	await handler.execute(activeInfo);
 });

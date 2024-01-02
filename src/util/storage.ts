@@ -1,48 +1,66 @@
-export async function syncStorageSetAsync(key: string, value: any) {
-	return new Promise((resolve, reject) => {
-		chrome.storage.sync.set({ [key]: value }, () => {
-			if (chrome.runtime.lastError) {
-				reject(chrome.runtime.lastError);
-			} else {
-				resolve(value);
-			}
-		});
-	});
+import { Storage } from '@plasmohq/storage';
+
+class PruneStorage extends Storage {
+	async setMany(kvs: Record<string, any>) {
+		try {
+			const promises = Object.entries(kvs).map(async ([key, value]) => {
+				return await this.set(key, value);
+			});
+			return await Promise.all(promises);
+		} catch (e) {
+			console.error('error setting kvs', kvs, e);
+		}
+		return null;
+	}
+
+	async getOrDefault(key: string, default_value: any = null) {
+		let result: any;
+
+		try {
+			result = await this.get(key);
+		} catch (e) {
+			console.error('error getting key', key, e);
+		}
+		return result ?? default_value;
+	}
+
+	async getManyOrDefault(
+		defaults: Record<string, any> | string,
+		default_value: any = null,
+	) {
+		let promises = [];
+		let result = {};
+
+		if (typeof defaults == 'string') {
+			promises.push(async () => {
+				let value = await this.getOrDefault(defaults, default_value);
+				return [defaults, value];
+			});
+		} else {
+			promises = promises.concat(
+				Object.entries(defaults).map(async ([key, default_value]) => {
+					let value = await this.getOrDefault(key, default_value);
+					return [key, value];
+				}),
+			);
+		}
+
+		try {
+			let results = await Promise.all(promises);
+			results.forEach(([key, value]) => {
+				result[key] = value;
+			});
+		} catch (e) {
+			console.error('error getting results', e);
+		}
+		return result;
+	}
 }
 
-export async function syncStorageGetAsync(defaults: any): Promise<any> {
-	return new Promise((resolve, reject) => {
-		console.debug('getting sync storage', defaults);
-		chrome.storage.sync.get(defaults, (items) => {
-			if (chrome.runtime.lastError) {
-				reject(chrome.runtime.lastError);
-			} else {
-				resolve(items);
-			}
-		});
-	});
-}
+// Fix this so you can DI a storage object
+const syncStorage = new PruneStorage();
+const localStorage = new PruneStorage({
+	area: 'local',
+});
 
-export async function localStorageSetAsync(items: any) {
-	return new Promise((resolve, reject) => {
-		chrome.storage.local.set(items, () => {
-			if (chrome.runtime.lastError) {
-				reject(chrome.runtime.lastError);
-			} else {
-				resolve(items);
-			}
-		});
-	});
-}
-
-export async function localStorageGetAsync(key: string): Promise<any> {
-	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(key, (items) => {
-			if (chrome.runtime.lastError) {
-				reject(chrome.runtime.lastError);
-			} else {
-				resolve(items);
-			}
-		});
-	});
-}
+export { PruneStorage, syncStorage, localStorage };

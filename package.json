@@ -1,7 +1,7 @@
 {
 	"name": "prune-plasmo",
 	"displayName": "prune",
-	"version": "3.3.0",
+	"version": "3.4.1",
 	"description": "An extension to help you trim your garden of tabs.",
 	"author": "theodore brockman",
 	"license": "GPLv3",
@@ -12,12 +12,13 @@
 	"packageManager": "pnpm@6.11.0",
 	"scripts": {
 		"dev": "plasmo dev",
+		"clean": "rm -fr build",
 		"build": "npm-run-all build:chrome build:firefox build:edge",
 		"build:chrome": "plasmo build --target=chrome-mv3 --zip --hoist",
 		"build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
 		"build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
 		"build:safari": "",
-		"test": "mocha -r ts-node/register -r tsconfig-paths/register -r esm tests/**/*"
+		"test": "mocha tests/**/*"
 	},
 	"dependencies": {
 		"@emotion/cache": "^11.11.0",
@@ -27,8 +28,8 @@
 		"@mui/lab": "^5.0.0-alpha.150",
 		"@mui/material": "^5.14.15",
 		"@plasmohq/messaging": "^0.5.0",
-		"@plasmohq/storage": "^1.8.1",
-		"plasmo": "0.83.0",
+		"@plasmohq/storage": "^1.9.0",
+		"plasmo": "0.84.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"zustand": "^4.4.4"
@@ -50,6 +51,7 @@
 		"sinon-chrome": "^3.0.1",
 		"ts-node": "^10.9.1",
 		"tsconfig-paths": "^4.2.0",
+		"tsx": "^4.7.0",
 		"typescript": "5.0.4"
 	},
 	"manifest": {
@@ -57,9 +59,14 @@
 			"alarms",
 			"tabs",
 			"storage",
-			"tabGroups",
-			"bookmarks"
-		]
+			"bookmarks",
+			"tabGroups"
+		],
+		"browser_specific_settings": {
+			"gecko": {
+				"id": "iam@theo.lol"
+			}
+		}
 	},
 	"repository": {
 		"type": "git",

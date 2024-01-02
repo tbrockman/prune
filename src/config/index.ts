@@ -27,12 +27,14 @@ const configs: { [key: string]: PruneConfig } = {
 			backend: 'http://127.0.0.1:8787',
 		},
 		share: {
-			// TODO: Create a proxy that detects your OS and redirects you to the appropriate URL
+			// TODO: Create a proxy that detects your browser and redirects you to the appropriate extension store
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
 		},
 		review: {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
 		},
+		// DEPRECATED: dead config from attempting to allow prune to block sites
+		// maybe revisit when incremental permissions makes this a bit less scary for users
 		productivity: {
 			domains: [
 				'youtube',
@@ -64,19 +66,27 @@ const configs: { [key: string]: PruneConfig } = {
 	},
 	chrome: {
 		review: {
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en'
-		}
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+		},
+	},
+	edge: {
+		review: {
+			// TODO: change when we have a page on the edge store
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+		},
 	},
 	safari: {
 		review: {
-			url: 'https://apps.apple.com/us/app/prune/id1568518239'
-		}
+			// TODO: change when we have a page on app store
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+		},
 	},
 	firefox: {
 		review: {
-			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune/'
-		}
-	}
+			// TODO: change when we have a page on the firefox add-on store
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+		},
+	},
 };
 
 const config = {

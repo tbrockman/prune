@@ -1,30 +1,31 @@
-import { type Tab } from "../types"
-import TabBookmarker from "./tab-bookmarker"
+import { type Tab } from '../types';
+import TabBookmarker from './tab-bookmarker';
 
 class TabPruner {
-  bookmarker: TabBookmarker | undefined
+	bookmarker: TabBookmarker;
 
-  constructor(bookmarker: TabBookmarker | undefined) {
-    this.bookmarker = bookmarker
-    this.pruneTabs = this.pruneTabs.bind(this)
-  }
+	constructor(bookmarker: TabBookmarker) {
+		this.bookmarker = bookmarker;
+		this.pruneTabs = this.pruneTabs.bind(this);
+	}
 
-  async pruneTabs(tabs: Tab[]) {
-    if (tabs.length == 0) return
+	async pruneTabs(tabs: Tab[]) {
+		console.debug('pruning tabs', tabs);
 
-    if (this.bookmarker) {
-      this.bookmarker.bookmarkTabs(tabs)
-    }
+		if (tabs.length == 0) return;
 
-    const tabIds: number[] = []
-    tabs.forEach((tab) => tab.id && tabIds.push(tab.id))
+		this.bookmarker.bookmarkTabs(tabs);
 
-    try {
-      await chrome.tabs.remove(tabIds)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+		const tabIds: number[] = tabs
+			.filter((tab) => tab.id !== null && tab.id !== undefined)
+			.map((tab) => tab.id);
+
+		try {
+			await chrome.tabs.remove(tabIds);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
-export default TabPruner
+export default TabPruner;

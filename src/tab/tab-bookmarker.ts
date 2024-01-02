@@ -1,33 +1,55 @@
-import { type Tab } from "../types"
+import { type Tab } from '../types';
 
 class TabBookmarker {
-  bookmarkFolderName: string
+	bookmarkFolderName: string;
+	enabled: boolean;
 
-  constructor(bookmarkFolderName: string) {
-    this.bookmarkFolderName = bookmarkFolderName
-    this.bookmarkTabs = this.bookmarkTabs.bind(this)
-  }
+	constructor(bookmarkFolderName: string, enabled: boolean = true) {
+		this.enabled = enabled;
+		this.bookmarkFolderName = bookmarkFolderName;
+		this.bookmarkTabs = this.bookmarkTabs.bind(this);
+	}
 
-  async bookmarkTabs(tabs: Tab[]) {
-    const bookmarks = await chrome.bookmarks.search({
-      title: this.bookmarkFolderName
-    })
-    let folder: chrome.bookmarks.BookmarkTreeNode
+	async bookmarkTabs(tabs: Tab[]) {
+		if (tabs.length == 0 || !this.enabled) return;
 
-    if (bookmarks.length == 0) {
-      folder = await chrome.bookmarks.create({ title: this.bookmarkFolderName })
-    } else {
-      folder = bookmarks[0]
-    }
+		try {
+			console.debug('searching for existing bookmark folder');
 
-    tabs.forEach(async (tab) => {
-      await chrome.bookmarks.create({
-        title: tab.title,
-        url: tab.url,
-        parentId: folder.id
-      })
-    })
-  }
+			const bookmarks = await chrome.bookmarks.search({
+				query: this.bookmarkFolderName,
+			});
+
+			let folder: chrome.bookmarks.BookmarkTreeNode;
+
+			console.debug('found bookmarks', bookmarks);
+
+			if (bookmarks.length == 0) {
+				folder = await chrome.bookmarks.create({
+					title: this.bookmarkFolderName,
+				});
+			} else {
+				folder = bookmarks[0];
+			}
+
+			console.debug('bookmark folder', folder);
+
+			let promises = tabs.map(async (tab) => {
+				return await chrome.bookmarks.create({
+					title: tab.title,
+					url: tab.url,
+					parentId: folder.id,
+				});
+			});
+			let result = await Promise.all(promises);
+
+			console.debug('bookmark creation result', result);
+
+			return result;
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
-export default TabBookmarker
+export default TabBookmarker;
