@@ -82,9 +82,11 @@ const configs: { [key: string]: PruneConfig } = {
 		},
 	},
 	firefox: {
+		share: {
+			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
+		},
 		review: {
-			// TODO: change when we have a page on the firefox add-on store
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
 		},
 	},
 };
