@@ -18,18 +18,23 @@ jobs:
           keys: ${{ secrets.SUBMIT_KEYS }}
           chrome-file: 'build/chrome-mv3-prod.zip'
           verbose: true
-  # upload-firefox:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: firefox
-  #         path: prune/dist/firefox-mv3-prod.zip
-  #     - uses: PlasmoHQ/bpp@v3
-  #       with:
-  #         keys: ${{ secrets.BPP_KEYS }}
-  #         firefox-file: "prune/dist/firefox-mv3-prod.zip"
-  #         verbose: true
+  upload-firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: build.yml
+          workflow_conclusion: success
+          branch: master
+          event: push
+          name: prune
+          path: build
+      - uses: PlasmoHQ/bpp@v3
+        with:
+          keys: ${{ secrets.SUBMIT_KEYS }}
+          firefox-file: 'build/firefox-mv3-prod.zip'
+          verbose: true
   # upload-edge:
   #   runs-on: ubuntu-latest
   #   steps:
