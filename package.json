@@ -1,7 +1,7 @@
 {
 	"name": "prune-plasmo",
 	"displayName": "prune",
-	"version": "3.4.1",
+	"version": "3.4.2",
 	"description": "An extension to help you trim your garden of tabs.",
 	"author": "theodore brockman",
 	"license": "GPLv3",
