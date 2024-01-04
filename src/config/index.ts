@@ -96,9 +96,8 @@ const config = {
 	...configs[process.env.NODE_ENV ?? 'development'],
 	// Okay there's probably a better way to do this so that you can have environment-specific configs per browser platform
 	// But I'm not sure what it is, so this is what we're doing for now
-	...configs[process.env.PLASMO_ENV ?? 'chrome'],
+	...configs[process.env.PLASMO_BROWSER ?? 'chrome'],
 };
 
 export { config };
-
 export type { PruneConfig, TipConfig };
