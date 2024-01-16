@@ -3,7 +3,6 @@ import {
 	FormControl,
 	FormControlLabel,
 	MenuItem,
-	Typography,
 } from '@mui/material'
 import { FormOption } from './FormOption'
 import _useOptions from '../hooks/useOptions'
