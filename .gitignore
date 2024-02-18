@@ -105,3 +105,7 @@ build/
 /build
 node_modules
 key.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
