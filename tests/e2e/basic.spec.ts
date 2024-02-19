@@ -16,7 +16,6 @@ test('closes new tab when navigating to existing tab', async ({ context, page, e
   expect(context.pages().length).toBe(1)
 })
 
-// TODO: make this pass
 test('focuses original tab, and reverts navigation if tab opened from existing tab', async ({ context, page, extensionId }) => {
   await page.goto('https://google.com')
   const secondPage = await context.newPage()
