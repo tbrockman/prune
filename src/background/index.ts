@@ -1,5 +1,5 @@
 import AlarmHandler from '~handlers/alarm';
-import TabCreatedHandler from '~handlers/tab-created';
+import TabUpdatedHandler from '~handlers/tab-updated';
 import TabFocusedHandler from '~handlers/tab-focused';
 import TabBookmarker from '~tab/tab-bookmarker';
 import TabDeduplicator from '~tab/tab-deduplicator';
@@ -61,7 +61,7 @@ async function alarmHandler() {
 // Ran every minute
 chrome.alarms.onAlarm.addListener(alarmHandler);
 
-// When a new tab might be created
+// When a new tab is created, or a navigation occurs in an existing tab
 chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	console.debug('tab updated', updatedInfo, tab);
 
@@ -78,7 +78,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	);
 	const pruner = new TabPruner(bookmarker);
 	const deduplicator = new TabDeduplicator(lock);
-	const handler = new TabCreatedHandler({
+	const handler = new TabUpdatedHandler({
 		tracker,
 		grouper,
 		pruner,

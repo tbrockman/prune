@@ -5,7 +5,7 @@ import TabPruner from '~tab/tab-pruner';
 import TabTracker from '~tab/tab-tracker';
 import type { Options } from '~util';
 
-type TabCreatedHandlerArgs = {
+type TabUpdatedHandlerArgs = {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
@@ -13,7 +13,7 @@ type TabCreatedHandlerArgs = {
 	options: any;
 };
 
-class TabCreatedHandler {
+class TabUpdatedHandler {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
@@ -26,7 +26,7 @@ class TabCreatedHandler {
 		pruner,
 		deduplicator,
 		options,
-	}: TabCreatedHandlerArgs) {
+	}: TabUpdatedHandlerArgs) {
 		this.tracker = tracker;
 		this.grouper = grouper;
 		this.pruner = pruner;
@@ -84,4 +84,4 @@ class TabCreatedHandler {
 	}
 }
 
-export default TabCreatedHandler;
+export default TabUpdatedHandler;

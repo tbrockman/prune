@@ -14,6 +14,7 @@ export const test = base.extend<{
         }
 
         // TODO: Firefox: https://stackoverflow.com/questions/41867515/open-firefox-with-a-temporary-add-on-on-startup
+        // See also: https://github.com/aslushnikov/demo-playwright-with-firefox-web-extension/blob/master/README.md
 
         const context = await chromium.launchPersistentContext('', {
             headless: false,

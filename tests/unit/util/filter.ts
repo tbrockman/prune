@@ -2,7 +2,7 @@ import {
 	getMatchingFilters,
 	getExemptFilters,
 	urlToPartialHref,
-} from '../../src/util/filter';
+} from '../../../src/util/filter';
 import { assert } from 'chai';
 
 describe('filter utils', () => {

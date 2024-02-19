@@ -1,9 +1,9 @@
 // TODO
 
-import AlarmHandler from '../../src/handlers/alarm';
-import TabGrouper from '../../src/tab/tab-grouper';
-import TabPruner from '../../src/tab/tab-pruner';
-import TabTracker from '../../src/tab/tab-tracker';
+import AlarmHandler from '../../../src/handlers/alarm';
+import TabGrouper from '../../../src/tab/tab-grouper';
+import TabPruner from '../../../src/tab/tab-pruner';
+import TabTracker from '../../../src/tab/tab-tracker';
 import sinon from 'sinon/pkg/sinon-esm';
 const chrome = require('sinon-chrome/extensions');
 

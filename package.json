@@ -18,7 +18,7 @@
     "build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
     "build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
     "build:safari": "",
-    "test": "mocha tests/**/*",
+    "test": "mocha tests/unit/**/*",
     "test:e2e": "npx playwright test"
   },
   "dependencies": {
