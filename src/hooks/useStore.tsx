@@ -10,7 +10,7 @@ export enum Page {
 
 interface Store {
 	options: Options;
-	setOption: (key: string, value: any) => void;
+	setOption: (key: keyof Options, value: any) => void;
 	setOptions: (updated: Options) => void;
 	page: Page;
 	setPage: (a: Page) => void;
@@ -19,7 +19,7 @@ interface Store {
 
 const useStore = create<Store>((set) => ({
 	options: new Options(),
-	setOption: (key: string, value: any) =>
+	setOption: (key: keyof Options, value: any) =>
 		set((state) => ({
 			options: { ...state.options, [key]: value },
 		})),

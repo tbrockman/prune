@@ -1,7 +1,7 @@
 {
 	"name": "prune-plasmo",
 	"displayName": "prune",
-	"version": "3.4.2",
+	"version": "3.4.3",
 	"description": "An extension to help you trim your garden of tabs.",
 	"author": "theodore brockman",
 	"license": "GPLv3",
@@ -9,7 +9,7 @@
 		"url": "https://github.com/tbrockman/prune/issues"
 	},
 	"homepage": "https://github.com/tbrockman/prune#readme",
-	"packageManager": "pnpm@6.11.0",
+	"packageManager": "pnpm@8.6.0",
 	"scripts": {
 		"dev": "plasmo dev",
 		"clean": "rm -fr build",
