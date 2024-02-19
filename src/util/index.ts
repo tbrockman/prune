@@ -27,8 +27,8 @@ const getOptionsAsync = async (): Promise<Options> => {
 	return (await syncStorage.getManyOrDefault(defaults)) as Options;
 };
 
-const setOptionAsync = async (key: string, value: any) => {
-	return await syncStorage.set(key, value);
+const setOptionAsync = async (key: keyof Options, value: any) => {
+	return await syncStorage.set(key as string, value);
 };
 
 export { defaults, getOptionsAsync, setOptionAsync, Options };

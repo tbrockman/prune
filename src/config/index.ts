@@ -69,18 +69,10 @@ const configs: { [key: string]: PruneConfig } = {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
 		},
 	},
-	edge: {
-		review: {
-			// TODO: change when we have a page on the edge store
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
-		},
-	},
-	safari: {
-		review: {
-			// TODO: change when we have a page on app store
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
-		},
-	},
+	// TODO: change when we have a page on the edge store
+	edge: {},
+	// TODO: change when we have a page on app store
+	safari: {},
 	firefox: {
 		share: {
 			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
