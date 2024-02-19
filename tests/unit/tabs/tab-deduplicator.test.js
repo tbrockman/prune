@@ -5,7 +5,6 @@ import sinon from 'sinon/pkg/sinon-esm';
 // TODO: investigate https://github.com/acvetkov/sinon-chrome/pull/94 and fork to mock missing APIs
 const chrome = require('sinon-chrome/extensions');
 
-
 describe('tab-deduplicator', () => {
 	let tabDeduplicator;
 	let tabLock;
