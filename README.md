@@ -10,7 +10,6 @@ A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you ma
 - Limits number of visible tabs, `prune` can automatically group/remove least recently used tabs if you reach your pre-defined limit
 - Bookmarks tabs before removing, `prune` can bookmark any tabs it would've closed, keeping them around a bit longer. -- suggested by [@valyagolev](https://github.com/valyagolev)
 - Tips! Help support `prune`'s developer
-- `🎉 new! 🎉` Productivity mode, `prune` can prevent you from wasting time on unproductive websites.
 
 As `prune` grows it might help you do _even_ more.
 
