@@ -26,7 +26,7 @@ export const test = base.extend<{
         });
 
         // Hack to handle Chromium starting with an initial open tab
-        const pages = await context.pages()
+        let pages = context.pages()
 
         if (pages.length > 0) {
             await Promise.all(pages.map(page => page.close()))
