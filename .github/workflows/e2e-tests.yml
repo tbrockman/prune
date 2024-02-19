@@ -31,7 +31,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
-      - run: pnpm exec playwright install
       - run: pnpm build
       - run: pnpm test:e2e
       - uses: actions/upload-artifact@v3
