@@ -1,7 +1,7 @@
+name: Unit tests
 on:
   pull_request:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   test:
@@ -28,11 +28,11 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install
-      - run: pnpm test
+      - run: pnpm test:unit
       - run: pnpm build
   auto-approve:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test # TODO: auto-approve without needing to build in both this workflow and e2e
     permissions:
       contents: write
       pull-requests: write

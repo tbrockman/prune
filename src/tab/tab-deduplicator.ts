@@ -34,7 +34,15 @@ class TabDeduplicator {
       await chrome.windows.update(openTabs[index].windowId, {
         focused: true
       })
-      await chrome.tabs.remove(tab.id)
+
+      // NEW: if `openerTabId` is available, this tab was opened by another tab or newtab
+      // TODO: check if this holds true in other browsers (Firefox, Edge, etc.)
+      if (tab.openerTabId) {
+        await chrome.tabs.remove(tab.id)
+      }
+      else {
+        await chrome.tabs.goBack(tab.id)
+      }
     }
     this.tabLock.delete(tab.id)
     return index > -1
