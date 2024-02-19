@@ -1,9 +1,11 @@
 name: End-to-end tests
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
 jobs:
   test:
     timeout-minutes: 60
