@@ -18,7 +18,8 @@
     "build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
     "build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
     "build:safari": "",
-    "test": "mocha tests/unit/**/*",
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "test:unit": "mocha tests/unit/**/*",
     "test:e2e": "npx playwright test"
   },
   "dependencies": {
@@ -37,7 +38,7 @@
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "4.0.1",
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "^1.41.2",
     "@types/chai": "^4.3.9",
     "@types/chrome": "0.0.248",
     "@types/mocha": "^10.0.1",

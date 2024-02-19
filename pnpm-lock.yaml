@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -47,7 +47,7 @@ devDependencies:
     specifier: 4.0.1
     version: 4.0.1(prettier@3.0.3)
   '@playwright/test':
-    specifier: ^1.35.1
+    specifier: ^1.41.2
     version: 1.41.2
   '@types/chai':
     specifier: ^4.3.9
