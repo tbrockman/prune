@@ -10,9 +10,11 @@ import TabTracker from '~tab/tab-tracker';
 
 import '@plasmohq/messaging/background';
 
-import { getOptionsAsync } from '../util';
+import { getOptionsAsync, initLogging } from '../util';
 import { Storage } from '@plasmohq/storage';
 import { StorageKeys } from '~enums';
+
+initLogging();
 
 const lock = new Set<number>();
 const isFirefox = process.env.PLASMO_BROWSER == 'firefox';
@@ -35,9 +37,10 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 		}
 	}
 });
-chrome.alarms.create({ periodInMinutes: 1 });
 
-async function alarmHandler() {
+// Ran every minute
+chrome.alarms.create({ periodInMinutes: 1 });
+chrome.alarms.onAlarm.addListener(async () => {
 	console.debug('alarm handler executing');
 
 	const options = await getOptionsAsync();
@@ -56,36 +59,33 @@ async function alarmHandler() {
 		isFirefox,
 	});
 	await handler.execute();
-}
-
-// Ran every minute
-chrome.alarms.onAlarm.addListener(alarmHandler);
+});
 
 // When a new tab is created, or a navigation occurs in an existing tab
 chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	console.debug('tab updated', updatedInfo, tab);
 
 	// TODO: handle when updatedInfo is tab being ungrouped
-	if (updatedInfo.status != 'loading') return;
+	if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
+		const options = await getOptionsAsync();
 
-	const options = await getOptionsAsync();
-
-	const tracker = new TabTracker();
-	const grouper = new TabGrouper(!isFirefox);
-	const bookmarker = new TabBookmarker(
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
-	);
-	const pruner = new TabPruner(bookmarker);
-	const deduplicator = new TabDeduplicator(lock);
-	const handler = new TabUpdatedHandler({
-		tracker,
-		grouper,
-		pruner,
-		deduplicator,
-		options,
-	});
-	await handler.execute(tab);
+		const tracker = new TabTracker();
+		const grouper = new TabGrouper(!isFirefox);
+		const bookmarker = new TabBookmarker(
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+		);
+		const pruner = new TabPruner(bookmarker);
+		const deduplicator = new TabDeduplicator(lock);
+		const handler = new TabUpdatedHandler({
+			tracker,
+			grouper,
+			pruner,
+			deduplicator,
+			options,
+		});
+		await handler.execute(tab);
+	}
 });
 
 // Whenever a tab comes into focus
@@ -95,7 +95,6 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	const localStorage = new Storage({
 		area: 'local',
 	});
-
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
 	const grouper = new TabGrouper(!isFirefox);

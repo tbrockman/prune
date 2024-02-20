@@ -1,6 +1,8 @@
 import { config } from '../config';
 import { StorageKeys } from '~enums';
 import { syncStorage } from './storage';
+export { pollTabForStatus } from './query';
+export { initLogging } from './logging';
 
 class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
