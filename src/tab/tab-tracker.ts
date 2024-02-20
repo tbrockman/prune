@@ -144,7 +144,7 @@ class TabTracker {
 				console.error(error);
 			}
 		} else {
-			console.debug('tab has no url', tab);
+			console.debug('tab has no url or is a special tab', tab);
 		}
 	}
 

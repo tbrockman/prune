@@ -34,7 +34,7 @@ class TabUpdatedHandler {
 		this.options = options;
 	}
 
-	async execute(tab: any) {
+	async execute(tab: chrome.tabs.Tab) {
 		let openTabs = await chrome.tabs.query({});
 		let deduplicated = false;
 
@@ -55,7 +55,6 @@ class TabUpdatedHandler {
 		await this.tracker.track(tab);
 
 		if (this.options[StorageKeys.TAB_LRU_ENABLED]) {
-			// TODO: this is incorrect if tab deduplicated
 			const group = {
 				title: this.options[StorageKeys.AUTO_GROUP_NAME],
 				color: 'yellow',

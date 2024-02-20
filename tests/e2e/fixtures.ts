@@ -31,7 +31,6 @@ export const test = base.extend<{
         if (pages.length > 0) {
             await Promise.all(pages.map(page => page.close()))
         }
-
         await use(context);
         await context.close();
     },
