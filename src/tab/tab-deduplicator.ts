@@ -3,11 +3,9 @@ import { type Tab } from "../types"
 
 class TabDeduplicator {
   tabLock: Set<number>
-  createdTabs: Set<number>
 
-  constructor(tabLock: Set<number>, createdTabs: Set<number>) {
+  constructor(tabLock: Set<number>) {
     this.tabLock = tabLock
-    this.createdTabs = createdTabs
     this.deduplicateTab = this.deduplicateTab.bind(this)
   }
 

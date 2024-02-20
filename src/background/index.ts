@@ -18,7 +18,6 @@ initLogging();
 
 const lock = new Set<number>();
 const isFirefox = process.env.PLASMO_BROWSER == 'firefox';
-const createdTabs = new Set<number>();
 
 // Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(async (details: any) => {
@@ -77,7 +76,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
 		);
 		const pruner = new TabPruner(bookmarker);
-		const deduplicator = new TabDeduplicator(lock, createdTabs);
+		const deduplicator = new TabDeduplicator(lock);
 		const handler = new TabUpdatedHandler({
 			tracker,
 			grouper,
@@ -86,9 +85,6 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 			options,
 		});
 		await handler.execute(tab);
-
-		// Remove the tab from the created tabs set, if applicable
-		createdTabs.delete(tabId);
 	}
 });
 
