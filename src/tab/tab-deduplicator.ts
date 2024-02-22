@@ -52,11 +52,13 @@ class TabDeduplicator {
           // If the tab was previously opened by explicitly creating a new tab, and navigating to the link
           // Or if we still have the same URL after going back,
           // Remove the tab.
-          if (updated.url == "chrome://newtab/" || updated.url == "about:newtab" || updated.url == 'about:blank' || tab.url == updated.url) {
+          if (updated.url == "chrome://newtab/" || updated.url == "about:newtab" || updated.url == 'about:blank') {
             console.debug("removing tab", tab.id)
             await chrome.tabs.remove(tab.id)
           }
         } catch (e) {
+          console.debug("error caught while deduplicating", e)
+
           if (e.message.includes("Cannot find a next page in history")) {
             await chrome.tabs.remove(tab.id)
           } else {

@@ -70,6 +70,8 @@ describe('tab-deduplicator', () => {
 		assert(chrome.tabs.goBack.notCalled);
 	});
 
+	// @tbrockman: Leaving here for a bit in case this seems desirable again.
+	// 
 	// it('shouldnt focus tab if not active', async () => {
 	// 	chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
@@ -122,18 +124,20 @@ describe('tab-deduplicator', () => {
 		assert(chrome.tabs.goBack.calledOnce);
 	});
 
-	it('should remove tab if tab goBack url is the same as before', async () => {
-		chrome.tabs.get.resolves({ url: 'theo.lol', status: 'complete' });
+	// @tbrockman: Leaving here for a bit in case this seems desirable again.
+	// 
+	// it('should remove tab if tab goBack url is the same as before', async () => {
+	// 	chrome.tabs.get.resolves({ url: 'theo.lol', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.calledOnce);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+	// 	await tabDeduplicator.deduplicateTab(
+	// 		{ id: 1, url: 'theo.lol', status: 'loading', active: true },
+	// 		[{ id: 2, url: 'theo.lol', status: 'complete' }],
+	// 	);
+	// 	assert(chrome.tabs.highlight.calledOnce);
+	// 	assert(chrome.windows.update.calledOnce);
+	// 	assert(chrome.tabs.remove.calledOnce);
+	// 	assert(chrome.tabs.goBack.calledOnce);
+	// });
 
 	it('should remove tab if tab goBack url throws navigation error', async () => {
 		chrome.tabs.goBack.throws(new Error("Cannot find a next page in history."));
