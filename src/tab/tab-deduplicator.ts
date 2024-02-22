@@ -34,16 +34,14 @@ class TabDeduplicator {
       if (index > -1) {
         console.debug("deduplicating tab", tab.id, tab)
 
-        if (tab.active) {
-          const highlightInfo = {
-            tabs: openTabs[index].index,
-            windowId: openTabs[index].windowId
-          }
-          await chrome.tabs.highlight(highlightInfo)
-          await chrome.windows.update(openTabs[index].windowId, {
-            focused: true
-          })
+        const highlightInfo = {
+          tabs: openTabs[index].index,
+          windowId: openTabs[index].windowId
         }
+        await chrome.tabs.highlight(highlightInfo)
+        await chrome.windows.update(openTabs[index].windowId, {
+          focused: true
+        })
         // TODO: might need to handle some concurrency-related edge case where we goBack and have a duplicate as well
         // Try to navigate backwards on the previous tab, polling until the navigation is complete (timing out after 5s)
         try {

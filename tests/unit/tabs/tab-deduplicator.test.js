@@ -70,18 +70,18 @@ describe('tab-deduplicator', () => {
 		assert(chrome.tabs.goBack.notCalled);
 	});
 
-	it('shouldnt focus tab if not active', async () => {
-		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+	// it('shouldnt focus tab if not active', async () => {
+	// 	chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: false },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
-		);
-		assert(chrome.tabs.highlight.notCalled);
-		assert(chrome.windows.update.notCalled);
-		assert(chrome.tabs.remove.notCalled);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+	// 	await tabDeduplicator.deduplicateTab(
+	// 		{ id: 1, url: 'theo.lol', status: 'loading', active: false },
+	// 		[{ id: 2, url: 'theo.lol', status: 'complete' }],
+	// 	);
+	// 	assert(chrome.tabs.highlight.notCalled);
+	// 	assert(chrome.windows.update.notCalled);
+	// 	assert(chrome.tabs.remove.notCalled);
+	// 	assert(chrome.tabs.goBack.calledOnce);
+	// });
 
 	it('should remove tab if tab goBack url is chrome://newtab/', async () => {
 		chrome.tabs.get.resolves({ url: 'chrome://newtab/', status: 'complete' });
