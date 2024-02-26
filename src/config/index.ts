@@ -19,6 +19,13 @@ interface PruneConfig {
 	share?: ShareConfig;
 	productivity?: ProductivityConfig;
 	review?: ReviewConfig;
+	unsupportedFeatures?: Set<Features>;
+}
+
+export enum Features {
+	TabGroups = 'tabGroups',
+	TabHighlighting = 'tabHighlighting',
+	Sharing = 'sharing',
 }
 
 const configs: { [key: string]: PruneConfig } = {
@@ -53,6 +60,7 @@ const configs: { [key: string]: PruneConfig } = {
 				'primevideo',
 			],
 		},
+		unsupportedFeatures: new Set(),
 	},
 	development: {
 		tip: {
@@ -77,9 +85,12 @@ const configs: { [key: string]: PruneConfig } = {
 		review: {
 			url: 'https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd'
 		},
+		unsupportedFeatures: new Set([Features.Sharing]),
 	},
 	// TODO: change when we have a page on app store
-	safari: {},
+	safari: {
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting]),
+	},
 	firefox: {
 		share: {
 			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
@@ -87,7 +98,11 @@ const configs: { [key: string]: PruneConfig } = {
 		review: {
 			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
 		},
+		unsupportedFeatures: new Set([Features.TabGroups]),
 	},
+	opera: {
+		unsupportedFeatures: new Set([Features.TabHighlighting]),
+	}
 };
 
 const config = {

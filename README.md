@@ -39,6 +39,12 @@ pnpm build
 npm run build
 ```
 
+For creating the Safari XCode project, run:
+
+```bash
+cd build && xcrun safari-web-extension-converter safari-mv3-prod
+```
+
 ## Submit to the webstores
 
 Execute the `publish` workflow

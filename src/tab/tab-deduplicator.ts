@@ -1,11 +1,14 @@
 import { pollTabForStatus } from "~util"
 import { type Tab } from "../types"
+import { Features } from "~config"
 
 class TabDeduplicator {
   tabLock: Set<number>
+  unsupportedFeatures: Set<Features>
 
-  constructor(tabLock: Set<number>) {
+  constructor(tabLock: Set<number>, unsupportedFeatures: Set<Features>) {
     this.tabLock = tabLock
+    this.unsupportedFeatures = unsupportedFeatures
     this.deduplicateTab = this.deduplicateTab.bind(this)
   }
 
@@ -38,7 +41,16 @@ class TabDeduplicator {
           tabs: openTabs[index].index,
           windowId: openTabs[index].windowId
         }
-        await chrome.tabs.highlight(highlightInfo)
+
+        if (!this.unsupportedFeatures.has(Features.TabHighlighting)) {
+          await chrome.tabs.highlight(highlightInfo)
+        } else {
+          await chrome.tabs.update(openTabs[index].id, {
+            active: true,
+            highlighted: true,
+            selected: true
+          })
+        }
         await chrome.windows.update(openTabs[index].windowId, {
           focused: true
         })
@@ -52,7 +64,7 @@ class TabDeduplicator {
           // If the tab was previously opened by explicitly creating a new tab, and navigating to the link
           // Or if we still have the same URL after going back,
           // Remove the tab.
-          if (updated.url == "chrome://newtab/" || updated.url == "about:newtab" || updated.url == 'about:blank') {
+          if (updated.url == "chrome://newtab/" || updated.url == "about:newtab" || updated.url == 'about:blank' || updated.url == '') {
             console.debug("removing tab", tab.id)
             await chrome.tabs.remove(tab.id)
           }

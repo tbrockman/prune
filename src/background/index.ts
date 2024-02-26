@@ -11,11 +11,11 @@ import '@plasmohq/messaging/background';
 
 import { getOptionsAsync, initLogging } from '../util';
 import { StorageKeys } from '~enums';
+import { Features, config } from '~config';
 
 initLogging();
 
 const lock = new Set<number>();
-const isFirefox = process.env.PLASMO_BROWSER == 'firefox';
 
 // Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(async (details: any) => {
@@ -40,10 +40,9 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 chrome.alarms.create({ periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(async () => {
 	console.debug('alarm handler executing');
-
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper(!isFirefox);
+	const grouper = new TabGrouper(config.unsupportedFeatures.has(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
@@ -54,7 +53,7 @@ chrome.alarms.onAlarm.addListener(async () => {
 		grouper,
 		pruner,
 		options,
-		isFirefox,
+		unsupportedFeatures: config.unsupportedFeatures,
 	});
 	await handler.execute();
 });
@@ -68,13 +67,13 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 		const options = await getOptionsAsync();
 
 		const tracker = new TabTracker();
-		const grouper = new TabGrouper(!isFirefox);
+		const grouper = new TabGrouper(!config.unsupportedFeatures.has(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
 		);
 		const pruner = new TabPruner(bookmarker);
-		const deduplicator = new TabDeduplicator(lock);
+		const deduplicator = new TabDeduplicator(lock, config.unsupportedFeatures);
 		const handler = new TabUpdatedHandler({
 			tracker,
 			grouper,

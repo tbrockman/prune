@@ -2,6 +2,7 @@ import TabGrouper from '~tab/tab-grouper';
 import TabPruner from '~tab/tab-pruner';
 import TabTracker from '~tab/tab-tracker';
 import { type Tab } from '../types';
+import { Features } from '~config';
 
 const toOneDayInMilliseconds = 24 * 60 * 60 * 1000;
 
@@ -10,7 +11,7 @@ type AlarmHandlerArgs = {
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	options: any;
-	isFirefox: boolean;
+	unsupportedFeatures: Set<Features>;
 };
 
 class AlarmHandler {
@@ -23,14 +24,14 @@ class AlarmHandler {
 	autoGroupThreshold: number;
 	autoGroupName: string;
 	autoBookmark: boolean;
-	isFirefox: boolean;
+	unsupportedFeatures: Set<Features>;
 
 	constructor({
 		tracker,
 		grouper,
 		pruner,
 		options,
-		isFirefox,
+		unsupportedFeatures,
 	}: AlarmHandlerArgs) {
 		this.tracker = tracker;
 		this.grouper = grouper;
@@ -42,7 +43,7 @@ class AlarmHandler {
 			options['auto-group-threshold'] * toOneDayInMilliseconds;
 		this.autoGroupName = options['auto-group-name'];
 		this.autoBookmark = options['auto-prune-bookmark'];
-		this.isFirefox = isFirefox;
+		this.unsupportedFeatures = unsupportedFeatures;
 	}
 
 	async execute() {
@@ -70,11 +71,11 @@ class AlarmHandler {
 			console.debug(
 				'before filtering any grouped tabs',
 				candidates,
-				'isFirefox',
-				this.isFirefox,
+				'unsupported features',
+				this.unsupportedFeatures,
 			);
 
-			if (this.autoGroup && !this.isFirefox) {
+			if (this.autoGroup && !this.unsupportedFeatures.has(Features.TabGroups)) {
 				const groups = await chrome.tabGroups.query({
 					title: group['title'],
 				});
@@ -93,7 +94,7 @@ class AlarmHandler {
 		}
 		console.debug('remaining tabs', openTabs);
 
-		if (this.autoGroup && !this.isFirefox) {
+		if (this.autoGroup && !this.unsupportedFeatures.has(Features.TabGroups)) {
 			const [toGroup] = this.tracker.findTabsExceedingThreshold(
 				openTabs,
 				this.autoGroupThreshold,

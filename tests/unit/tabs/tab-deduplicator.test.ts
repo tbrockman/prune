@@ -1,20 +1,27 @@
 import TabDeduplicator from '../../../src/tab/tab-deduplicator';
+
+import { createTab } from 'tests/testutils';
+import { Features } from '~config';
+
 import { assert } from 'chai';
 import sinon from 'sinon/pkg/sinon-esm';
 
 // TODO: investigate https://github.com/acvetkov/sinon-chrome/pull/94 and fork to mock missing APIs
 const chrome = require('sinon-chrome/extensions');
 
+declare var global: any;
+
 describe('tab-deduplicator', () => {
-	let tabDeduplicator;
+	let tabDeduplicator: TabDeduplicator;
 	let tabLock;
+	let unsupportedFeatures: Set<Features> = new Set<Features>();
 
 	beforeEach(() => {
 		global.chrome = chrome;
 		chrome.tabs.goBack = sinon.stub();
 		chrome.tabs.goBack.resolves();
 		tabLock = new Set();
-		tabDeduplicator = new TabDeduplicator(tabLock);
+		tabDeduplicator = new TabDeduplicator(tabLock, unsupportedFeatures);
 	});
 
 	afterEach(() => {
@@ -23,7 +30,7 @@ describe('tab-deduplicator', () => {
 
 	it('shouldnt do anything if lock cannot be acquired', async () => {
 		tabLock.add(1);
-		const result = await tabDeduplicator.deduplicateTab({ id: 1 }, []);
+		const result = await tabDeduplicator.deduplicateTab(createTab({ id: 1 }), []);
 		assert(result === false);
 		assert(chrome.tabs.remove.notCalled);
 	});
@@ -34,8 +41,8 @@ describe('tab-deduplicator', () => {
 			return new Error('test');
 		});
 		const result = await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol' })],
 		);
 		assert(result === false);
 		assert(tabLock.size === 0);
@@ -43,7 +50,7 @@ describe('tab-deduplicator', () => {
 
 	it('shouldnt do anything if opening blank new tab', async () => {
 		const result = await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'chrome://newtab/' },
+			createTab({ id: 1, url: 'chrome://newtab/' }),
 			[],
 		);
 		assert(result === false);
@@ -51,7 +58,7 @@ describe('tab-deduplicator', () => {
 	});
 
 	it('shouldnt do anything if not opening new tab', async () => {
-		const result = await tabDeduplicator.deduplicateTab({ id: 1, url: 'theo.lol' }, []);
+		const result = await tabDeduplicator.deduplicateTab(createTab({ id: 1, url: 'theo.lol' }), []);
 		assert(result === false);
 		assert(chrome.tabs.remove.notCalled);
 	});
@@ -60,8 +67,8 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
 		const result = await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'loading' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'loading' })],
 		);
 		assert(result === false);
 		assert(chrome.tabs.highlight.notCalled);
@@ -89,8 +96,8 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.get.resolves({ url: 'chrome://newtab/', status: 'complete' });
 
 		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
 		);
 		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
@@ -102,8 +109,8 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.get.resolves({ url: 'about:newtab', status: 'complete' });
 
 		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
 		);
 		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
@@ -115,8 +122,8 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.get.resolves({ url: 'about:blank', status: 'complete' });
 
 		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
 		);
 		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
@@ -143,8 +150,8 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.goBack.throws(new Error("Cannot find a next page in history."));
 
 		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
 		);
 		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
@@ -156,12 +163,26 @@ describe('tab-deduplicator', () => {
 		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
 		await tabDeduplicator.deduplicateTab(
-			{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-			[{ id: 2, url: 'theo.lol', status: 'complete' }],
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
 		);
 		assert(chrome.tabs.highlight.calledOnce);
 		assert(chrome.windows.update.calledOnce);
 		assert(chrome.tabs.remove.notCalled);
 		assert(chrome.tabs.goBack.calledOnce);
 	});
+
+	it('shouldnt call highlight if feature not supported', async () => {
+		unsupportedFeatures.add(Features.TabHighlighting);
+		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+
+		await tabDeduplicator.deduplicateTab(
+			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+		);
+		assert(chrome.tabs.highlight.notCalled);
+		assert(chrome.windows.update.calledOnce);
+		assert(chrome.tabs.remove.notCalled);
+		assert(chrome.tabs.goBack.calledOnce);
+	})
 });
