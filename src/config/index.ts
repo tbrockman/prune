@@ -14,12 +14,16 @@ interface ReviewConfig {
 	url: string;
 }
 
-interface PruneConfig {
+interface IPruneConfig {
 	tip?: TipConfig;
 	share?: ShareConfig;
 	productivity?: ProductivityConfig;
 	review?: ReviewConfig;
 	unsupportedFeatures?: Set<Features>;
+}
+
+interface PruneConfig extends IPruneConfig {
+	featureSupported(feature: Features): boolean;
 }
 
 export enum Features {
@@ -28,7 +32,7 @@ export enum Features {
 	Sharing = 'sharing',
 }
 
-const configs: { [key: string]: PruneConfig } = {
+const configs: { [key: string]: IPruneConfig } = {
 	default: {
 		tip: {
 			backend: 'http://127.0.0.1:8787',
@@ -101,17 +105,21 @@ const configs: { [key: string]: PruneConfig } = {
 		unsupportedFeatures: new Set([Features.TabGroups]),
 	},
 	opera: {
-		unsupportedFeatures: new Set([Features.TabHighlighting]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting]),
 	}
 };
 
-const config = {
+const config: PruneConfig = {
 	...configs.default,
 	...configs[process.env.NODE_ENV ?? 'development'],
 	// Okay there's probably a better way to do this so that you can have environment-specific configs per browser platform
 	// But I'm not sure what it is, so this is what we're doing for now
 	...configs[process.env.PLASMO_BROWSER ?? 'chrome'],
+	featureSupported: (feature: Features): boolean => {
+		return !config.unsupportedFeatures.has(feature);
+	}
 };
+
 
 export { config };
 export type { PruneConfig, TipConfig };

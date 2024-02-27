@@ -1,26 +1,30 @@
 import React, { useRef } from 'react';
 import { FormGroup, Grid, Link, Typography } from '@mui/material';
 import TipForm from '../components/TipForm';
-import { Page, useStore } from '../hooks/useStore';
 import { PruneHeader } from '../components/PruneHeader';
 import { DeduplicateBlock } from '~components/DeduplicateBlock';
 import { GroupTabsBlock } from '~components/GroupTabsBlock';
 import { RemoveTabsBlock } from '~components/RemoveTabsBlock';
 import { LRUBlock } from '~components/LRUBlock';
 import { StorageBlock } from '~components/StorageBlock';
+import _useConfig from '~hooks/useConfig';
+import type { useConfigType } from '~hooks/useConfig';
+import { Features } from '~config';
 
 type OptionsHomePageProps = {
-	isFirefox: boolean;
+	useConfig?: () => useConfigType;
 };
 
-const OptionsHomePage = ({ isFirefox }: OptionsHomePageProps) => {
+const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
+	const { config } = useConfig();
+
 	return (
 		<>
 			<DeduplicateBlock />
-			{!isFirefox && <GroupTabsBlock />}
+			{config.featureSupported(Features.TabGroups) && <GroupTabsBlock />}
 			<RemoveTabsBlock />
-			<LRUBlock isFirefox={isFirefox} />
-			<StorageBlock isFirefox={isFirefox} />
+			<LRUBlock />
+			<StorageBlock />
 		</>
 	);
 };
@@ -33,7 +37,7 @@ export function PopupMain() {
 			<PruneHeader />
 			<Typography className="section-title">options 🔧</Typography>
 			<FormGroup ref={ref} className="main-form-group options-form-group">
-				<OptionsHomePage isFirefox={process.env.PLASMO_BROWSER == 'firefox'} />
+				<OptionsHomePage />
 			</FormGroup>
 			<Typography component="h1" className="section-title">
 				about 📝

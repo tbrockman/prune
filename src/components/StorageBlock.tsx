@@ -5,14 +5,17 @@ import _useOptions from '../hooks/useOptions';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
 import { StorageKeys } from '~enums';
+import _useConfig from '~hooks/useConfig';
+import { Features } from '~config';
 
-export function StorageBlock({ useOptions = _useOptions, isFirefox }) {
+export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 	const { options } = useOptions();
+	const { config } = useConfig();
 	const tabStorageEnabled =
 		options[StorageKeys.AUTO_PRUNE] ||
 		(options[StorageKeys.TAB_LRU_DESTINATION] === 'close' &&
 			options[StorageKeys.TAB_LRU_ENABLED]) ||
-		(options[StorageKeys.TAB_LRU_ENABLED] && isFirefox);
+		(options[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
 	const bookmarkHint =
 		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before closing";
 	const bookmarkLabel = 'bookmark closed tabs under';

@@ -1,6 +1,6 @@
 import { config, type PruneConfig } from '../config';
 
-type useConfigType = {
+export type useConfigType = {
 	config: PruneConfig;
 };
 

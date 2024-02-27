@@ -9,14 +9,17 @@ import _useOptions from '../hooks/useOptions'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
 import { StorageKeys } from '~enums'
+import _useConfig from '~hooks/useConfig'
+import { Features } from '~config'
 
-export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
+export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 	const { options } = useOptions()
+	const { config } = useConfig()
 
 	const lruTabsHint =
 		'you can let prune group or close your oldest tabs once you go over your limit'
 	let lruTabsLabel = 'least recently used tabs once'
-	lruTabsLabel = isFirefox ? 'close ' + lruTabsLabel : lruTabsLabel
+	lruTabsLabel = config.featureSupported(Features.TabGroups) ? 'close ' + lruTabsLabel : lruTabsLabel
 	const lruOptionsComponent = <PersistedInput
 		component="select"
 		storageKey={StorageKeys.TAB_LRU_DESTINATION}
@@ -36,7 +39,7 @@ export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 								component="checkbox"
 								storageKey={StorageKeys.TAB_LRU_ENABLED}
 							/>
-							{!isFirefox && lruOptionsComponent}
+							{!config.featureSupported(Features.TabGroups) && lruOptionsComponent}
 						</>
 					}
 					label={
@@ -45,7 +48,7 @@ export function LRUBlock({ useOptions = _useOptions, isFirefox = false }) {
 							label={lruTabsLabel}
 						/>
 					}
-					disabled={!options[StorageKeys.TAB_LRU_ENABLED] && !isFirefox}
+					disabled={!options[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups)}
 				/>
 				<FormControlLabel
 					control={

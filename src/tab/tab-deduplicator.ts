@@ -64,8 +64,9 @@ class TabDeduplicator {
           // If the tab was previously opened by explicitly creating a new tab, and navigating to the link
           // Or if we still have the same URL after going back,
           // Remove the tab.
-          if (updated.url == "chrome://newtab/" || updated.url == "about:newtab" || updated.url == 'about:blank' || updated.url == '') {
-            console.debug("removing tab", tab.id)
+          const newTabUrls = ["chrome://newtab/", "about:newtab", "about:blank", "chrome://startpageshared/", ""]
+
+          if (newTabUrls.includes(updated.url)) {
             await chrome.tabs.remove(tab.id)
           }
         } catch (e) {
