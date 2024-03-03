@@ -12,11 +12,11 @@ export function DeduplicateBlock() {
 	const { options } = useOptions();
 	const dedupEnabled = options[StorageKeys.AUTO_DEDUPLICATE];
 	const dedupMergeEnabled = options[StorageKeys.AUTO_DEDUPLICATE_CLOSE];
-	const dedupHint =
-		'when turned on, if you try to navigate to a website you already have open, prune will undo the navigation and show you the original tab instead (unless it was a blank new tab, in which case we close it for you)';
-	const dedupLable = 'focus existing tabs instead of opening new ones ♻️';
-	const closeDuplicateLabel = 'close duplicates when navigating to existing tabs 🗑️';
-	const closeDuplicateHint = 'if you were navigating from "abc.com" to "xyz.com" in one tab, and "xyz.com" was already open in another, the "abc.com" tab would be closed, leaving only the already open "xyz.com" tab'
+	// IDEA: type-safe i18n message keys
+	const dedupHint = chrome.i18n.getMessage('deduplicateHint');
+	const dedupLabel = chrome.i18n.getMessage('deduplicateLabel');
+	const closeDuplicateLabel = chrome.i18n.getMessage('closeDuplicateLabel');
+	const closeDuplicateHint = chrome.i18n.getMessage('closeDuplicateHint');
 
 	return (
 		<FormOption>
@@ -30,7 +30,7 @@ export function DeduplicateBlock() {
 				label={
 					<LabelWithHint
 						hint={dedupHint}
-						label={dedupLable}
+						label={dedupLabel}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}

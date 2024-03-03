@@ -1,0 +1,130 @@
+{
+    "deduplicateHint": {
+        "message": "when turned on, if you try to navigate to a website you already have open, prune will undo the navigation and show you the original tab instead (unless it was a blank new tab, in which case we close it for you)",
+        "description": "A hint to explain the tab deduplicate feature to the user, displayed on hover over the deduplicate label"
+    },
+    "deduplicateLabel": {
+        "message": "focus existing tabs instead of opening new ones ♻️",
+        "description": "Visible label displayed next to a checkbox to enable/disable the tab focus+deduplicate feature"
+    },
+    "closeDuplicateLabel": {
+        "message": "close duplicates when navigating to existing tabs 🗑️",
+        "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them"
+    },
+    "closeDuplicateHint": {
+        "message": "if you were navigating from \"abc.com\" to \"xyz.com\" in one tab, and \"xyz.com\" was already open in another, the \"abc.com\" tab would be closed, leaving only the already open \"xyz.com\" tab",
+        "description": "A hint to explain the close duplicate feature to the user, displayed on hover over the close duplicate label"
+    },
+    "hideTabsLabel": {
+        "message": "hide tabs after",
+        "description": "Visible label displayed next to a check to enable feature to hide/group tabs after a certain time, with a box to its other side to enter the time (followed by another label)"
+    },
+    "hideTabsHint": {
+        "message": "you can choose to tuck away your neglected tabs until you're ready to see them again",
+        "description": "A hint to explain the hide tabs feature to the user, displayed on hover over the hide tabs label"
+    },
+    "groupNameLabel": {
+        "message": "days in a group named",
+        "description": "Visible label succeeding a box to enter the number of days to group tabs, followed by a box to enter the name of the group"
+    },
+    "groupNameHint": {
+        "message": "if the group doesn't already exist, it will be created for you",
+        "description": "A hint to explain more about the group name feature to the user, displayed on hover over the group name label"
+    },
+    "groupNameDefault": {
+        "message": "🕒 old tabs",
+        "description": "The default value for the group name input box, to be used as a group for storing tabs which the user hasn't interacted with in awhile"
+    },
+    "linkCopiedToClipboardSuccess": {
+        "message": "link copied to clipboard!",
+        "description": "A message to popover the share button when the link for sharing is successfully copied to the clipboard"
+    },
+    "linkCopiedToClipboardError": {
+        "message": "error copying to clipboard/sharing",
+        "description": "A message to popover the share button when the link for sharing fails to be copied to the clipboard"
+    },
+    "sharePruneTitle": {
+        "message": "Share prune",
+        "description": "Title for the share prune dialog"
+    },
+    "sharePruneText": {
+        "message": "Help a friend prune their tabs",
+        "description": "Text for the share prune dialog"
+    },
+    "shareTooltipTitle": {
+        "message": "share",
+        "description": "Tooltip shown when hovering over the share icon button"
+    },
+    "githubTooltipTitle": {
+        "message": "github",
+        "description": "Tooltip shown when hovering over the GitHub icon button"
+    },
+    "creatorTooltipTitle": {
+        "message": "creator",
+        "description": "Tooltip shown when hovering over the creator icon button"
+    },
+    "leastRecentlyUsedTabsLabelAction": {
+        "message": "close",
+        "description": "Action text (close) prefixing the leastRecentlyUsedTabsLabel when there is no tab grouping feature support in the browser"
+    },
+    "leastRecentlyUsedTabsLabel": {
+        "message": "least recently used tabs once",
+        "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
+    },
+    "leastRecentlyUsedTabsSizeLabel": {
+        "message": "tabs are open",
+        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken"
+    },
+    "leastRecentlyUsedTabsHint": {
+        "message": "you can let prune group or close your oldest tabs once you go over your limit",
+        "description": "A hint to explain the least recently used tabs feature to the user, displayed on hover over the least recently used tabs label"
+    },
+    "leastRecentlyUsedTabsDestinationGroup": {
+        "message": "group",
+        "description": "Value of a select option to choose to send least recently used tabs to a tab group"
+    },
+    "leastRecentlyUsedTabsDestinationClose": {
+        "message": "close",
+        "description": "Value of a select option to choose to close least recently used tabs"
+    },
+    "bookmarkLabel": {
+        "message": "bookmark closed tabs under",
+        "description": "Visible label displayed next to a checkbox to enable/disable the bookmark feature, with a box to its other side to enter the name of the folder"
+    },
+    "bookmarkHint": {
+        "message": "if you're afraid of losing your tabs forever, prune can store them in your bookmarks before we close any",
+        "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
+    },
+    "optionsTitle": {
+        "message": "options 🔧",
+        "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension"
+    },
+    "aboutTitle": {
+        "message": "about 📝",
+        "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
+    },
+    "aboutTextStart": {
+        "message": "is a free, open-source extension made by",
+        "description": "Text to introduce the creator of the extension in the about section of the extension popup (followed by the creator's name)"
+    },
+    "aboutTextEnd": {
+        "message": "to help make your browsing less cluttered and more productive.",
+        "description": "Text to conclude the about section of the extension popup (preceded by the creator's name)"
+    },
+    "tipButtonText": {
+        "message": "❤️ tip the author",
+        "description": "Text for the button to send a monetary donation to the author of the extension"
+    },
+    "tipButtonHint": {
+        "message": "i'll probably survive without it, but still appreciate the support!",
+        "description": "A hint to happily elaborate that tips are not necessary, but still appreciated, displayed on hover over the tip button"
+    },
+    "reviewButtonText": {
+        "message": "🌟 leave a review",
+        "description": "Text for the button to leave a review for the extension"
+    },
+    "reviewButtonHint": {
+        "message": "but please don't make fun of how much i like box shadows 🥺",
+        "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button"
+    }
+}

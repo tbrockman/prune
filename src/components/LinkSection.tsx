@@ -14,8 +14,12 @@ export default function LinkSection({ useConfig = _useConfig }) {
     const { config } = useConfig()
     const [shareTooltipOpen, setShareTooltipOpen] = useState(false)
     const [shareResultTooltipOpen, setShareResultTooltipOpen] = useState(false)
-    const [shareResultTooltipText, setShareResultTooltipText] = useState("link copied to clipboard!")
+    const [shareResultTooltipText, setShareResultTooltipText] = useState(chrome.i18n.getMessage('linkCopiedToClipboardSuccess'))
     const [storedTimeout, setStoredTimeout] = useState<any>()
+
+    const shareTooltipTitle = chrome.i18n.getMessage('shareTooltipTitle')
+    const githubTooltipTitle = chrome.i18n.getMessage('githubTooltipTitle')
+    const creatorTooltipTitle = chrome.i18n.getMessage('creatorTooltipTitle')
 
     const shareTooltipOpened = () => {
         setShareTooltipOpen(true)
@@ -34,7 +38,7 @@ export default function LinkSection({ useConfig = _useConfig }) {
     }
 
     const openShareErrorDialog = () => {
-        setShareResultTooltipText("error copying to clipboard/sharing")
+        setShareResultTooltipText(chrome.i18n.getMessage('linkCopiedToClipboardError'))
         setShareTooltipOpen(false)
         setShareResultTooltipOpen(true)
 
@@ -68,8 +72,8 @@ export default function LinkSection({ useConfig = _useConfig }) {
 
     const shareClicked = async (e: any) => {
         const data = {
-            title: "Share prune",
-            text: "Help a friend prune their tabs",
+            title: chrome.i18n.getMessage('sharePruneTitle'),
+            text: chrome.i18n.getMessage('sharePruneText'),
             url: config.share?.url
         }
 
@@ -103,7 +107,7 @@ export default function LinkSection({ useConfig = _useConfig }) {
                             open={shareTooltipOpen}
                             onOpen={shareTooltipOpened}
                             onClose={shareTooltipClosed}
-                            title="share">
+                            title={shareTooltipTitle}>
                             <IconButton href="#share" onClick={shareClicked}>
                                 <ShareIcon />
                             </IconButton>
@@ -121,14 +125,14 @@ export default function LinkSection({ useConfig = _useConfig }) {
                         </Tooltip>
                     )}
                 </>}
-            <Tooltip title="github">
+            <Tooltip title={githubTooltipTitle}>
                 <IconButton target="_blank" href="https://github.com/tbrockman/prune">
                     <Icon>
                         <GitHubLogo />
                     </Icon>
                 </IconButton>
             </Tooltip>
-            <Tooltip title="creator">
+            <Tooltip title={creatorTooltipTitle}>
                 <IconButton target="_blank" href="https://theo.lol">
                     <PaletteIcon />
                 </IconButton>

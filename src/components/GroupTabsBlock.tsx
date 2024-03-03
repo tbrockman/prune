@@ -9,12 +9,10 @@ import { StorageKeys } from '~enums'
 export function GroupTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions()
 
-	const hideLabel = 'hide tabs after'
-	const hideHint =
-		"you can choose to tuck away your neglected tabs until you're ready to see them again"
-	const groupHint =
-		"if the group doesn't already exist, it will be created for you"
-	const groupLabel = 'days in a group named'
+	const hideLabel = chrome.i18n.getMessage('hideTabsLabel')
+	const hideHint = chrome.i18n.getMessage('hideTabsHint')
+	const groupNameHint = chrome.i18n.getMessage('groupNameHint')
+	const groupNameLabel = chrome.i18n.getMessage('groupNameLabel')
 
 	return (
 		<FormOption>
@@ -50,7 +48,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 						value={options[StorageKeys.AUTO_GROUP_THRESHOLD]}
 					/>
 				}
-				label={<LabelWithHint hint={groupHint} label={groupLabel} />}
+				label={<LabelWithHint hint={groupNameHint} label={groupNameLabel} />}
 			/>
 			<FormControlLabel
 				control={

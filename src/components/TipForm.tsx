@@ -17,10 +17,10 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 	const [tip, setTip] = useState(3);
 	const [isTipping, setTipping] = useState(false);
 	const tipClient = useTipClient();
-	const tipHint =
-		"i'll probably survive without it, but still appreciate the support!";
-	const leaveReviewHint =
-		"but please don't make fun of how much i like box shadows 🥺";
+	const tipButtonText = chrome.i18n.getMessage('tipButtonText');
+	const tipButtonHint = chrome.i18n.getMessage('tipButtonHint');
+	const reviewButtonText = chrome.i18n.getMessage('reviewButtonText');
+	const reviewButtonHint = chrome.i18n.getMessage('reviewButtonHint');
 	const { config } = useConfig();
 	const reviewUrl = config.review.url;
 
@@ -65,7 +65,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					arrow={true}
 					enterDelay={1500}
 					enterNextDelay={750}
-					title={tipHint}
+					title={tipButtonHint}
 				>
 					<LoadingButton
 						color="secondary"
@@ -73,7 +73,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 						loading={isTipping}
 						onClick={tipButtonClicked}
 					>
-						❤️ tip the author
+						{tipButtonText}
 					</LoadingButton>
 				</Tooltip>
 				<Tooltip
@@ -81,7 +81,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					arrow={true}
 					enterDelay={1500}
 					enterNextDelay={750}
-					title={leaveReviewHint}
+					title={reviewButtonHint}
 				>
 					<Button
 						target="_blank"
@@ -90,7 +90,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 						variant="outlined"
 						color="info"
 					>
-						🌟 leave a review
+						{reviewButtonText}
 					</Button>
 				</Tooltip>
 			</FormGroup>

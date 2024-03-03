@@ -31,24 +31,28 @@ const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
 
 export function PopupMain() {
 	const ref = useRef<HTMLFormElement>();
+	const optionsTitle = chrome.i18n.getMessage('optionsTitle');
+	const aboutTitle = chrome.i18n.getMessage('aboutTitle');
+	const aboutTextStart = chrome.i18n.getMessage('aboutTextStart');
+	const aboutTextEnd = chrome.i18n.getMessage('aboutTextEnd');
 
 	return (
 		<Grid width="100%">
 			<PruneHeader />
-			<Typography className="section-title">options 🔧</Typography>
+			<Typography className="section-title">{optionsTitle}</Typography>
 			<FormGroup ref={ref} className="main-form-group options-form-group">
 				<OptionsHomePage />
 			</FormGroup>
 			<Typography component="h1" className="section-title">
-				about 📝
+				{aboutTitle}
 			</Typography>
 			<FormGroup className="main-form-group">
 				<Typography marginTop={'8px'} marginBottom={'16px'}>
-					<b>prune</b> is a free, open-source extension made by{' '}
+					<b>prune</b> {aboutTextStart}{' '}
 					<Link href="https://theo.lol/resume" target="_blank">
 						@tbrockman
 					</Link>{' '}
-					to help make your browsing less cluttered and more productive.
+					{aboutTextEnd}
 				</Typography>
 				<TipForm />
 			</FormGroup>

@@ -16,9 +16,8 @@ export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig 
 		(options[StorageKeys.TAB_LRU_DESTINATION] === 'close' &&
 			options[StorageKeys.TAB_LRU_ENABLED]) ||
 		(options[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
-	const bookmarkHint =
-		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before we close any";
-	const bookmarkLabel = 'bookmark closed tabs under';
+	const bookmarkHint = chrome.i18n.getMessage('bookmarkHint');
+	const bookmarkLabel = chrome.i18n.getMessage('bookmarkLabel');
 
 	return (
 		<FormOption>

@@ -16,18 +16,18 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 	const { options } = useOptions()
 	const { config } = useConfig()
 
-	const lruTabsHint =
-		'you can let prune group or close your oldest tabs once you go over your limit'
-	let lruTabsLabel = 'least recently used tabs once'
-	lruTabsLabel = config.featureSupported(Features.TabGroups) ? 'close ' + lruTabsLabel : lruTabsLabel
+	const lruTabsHint = chrome.i18n.getMessage('leastRecentlyUsedTabsHint')
+	let lruTabsLabel = chrome.i18n.getMessage('leastRecentlyUsedTabsLabel')
+	lruTabsLabel = !config.featureSupported(Features.TabGroups) ? chrome.i18n.getMessage('leastRecentlyUsedTabsLabelAction') + ' ' + lruTabsLabel : lruTabsLabel
 	const lruOptionsComponent = <PersistedInput
 		component="select"
 		storageKey={StorageKeys.TAB_LRU_DESTINATION}
 		disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 	>
-		<MenuItem value={'group'}>group</MenuItem>
-		<MenuItem value={'close'}>close</MenuItem>
+		<MenuItem value={'group'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationGroup')}</MenuItem>
+		<MenuItem value={'close'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationClose')}</MenuItem>
 	</PersistedInput>
+	const lruSizeLabel = chrome.i18n.getMessage('leastRecentlyUsedTabsSizeLabel')
 
 	return (
 		<FormOption className="lru-options">
@@ -39,7 +39,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 								component="checkbox"
 								storageKey={StorageKeys.TAB_LRU_ENABLED}
 							/>
-							{!config.featureSupported(Features.TabGroups) && lruOptionsComponent}
+							{config.featureSupported(Features.TabGroups) && lruOptionsComponent}
 						</>
 					}
 					label={
@@ -48,12 +48,13 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							label={lruTabsLabel}
 						/>
 					}
-					disabled={!options[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups)}
+					disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 				/>
 				<FormControlLabel
 					control={
 						<PersistedInput
 							component="textfield"
+							// @ts-ignore
 							hiddenLabel
 							size="small"
 							variant="filled"
@@ -70,7 +71,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							}}
 						/>
 					}
-					label="tabs are open"
+					label={lruSizeLabel}
 				/>
 			</FormControl>
 		</FormOption>
