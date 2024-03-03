@@ -2,7 +2,7 @@ enum StorageKeys {
 	AUTO_DEDUPLICATE = 'auto-deduplicate',
 	AUTO_DEDUPLICATE_CLOSE = 'auto-deduplicate-close',
 	AUTO_PRUNE = 'auto-prune',
-	PRUNE_THRESHOLD = 'prune-threshold',
+	AUTO_PRUNE_THRESHOLD = 'prune-threshold',
 	AUTO_GROUP = 'auto-group',
 	AUTO_GROUP_THRESHOLD = 'auto-group-threshold',
 	AUTO_GROUP_NAME = 'auto-group-name',

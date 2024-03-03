@@ -12,7 +12,7 @@
         "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them"
     },
     "closeDuplicateHint": {
-        "message": "if you were navigating from \"abc.com\" to \"xyz.com\" in one tab, and \"xyz.com\" was already open in another, the \"abc.com\" tab would be closed, leaving only the already open \"xyz.com\" tab",
+        "message": "if you were navigating from \"abc.com\" to \"xyz.com\" in one tab, and \"xyz.com\" was already open in another, the \"abc.com\" tab would be closed",
         "description": "A hint to explain the close duplicate feature to the user, displayed on hover over the close duplicate label"
     },
     "hideTabsLabel": {

@@ -25,7 +25,7 @@ test('popup page renders', async ({ page, extensionId }) => {
 //   expect(context.pages().length).toBe(1)
 // })
 
-test('focuses original tab, and reverts navigation if tab opened from existing tab', async ({ context, page, extensionId }) => {
+test('focuses original tab, and removes duplicate', async ({ context, page, extensionId }) => {
   await page.goto('https://google.com')
   const secondPage = await context.newPage()
   try {
@@ -33,7 +33,6 @@ test('focuses original tab, and reverts navigation if tab opened from existing t
     await secondPage.goto('https://www.google.com')
   } catch (error) {
   }
-  expect(context.pages().length).toBe(2)
+  expect(context.pages().length).toBe(1)
   expect(page.url()).toBe('https://www.google.com/')
-  expect(secondPage.url()).toBe('https://news.ycombinator.com/')
 })

@@ -5,13 +5,12 @@ import AlarmHandler from '~handlers/alarm';
 import TabGrouper from '~tab/tab-grouper';
 import TabPruner from '~tab/tab-pruner';
 import TabTracker from '~tab/tab-tracker';
-import { StorageKeys } from '~enums';
 
 import { createTab } from 'tests/testutils';
 
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon';
-import type { Options } from '~util';
+import { Options } from '~util';
 
 const chrome = require('sinon-chrome/extensions');
 
@@ -39,24 +38,7 @@ describe('alarm-handler', () => {
 	})
 
 	const createOptions = (overrides: Partial<Options>): Options => {
-		const defaults = {
-			[StorageKeys.AUTO_DEDUPLICATE]: true,
-			[StorageKeys.AUTO_DEDUPLICATE_CLOSE]: true,
-			[StorageKeys.AUTO_PRUNE]: true,
-			[StorageKeys.PRUNE_THRESHOLD]: 7,
-			[StorageKeys.AUTO_GROUP]: true,
-			[StorageKeys.AUTO_GROUP_THRESHOLD]: 3,
-			[StorageKeys.AUTO_GROUP_NAME]: '🕒 old tabs',
-			[StorageKeys.AUTO_PRUNE_BOOKMARK]: false,
-			[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME]: '🌱 pruned',
-			[StorageKeys.TAB_LRU_ENABLED]: false,
-			[StorageKeys.TAB_LRU_SIZE]: 30,
-			[StorageKeys.TAB_LRU_DESTINATION]: 'group',
-			[StorageKeys.SHOW_HINTS]: true,
-			[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: true,
-			[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: [],
-			[StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: {},
-		} as Options;
+		const defaults = new Options();
 		return { ...defaults, ...overrides };
 	};
 

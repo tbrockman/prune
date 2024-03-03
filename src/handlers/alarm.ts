@@ -3,14 +3,16 @@ import TabPruner from '~tab/tab-pruner';
 import TabTracker from '~tab/tab-tracker';
 import { type Tab } from '../types';
 import { Features } from '~config';
+import { StorageKeys } from '~enums';
+import type { Options } from '~util';
 
-const toOneDayInMilliseconds = 24 * 60 * 60 * 1000;
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 type AlarmHandlerArgs = {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
-	options: any;
+	options: Options;
 	unsupportedFeatures: Set<Features>;
 };
 
@@ -36,13 +38,13 @@ class AlarmHandler {
 		this.tracker = tracker;
 		this.grouper = grouper;
 		this.pruner = pruner;
-		this.autoPrune = options['auto-prune'];
-		this.pruneThreshold = options['prune-threshold'] * toOneDayInMilliseconds;
-		this.autoGroup = options['auto-group'];
+		this.autoPrune = options[StorageKeys.AUTO_PRUNE];
+		this.pruneThreshold = options[StorageKeys.AUTO_PRUNE_THRESHOLD] * ONE_DAY_IN_MS;
+		this.autoGroup = options[StorageKeys.AUTO_GROUP];
 		this.autoGroupThreshold =
-			options['auto-group-threshold'] * toOneDayInMilliseconds;
-		this.autoGroupName = options['auto-group-name'];
-		this.autoBookmark = options['auto-prune-bookmark'];
+			options[StorageKeys.AUTO_GROUP_THRESHOLD] * ONE_DAY_IN_MS;
+		this.autoGroupName = options[StorageKeys.AUTO_GROUP_NAME];
+		this.autoBookmark = options[StorageKeys.AUTO_PRUNE_BOOKMARK];
 		this.unsupportedFeatures = unsupportedFeatures;
 	}
 

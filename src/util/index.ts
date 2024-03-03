@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { Features, config } from '../config';
 import { StorageKeys } from '~enums';
 import { syncStorage } from './storage';
 export { pollTabForStatus } from './query';
@@ -6,9 +6,9 @@ export { initLogging } from './logging';
 
 class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
-	[StorageKeys.AUTO_DEDUPLICATE_CLOSE] = false;
+	[StorageKeys.AUTO_DEDUPLICATE_CLOSE] = true;
 	[StorageKeys.AUTO_PRUNE] = true;
-	[StorageKeys.PRUNE_THRESHOLD] = 7;
+	[StorageKeys.AUTO_PRUNE_THRESHOLD] = config.featureSupported(Features.TabGroups) ? 7 : 4;
 	[StorageKeys.AUTO_GROUP] = true;
 	[StorageKeys.AUTO_GROUP_THRESHOLD] = 1;
 	[StorageKeys.AUTO_GROUP_NAME] = '🕒 old tabs';

@@ -40,7 +40,7 @@ export function RemoveTabsBlock({ useOptions = _useOptions }) {
 						type="number"
 						color="secondary"
 						style={{ width: '8ch' }}
-						storageKey={StorageKeys.PRUNE_THRESHOLD}
+						storageKey={StorageKeys.AUTO_PRUNE_THRESHOLD}
 						disabled={!options[StorageKeys.AUTO_PRUNE]}
 						InputProps={{
 							inputProps: {
