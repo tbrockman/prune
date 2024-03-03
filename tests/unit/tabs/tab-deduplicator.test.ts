@@ -14,13 +14,14 @@ declare var global: any;
 describe('tab-deduplicator', () => {
 	let tabDeduplicator: TabDeduplicator;
 	let tabLock;
-	let unsupportedFeatures: Set<Features> = new Set<Features>();
+	let unsupportedFeatures: Set<Features>;
 
 	beforeEach(() => {
 		global.chrome = chrome;
 		chrome.tabs.goBack = sinon.stub();
 		chrome.tabs.goBack.resolves();
 		tabLock = new Set();
+		unsupportedFeatures = new Set();
 		tabDeduplicator = new TabDeduplicator(tabLock, unsupportedFeatures);
 	});
 
@@ -92,97 +93,146 @@ describe('tab-deduplicator', () => {
 	// 	assert(chrome.tabs.goBack.calledOnce);
 	// });
 
-	it('should remove tab if tab goBack url is chrome://newtab/', async () => {
-		chrome.tabs.get.resolves({ url: 'chrome://newtab/', status: 'complete' });
+	describe('undoNavigation disabled (closeAllDuplicates == true)', () => {
+		it('should remove duplicate tab', async () => {
+			chrome.tabs.get.resolves({ url: 'about:newtab', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.calledOnce);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.notCalled);
+		});
 
-	it('should remove tab if tab goBack url is about:newtab', async () => {
-		chrome.tabs.get.resolves({ url: 'about:newtab', status: 'complete' });
+		it('should deduplicate tab with trailing slashes', async () => {
+			chrome.tabs.get.resolves({ url: 'theo.lol', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.calledOnce);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol/', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.notCalled);
+		})
 
-	it('should remove tab if tab goBack url is about:blank', async () => {
-		chrome.tabs.get.resolves({ url: 'about:blank', status: 'complete' });
+		it('shouldnt call highlight if feature not supported', async () => {
+			unsupportedFeatures.add(Features.TabHighlighting);
+			chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.calledOnce);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.notCalled);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.notCalled);
+		})
+	})
 
-	// @tbrockman: Leaving here for a bit in case this seems desirable again.
-	// 
-	// it('should remove tab if tab goBack url is the same as before', async () => {
-	// 	chrome.tabs.get.resolves({ url: 'theo.lol', status: 'complete' });
+	describe('undoNavigation enabled (closeAllDuplicates == false)', () => {
 
-	// 	await tabDeduplicator.deduplicateTab(
-	// 		{ id: 1, url: 'theo.lol', status: 'loading', active: true },
-	// 		[{ id: 2, url: 'theo.lol', status: 'complete' }],
-	// 	);
-	// 	assert(chrome.tabs.highlight.calledOnce);
-	// 	assert(chrome.windows.update.calledOnce);
-	// 	assert(chrome.tabs.remove.calledOnce);
-	// 	assert(chrome.tabs.goBack.calledOnce);
-	// });
+		beforeEach(() => {
+			tabDeduplicator.closeAllDuplicates = false;
+		});
 
-	it('should remove tab if tab goBack url throws navigation error', async () => {
-		chrome.tabs.goBack.throws(new Error("Cannot find a next page in history."));
+		it('should remove tab if tab goBack url is chrome://newtab/', async () => {
+			chrome.tabs.get.resolves({ url: 'chrome://newtab/', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.calledOnce);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.calledOnce);
+		});
 
-	it('shouldnt remove tab if tab goBack url is different than before', async () => {
-		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+		it('should remove tab if tab goBack url is about:newtab', async () => {
+			chrome.tabs.get.resolves({ url: 'about:newtab', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.calledOnce);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.notCalled);
-		assert(chrome.tabs.goBack.calledOnce);
-	});
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.calledOnce);
+		});
 
-	it('shouldnt call highlight if feature not supported', async () => {
-		unsupportedFeatures.add(Features.TabHighlighting);
-		chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+		it('should remove tab if tab goBack url is about:blank', async () => {
+			chrome.tabs.get.resolves({ url: 'about:blank', status: 'complete' });
 
-		await tabDeduplicator.deduplicateTab(
-			createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
-			[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
-		);
-		assert(chrome.tabs.highlight.notCalled);
-		assert(chrome.windows.update.calledOnce);
-		assert(chrome.tabs.remove.notCalled);
-		assert(chrome.tabs.goBack.calledOnce);
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.calledOnce);
+		});
+
+		it('should remove tab if tab goBack url throws navigation error', async () => {
+			chrome.tabs.goBack.throws(new Error("Cannot find a next page in history."));
+
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.calledOnce);
+			assert(chrome.tabs.goBack.calledOnce);
+		});
+
+		it('shouldnt remove tab if tab goBack url is different than before', async () => {
+			chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.calledOnce);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.notCalled);
+			assert(chrome.tabs.goBack.calledOnce);
+		});
+
+		it('shouldnt call highlight if feature not supported', async () => {
+			unsupportedFeatures.add(Features.TabHighlighting);
+			chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
+
+			await tabDeduplicator.deduplicateTab(
+				createTab({ id: 1, url: 'theo.lol', status: 'loading', active: true }),
+				[createTab({ id: 2, url: 'theo.lol', status: 'complete' })],
+			);
+			assert(chrome.tabs.highlight.notCalled);
+			assert(chrome.windows.update.calledOnce);
+			assert(chrome.tabs.remove.notCalled);
+			assert(chrome.tabs.goBack.calledOnce);
+		})
+
+		// @tbrockman: Leaving here for a bit in case this seems desirable again.
+		// 
+		// it('should remove tab if tab goBack url is the same as before', async () => {
+		// 	chrome.tabs.get.resolves({ url: 'theo.lol', status: 'complete' });
+
+		// 	await tabDeduplicator.deduplicateTab(
+		// 		{ id: 1, url: 'theo.lol', status: 'loading', active: true },
+		// 		[{ id: 2, url: 'theo.lol', status: 'complete' }],
+		// 	);
+		// 	assert(chrome.tabs.highlight.calledOnce);
+		// 	assert(chrome.windows.update.calledOnce);
+		// 	assert(chrome.tabs.remove.calledOnce);
+		// 	assert(chrome.tabs.goBack.calledOnce);
+		// });
 	})
 });

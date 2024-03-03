@@ -1,15 +1,17 @@
 // TODO
 
 import { Features } from '~config';
-import AlarmHandler from '../../../src/handlers/alarm';
-import TabGrouper from '../../../src/tab/tab-grouper';
-import TabPruner from '../../../src/tab/tab-pruner';
-import TabTracker from '../../../src/tab/tab-tracker';
+import AlarmHandler from '~handlers/alarm';
+import TabGrouper from '~tab/tab-grouper';
+import TabPruner from '~tab/tab-pruner';
+import TabTracker from '~tab/tab-tracker';
+import { StorageKeys } from '~enums';
 
 import { createTab } from 'tests/testutils';
 
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon';
+import type { Options } from '~util';
 
 const chrome = require('sinon-chrome/extensions');
 
@@ -36,25 +38,26 @@ describe('alarm-handler', () => {
 		};
 	})
 
-	const createOptions = (overrides) => {
-		const options = {
-			'auto-deduplicate': true,
-			'auto-prune': true,
-			'prune-threshold': 7,
-			'auto-group': true,
-			'auto-group-threshold': 3,
-			'auto-group-name': '🕒 old tabs',
-			'auto-prune-bookmark': false,
-			'auto-prune-bookmark-name': '🌱 pruned',
-			'tab-lru-enabled': false,
-			'tab-lru-size': 30,
-			'tab-lru-destination': 'group',
-			'show-hints': true,
-			'productivity-mode-enabled': true,
-			'productivity-suspend-domains': [],
-			'productivity-suspend-exemptions': {},
-		};
-		return { ...options, ...overrides };
+	const createOptions = (overrides: Partial<Options>): Options => {
+		const defaults = {
+			[StorageKeys.AUTO_DEDUPLICATE]: true,
+			[StorageKeys.AUTO_DEDUPLICATE_CLOSE]: true,
+			[StorageKeys.AUTO_PRUNE]: true,
+			[StorageKeys.PRUNE_THRESHOLD]: 7,
+			[StorageKeys.AUTO_GROUP]: true,
+			[StorageKeys.AUTO_GROUP_THRESHOLD]: 3,
+			[StorageKeys.AUTO_GROUP_NAME]: '🕒 old tabs',
+			[StorageKeys.AUTO_PRUNE_BOOKMARK]: false,
+			[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME]: '🌱 pruned',
+			[StorageKeys.TAB_LRU_ENABLED]: false,
+			[StorageKeys.TAB_LRU_SIZE]: 30,
+			[StorageKeys.TAB_LRU_DESTINATION]: 'group',
+			[StorageKeys.SHOW_HINTS]: true,
+			[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: true,
+			[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: [],
+			[StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: {},
+		} as Options;
+		return { ...defaults, ...overrides };
 	};
 
 	const createAlarmHandler = (options) => {

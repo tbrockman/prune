@@ -4,11 +4,12 @@ import './ProductivitySettings.css';
 import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
 import { useStorage } from '@plasmohq/storage/hook';
+import { StorageKeys } from '~enums';
 
 export default function ProductivitySettings() {
 	const { config } = useConfig();
 	const [suspendedDomains, setSuspendedDomains] = useStorage(
-		'productivity-suspend-domains',
+		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
 		config.productivity.domains,
 	);
 

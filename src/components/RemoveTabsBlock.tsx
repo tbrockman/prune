@@ -33,6 +33,7 @@ export function RemoveTabsBlock({ useOptions = _useOptions }) {
 				control={
 					<PersistedInput
 						component="textfield"
+						// @ts-ignore
 						hiddenLabel
 						size="small"
 						variant="filled"

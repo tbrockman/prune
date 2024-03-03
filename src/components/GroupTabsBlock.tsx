@@ -32,6 +32,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 					<PersistedInput
 						component="textfield"
 						storageKey={StorageKeys.AUTO_GROUP_THRESHOLD}
+						// @ts-ignore
 						hiddenLabel
 						size="small"
 						variant="filled"
@@ -56,6 +57,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 					<PersistedInput
 						component="textfield"
 						storageKey={StorageKeys.AUTO_GROUP_NAME}
+						// @ts-ignore
 						hiddenLabel
 						size="small"
 						variant="filled"

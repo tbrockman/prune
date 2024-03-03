@@ -14,6 +14,22 @@ class TabBookmarker {
 		if (tabs.length == 0 || !this.enabled) return;
 
 		try {
+			console.debug('filtering tabs with existing bookmarks');
+
+			const tabPromises = tabs.map(async (tab) => {
+				const exists = await chrome.bookmarks.search({
+					title: tab.title,
+					url: tab.url,
+				});
+
+				return exists.length == 0 ? tab : null;
+			})
+
+			const bookmarkedTabs = await Promise.all(tabPromises);
+			tabs = bookmarkedTabs.filter((tab) => tab != null);
+
+			if (tabs.length == 0) return;
+
 			console.debug('searching for existing bookmark folder');
 
 			const bookmarks = await chrome.bookmarks.search({

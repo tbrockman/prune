@@ -73,7 +73,11 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
 		);
 		const pruner = new TabPruner(bookmarker);
-		const deduplicator = new TabDeduplicator(lock, config.unsupportedFeatures);
+		const deduplicator = new TabDeduplicator(
+			lock,
+			config.unsupportedFeatures,
+			options[StorageKeys.AUTO_DEDUPLICATE_CLOSE]
+		);
 		const handler = new TabUpdatedHandler({
 			tracker,
 			grouper,

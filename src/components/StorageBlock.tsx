@@ -37,6 +37,7 @@ export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig 
 				control={
 					<PersistedInput
 						component="textfield"
+						// @ts-ignore
 						hiddenLabel
 						size="small"
 						placeholder="🌱 pruned"

@@ -11,12 +11,12 @@ import useOptions from '~hooks/useOptions';
 export function DeduplicateBlock() {
 	const { options } = useOptions();
 	const dedupEnabled = options[StorageKeys.AUTO_DEDUPLICATE];
-	const dedupMergeEnabled = options[StorageKeys.AUTO_DEDUPLICATE_MERGE];
+	const dedupMergeEnabled = options[StorageKeys.AUTO_DEDUPLICATE_CLOSE];
 	const dedupHint =
-		'when turned on, if you try to navigate to a website you already have open, prune will undo the navigation and show you the original tab instead (unless it was new tab window, in which case we close it for you)';
+		'when turned on, if you try to navigate to a website you already have open, prune will undo the navigation and show you the original tab instead (unless it was a blank new tab, in which case we close it for you)';
 	const dedupLable = 'focus existing tabs instead of opening new ones ♻️';
 	const closeDuplicateLabel = 'close duplicates when navigating to existing tabs 🗑️';
-	const closeDuplicateHint = 'if you were navigating from "abc.com" to "xyz.com" in one tab, and "xyz.com" was already open in another, "abc.com" would be closed, leaving only one "xyz.com" tab'
+	const closeDuplicateHint = 'if you were navigating from "abc.com" to "xyz.com" in one tab, and "xyz.com" was already open in another, the "abc.com" tab would be closed, leaving only the already open "xyz.com" tab'
 
 	return (
 		<FormOption>
@@ -42,7 +42,7 @@ export function DeduplicateBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_DEDUPLICATE_MERGE}
+						storageKey={StorageKeys.AUTO_DEDUPLICATE_CLOSE}
 					/>
 				}
 				label={

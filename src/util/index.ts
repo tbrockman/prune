@@ -6,7 +6,7 @@ export { initLogging } from './logging';
 
 class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
-	[StorageKeys.AUTO_DEDUPLICATE_MERGE] = false;
+	[StorageKeys.AUTO_DEDUPLICATE_CLOSE] = false;
 	[StorageKeys.AUTO_PRUNE] = true;
 	[StorageKeys.PRUNE_THRESHOLD] = 7;
 	[StorageKeys.AUTO_GROUP] = true;
