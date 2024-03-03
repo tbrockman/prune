@@ -58,7 +58,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							size="small"
 							variant="filled"
 							type="number"
-							style={{ width: '11ch' }}
+							style={{ width: '8ch' }}
 							storageKey={StorageKeys.TAB_LRU_SIZE}
 							disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
 							color="secondary"

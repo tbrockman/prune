@@ -37,7 +37,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 						variant="filled"
 						type="number"
 						color="secondary"
-						style={{ width: '11ch' }}
+						style={{ width: '8ch' }}
 						InputProps={{
 							inputProps: {
 								max: 100,

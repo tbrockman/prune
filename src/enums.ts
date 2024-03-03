@@ -1,5 +1,6 @@
 enum StorageKeys {
 	AUTO_DEDUPLICATE = 'auto-deduplicate',
+	AUTO_DEDUPLICATE_MERGE = 'auto-deduplicate-merge',
 	AUTO_PRUNE = 'auto-prune',
 	PRUNE_THRESHOLD = 'prune-threshold',
 	AUTO_GROUP = 'auto-group',

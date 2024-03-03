@@ -17,7 +17,7 @@ export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig 
 			options[StorageKeys.TAB_LRU_ENABLED]) ||
 		(options[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
 	const bookmarkHint =
-		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before closing";
+		"if you're afraid of losing your tabs forever, prune can store them in your bookmarks before we close any";
 	const bookmarkLabel = 'bookmark closed tabs under';
 
 	return (
@@ -39,7 +39,7 @@ export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig 
 						component="textfield"
 						hiddenLabel
 						size="small"
-						placeholder="pruned"
+						placeholder="🌱 pruned"
 						variant="filled"
 						color="secondary"
 						fullWidth={false}

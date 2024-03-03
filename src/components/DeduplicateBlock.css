@@ -1,0 +1,35 @@
+label.sub-checkbox {
+
+    & {
+        padding-left: 0.5rem;
+        margin-left: 2rem;
+        position: relative;
+    }
+
+    &.Mui-disabled {
+        &::before {
+            border-color: #b8b8b8;
+        }
+    }
+
+    &::before {
+        content: "";
+        border-left: 2px solid;
+        width: 1.25rem;
+        height: 1.25rem;
+        position: absolute;
+        top: 1px;
+        left: -15px;
+        border-bottom: 2px solid;
+        border-color: #000;
+        border-style: dotted;
+        border-right: none;
+        border-top: none;
+    }
+
+    &.is-checked::before {
+        border-style: solid;
+        border-right: none;
+        border-top: none;
+    }
+}

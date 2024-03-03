@@ -15,11 +15,13 @@ import { Options } from '../util/';
 type PersistedInputProps = {
 	component: 'checkbox' | 'select' | 'textfield' | 'switch';
 	storageKey: keyof Options;
+	children?: React.ReactNode;
 } & (CheckboxProps | SelectProps | TextFieldProps | SwitchProps);
 
 export default function PersistedInput({
 	component,
 	storageKey,
+	children,
 	...props
 }: PersistedInputProps) {
 	const { options, setOptionAsync } = useOptions();
@@ -45,7 +47,9 @@ export default function PersistedInput({
 					{...without}
 					onChange={onChangeProxy}
 					checked={options[storageKey] as boolean}
-				/>
+				>
+					{children}
+				</Checkbox>
 			);
 		}
 		case 'textfield': {
@@ -57,7 +61,7 @@ export default function PersistedInput({
 					onChange={onChangeProxy}
 					value={options[storageKey]}
 				>
-					{(props as TextFieldProps).children}
+					{children}
 				</TextField>
 			);
 		}
@@ -70,7 +74,7 @@ export default function PersistedInput({
 					onChange={onChangeProxy}
 					value={options[storageKey]}
 				>
-					{(props as SelectProps).children}
+					{children}
 				</Select>
 			);
 		}
