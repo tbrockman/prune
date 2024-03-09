@@ -1,6 +1,6 @@
 // TODO
 
-import { Features } from '~config';
+import { Features, type PruneConfig } from '~config';
 import AlarmHandler from '~handlers/alarm';
 import TabGrouper from '~tab/tab-grouper';
 import TabPruner from '~tab/tab-pruner';
@@ -21,7 +21,9 @@ describe('alarm-handler', () => {
 	let tracker: SinonStubbedInstance<TabTracker>;
 	let grouper: SinonStubbedInstance<TabGrouper>;
 	let pruner: SinonStubbedInstance<TabPruner>;
-	let unsupportedFeatures: Set<Features> = new Set<Features>();
+	let config: PruneConfig = {
+		featureSupported() { return true },
+	}
 
 	before(() => {
 		global.chrome = chrome;
@@ -46,11 +48,11 @@ describe('alarm-handler', () => {
 		tracker = sinon.createStubInstance(TabTracker);
 		grouper = sinon.createStubInstance(TabGrouper);
 		pruner = sinon.createStubInstance(TabPruner);
-		return new AlarmHandler({ tracker, grouper, pruner, options, unsupportedFeatures });
+		return new AlarmHandler({ tracker, grouper, pruner, options, config });
 	};
 
 	afterEach(() => {
-		unsupportedFeatures.clear();
+		config.featureSupported = () => true;
 		global.chrome.flush();
 	});
 
@@ -111,8 +113,7 @@ describe('alarm-handler', () => {
 	it('shouldnt call tabgrouper if tab grouping not supported', async () => {
 		const options = createOptions({ 'auto-prune': false });
 		handler = createAlarmHandler(options);
-		handler.unsupportedFeatures.add(Features.TabGroups);
-		console.log('am I logging here??', handler.unsupportedFeatures)
+		handler.config.featureSupported = (feature) => feature !== Features.TabGroups;
 		const tabs = [
 			createTab({ id: 1, groupId: -1 }),
 			createTab({ id: 2, groupId: -1 }),

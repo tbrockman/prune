@@ -1,3 +1,4 @@
+import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
 import TabDeduplicator from '~tab/tab-deduplicator';
 import TabGrouper from '~tab/tab-grouper';
@@ -10,7 +11,8 @@ type TabUpdatedHandlerArgs = {
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	deduplicator: TabDeduplicator;
-	options: any;
+	options: Options;
+	config: PruneConfig;
 };
 
 class TabUpdatedHandler {
@@ -19,6 +21,7 @@ class TabUpdatedHandler {
 	pruner: TabPruner;
 	deduplicator: TabDeduplicator;
 	options: Options;
+	config: PruneConfig;
 
 	constructor({
 		tracker,
@@ -26,12 +29,14 @@ class TabUpdatedHandler {
 		pruner,
 		deduplicator,
 		options,
+		config
 	}: TabUpdatedHandlerArgs) {
 		this.tracker = tracker;
 		this.grouper = grouper;
 		this.pruner = pruner;
 		this.deduplicator = deduplicator;
 		this.options = options;
+		this.config = config;
 	}
 
 	async execute(tab: chrome.tabs.Tab) {
@@ -71,7 +76,7 @@ class TabUpdatedHandler {
 
 			if (
 				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'remove' ||
-				process.env.PLASMO_BROWSER == 'firefox' // TODO: kinda hacky
+				!this.config.featureSupported(Features.TabGroups)
 			) {
 				await this.pruner.pruneTabs(hidden);
 			} else if (

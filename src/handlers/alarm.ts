@@ -2,7 +2,7 @@ import TabGrouper from '~tab/tab-grouper';
 import TabPruner from '~tab/tab-pruner';
 import TabTracker from '~tab/tab-tracker';
 import { type Tab } from '../types';
-import { Features } from '~config';
+import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
 import type { Options } from '~util';
 
@@ -13,27 +13,27 @@ type AlarmHandlerArgs = {
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	options: Options;
-	unsupportedFeatures: Set<Features>;
+	config: PruneConfig;
 };
 
 class AlarmHandler {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
+	config: PruneConfig;
 	autoPrune: boolean;
 	pruneThreshold: number;
 	autoGroup: boolean;
 	autoGroupThreshold: number;
 	autoGroupName: string;
 	autoBookmark: boolean;
-	unsupportedFeatures: Set<Features>;
 
 	constructor({
 		tracker,
 		grouper,
 		pruner,
 		options,
-		unsupportedFeatures,
+		config,
 	}: AlarmHandlerArgs) {
 		this.tracker = tracker;
 		this.grouper = grouper;
@@ -45,7 +45,7 @@ class AlarmHandler {
 			options[StorageKeys.AUTO_GROUP_THRESHOLD] * ONE_DAY_IN_MS;
 		this.autoGroupName = options[StorageKeys.AUTO_GROUP_NAME];
 		this.autoBookmark = options[StorageKeys.AUTO_PRUNE_BOOKMARK];
-		this.unsupportedFeatures = unsupportedFeatures;
+		this.config = config;
 	}
 
 	async execute() {
@@ -74,10 +74,10 @@ class AlarmHandler {
 				'before filtering any grouped tabs',
 				candidates,
 				'unsupported features',
-				this.unsupportedFeatures,
+				this.config.unsupportedFeatures,
 			);
 
-			if (this.autoGroup && !this.unsupportedFeatures.has(Features.TabGroups)) {
+			if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
 				const groups = await chrome.tabGroups.query({
 					title: group['title'],
 				});
@@ -96,7 +96,7 @@ class AlarmHandler {
 		}
 		console.debug('remaining tabs', openTabs);
 
-		if (this.autoGroup && !this.unsupportedFeatures.has(Features.TabGroups)) {
+		if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
 			const [toGroup] = this.tracker.findTabsExceedingThreshold(
 				openTabs,
 				this.autoGroupThreshold,
