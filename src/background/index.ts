@@ -53,7 +53,7 @@ chrome.alarms.onAlarm.addListener(async () => {
 		grouper,
 		pruner,
 		options,
-		unsupportedFeatures: config.unsupportedFeatures,
+		config
 	});
 	await handler.execute();
 });
@@ -84,6 +84,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 			pruner,
 			deduplicator,
 			options,
+			config
 		});
 		await handler.execute(tab);
 	}

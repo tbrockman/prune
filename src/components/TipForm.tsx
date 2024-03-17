@@ -1,11 +1,13 @@
-import React, { type ChangeEvent, useState } from 'react';
+import React, { type ChangeEvent, useState, useRef } from 'react';
 
 import { LoadingButton } from '@mui/lab';
 import {
 	Button,
+	ButtonGroup,
+	FormControl,
 	FormGroup,
 	InputAdornment,
-	TextField,
+	InputBase,
 	Tooltip,
 } from '@mui/material';
 import { FormOption } from './FormOption';
@@ -25,7 +27,12 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 	const reviewUrl = config.review.url;
 
 	const onTipChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setTip(parseFloat(event.target.value));
+		if (event.target.value === '') {
+			return;
+		}
+		else {
+			setTip(parseFloat(event.target.value));
+		}
 	};
 
 	const tipButtonClicked = async () => {
@@ -41,41 +48,53 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 	return (
 		<FormOption style={{ marginLeft: '0px' }}>
 			<FormGroup className="tip-form-group">
-				<TextField
-					margin="dense"
-					hiddenLabel
-					size="small"
-					variant="filled"
-					type="number"
-					value={tip}
-					onChange={onTipChange}
+				<ButtonGroup
+					component={'form'}
 					color="secondary"
-					InputProps={{
-						className: 'tip-input',
-						inputProps: {
-							min: 1,
-							max: 1000,
-							step: 'any',
-						},
-						startAdornment: <InputAdornment position="start">$</InputAdornment>,
-					}}
-				/>
-				<Tooltip
-					placement="top"
-					arrow={true}
-					enterDelay={1500}
-					enterNextDelay={750}
-					title={tipButtonHint}
+					variant="contained"
+					className="tip-button-group"
+					aria-label="Button group with a nested menu"
 				>
-					<LoadingButton
+					<InputBase
 						color="secondary"
-						variant="contained"
-						loading={isTipping}
-						onClick={tipButtonClicked}
+						size='small'
+						type="number"
+						className='tip-number-input'
+						value={tip}
+						onChange={onTipChange}
+						placeholder='3'
+						slotProps={{
+							input: {
+								min: 1,
+								max: 1000,
+								step: 'any',
+								style: {
+									padding: 0,
+									width: (Math.max(tip.toString().length, 1) + 3) * 8 + 'px',
+								}
+							}
+						}}
+						startAdornment={<InputAdornment position="start">$</InputAdornment>}
 					>
-						{tipButtonText}
-					</LoadingButton>
-				</Tooltip>
+					</InputBase>
+					<Tooltip
+						placement="top"
+						arrow={true}
+						enterDelay={1500}
+						enterNextDelay={750}
+						title={tipButtonHint}
+					>
+						<LoadingButton
+							type='submit'
+							color="secondary"
+							variant="contained"
+							loading={isTipping}
+							onClick={tipButtonClicked}
+						>
+							{tipButtonText}
+						</LoadingButton>
+					</Tooltip>
+				</ButtonGroup>
 				<Tooltip
 					placement="top"
 					arrow={true}
@@ -86,7 +105,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					<Button
 						target="_blank"
 						href={reviewUrl}
-						style={{ marginLeft: '8px' }}
+						rel="noopener"
 						variant="outlined"
 						color="info"
 					>
@@ -94,6 +113,6 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					</Button>
 				</Tooltip>
 			</FormGroup>
-		</FormOption>
+		</FormOption >
 	);
 }

@@ -48,8 +48,8 @@ export function PopupMain() {
 			</Typography>
 			<FormGroup className="main-form-group">
 				<Typography marginTop={'8px'} marginBottom={'16px'}>
-					<b>prune</b> {aboutTextStart}{' '}
-					<Link href="https://theo.lol/resume" target="_blank">
+					<Link href='https://github.com/tbrockman/prune' underline='hover' rel="noopener" target="_blank">prune</Link> {aboutTextStart}{' '}
+					<Link href="https://theo.lol/" rel="noopener" underline='hover' target="_blank">
 						@tbrockman
 					</Link>{' '}
 					{aboutTextEnd}

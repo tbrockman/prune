@@ -108,7 +108,7 @@ export default function LinkSection({ useConfig = _useConfig }) {
                             onOpen={shareTooltipOpened}
                             onClose={shareTooltipClosed}
                             title={shareTooltipTitle}>
-                            <IconButton href="#share" onClick={shareClicked}>
+                            <IconButton size="large" href="#share" onClick={shareClicked}>
                                 <ShareIcon />
                             </IconButton>
                         </Tooltip>
@@ -119,21 +119,21 @@ export default function LinkSection({ useConfig = _useConfig }) {
                             onOpen={copiedTooltipOpened}
                             onClose={copiedTooltipClosed}
                             title={shareResultTooltipText}>
-                            <IconButton href="#share" onClick={shareClicked}>
+                            <IconButton size="large" href="#share" onClick={shareClicked}>
                                 <ShareIcon />
                             </IconButton>
                         </Tooltip>
                     )}
                 </>}
             <Tooltip title={githubTooltipTitle}>
-                <IconButton target="_blank" href="https://github.com/tbrockman/prune">
+                <IconButton size="large" target="_blank" rel="noopener" href="https://github.com/tbrockman/prune">
                     <Icon>
                         <GitHubLogo />
                     </Icon>
                 </IconButton>
             </Tooltip>
             <Tooltip title={creatorTooltipTitle}>
-                <IconButton target="_blank" href="https://theo.lol">
+                <IconButton size="large" target="_blank" rel="noopener" href="https://theo.lol">
                     <PaletteIcon />
                 </IconButton>
             </Tooltip>

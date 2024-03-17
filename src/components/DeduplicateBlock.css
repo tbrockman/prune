@@ -22,7 +22,7 @@ label.sub-checkbox {
         left: -15px;
         border-bottom: 2px solid;
         border-color: #000;
-        border-style: dotted;
+        border-style: dashed;
         border-right: none;
         border-top: none;
     }

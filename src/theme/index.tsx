@@ -14,9 +14,9 @@ export default function createTheme() {
 			},
 		},
 		typography: {
-			fontFamily: 'Times New Roman, serif',
+			fontFamily: 'monospace',
 			body1: {
-				fontSize: '16px',
+				fontSize: '14px',
 			},
 			button: {
 				fontSize: '14px',

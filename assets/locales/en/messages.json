@@ -104,7 +104,7 @@
         "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
     },
     "aboutTextStart": {
-        "message": "is a free, open-source extension made by",
+        "message": "is a free, open-source browser extension made by",
         "description": "Text to introduce the creator of the extension in the about section of the extension popup (followed by the creator's name)"
     },
     "aboutTextEnd": {

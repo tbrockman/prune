@@ -1,9 +1,9 @@
-.link-section > * {
+.link-section>* {
 	color: #000 !important;
 	margin-right: 32px !important;
 }
 
-.link-section > *:last-child {
+.link-section>*:last-child {
 	margin-right: 0 !important;
 }
 

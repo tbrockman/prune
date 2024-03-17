@@ -1,9 +1,9 @@
 div.tip-form-group {
 	flex-direction: row;
-	align-items: center;
+	gap: 1rem;
 }
 
-.tip-form-group > .MuiFormControl-root {
+.tip-form-group>.MuiFormControl-root {
 	margin: 0;
 }
 
@@ -13,6 +13,15 @@ div.tip-input {
 	padding-left: 0;
 }
 
-.tip-input > input {
+.tip-input>input {
 	padding: 7px 7px 7px 0;
+}
+
+.tip-button-group>button {
+	border-color: white !important;
+}
+
+.tip-number-input {
+	padding: 4px 14px;
+	border: 1px solid;
 }
