@@ -9,7 +9,6 @@ body {
 }
 
 .app {
-	width: 590px;
 	display: flex;
 	justify-content: center;
 }

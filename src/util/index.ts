@@ -10,7 +10,7 @@ class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_PRUNE] = true;
 	[StorageKeys.AUTO_PRUNE_THRESHOLD] = config.featureSupported(Features.TabGroups) ? 7 : 4;
 	[StorageKeys.AUTO_GROUP] = true;
-	[StorageKeys.AUTO_GROUP_THRESHOLD] = 1;
+	[StorageKeys.AUTO_GROUP_THRESHOLD] = 2;
 	[StorageKeys.AUTO_GROUP_NAME] = '🕒 old tabs';
 	[StorageKeys.AUTO_PRUNE_BOOKMARK] = true;
 	[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME] = '🌱 pruned';

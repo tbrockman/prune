@@ -17,6 +17,10 @@ div.tip-input {
 	padding: 7px 7px 7px 0;
 }
 
+.tip-button-group {
+	box-shadow: none !important;
+}
+
 .tip-button-group>button {
 	border-color: white !important;
 }

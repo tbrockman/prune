@@ -8,7 +8,6 @@ import { StorageKeys } from '~enums'
 
 export function RemoveTabsBlock({ useOptions = _useOptions }) {
 	const { options } = useOptions()
-
 	const closeTabsHint =
 		"prune can also clean up any pages you haven't looked at in awhile. don't worry, you won't miss them"
 	const closeTabsLabel = 'close old tabs after'
@@ -50,7 +49,7 @@ export function RemoveTabsBlock({ useOptions = _useOptions }) {
 						}}
 					/>
 				}
-				label="days"
+				label="days 🗑️"
 			/>
 		</FormOption>
 	)

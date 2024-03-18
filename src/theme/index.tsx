@@ -1,5 +1,7 @@
 import { createTheme as muiCreateTheme } from '@mui/material/styles'
 
+import './index.css'
+
 export default function createTheme() {
 	return muiCreateTheme({
 		palette: {

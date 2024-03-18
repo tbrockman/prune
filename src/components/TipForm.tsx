@@ -59,6 +59,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 						color="secondary"
 						size='small'
 						type="number"
+						disabled={isTipping}
 						className='tip-number-input'
 						value={tip}
 						onChange={onTipChange}

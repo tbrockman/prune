@@ -8,7 +8,7 @@
         "description": "Visible label displayed next to a checkbox to enable/disable the tab focus+deduplicate feature"
     },
     "closeDuplicateLabel": {
-        "message": "close duplicates when navigating to existing tabs 🗑️",
+        "message": "close duplicates when navigating to existing tabs 🧹",
         "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them"
     },
     "closeDuplicateHint": {
@@ -96,11 +96,11 @@
         "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
     },
     "optionsTitle": {
-        "message": "options 🔧",
+        "message": "options 🪴",
         "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension"
     },
     "aboutTitle": {
-        "message": "about 📝",
+        "message": "about 📚",
         "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
     },
     "aboutTextStart": {
