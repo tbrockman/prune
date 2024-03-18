@@ -50,13 +50,12 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 			<FormGroup className="tip-form-group">
 				<ButtonGroup
 					component={'form'}
-					color="secondary"
 					variant="contained"
 					className="tip-button-group"
-					aria-label="Button group with a nested menu"
+					aria-label="Button group for selecting an amount to tip the developer, and then submitting the tip"
 				>
 					<InputBase
-						color="secondary"
+						color="warning"
 						size='small'
 						type="number"
 						disabled={isTipping}
@@ -87,8 +86,9 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					>
 						<LoadingButton
 							type='submit'
-							color="secondary"
+							color="info"
 							variant="contained"
+							className='tip-button'
 							loading={isTipping}
 							onClick={tipButtonClicked}
 						>
@@ -107,8 +107,8 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 						target="_blank"
 						href={reviewUrl}
 						rel="noopener"
-						variant="outlined"
-						color="info"
+						variant="contained"
+						color="secondary"
 					>
 						{reviewButtonText}
 					</Button>

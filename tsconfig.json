@@ -1,6 +1,9 @@
 {
 	"extends": "plasmo/templates/tsconfig.base",
-	"exclude": ["node_modules", "build"],
+	"exclude": [
+		"node_modules",
+		"build"
+	],
 	"include": [
 		".plasmo/index.d.ts",
 		".plasmo/**/*",
@@ -10,7 +13,9 @@
 	],
 	"compilerOptions": {
 		"paths": {
-			"~*": ["./src/*"]
+			"~*": [
+				"./src/*"
+			]
 		},
 		"baseUrl": ".",
 		"module": "ES6",

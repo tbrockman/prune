@@ -7,25 +7,14 @@ div.tip-form-group {
 	margin: 0;
 }
 
-div.tip-input {
-	margin-right: 8px;
-	max-width: 72px;
-	padding-left: 0;
-}
-
-.tip-input>input {
-	padding: 7px 7px 7px 0;
-}
-
-.tip-button-group {
-	box-shadow: none !important;
-}
-
-.tip-button-group>button {
-	border-color: white !important;
-}
-
 .tip-number-input {
 	padding: 4px 14px;
 	border: 1px solid;
+	border-color: rgba(0, 0, 0, 0.5);
+}
+
+.tip-button-group>.tip-button {
+	border: 1px solid;
+	border-left: none;
+	border-color: rgba(0, 0, 0, 0.5);
 }

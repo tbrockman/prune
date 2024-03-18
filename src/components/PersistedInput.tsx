@@ -8,7 +8,12 @@ import {
 	TextField,
 	type TextFieldProps,
 	type SwitchProps,
+	SvgIcon,
 } from '@mui/material';
+
+import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg"
+import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg"
+
 import useOptions from '../hooks/useOptions';
 import { Options } from '../util/';
 
@@ -46,6 +51,8 @@ export default function PersistedInput({
 				<Checkbox
 					{...without}
 					onChange={onChangeProxy}
+					icon={<SvgIcon><CheckBoxOutlineBlankSharpIcon /></SvgIcon>}
+					checkedIcon={<SvgIcon><CheckBoxSharpIcon /></SvgIcon>}
 					checked={options[storageKey] as boolean}
 				>
 					{children}
