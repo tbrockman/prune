@@ -16,7 +16,7 @@ const chrome = require('sinon-chrome/extensions');
 
 declare var global: any;
 
-describe('alarm-handler', () => {
+describe('alarm handler', () => {
 	let handler: AlarmHandler;
 	let tracker: SinonStubbedInstance<TabTracker>;
 	let grouper: SinonStubbedInstance<TabGrouper>;

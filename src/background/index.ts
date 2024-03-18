@@ -9,7 +9,7 @@ import TabTracker from '~tab/tab-tracker';
 
 import '@plasmohq/messaging/background';
 
-import { getOptionsAsync, initLogging } from '../util';
+import { getOptionsAsync, initLogging } from '~util';
 import { StorageKeys } from '~enums';
 import { Features, config } from '~config';
 
@@ -42,7 +42,7 @@ chrome.alarms.onAlarm.addListener(async () => {
 	console.debug('alarm handler executing');
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker();
-	const grouper = new TabGrouper(config.unsupportedFeatures.has(Features.TabGroups));
+	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
@@ -67,7 +67,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 		const options = await getOptionsAsync();
 
 		const tracker = new TabTracker();
-		const grouper = new TabGrouper(!config.unsupportedFeatures.has(Features.TabGroups));
+		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
@@ -75,7 +75,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 		const pruner = new TabPruner(bookmarker);
 		const deduplicator = new TabDeduplicator(
 			lock,
-			config.unsupportedFeatures,
+			config.featureSupported(Features.TabHighlighting),
 			options[StorageKeys.AUTO_DEDUPLICATE_CLOSE]
 		);
 		const handler = new TabUpdatedHandler({

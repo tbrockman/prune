@@ -14,15 +14,13 @@ declare var global: any;
 describe('tab-deduplicator', () => {
 	let tabDeduplicator: TabDeduplicator;
 	let tabLock;
-	let unsupportedFeatures: Set<Features>;
 
 	beforeEach(() => {
 		global.chrome = chrome;
 		chrome.tabs.goBack = sinon.stub();
 		chrome.tabs.goBack.resolves();
 		tabLock = new Set();
-		unsupportedFeatures = new Set();
-		tabDeduplicator = new TabDeduplicator(tabLock, unsupportedFeatures);
+		tabDeduplicator = new TabDeduplicator(tabLock);
 	});
 
 	afterEach(() => {
@@ -121,7 +119,7 @@ describe('tab-deduplicator', () => {
 		})
 
 		it('shouldnt call highlight if feature not supported', async () => {
-			unsupportedFeatures.add(Features.TabHighlighting);
+			tabDeduplicator.canHighlight = false;
 			chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
 			await tabDeduplicator.deduplicateTab(
@@ -207,7 +205,7 @@ describe('tab-deduplicator', () => {
 		});
 
 		it('shouldnt call highlight if feature not supported', async () => {
-			unsupportedFeatures.add(Features.TabHighlighting);
+			tabDeduplicator.canHighlight = false;
 			chrome.tabs.get.resolves({ url: 'example.com', status: 'complete' });
 
 			await tabDeduplicator.deduplicateTab(

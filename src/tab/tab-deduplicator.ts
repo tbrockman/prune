@@ -7,12 +7,12 @@ const NEW_TAB_URLS = ["chrome://newtab", "about:newtab", "about:blank", "chrome:
 
 class TabDeduplicator {
   tabLock: Set<number>
-  unsupportedFeatures: Set<Features>
+  canHighlight: boolean
   closeAllDuplicates: boolean
 
-  constructor(tabLock: Set<number>, unsupportedFeatures: Set<Features>, closeAllDuplicates = true) {
+  constructor(tabLock: Set<number>, canHighlight = true, closeAllDuplicates = true) {
     this.tabLock = tabLock
-    this.unsupportedFeatures = unsupportedFeatures
+    this.canHighlight = canHighlight
     this.closeAllDuplicates = closeAllDuplicates
     this.deduplicateTab = this.deduplicateTab.bind(this)
   }
@@ -73,7 +73,7 @@ class TabDeduplicator {
           windowId: openTabs[index].windowId
         }
 
-        if (!this.unsupportedFeatures.has(Features.TabHighlighting)) {
+        if (this.canHighlight) {
           await chrome.tabs.highlight(highlightInfo)
         } else {
           await chrome.tabs.update(openTabs[index].id, {
