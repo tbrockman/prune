@@ -86,7 +86,7 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 					>
 						<LoadingButton
 							type='submit'
-							color="info"
+							color="secondary"
 							variant="contained"
 							className='tip-button'
 							loading={isTipping}
@@ -107,8 +107,8 @@ export default function TipForm({ useTipClient = _useTipClient }) {
 						target="_blank"
 						href={reviewUrl}
 						rel="noopener"
+						color="info"
 						variant="contained"
-						color="secondary"
 					>
 						{reviewButtonText}
 					</Button>

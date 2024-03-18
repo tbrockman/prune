@@ -12,7 +12,7 @@ export default function createTheme() {
 				main: '#472966',
 			},
 			info: {
-				main: '#000',
+				main: '#fff',
 			},
 		},
 		typography: {
@@ -32,8 +32,11 @@ export default function createTheme() {
 						color: '#fff',
 						borderRadius: 0,
 					},
-					outlinedInfo: {
+					containedInfo: {
 						color: '#000',
+						border: '1px solid',
+						borderColor: 'rgba(0, 0, 0, 0.5)',
+						boxShadow: 'none'
 					},
 				},
 			},
