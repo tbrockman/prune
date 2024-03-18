@@ -39,10 +39,10 @@ const configs: { [key: string]: IPruneConfig } = {
 		},
 		share: {
 			// TODO: Create a proxy that detects your browser and redirects you to the appropriate extension store?
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
 		},
 		review: {
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
 		},
 		// DEPRECATED: dead config from attempting to allow prune to block sites
 		// maybe revisit when incremental permissions makes this a bit less scary for users
@@ -78,7 +78,7 @@ const configs: { [key: string]: IPruneConfig } = {
 	},
 	chrome: {
 		review: {
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh?hl=en',
+			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
 		},
 	},
 	edge: {
@@ -105,6 +105,12 @@ const configs: { [key: string]: IPruneConfig } = {
 		unsupportedFeatures: new Set([Features.TabGroups]),
 	},
 	opera: {
+		share: {
+			url: 'https://addons.opera.com/en/extensions/details/prune/',
+		},
+		review: {
+			url: 'https://addons.opera.com/en/extensions/details/prune/'
+		},
 		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting]),
 	}
 };

@@ -11,6 +11,7 @@ div.tip-form-group {
 	padding: 4px 14px;
 	border: 1px solid;
 	border-color: rgba(0, 0, 0, 0.5);
+	border-right: none;
 }
 
 .tip-button-group>.tip-button {
