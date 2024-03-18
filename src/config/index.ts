@@ -126,6 +126,5 @@ const config: PruneConfig = {
 	}
 };
 
-
 export { config };
 export type { PruneConfig, TipConfig };
