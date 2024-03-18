@@ -19,7 +19,7 @@ export function DeduplicateBlock() {
 	const closeDuplicateHint = chrome.i18n.getMessage('closeDuplicateHint');
 
 	return (
-		<FormOption>
+		<FormOption className='form-option-with-subgroup'>
 			<FormControlLabel
 				control={
 					<PersistedInput

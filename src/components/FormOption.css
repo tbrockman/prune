@@ -1,3 +1,9 @@
 .form-option {
 	padding: 0;
 }
+
+.form-option.form-option-with-subgroup {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
