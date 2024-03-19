@@ -2,6 +2,10 @@
 
 A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you manage your garden of tabs.
 
+## Download
+
+[🌈 Chrome](https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh) - [🔶 Firefox](https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/) - [🌊 Edge](https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd) - [🎭 Opera](https://addons.opera.com/en/extensions/details/prune/)
+
 ## Features
 
 - Prevents opening duplicate tabs, `prune` will focus the original for you if you already have it opened.
