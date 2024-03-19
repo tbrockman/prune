@@ -1,9 +1,8 @@
 import { pollTabForStatus } from "~util"
 import { type Tab } from "../types"
-import { Features } from "~config"
 import { removeTrailingSlashes } from "~util/string"
 
-const NEW_TAB_URLS = ["chrome://newtab", "about:newtab", "about:blank", "chrome://startpageshared", ""]
+const NEW_TAB_URLS = ["chrome://newtab", "edge://newtab", "about:newtab", "about:blank", "chrome://startpageshared", ""]
 
 class TabDeduplicator {
   tabLock: Set<number>
@@ -66,7 +65,7 @@ class TabDeduplicator {
     // Try-catch so we always remove the lock
     try {
       if (index > -1) {
-        console.debug("deduplicating tab", tab.id, tab)
+        console.debug("deduplicating tab", tab.id, tab, "closeAllDuplicates", this.closeAllDuplicates, "canHighlight", this.canHighlight, "openTabs", openTabs, "index", index)
 
         const highlightInfo = {
           tabs: openTabs[index].index,
