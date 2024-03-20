@@ -46,7 +46,7 @@ class TabGrouper {
 			try {
 				const groupId = await chrome.tabs.group({ tabIds });
 				await chrome.tabGroups.update(groupId, groupProperties);
-				await chrome.tabGroups.move(groupId, { index: -1 });
+				await chrome.tabGroups.move(groupId, { index: 0 });
 			} catch (err) {
 				console.error(err);
 			}
