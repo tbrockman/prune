@@ -176,7 +176,14 @@ export default function createTheme() {
 						paddingBottom: '0',
 					}
 				}
-			}
+			},
+			MuiButtonGroup: {
+				styleOverrides: {
+					root: {
+						boxShadow: 'none',
+					},
+				},
+			},
 		},
 	})
 }

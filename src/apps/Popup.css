@@ -3,21 +3,15 @@
 		margin: 1rem;
 	}
 
-	.MuiFormGroup-root.main-form-group {
-		border: none;
-		box-shadow: none;
-		padding: 0;
-		margin: 0;
+	div.MuiFormGroup-root.main-form-group {
 		overflow-x: auto;
+		margin: 0;
+		margin-bottom: 1.5rem;
+		padding: 1rem;
 
-		&.options-form-group {
-			padding-left: 0;
+		&>.form-option:first-child {
+			margin-top: 0;
 		}
-	}
-
-	.MuiTypography-root.section-title {
-		padding: 1rem 0 0 0 !important;
-		margin: 0 !important;
 	}
 
 	span.MuiCheckbox-root {
@@ -32,6 +26,11 @@
 	div.main-form-group>.form-option {
 		flex-wrap: nowrap;
 		max-width: unset;
+	}
+
+	h1.section-title.MuiTypography-root,
+	p.section-title.MuiTypography-root {
+		margin-left: 9px;
 	}
 }
 
