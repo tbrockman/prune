@@ -30,6 +30,7 @@ export enum Features {
 	TabGroups = 'tabGroups',
 	TabHighlighting = 'tabHighlighting',
 	Sharing = 'sharing',
+	Bookmarks = 'bookmarks',
 }
 
 const configs: { [key: string]: IPruneConfig } = {
@@ -93,7 +94,7 @@ const configs: { [key: string]: IPruneConfig } = {
 	},
 	// TODO: change when we have a page on app store
 	safari: {
-		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks]),
 	},
 	firefox: {
 		share: {

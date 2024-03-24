@@ -24,7 +24,7 @@ const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
 			{config.featureSupported(Features.TabGroups) && <GroupTabsBlock />}
 			<RemoveTabsBlock />
 			<LRUBlock />
-			<StorageBlock />
+			{config.featureSupported(Features.Bookmarks) && <StorageBlock />}
 		</>
 	);
 };

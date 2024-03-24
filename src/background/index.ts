@@ -34,6 +34,23 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 			await chrome.storage.local.clear();
 		}
 	}
+
+	const options = await getOptionsAsync();
+	const tracker = new TabTracker();
+	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
+	const bookmarker = new TabBookmarker(
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
+	);
+	const pruner = new TabPruner(bookmarker);
+	const handler = new AlarmHandler({
+		tracker,
+		grouper,
+		pruner,
+		options,
+		config
+	});
+	await handler.execute();
 });
 
 // Ran every minute
@@ -45,7 +62,7 @@ chrome.alarms.onAlarm.addListener(async () => {
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+		options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
 	);
 	const pruner = new TabPruner(bookmarker);
 	const handler = new AlarmHandler({
@@ -70,7 +87,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK],
+			options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
 		);
 		const pruner = new TabPruner(bookmarker);
 		const deduplicator = new TabDeduplicator(
