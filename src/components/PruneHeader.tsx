@@ -4,6 +4,8 @@ import PruneLogo from 'react:~assets/prune-banner.svg';
 
 import LinkSection from './LinkSection';
 
+import './PruneHeader.css';
+
 class PruneHeaderProps {
 	showLinkSection?: Boolean;
 }
@@ -11,6 +13,7 @@ class PruneHeaderProps {
 export function PruneHeader({ showLinkSection = true }: PruneHeaderProps) {
 	return (
 		<Grid
+			className="prune-header"
 			container
 			padding="32px"
 			paddingTop={'16px'}
@@ -18,7 +21,7 @@ export function PruneHeader({ showLinkSection = true }: PruneHeaderProps) {
 			alignItems="center"
 			justifyContent="space-between"
 		>
-			<PruneLogo width="200px" />
+			<PruneLogo />
 			{showLinkSection && <LinkSection />}
 		</Grid>
 	);
