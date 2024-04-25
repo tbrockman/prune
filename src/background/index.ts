@@ -1,11 +1,11 @@
 import AlarmHandler from '~handlers/alarm';
 import TabUpdatedHandler from '~handlers/tab-updated';
 import TabFocusedHandler from '~handlers/tab-focused';
-import TabBookmarker from '~tab/tab-bookmarker';
-import TabDeduplicator from '~tab/tab-deduplicator';
-import TabGrouper from '~tab/tab-grouper';
-import TabPruner from '~tab/tab-pruner';
-import TabTracker from '~tab/tab-tracker';
+import TabBookmarker from '~tab/bookmarker';
+import TabDeduplicator from '~tab/deduplicator';
+import TabGrouper from '~tab/grouper';
+import TabPruner from '~tab/pruner';
+import TabTracker from '~tab/tracker';
 
 import '@plasmohq/messaging/background';
 

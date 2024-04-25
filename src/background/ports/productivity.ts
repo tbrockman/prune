@@ -1,7 +1,7 @@
 import type { PlasmoMessaging } from '@plasmohq/messaging'
 import { Storage } from '@plasmohq/storage'
 import { StorageKeys } from '~enums'
-import TabTracker from '~tab/tab-tracker'
+import TabTracker from '~tab/tracker'
 import { getMatchingFilters, urlToPartialHref } from '~util/filter'
 import { config as _config, type PruneConfig } from '~config'
 

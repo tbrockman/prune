@@ -1,12 +1,11 @@
-import TabTracker from '../../../src/tab/tab-tracker';
+import TabTracker from '../../../src/tab/tracker';
 import { assert } from 'chai';
 
 import chrome from 'sinon-chrome/extensions';
 import sinon from 'sinon';
-import { PruneStorage } from '../../../src/util/storage';
 declare var global: any;
 
-describe('tab-tracker', () => {
+describe('tracker', () => {
 	let tabTracker;
 	let storage;
 

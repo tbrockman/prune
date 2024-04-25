@@ -1,8 +1,8 @@
-import * as tabGrouperModule from '../../../src/tab/tab-grouper'
-import * as tabPrunerModule from '../../../src/tab/tab-pruner'
-import * as tabTrackerModule from '../../../src/tab/tab-tracker'
-import * as tabDeduplicatorModule from '../../../src/tab/tab-deduplicator'
-import * as tabBookmarkerModule from '../../../src/tab/tab-bookmarker'
+import * as tabGrouperModule from '../../../src/tab/grouper'
+import * as tabPrunerModule from '../../../src/tab/pruner'
+import * as tabTrackerModule from '../../../src/tab/tracker'
+import * as tabDeduplicatorModule from '../../../src/tab/deduplicator'
+import * as tabBookmarkerModule from '../../../src/tab/bookmarker'
 import * as alarmModule from '../../../src/handlers/alarm'
 
 import sinon from 'sinon/pkg/sinon-esm';
@@ -47,11 +47,11 @@ describe('background script', () => {
     it('should create alarm and handlers', async () => {
         proxyquire('../../../src/background/index', {
             '~handlers/alarm': AlarmHandler,
-            '~tab/tab-grouper': TabGrouper,
-            '~tab/tab-pruner': TabPruner,
-            '~tab/tab-tracker': TabTracker,
-            '~tab/tab-deduplicator': TabDeduplicator,
-            '~tab/tab-bookmarker': TabBookmarker,
+            '~tab/grouper': TabGrouper,
+            '~tab/pruner': TabPruner,
+            '~tab/tracker': TabTracker,
+            '~tab/deduplicator': TabDeduplicator,
+            '~tab/bookmarker': TabBookmarker,
             '~util': { getOptionsAsync: getOptionsAsyncStub, initLogging: initLoggingStub }
         })
 
@@ -65,11 +65,11 @@ describe('background script', () => {
     it('alarm listener should execute alarm handler', async () => {
         proxyquire('../../../src/background/index', {
             '~handlers/alarm': AlarmHandler,
-            '~tab/tab-grouper': TabGrouper,
-            '~tab/tab-pruner': TabPruner,
-            '~tab/tab-tracker': TabTracker,
-            '~tab/tab-deduplicator': TabDeduplicator,
-            '~tab/tab-bookmarker': TabBookmarker,
+            '~tab/grouper': TabGrouper,
+            '~tab/pruner': TabPruner,
+            '~tab/tracker': TabTracker,
+            '~tab/deduplicator': TabDeduplicator,
+            '~tab/bookmarker': TabBookmarker,
             '~util': { getOptionsAsync: getOptionsAsyncStub, initLogging: initLoggingStub }
         })
 

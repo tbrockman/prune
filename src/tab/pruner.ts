@@ -1,5 +1,5 @@
 import { type Tab } from '../types';
-import TabBookmarker from './tab-bookmarker';
+import TabBookmarker from './bookmarker';
 
 class TabPruner {
 	bookmarker: TabBookmarker;

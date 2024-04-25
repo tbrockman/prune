@@ -1,4 +1,4 @@
-import TabTracker from '~tab/tab-tracker';
+import TabTracker from '~tab/tracker';
 
 type TabFocusedHandlerArgs = {
 	tracker: TabTracker;

@@ -1,9 +1,9 @@
 import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
-import TabDeduplicator from '~tab/tab-deduplicator';
-import TabGrouper from '~tab/tab-grouper';
-import TabPruner from '~tab/tab-pruner';
-import TabTracker from '~tab/tab-tracker';
+import TabDeduplicator from '~tab/deduplicator';
+import TabGrouper from '~tab/grouper';
+import TabPruner from '~tab/pruner';
+import TabTracker from '~tab/tracker';
 import type { Options } from '~util';
 
 type TabUpdatedHandlerArgs = {

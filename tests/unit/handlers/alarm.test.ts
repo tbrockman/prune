@@ -2,9 +2,9 @@
 
 import { Features, type PruneConfig } from '~config';
 import AlarmHandler from '~handlers/alarm';
-import TabGrouper from '~tab/tab-grouper';
-import TabPruner from '~tab/tab-pruner';
-import TabTracker from '~tab/tab-tracker';
+import TabGrouper from '~tab/grouper';
+import TabPruner from '~tab/pruner';
+import TabTracker from '~tab/tracker';
 
 import { createTab } from 'tests/testutils';
 

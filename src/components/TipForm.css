@@ -14,10 +14,6 @@ div.tip-form-group {
 	border-right: none;
 }
 
-form.tip-button-group { 
-	box-shadow: none;
-}
-
 .tip-button-group>.tip-button {
 	border: 1px solid;
 	border-left: none;

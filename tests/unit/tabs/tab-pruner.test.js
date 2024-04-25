@@ -1,10 +1,10 @@
-import TabBookmarker from '../../../src/tab/tab-bookmarker';
-import TabPruner from '../../../src/tab/tab-pruner';
+import TabBookmarker from '../../../src/tab/bookmarker';
+import TabPruner from '../../../src/tab/pruner';
 import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('tab-pruner', () => {
+describe('pruner', () => {
 	let tabPruner;
 	let tabBookmarker;
 
