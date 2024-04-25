@@ -6,10 +6,11 @@ import { DeduplicateBlock } from '~components/DeduplicateBlock';
 import { GroupTabsBlock } from '~components/GroupTabsBlock';
 import { RemoveTabsBlock } from '~components/RemoveTabsBlock';
 import { LRUBlock } from '~components/LRUBlock';
-import { StorageBlock } from '~components/StorageBlock';
+import { TabStorageBlock } from '~components/TabStorageBlock';
 import _useConfig from '~hooks/useConfig';
 import type { useConfigType } from '~hooks/useConfig';
 import { Features } from '~config';
+import StorageAreaBlock from '~components/StorageAreaBlock';
 
 type OptionsHomePageProps = {
 	useConfig?: () => useConfigType;
@@ -24,7 +25,8 @@ const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
 			{config.featureSupported(Features.TabGroups) && <GroupTabsBlock />}
 			<RemoveTabsBlock />
 			<LRUBlock />
-			{config.featureSupported(Features.Bookmarks) && <StorageBlock />}
+			{config.featureSupported(Features.Bookmarks) && <TabStorageBlock />}
+			{config.featureSupported(Features.SyncStorage) && <StorageAreaBlock />}
 		</>
 	);
 };

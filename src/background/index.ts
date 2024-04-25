@@ -12,6 +12,7 @@ import '@plasmohq/messaging/background';
 import { getOptionsAsync, initLogging } from '~util';
 import { StorageKeys } from '~enums';
 import { Features, config } from '~config';
+import { localStorage, syncStorage } from '~util/storage';
 
 initLogging();
 
@@ -36,7 +37,7 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 	}
 
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -58,7 +59,7 @@ chrome.alarms.create({ periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(async () => {
 	console.debug('alarm handler executing');
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -82,8 +83,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	// TODO: handle when updatedInfo is tab being ungrouped
 	if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
 		const options = await getOptionsAsync();
-
-		const tracker = new TabTracker();
+		const tracker = new TabTracker({ storage: options.getStorage() });
 		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -112,7 +112,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('tab activated listener', activeInfo);
 
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const handler = new TabFocusedHandler({
 		tracker,
 		options,

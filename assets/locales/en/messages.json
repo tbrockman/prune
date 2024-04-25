@@ -126,5 +126,13 @@
     "reviewButtonHint": {
         "message": "but please don't make fun of how much i like box shadows 🥺",
         "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button"
+    },
+    "useSyncStorageHint": {
+        "message": "[experimental] use the same tab viewing history across all your devices",
+        "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
+    },
+    "useSyncStorageLabel": {
+        "message": "sync tab activity across devices 🔄",
+        "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
     }
 }

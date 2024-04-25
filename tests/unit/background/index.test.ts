@@ -8,6 +8,7 @@ import * as alarmModule from '../../../src/handlers/alarm'
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon'
 import { StorageKeys } from '~enums'
+import { Options } from '~util'
 
 declare var global: any;
 
@@ -37,10 +38,10 @@ describe('background script', () => {
         TabDeduplicator = sinon.stub().callsFake(() => sinon.createStubInstance(tabDeduplicatorModule.default))
         TabBookmarker = sinon.stub().callsFake(() => sinon.createStubInstance(tabBookmarkerModule.default))
         AlarmHandler = sinon.stub().callsFake(() => alarmHandlerStub = sinon.createStubInstance(alarmModule.default))
-        getOptionsAsyncStub = sinon.stub().resolves({
-            [StorageKeys.AUTO_PRUNE_BOOKMARK_NAME]: 'a',
-            [StorageKeys.AUTO_PRUNE_BOOKMARK]: true
-        })
+        const options = new Options()
+        options.set(StorageKeys.AUTO_PRUNE_BOOKMARK, true)
+        options.set(StorageKeys.AUTO_PRUNE_BOOKMARK_NAME, 'a')
+        getOptionsAsyncStub = sinon.stub().resolves(options)
         initLoggingStub = sinon.stub()
     })
 

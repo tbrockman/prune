@@ -16,6 +16,7 @@ enum StorageKeys {
 	PRODUCTIVITY_SUSPEND_DOMAINS = 'productivity-suspend-domains',
 	PRODUCTIVITY_SUSPEND_EXEMPTIONS = 'productivity-suspend-exemptions',
 	PRODUCTIVITY_LAST_PRODUCTIVE_TAB = 'productivity-last-productive-tab',
+	USE_SYNC_STORAGE = 'use-sync-storage',
 }
 
 enum Ports {

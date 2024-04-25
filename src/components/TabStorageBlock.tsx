@@ -8,7 +8,7 @@ import { StorageKeys } from '~enums';
 import _useConfig from '~hooks/useConfig';
 import { Features } from '~config';
 
-export function StorageBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
+export function TabStorageBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 	const { options } = useOptions();
 	const { config } = useConfig();
 	const tabStorageEnabled =

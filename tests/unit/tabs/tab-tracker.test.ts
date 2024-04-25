@@ -19,7 +19,7 @@ describe('tracker', () => {
 			get: sinon.stub(),
 			set: sinon.stub(),
 		};
-		tabTracker = new TabTracker('test', storage);
+		tabTracker = new TabTracker({ tabsStorageKey: 'test', storage });
 	});
 
 	afterEach(() => {

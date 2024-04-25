@@ -1,6 +1,6 @@
 import { Features, config } from '../config';
 import { StorageKeys } from '~enums';
-import { syncStorage } from './storage';
+import { localStorage, syncStorage } from './storage';
 export { pollTabForStatus } from './query';
 export { initLogging } from './logging';
 
@@ -16,11 +16,16 @@ class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME] = '🌱 pruned';
 	[StorageKeys.TAB_LRU_ENABLED] = false;
 	[StorageKeys.TAB_LRU_SIZE] = 16;
-	[StorageKeys.TAB_LRU_DESTINATION] = 'group';
+	[StorageKeys.TAB_LRU_DESTINATION]: 'group' | 'close' = 'group';
 	[StorageKeys.SHOW_HINTS] = true;
 	[StorageKeys.PRODUCTIVITY_MODE_ENABLED] = false;
 	[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS] = config.productivity?.domains;
 	[StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS] = {};
+	[StorageKeys.USE_SYNC_STORAGE] = false;
+
+	getStorage() {
+		return this[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage;
+	}
 }
 
 const defaults = new Options();

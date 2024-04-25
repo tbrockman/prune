@@ -1,16 +1,21 @@
 // TODO: extract common code
-import { localStorage as defaultLocalStorage } from '~util/storage';
+import { localStorage } from '~util/storage';
 import { type PruneStorage } from '~util/storage';
 import { type Tab } from '../types';
+
+type TabTrackerOptions = {
+	tabsStorageKey: string;
+	storage: PruneStorage;
+};
 
 class TabTracker {
 	tabsStorageKey: string;
 	tabs: Map<string, number>;
-	localStorage: PruneStorage;
+	storage: PruneStorage;
 
-	constructor(tabsStorageKey = 'tabs', localStorage = defaultLocalStorage) {
+	constructor({ tabsStorageKey = 'tabs', storage = localStorage }: Partial<TabTrackerOptions> = {}) {
 		this.tabsStorageKey = tabsStorageKey;
-		this.localStorage = localStorage;
+		this.storage = storage;
 		this.tabs = new Map();
 		this.init = this.init.bind(this);
 		this.saveStateAsync = this.saveStateAsync.bind(this);
@@ -169,7 +174,7 @@ class TabTracker {
 		const serialized = this.serializeTabs(this.tabs);
 		console.debug('saving state', key, serialized);
 		try {
-			await this.localStorage.set(key, serialized);
+			await this.storage.set(key, serialized);
 		} catch (error) {
 			console.debug('error saving state', error);
 		}
@@ -177,7 +182,7 @@ class TabTracker {
 	}
 
 	async loadStateAsync(key: string) {
-		const data: any = await this.localStorage.get(key);
+		const data: any = await this.storage.get(key);
 		console.debug('got local storage data', data);
 
 		if (data) {
