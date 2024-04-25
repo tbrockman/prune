@@ -53,6 +53,9 @@ class AlarmHandler {
 		let openTabs = await chrome.tabs.query({});
 		let candidates: Tab[] = [];
 		await this.tracker.init(openTabs);
+		// new: only filter closed tabs on alarm handler, not on all tracker inits
+		await this.tracker.filterClosedTabs(openTabs);
+
 		console.debug('open tabs', openTabs);
 		const group = {
 			title: this.autoGroupName,

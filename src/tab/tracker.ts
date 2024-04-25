@@ -21,8 +21,8 @@ class TabTracker {
 		this.saveStateAsync = this.saveStateAsync.bind(this);
 		this.loadStateAsync = this.loadStateAsync.bind(this);
 		this.trackTabs = this.trackTabs.bind(this);
-		this.filterClosedTabsAndTrackNew =
-			this.filterClosedTabsAndTrackNew.bind(this);
+		this.filterClosedTabs =
+			this.filterClosedTabs.bind(this);
 		this.getTabLastViewed = this.getTabLastViewed.bind(this);
 		this.remove = this.remove.bind(this);
 		this.track = this.track.bind(this);
@@ -34,12 +34,11 @@ class TabTracker {
 
 		if (tabs.size === 0) {
 			console.debug('no loaded tabs found in storage');
-			await this.trackTabs(openTabs);
 		} else {
 			this.tabs = tabs;
 			console.debug('loaded tabs found in storage', tabs);
-			await this.filterClosedTabsAndTrackNew(openTabs);
 		}
+		await this.trackNewOpenTabs(openTabs);
 		console.debug('resolved tab state', this.tabs);
 	}
 
@@ -92,38 +91,44 @@ class TabTracker {
 	async trackTabs(tabs: Tab[]) {
 		await Promise.all(
 			tabs.map(async (tab) => {
-				await this.track(tab);
+				await this.track(tab, false);
 			}),
 		);
+		await this.saveStateAsync(this.tabsStorageKey)
 		console.debug('done tracking tabs');
 	}
 
-	async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
-		const openTabSet: Set<string> = new Set();
-		console.debug('currently open tabs when filtering: ', openTabs);
-
+	async trackNewOpenTabs(openTabs: Tab[]) {
 		await Promise.all(
 			openTabs.map(async (tab) => {
 				if (tab.url) {
-					openTabSet.add(tab.url);
-
 					if (!this.tabs.has(tab.url)) {
-						await this.track(tab);
+						await this.track(tab, false);
 					}
 				}
 			}),
 		);
+		await this.saveStateAsync(this.tabsStorageKey)
+	}
+
+	async filterClosedTabs(openTabs: Tab[]) {
+		const openTabSet: Set<string> = new Set();
+		console.debug('currently open tabs when filtering: ', openTabs);
+
+		openTabs.map((tab) => {
+			if (tab.url) {
+				openTabSet.add(tab.url);
+			}
+		})
 
 		console.debug('open tabs set: ', openTabSet);
 
 		this.tabs.forEach((val, key) => {
 			if (!openTabSet.has(key)) {
 				console.debug('removing non-open tab', key);
-
 				this.remove(key);
 			}
 		});
-
 		await this.saveStateAsync(this.tabsStorageKey);
 	}
 
@@ -134,7 +139,7 @@ class TabTracker {
 		return;
 	}
 
-	async track(tab: Tab) {
+	async track(tab: Tab, saveImmediately = true) {
 		if (tab.url) {
 			console.debug('tracking tab', tab.url);
 
@@ -144,7 +149,7 @@ class TabTracker {
 			this.tabs.set(tab.url, new Date().getTime());
 
 			try {
-				await this.saveStateAsync(this.tabsStorageKey);
+				saveImmediately && await this.saveStateAsync(this.tabsStorageKey);
 			} catch (error) {
 				console.error(error);
 			}
