@@ -92,7 +92,7 @@
         "description": "Visible label displayed next to a checkbox to enable/disable the bookmark feature, with a box to its other side to enter the name of the folder"
     },
     "bookmarkHint": {
-        "message": "if you're afraid of losing your tabs forever, prune can store them in your bookmarks before we close any",
+        "message": "if you're afraid of losing your tabs forever, prune can store them as bookmarks before closing them",
         "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
     },
     "optionsTitle": {
@@ -128,11 +128,11 @@
         "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button"
     },
     "useSyncStorageHint": {
-        "message": "[experimental] use the same tab viewing history across all your devices",
+        "message": "[experimental feature] use the same tab viewing history across all your devices",
         "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
     },
     "useSyncStorageLabel": {
-        "message": "sync tab activity across devices 🔄",
+        "message": "use same tab activity across devices 🔄",
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
     }
 }
