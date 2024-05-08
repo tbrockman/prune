@@ -6,7 +6,7 @@ import { ThemeProvider } from "@mui/material/styles"
 
 import { useStore as _useStore } from "../hooks/useStore"
 import createTheme from "../theme"
-import { PopupMain } from "~pages/PopupMain"
+import { PopupMain } from "~pages/popup/PopupMain"
 
 function Popup({ useStore = _useStore }) {
   const init = useStore((state) => state.init)
@@ -19,7 +19,7 @@ function Popup({ useStore = _useStore }) {
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
-        <PopupMain/>
+        <PopupMain />
       </div>
     </ThemeProvider>
   )

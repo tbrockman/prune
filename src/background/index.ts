@@ -12,7 +12,6 @@ import '@plasmohq/messaging/background';
 import { getOptionsAsync, initLogging } from '~util';
 import { StorageKeys } from '~enums';
 import { Features, config } from '~config';
-import { localStorage, syncStorage } from '~util/storage';
 
 initLogging();
 
@@ -57,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 // Ran every minute
 chrome.alarms.create({ periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(async () => {
-	console.debug('alarm handler executing');
+	console.debug('alarm listener triggered');
 	const options = await getOptionsAsync();
 	const tracker = new TabTracker({ storage: options.getStorage() });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));

@@ -1,7 +1,6 @@
 import TabDeduplicator from '../../../src/tab/deduplicator';
 
-import { createTab } from 'tests/testutils';
-import { Features } from '~config';
+import { createTab } from '~util/tabs';
 
 import { assert } from 'chai';
 import sinon from 'sinon/pkg/sinon-esm';

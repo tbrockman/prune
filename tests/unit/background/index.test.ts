@@ -39,8 +39,8 @@ describe('background script', () => {
         TabBookmarker = sinon.stub().callsFake(() => sinon.createStubInstance(tabBookmarkerModule.default))
         AlarmHandler = sinon.stub().callsFake(() => alarmHandlerStub = sinon.createStubInstance(alarmModule.default))
         const options = new Options()
-        options.set(StorageKeys.AUTO_PRUNE_BOOKMARK, true)
-        options.set(StorageKeys.AUTO_PRUNE_BOOKMARK_NAME, 'a')
+        options[StorageKeys.AUTO_PRUNE_BOOKMARK] = true
+        options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME] = 'a'
         getOptionsAsyncStub = sinon.stub().resolves(options)
         initLoggingStub = sinon.stub()
     })

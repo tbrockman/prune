@@ -128,11 +128,11 @@
         "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button"
     },
     "useSyncStorageHint": {
-        "message": "[experimental feature] use the same tab viewing history across all your devices",
+        "message": "use the same tab history across all your devices, keeping tabs around when you've viewed them elsewhere (note: may not work as intended depending on tab volume/activity)",
         "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
     },
     "useSyncStorageLabel": {
-        "message": "use same tab activity across devices 🔄",
+        "message": "sync tab activity across your devices 🔄",
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
     }
 }

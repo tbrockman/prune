@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import createTheme from '../theme';
 import { useStore as _useStore } from '../hooks/useStore';
-import { LockedMain } from '~pages/LockedMain';
+import { LockedMain } from '~pages/locked/LockedMain';
 
 function Locked({ matchingFilters, useStore = _useStore }) {
 	const init = useStore((state) => state.init);

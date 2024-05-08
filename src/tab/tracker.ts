@@ -2,6 +2,7 @@
 import { localStorage } from '~util/storage';
 import { type PruneStorage } from '~util/storage';
 import { type Tab } from '../types';
+import { createTab } from '~util/tabs';
 
 type TabTrackerOptions = {
 	tabsStorageKey: string;
@@ -24,7 +25,6 @@ class TabTracker {
 		this.filterClosedTabs =
 			this.filterClosedTabs.bind(this);
 		this.getTabLastViewed = this.getTabLastViewed.bind(this);
-		this.remove = this.remove.bind(this);
 		this.track = this.track.bind(this);
 	}
 
@@ -111,9 +111,10 @@ class TabTracker {
 		await this.saveStateAsync(this.tabsStorageKey)
 	}
 
-	async filterClosedTabs(openTabs: Tab[]) {
+	async getClosedTabs(openTabs: Tab[]): Promise<Tab[]> {
 		const openTabSet: Set<string> = new Set();
-		console.debug('currently open tabs when filtering: ', openTabs);
+		const closedTabs: Tab[] = [];
+		console.debug('currently open tabs when retrieving closed tabs: ', openTabs);
 
 		openTabs.map((tab) => {
 			if (tab.url) {
@@ -123,29 +124,37 @@ class TabTracker {
 
 		console.debug('open tabs set: ', openTabSet);
 
-		this.tabs.forEach((val, key) => {
-			if (!openTabSet.has(key)) {
-				console.debug('removing non-open tab', key);
-				this.remove(key);
+		this.tabs.forEach((tabId, url) => {
+			if (!openTabSet.has(url)) {
+				console.debug('found no longer opened tab:', { url, tabId });
+				closedTabs.push(createTab({ url, id: tabId }));
 			}
 		});
+
+		return closedTabs;
+	}
+
+	async filterClosedTabs(openTabs: Tab[]) {
+		const closedTabs = await this.getClosedTabs(openTabs);
+		console.debug('found closed tabs', closedTabs);
+		await this.removeTabs(closedTabs);
+	}
+
+	async removeTabs(tabs: Tab[]) {
+		console.debug('removing tabs', tabs);
+		tabs.map(({ url }) => this.#removeTab(url));
 		await this.saveStateAsync(this.tabsStorageKey);
 	}
 
-	remove(tabUrl: string) {
-		if (this.tabs.has(tabUrl)) {
-			this.tabs.delete(tabUrl);
-		}
-		return;
+	#removeTab(tabUrl: string) {
+		return this.tabs.delete(tabUrl);
 	}
 
 	async track(tab: Tab, saveImmediately = true) {
 		if (tab.url) {
-			console.debug('tracking tab', tab.url);
-
-			if (this.tabs.has(tab.url)) {
-				this.tabs.delete(tab.url);
-			}
+			console.debug('tracking tab', tab);
+			// IMPORTANT: to maintain order on updates, we remove and re-add tabs to our map
+			this.tabs.delete(tab.url);
 			this.tabs.set(tab.url, new Date().getTime());
 
 			try {

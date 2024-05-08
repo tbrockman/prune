@@ -57,7 +57,10 @@ class TabUpdatedHandler {
 
 		if (deduplicated) return;
 
-		await this.tracker.track(tab);
+		// only track active tabs on update (i.e, if we change pages, not just if we reload a session) 
+		if (tab.active) {
+			await this.tracker.track(tab);
+		}
 
 		if (this.options[StorageKeys.TAB_LRU_ENABLED]) {
 			const group = {
@@ -75,7 +78,7 @@ class TabUpdatedHandler {
 			);
 
 			if (
-				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'remove' ||
+				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'close' ||
 				!this.config.featureSupported(Features.TabGroups)
 			) {
 				await this.pruner.pruneTabs(hidden);
