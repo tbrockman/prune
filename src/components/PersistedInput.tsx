@@ -33,7 +33,6 @@ export default function PersistedInput({
 
 	const onChangeProxy = async (event: any, ...rest: any) => {
 		if (props.onChange) {
-			console.log('onChange', event, rest)
 			props.onChange(event, rest);
 		}
 		const value =
