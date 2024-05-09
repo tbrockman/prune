@@ -31,6 +31,7 @@ export enum Features {
 	TabHighlighting = 'tabHighlighting',
 	Sharing = 'sharing',
 	Bookmarks = 'bookmarks',
+	SyncStorage = 'syncStorage'
 }
 
 const configs: { [key: string]: IPruneConfig } = {
@@ -94,7 +95,7 @@ const configs: { [key: string]: IPruneConfig } = {
 	},
 	// TODO: change when we have a page on app store
 	safari: {
-		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks, Features.SyncStorage]),
 	},
 	firefox: {
 		share: {
@@ -112,7 +113,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		review: {
 			url: 'https://addons.opera.com/en/extensions/details/prune/'
 		},
-		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.SyncStorage]),
 	}
 };
 

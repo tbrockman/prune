@@ -1,3 +1,9 @@
 .MuiFormControlLabel-label.MuiTypography-root {
     white-space: nowrap;
 }
+
+@font-face {
+    font-family: 'Emoji';
+    src: local('Apple Color Emoji');
+    unicode-range: U+2600-2714;
+}

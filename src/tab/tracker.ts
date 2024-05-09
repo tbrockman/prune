@@ -1,25 +1,30 @@
 // TODO: extract common code
-import { localStorage as defaultLocalStorage } from '~util/storage';
+import { localStorage } from '~util/storage';
 import { type PruneStorage } from '~util/storage';
 import { type Tab } from '../types';
+import { createTab } from '~util/tabs';
+
+type TabTrackerOptions = {
+	tabsStorageKey: string;
+	storage: PruneStorage;
+};
 
 class TabTracker {
 	tabsStorageKey: string;
 	tabs: Map<string, number>;
-	localStorage: PruneStorage;
+	storage: PruneStorage;
 
-	constructor(tabsStorageKey = 'tabs', localStorage = defaultLocalStorage) {
+	constructor({ tabsStorageKey = 'tabs', storage = localStorage }: Partial<TabTrackerOptions> = {}) {
 		this.tabsStorageKey = tabsStorageKey;
-		this.localStorage = localStorage;
+		this.storage = storage;
 		this.tabs = new Map();
 		this.init = this.init.bind(this);
 		this.saveStateAsync = this.saveStateAsync.bind(this);
 		this.loadStateAsync = this.loadStateAsync.bind(this);
 		this.trackTabs = this.trackTabs.bind(this);
-		this.filterClosedTabsAndTrackNew =
-			this.filterClosedTabsAndTrackNew.bind(this);
+		this.filterClosedTabs =
+			this.filterClosedTabs.bind(this);
 		this.getTabLastViewed = this.getTabLastViewed.bind(this);
-		this.remove = this.remove.bind(this);
 		this.track = this.track.bind(this);
 	}
 
@@ -29,12 +34,11 @@ class TabTracker {
 
 		if (tabs.size === 0) {
 			console.debug('no loaded tabs found in storage');
-			await this.trackTabs(openTabs);
 		} else {
 			this.tabs = tabs;
 			console.debug('loaded tabs found in storage', tabs);
-			await this.filterClosedTabsAndTrackNew(openTabs);
 		}
+		await this.trackNewOpenTabs(openTabs);
 		console.debug('resolved tab state', this.tabs);
 	}
 
@@ -87,59 +91,74 @@ class TabTracker {
 	async trackTabs(tabs: Tab[]) {
 		await Promise.all(
 			tabs.map(async (tab) => {
-				await this.track(tab);
+				await this.track(tab, false);
 			}),
 		);
+		await this.saveStateAsync(this.tabsStorageKey)
 		console.debug('done tracking tabs');
 	}
 
-	async filterClosedTabsAndTrackNew(openTabs: Tab[]) {
-		const openTabSet: Set<string> = new Set();
-		console.debug('currently open tabs when filtering: ', openTabs);
-
+	async trackNewOpenTabs(openTabs: Tab[]) {
 		await Promise.all(
 			openTabs.map(async (tab) => {
 				if (tab.url) {
-					openTabSet.add(tab.url);
-
 					if (!this.tabs.has(tab.url)) {
-						await this.track(tab);
+						await this.track(tab, false);
 					}
 				}
 			}),
 		);
+		await this.saveStateAsync(this.tabsStorageKey)
+	}
+
+	async getClosedTabs(openTabs: Tab[]): Promise<Tab[]> {
+		const openTabSet: Set<string> = new Set();
+		const closedTabs: Tab[] = [];
+		console.debug('currently open tabs when retrieving closed tabs: ', openTabs);
+
+		openTabs.map((tab) => {
+			if (tab.url) {
+				openTabSet.add(tab.url);
+			}
+		})
 
 		console.debug('open tabs set: ', openTabSet);
 
-		this.tabs.forEach((val, key) => {
-			if (!openTabSet.has(key)) {
-				console.debug('removing non-open tab', key);
-
-				this.remove(key);
+		this.tabs.forEach((tabId, url) => {
+			if (!openTabSet.has(url)) {
+				console.debug('found no longer opened tab:', { url, tabId });
+				closedTabs.push(createTab({ url, id: tabId }));
 			}
 		});
 
+		return closedTabs;
+	}
+
+	async filterClosedTabs(openTabs: Tab[]) {
+		const closedTabs = await this.getClosedTabs(openTabs);
+		console.debug('found closed tabs', closedTabs);
+		await this.removeTabs(closedTabs);
+	}
+
+	async removeTabs(tabs: Tab[]) {
+		console.debug('removing tabs', tabs);
+		tabs.map(({ url }) => this.#removeTab(url));
 		await this.saveStateAsync(this.tabsStorageKey);
 	}
 
-	remove(tabUrl: string) {
-		if (this.tabs.has(tabUrl)) {
-			this.tabs.delete(tabUrl);
-		}
-		return;
+	#removeTab(tabUrl: string) {
+		return this.tabs.delete(tabUrl);
 	}
 
-	async track(tab: Tab) {
+	async track(tab: Tab, saveImmediately = true) {
 		if (tab.url) {
-			console.debug('tracking tab', tab.url);
-
-			if (this.tabs.has(tab.url)) {
-				this.tabs.delete(tab.url);
-			}
+			console.debug('tracking tab', tab);
+			// IMPORTANT: to maintain order on updates, we remove and re-add tabs to our map
+			this.tabs.delete(tab.url);
 			this.tabs.set(tab.url, new Date().getTime());
 
 			try {
-				await this.saveStateAsync(this.tabsStorageKey);
+				saveImmediately && await this.saveStateAsync(this.tabsStorageKey);
 			} catch (error) {
 				console.error(error);
 			}
@@ -169,7 +188,7 @@ class TabTracker {
 		const serialized = this.serializeTabs(this.tabs);
 		console.debug('saving state', key, serialized);
 		try {
-			await this.localStorage.set(key, serialized);
+			await this.storage.set(key, serialized);
 		} catch (error) {
 			console.debug('error saving state', error);
 		}
@@ -177,7 +196,7 @@ class TabTracker {
 	}
 
 	async loadStateAsync(key: string) {
-		const data: any = await this.localStorage.get(key);
+		const data: any = await this.storage.get(key);
 		console.debug('got local storage data', data);
 
 		if (data) {

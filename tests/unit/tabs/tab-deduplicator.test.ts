@@ -1,7 +1,6 @@
-import TabDeduplicator from '../../../src/tab/tab-deduplicator';
+import TabDeduplicator from '../../../src/tab/deduplicator';
 
-import { createTab } from 'tests/testutils';
-import { Features } from '~config';
+import { createTab } from '~util/tabs';
 
 import { assert } from 'chai';
 import sinon from 'sinon/pkg/sinon-esm';
@@ -11,7 +10,7 @@ const chrome = require('sinon-chrome/extensions');
 
 declare var global: any;
 
-describe('tab-deduplicator', () => {
+describe('deduplicator', () => {
 	let tabDeduplicator: TabDeduplicator;
 	let tabLock;
 

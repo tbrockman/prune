@@ -1,9 +1,9 @@
-import TabBookmarker from '../../../src/tab/tab-bookmarker';
+import TabBookmarker from '../../../src/tab/bookmarker';
 import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('tab-bookmarker', () => {
+describe('bookmarker', () => {
 	let tabBookmarker;
 
 	beforeEach(() => {

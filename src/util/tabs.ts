@@ -16,5 +16,5 @@ const createTab = (overrides: Partial<chrome.tabs.Tab> = {}): chrome.tabs.Tab =>
 }
 
 export {
-    createTab
+    createTab,
 }

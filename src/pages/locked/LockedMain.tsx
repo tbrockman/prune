@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumbs, FormGroup, Grid, Link } from '@mui/material';
-import PausedDialog from '../components/PauseDialog';
-import { PruneHeader } from '../components/PruneHeader';
+import PausedDialog from '../../components/PauseDialog';
+import { PruneHeader } from '../../components/PruneHeader';
 
 export function LockedMain({ matchingFilters }) {
 	return (

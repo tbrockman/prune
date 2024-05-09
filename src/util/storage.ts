@@ -17,7 +17,7 @@ class PruneStorage extends Storage {
 		let result: any;
 
 		try {
-			result = await this.get(key);
+			result = await this.get<any>(key);
 		} catch (e) {
 			console.error('error getting key', key, e);
 		}
@@ -27,7 +27,7 @@ class PruneStorage extends Storage {
 	async getManyOrDefault(
 		defaults: Record<string, any> | string,
 		default_value: any = null,
-	) {
+	): Promise<Record<string, any>> {
 		let promises = [];
 		let result = {};
 

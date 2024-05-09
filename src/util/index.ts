@@ -1,10 +1,10 @@
 import { Features, config } from '../config';
 import { StorageKeys } from '~enums';
-import { syncStorage } from './storage';
+import { localStorage, syncStorage } from './storage';
 export { pollTabForStatus } from './query';
 export { initLogging } from './logging';
 
-class Options extends Map<StorageKeys, any> {
+class Options implements Record<StorageKeys, any> {
 	[StorageKeys.AUTO_DEDUPLICATE] = true;
 	[StorageKeys.AUTO_DEDUPLICATE_CLOSE] = true;
 	[StorageKeys.AUTO_PRUNE] = true;
@@ -16,22 +16,30 @@ class Options extends Map<StorageKeys, any> {
 	[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME] = '🌱 pruned';
 	[StorageKeys.TAB_LRU_ENABLED] = false;
 	[StorageKeys.TAB_LRU_SIZE] = 16;
-	[StorageKeys.TAB_LRU_DESTINATION] = 'group';
+	[StorageKeys.TAB_LRU_DESTINATION]: 'group' | 'close' = 'group';
 	[StorageKeys.SHOW_HINTS] = true;
 	[StorageKeys.PRODUCTIVITY_MODE_ENABLED] = false;
 	[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS] = config.productivity?.domains;
 	[StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS] = {};
+	[StorageKeys.USE_SYNC_STORAGE] = false;
+	[StorageKeys.PRODUCTIVITY_LAST_PRODUCTIVE_TAB] = 0;
+
+	getStorage() {
+		return this[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage;
+	}
 }
 
-const defaults = new Options();
-
 const getOptionsAsync = async (): Promise<Options> => {
-	console.debug('getting options async');
-	return (await syncStorage.getManyOrDefault(defaults)) as Options;
+	const options = new Options();
+	const raw = await syncStorage.getManyOrDefault(options);
+	for (const key in raw) {
+		options[key] = raw[key];
+	}
+	return options;
 };
 
 const setOptionAsync = async (key: keyof Options, value: any) => {
 	return await syncStorage.set(key as string, value);
 };
 
-export { defaults, getOptionsAsync, setOptionAsync, Options };
+export { getOptionsAsync, setOptionAsync, Options };

@@ -1,10 +1,10 @@
-import TabGrouper from '../../../src/tab/tab-grouper';
+import TabGrouper from '../../../src/tab/grouper';
 import sinon from '../../../node_modules/sinon/pkg/sinon-esm.js';
 import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('tab-grouper', () => {
+describe('grouper', () => {
 	let tabGrouper;
 
 	before(() => {

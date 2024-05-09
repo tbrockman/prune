@@ -1,6 +1,6 @@
-import TabGrouper from '~tab/tab-grouper';
-import TabPruner from '~tab/tab-pruner';
-import TabTracker from '~tab/tab-tracker';
+import TabGrouper from '~tab/grouper';
+import TabPruner from '~tab/pruner';
+import TabTracker from '~tab/tracker';
 import { type Tab } from '../types';
 import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
@@ -51,9 +51,22 @@ class AlarmHandler {
 	async execute() {
 		console.debug('alarm handler executing', this);
 		let openTabs = await chrome.tabs.query({});
-		let candidates: Tab[] = [];
+		console.debug({ openTabs });
+
 		await this.tracker.init(openTabs);
-		console.debug('open tabs', openTabs);
+
+		// remove closed tabs (with some tolerance to allow reusing sessions) from the tracker
+		const closed = await this.tracker.getClosedTabs(openTabs);
+		console.debug({ closed })
+		const threshold = Math.min(this.pruneThreshold, this.autoGroupThreshold, ONE_DAY_IN_MS)
+		console.debug({ threshold })
+		const [exceeding,] = this.tracker.findTabsExceedingThreshold(
+			closed,
+			threshold,
+		);
+		console.debug({ exceeding })
+		await this.tracker.removeTabs(exceeding)
+
 		const group = {
 			title: this.autoGroupName,
 			color: 'yellow',
@@ -61,20 +74,22 @@ class AlarmHandler {
 		};
 
 		if (this.autoPrune) {
-			console.debug('finding tabs exceeding threshold');
+			console.debug('finding tabs exceeding threshold to group', { openTabs, threshold: this.pruneThreshold });
 			let result = this.tracker.findTabsExceedingThreshold(
 				openTabs,
 				this.pruneThreshold,
 			);
-			candidates = result[0];
+			console.debug('received result', { result })
+			let candidates = result[0];
 			openTabs = result[1];
 			const filter = [-1];
 
 			console.debug(
-				'before filtering any grouped tabs',
-				candidates,
-				'unsupported features',
-				this.config.unsupportedFeatures,
+				'candidates and features before filtering any grouped tabs',
+				{
+					candidates,
+					unsupportedFeatures: this.config.unsupportedFeatures
+				},
 			);
 
 			if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
@@ -91,10 +106,10 @@ class AlarmHandler {
 			candidates = candidates.filter((tab) =>
 				filter.includes(tab.groupId ? tab.groupId : -1),
 			);
-			console.debug('should be pruning', candidates);
+			console.debug('should be pruning', { candidates });
 			await this.pruner.pruneTabs(candidates);
 		}
-		console.debug('remaining tabs', openTabs);
+		console.debug('open tabs not being pruned', { openTabs });
 
 		if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
 			const [toGroup] = this.tracker.findTabsExceedingThreshold(

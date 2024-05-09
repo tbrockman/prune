@@ -1,7 +1,7 @@
 {
   "name": "prune",
   "displayName": "prune",
-  "version": "3.4.7",
+  "version": "3.4.8",
   "description": "An extension to help you trim your garden of tabs.",
   "author": "theodore brockman",
   "license": "GPLv3",
@@ -14,7 +14,8 @@
     "postinstall": "pnpx playwright install",
     "dev": "plasmo dev",
     "clean": "rm -fr build",
-    "build": "npm-run-all build:chrome build:firefox build:edge build:safari build:opera",
+    "build": "npm-run-all build:safari build:windows",
+    "build:windows": "npm-run-all build:chrome build:firefox build:edge build:opera",
     "build:chrome": "plasmo build --target=chrome-mv3 --zip --hoist",
     "build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
     "build:edge": "plasmo build --target=edge-mv3 --zip --hoist",

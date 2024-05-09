@@ -1,11 +1,11 @@
 import AlarmHandler from '~handlers/alarm';
 import TabUpdatedHandler from '~handlers/tab-updated';
 import TabFocusedHandler from '~handlers/tab-focused';
-import TabBookmarker from '~tab/tab-bookmarker';
-import TabDeduplicator from '~tab/tab-deduplicator';
-import TabGrouper from '~tab/tab-grouper';
-import TabPruner from '~tab/tab-pruner';
-import TabTracker from '~tab/tab-tracker';
+import TabBookmarker from '~tab/bookmarker';
+import TabDeduplicator from '~tab/deduplicator';
+import TabGrouper from '~tab/grouper';
+import TabPruner from '~tab/pruner';
+import TabTracker from '~tab/tracker';
 
 import '@plasmohq/messaging/background';
 
@@ -36,7 +36,7 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 	}
 
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -56,9 +56,9 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 // Ran every minute
 chrome.alarms.create({ periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(async () => {
-	console.debug('alarm handler executing');
+	console.debug('alarm listener triggered');
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
 		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -82,8 +82,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	// TODO: handle when updatedInfo is tab being ungrouped
 	if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
 		const options = await getOptionsAsync();
-
-		const tracker = new TabTracker();
+		const tracker = new TabTracker({ storage: options.getStorage() });
 		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
 			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
@@ -112,7 +111,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('tab activated listener', activeInfo);
 
 	const options = await getOptionsAsync();
-	const tracker = new TabTracker();
+	const tracker = new TabTracker({ storage: options.getStorage() });
 	const handler = new TabFocusedHandler({
 		tracker,
 		options,
