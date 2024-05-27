@@ -31,7 +31,7 @@ jobs:
           edge-file: 'build/edge-mv3-prod.zip'
           edge-notes: "Publishing latest prune version (${{ inputs.version }}) to Edge Store."
           # opera-file: 'build/opera-mv3-prod.zip'
-          verbose: true
+          verbose: ${{ inputs.verbose }}
   # upload-safari:
   #   runs-on: macos-10.15
   #   timeout-minutes: 15
