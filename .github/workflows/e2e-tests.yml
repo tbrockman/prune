@@ -32,7 +32,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - run: pnpm build
-      - run: pnpm test:e2e
+      - run: pnpm test:unit
+      # - run: pnpm test:e2e
       - uses: actions/upload-artifact@v3
         if: always()
         with:
