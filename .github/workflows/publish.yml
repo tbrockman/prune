@@ -1,7 +1,16 @@
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+      inputs:
+        version:
+          description: 'Version to publish'
+          required: true
+        verbose:
+          description: 'Verbose mode'
+          required: false
+          default: 'false'
 
 jobs:
-  upload-chrome:
+  run-bpp:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
@@ -13,40 +22,16 @@ jobs:
           event: push
           name: prune
           path: build
-      - uses: PlasmoHQ/bpp@v3
+      - name: Browser Platform Publish
+        uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.SUBMIT_KEYS }}
           chrome-file: 'build/chrome-mv3-prod.zip'
-          verbose: true
-  upload-firefox:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: build.yml
-          workflow_conclusion: success
-          branch: master
-          event: push
-          name: prune
-          path: build
-      - uses: PlasmoHQ/bpp@v3
-        with:
-          keys: ${{ secrets.SUBMIT_KEYS }}
           firefox-file: 'build/firefox-mv3-prod.zip'
+          edge-file: 'build/edge-mv3-prod.zip'
+          opera-file: 'build/opera-mv3-prod.zip'
+          edge-notes: "Publishing latest prune version (${{ inputs.version }}) to Edge Store."
           verbose: true
-  # upload-edge:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: edge
-  #         path: prune/dist/edge-mv3-prod.zip
-  #     - uses: PlasmoHQ/bpp@v3
-  #       with:
-  #         keys: ${{ secrets.BPP_KEYS }}
-  #         edge-file: "prune/dist/edge-mv3-prod.zip"
-  #         verbose: true
   # upload-safari:
   #   runs-on: macos-10.15
   #   timeout-minutes: 15
