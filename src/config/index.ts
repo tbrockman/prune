@@ -93,9 +93,14 @@ const configs: { [key: string]: IPruneConfig } = {
 		},
 		unsupportedFeatures: new Set([Features.Sharing]),
 	},
-	// TODO: change when we have a page on app store
 	safari: {
 		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks, Features.SyncStorage]),
+		share: {
+			url: 'https://apps.apple.com/us/app/prune-your-tabs/id6503263467'
+		},
+		review: {
+			url: 'https://apps.apple.com/us/app/prune-your-tabs/id6503263467?action=write-review'
+		}
 	},
 	firefox: {
 		share: {

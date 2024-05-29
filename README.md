@@ -2,11 +2,14 @@
 
 A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you manage your garden of tabs.
 
-## Download
+## Available on
 
-[🌈 Chrome](https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh) - [🔶 Firefox](https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/) - [🌊 Edge](https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd) - [🎭 Opera](https://addons.opera.com/en/extensions/details/prune/)
+[🌈 Chrome](https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh) - [🔶 Firefox](https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/) - [🧭 Safari](https://apps.apple.com/us/app/prune-your-tabs/id6503263467) - [🌊 Edge](https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd) - [🎭 Opera](https://addons.opera.com/en/extensions/details/prune/)
 
 ## Features
+
+> [!IMPORTANT] 
+> Some features may not be available due to varying support of extension APIs across browsers
 
 - Prevents opening duplicate tabs, `prune` will focus the original for you if you already have it opened.
 - Removes old tabs, `prune` can remove any tabs which haven't been looked at for more than `X` days.
@@ -23,7 +26,15 @@ Check out the [code of conduct](CODE_OF_CONDUCT.md) and [contributing](CONTRIBUT
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+pnpm install
+# or
+npm install
+```
+
+Run the development server:
 
 ```bash
 pnpm dev
@@ -43,6 +54,8 @@ pnpm build
 npm run build
 ```
 
+### Safari
+
 For creating the Safari XCode project, run:
 
 ```bash
@@ -51,4 +64,8 @@ cd build && xcrun safari-web-extension-converter safari-mv3-prod
 
 ## Submit to the webstores
 
-Execute the `publish` workflow
+> [!WARNING]  
+> Opera and Safari extensions are not automatically published. You will need to manually submit your build to the respective webstore.
+
+Execute the [`publish`](.github/workflows/publish.yml) workflow
+

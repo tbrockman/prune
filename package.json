@@ -21,6 +21,7 @@
     "build:firefox": "plasmo build --target=firefox-mv3 --zip --hoist",
     "build:edge": "plasmo build --target=edge-mv3 --zip --hoist",
     "build:safari": "plasmo build --target=safari-mv3 --zip --hoist",
+    "convert:safari": "cd build && xcrun safari-web-extension-converter safari-mv3-prod",
     "build:opera": "plasmo build --target=opera-mv3 --zip --hoist",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "mocha tests/unit/**/* --require mocha-suppress-logs",
