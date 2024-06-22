@@ -13,11 +13,11 @@ import { Features } from '~config';
 import { AdvancedSettingsBlock } from '~components/AdvancedSettingsBlock';
 // import StorageAreaBlock from '~components/StorageAreaBlock';
 
-type OptionsHomePageProps = {
+type OptionsProps = {
 	useConfig?: () => useConfigType;
 };
 
-const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
+const OptionsSection = ({ useConfig = _useConfig }: OptionsProps) => {
 	const { config } = useConfig();
 
 	return (
@@ -44,13 +44,13 @@ export function PopupMain() {
 		<Grid width="100%">
 			<PruneHeader />
 			<Typography className="section-title">{optionsTitle}</Typography>
-			<FormGroup ref={ref} className="main-form-group options-form-group">
-				<OptionsHomePage />
+			<FormGroup ref={ref} className="form-group-section options-form-group">
+				<OptionsSection />
 			</FormGroup>
 			<Typography component="h1" className="section-title">
 				{aboutTitle}
 			</Typography>
-			<FormGroup className="main-form-group">
+			<FormGroup className="form-group-section">
 				<Typography marginTop={'8px'} marginBottom={'16px'} maxWidth={'64ch'}>
 					<Link href='https://github.com/tbrockman/prune' underline='hover' rel="noopener" target="_blank">prune</Link> {aboutTextStart}{' '}
 					<Link href="https://theo.lol/" rel="noopener" underline='hover' target="_blank">

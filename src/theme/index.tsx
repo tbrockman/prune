@@ -1,4 +1,4 @@
-import { createTheme as muiCreateTheme } from '@mui/material/styles'
+import { createTheme as muiCreateTheme, styled } from '@mui/material/styles'
 
 import './index.css'
 
@@ -187,6 +187,25 @@ export default function createTheme() {
 					},
 				},
 			},
+			MuiAccordion: {
+				styleOverrides: {
+					root: {
+						'&::before': {
+							display: 'none',
+						},
+					},
+				}
+			},
+			MuiAccordionSummary: {
+				styleOverrides: {
+					root: {
+						flexDirection: 'row-reverse',
+						'& .MuiAccordionSummary-content': {
+							marginLeft: '10px'
+						}
+					},
+				}
+			}
 		},
 	})
 }

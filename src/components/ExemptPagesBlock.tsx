@@ -48,7 +48,6 @@ export function ExemptPagesBlock() {
                 }}
                 multiple
                 freeSolo
-                fullWidth
                 options={[]} // TODO: pre-fill options with currently open pages
                 disableClearable
                 filterSelectedOptions

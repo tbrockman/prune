@@ -1,0 +1,16 @@
+.MuiAccordionSummary-root.advanced-settings-summary {
+    padding: 0 0 0 8px;
+}
+
+.MuiAccordionDetails-root.advanced-settings-details {
+    padding: 0;
+}
+
+.advanced-settings-details>.form-option {
+    margin-bottom: 8px;
+}
+
+.advanced-settings-details>.form-option>.MuiAutocomplete-root {
+    padding-left: 30px;
+    padding-right: 12px;
+}

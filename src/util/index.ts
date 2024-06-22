@@ -23,7 +23,7 @@ class Options implements Record<StorageKeys, any> {
 	[StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS] = {};
 	[StorageKeys.USE_SYNC_STORAGE] = false;
 	[StorageKeys.PRODUCTIVITY_LAST_PRODUCTIVE_TAB] = 0;
-	[StorageKeys.ENABLED_ADVANCED_SETTINGS] = false;
+	[StorageKeys.SHOW_ADVANCED_SETTINGS] = false;
 	[StorageKeys.SKIP_EXEMPT_PAGES] = false;
 	[StorageKeys.EXEMPT_PAGES] = [];
 

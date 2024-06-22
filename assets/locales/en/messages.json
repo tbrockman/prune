@@ -136,23 +136,23 @@
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
     },
     "advancedSettingsLabel": {
-        "message": "show advanced settings 🧑‍🔬",
-        "description": "A label to show/hide the advanced settings section in the options"
+        "message": "advanced settings 🧪",
+        "description": "A label to toggle the advanced settings section in the options"
     },
     "advancedSettingsHint": {
-        "message": "if you're feeling brave, you can enable some of the more experimental features of prune",
+        "message": "if you're feeling brave, you can check out some of the more experimental features of prune",
         "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
     },
     "exemptPagesLabel": {
-        "message": "don't prune certain websites 🛡️",
+        "message": "don't run prune for certain websites 🛡️",
         "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
     },
     "exemptPagesHint": {
-        "message": "if you don't want prune to deduplicate or close tabs on specific websites, you can add them here",
+        "message": "if you want prune to leave your tabs alone for specific websites, you can add them here",
         "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
     },
     "exemptPagesInputPlaceholder": {
-        "message": "skip pruning ↩",
+        "message": "skip pages ↩",
         "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
     },
     "productivityModeLabel": {
@@ -160,7 +160,7 @@
         "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature"
     },
     "productivityModeHint": {
-        "message": "helps keep your browsing productive by blocking you from opening time-wasting websites of your choosing",
+        "message": "helps keep your browsing productive by making it harder for you to open time-wasting websites (of your choosing)",
         "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
     }
 }

@@ -52,7 +52,6 @@ export default function ProductivityBlock() {
 				}}
 				multiple
 				freeSolo
-				fullWidth
 				options={config.productivity?.domains ?? []}
 				disableClearable
 				filterSelectedOptions

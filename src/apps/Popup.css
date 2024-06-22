@@ -3,7 +3,7 @@
 		margin: 1rem;
 	}
 
-	.MuiFormGroup-root.main-form-group {
+	.MuiFormGroup-root.form-group-section {
 		border: none;
 		box-shadow: none;
 		padding: 0;
@@ -29,7 +29,7 @@
 		padding-left: 1rem;
 	}
 
-	div.main-form-group>.form-option {
+	div.form-group-section>.form-option {
 		flex-wrap: nowrap;
 		max-width: unset;
 	}
@@ -51,7 +51,7 @@ body {
 	max-width: 100%;
 }
 
-.main-form-group {
+.form-group-section {
 	border: 2px solid;
 	box-shadow: -8px 8px 0 0px #000;
 	margin: 0 32px 32px;
@@ -59,12 +59,12 @@ body {
 	max-width: fit-content;
 }
 
-.main-form-group.options-form-group {
+.form-group-section.options-form-group {
 	max-width: 100%;
 	padding-left: 6px;
 }
 
-.main-form-group>.form-option {
+.form-group-section>.form-option {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;

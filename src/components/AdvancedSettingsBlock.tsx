@@ -1,38 +1,42 @@
-import { FormControlLabel } from "@mui/material";
-import { FormOption } from "./FormOption";
-import PersistedInput from "./PersistedInput";
-import LabelWithHint from "./LabelWithHint";
-import { StorageKeys } from "~enums";
-import useOptions from "~hooks/useOptions";
+import Accordion from '@mui/material/Accordion';
 import { ExemptPagesBlock } from "./ExemptPagesBlock";
 import ProductivityBlock from "./ProductivityBlock";
+import { AccordionDetails, AccordionSummary, Tooltip, Typography } from '@mui/material';
+
+import './AdvancedSettingsBlock.css';
+import { useStorage } from '@plasmohq/storage/hook';
+import { StorageKeys } from '~enums';
+import type React from 'react';
+import LabelWithHint from './LabelWithHint';
 
 export function AdvancedSettingsBlock() {
-    const { options } = useOptions();
+    const [showAdvancedSettings, setShowAdvancedSettings] = useStorage(
+        StorageKeys.SHOW_ADVANCED_SETTINGS,
+        false,
+    );
 
     const advancedSettingsLabel = chrome.i18n.getMessage('advancedSettingsLabel');
     const advancedSettingsHint = chrome.i18n.getMessage('advancedSettingsHint');
 
+    const handleAdvancedSettingsChange = (_: React.SyntheticEvent, isExpanded: boolean) => {
+        setShowAdvancedSettings(isExpanded);
+    }
+
     return (
         <>
-            <FormOption>
-                <FormControlLabel
-                    control={
-                        <PersistedInput
-                            component="checkbox"
-                            storageKey={StorageKeys.ENABLED_ADVANCED_SETTINGS}
-                        />
-                    }
-                    label={
-                        <LabelWithHint
-                            hint={advancedSettingsHint}
-                            label={advancedSettingsLabel}
-                        />
-                    }
-                />
-            </FormOption>
-            {options['show-advanced-settings'] && <ExemptPagesBlock />}
-            {options['show-advanced-settings'] && <ProductivityBlock />}
+            <Accordion expanded={showAdvancedSettings} onChange={handleAdvancedSettingsChange} disableGutters elevation={0} square>
+                <AccordionSummary className='advanced-settings-summary' expandIcon={<Typography>⚙️</Typography>}>
+                    <LabelWithHint label={
+                        <Typography>
+                            {advancedSettingsLabel}
+                        </Typography>
+                    } hint={advancedSettingsHint} />
+                </AccordionSummary>
+                <AccordionDetails className='advanced-settings-details'>
+                    <ExemptPagesBlock />
+                    <ProductivityBlock />
+                </AccordionDetails>
+            </Accordion >
         </>
 
     )

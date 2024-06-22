@@ -28,7 +28,7 @@ export default function LabelWithHint({
 		<Tooltip
 			placement="top"
 			arrow={true}
-			enterDelay={1500}
+			enterDelay={1000}
 			enterNextDelay={750}
 			{...tooltipProps}
 			title={options[StorageKeys.SHOW_HINTS] ? hint : ''}
