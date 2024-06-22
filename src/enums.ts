@@ -17,7 +17,7 @@ enum StorageKeys {
 	PRODUCTIVITY_SUSPEND_EXEMPTIONS = 'productivity-suspend-exemptions',
 	PRODUCTIVITY_LAST_PRODUCTIVE_TAB = 'productivity-last-productive-tab',
 	USE_SYNC_STORAGE = 'use-sync-storage',
-	SHOW_ADVANCED_SETTINGS = 'show-advanced-settings',
+	ENABLED_ADVANCED_SETTINGS = 'show-advanced-settings',
 	SKIP_EXEMPT_PAGES = 'skip-exempt-pages',
 	EXEMPT_PAGES = 'exempt-pages',
 }

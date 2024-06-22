@@ -12,6 +12,8 @@ import '@plasmohq/messaging/background';
 import { getOptionsAsync, initLogging } from '~util';
 import { StorageKeys } from '~enums';
 import { Features, config } from '~config';
+import { getMatchingFilters, urlToPartialHref } from '~util/filter';
+import { tabExemptionsApply } from '~tab/util';
 
 initLogging();
 
@@ -82,6 +84,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	// TODO: handle when updatedInfo is tab being ungrouped
 	if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
 		const options = await getOptionsAsync();
+
+		if (tabExemptionsApply(options, tab)) {
+			console.debug('exempt page', tab.url);
+			return;
+		}
+
 		const tracker = new TabTracker({ storage: options.getStorage() });
 		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(

@@ -1,5 +1,6 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import './KeyShortcut.css';
+import useOptions from "~hooks/useOptions";
 
 export type KeyShortcutProps = {
     modifiers: string[];
@@ -13,12 +14,12 @@ export function KeyShortcut({ modifiers, keys }: KeyShortcutProps) {
 
     concat.forEach((item, index) => {
         elements.push(
-            <Box key={`${item}_${index}`} className="keyboard-shortcut-key">{item}</Box>
+            <Box key={`${item}_${index}`} className="keyboard-shortcut-key"><Typography fontSize={'12px'}>{item}</Typography></Box>
         )
 
         if (index < concat.length - 1 && concat.length > 1) {
             elements.push(
-                <Box key={`plus_${index}`} className="keyboard-shortcut-plus">+</Box>
+                <Box key={`plus_${index}`} className="keyboard-shortcut-plus"><Typography>+</Typography></Box>
             )
         }
     })

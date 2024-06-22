@@ -18,6 +18,7 @@ interface IPruneConfig {
 	tip?: TipConfig;
 	share?: ShareConfig;
 	productivity?: ProductivityConfig;
+	exemptions?: string[];
 	review?: ReviewConfig;
 	unsupportedFeatures?: Set<Features>;
 }
@@ -48,6 +49,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		},
 		// DEPRECATED: dead config from attempting to allow prune to block sites
 		// maybe revisit when incremental permissions makes this a bit less scary for users
+		exemptions: ['bing'],
 		productivity: {
 			domains: [
 				'youtube',

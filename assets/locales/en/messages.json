@@ -72,7 +72,7 @@
         "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
     },
     "leastRecentlyUsedTabsSizeLabel": {
-        "message": "tabs are open",
+        "message": "tabs are open 📈",
         "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken"
     },
     "leastRecentlyUsedTabsHint": {
@@ -136,7 +136,7 @@
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
     },
     "advancedSettingsLabel": {
-        "message": "show advanced settings 🧪",
+        "message": "show advanced settings 🧑‍🔬",
         "description": "A label to show/hide the advanced settings section in the options"
     },
     "advancedSettingsHint": {
@@ -144,11 +144,23 @@
         "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
     },
     "exemptPagesLabel": {
-        "message": "skip pruning any of these pages 🙅",
+        "message": "don't prune certain websites 🛡️",
         "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
     },
     "exemptPagesHint": {
-        "message": "adds URLs of pages you don't want prune to do anything with",
+        "message": "if you don't want prune to deduplicate or close tabs on specific websites, you can add them here",
         "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
+    },
+    "exemptPagesInputPlaceholder": {
+        "message": "skip pruning ↩",
+        "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
+    },
+    "productivityModeLabel": {
+        "message": "turn on productivity mode 🚀",
+        "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature"
+    },
+    "productivityModeHint": {
+        "message": "helps keep your browsing productive by blocking you from opening time-wasting websites of your choosing",
+        "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
     }
 }

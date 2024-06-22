@@ -5,6 +5,7 @@ import { type Tab } from '../types';
 import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
 import type { Options } from '~util';
+import { tabExemptionsApply } from '~tab/util';
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -21,12 +22,10 @@ class AlarmHandler {
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	config: PruneConfig;
-	autoPrune: boolean;
+	options: Options;
 	pruneThreshold: number;
-	autoGroup: boolean;
 	autoGroupThreshold: number;
 	autoGroupName: string;
-	autoBookmark: boolean;
 
 	constructor({
 		tracker,
@@ -38,14 +37,12 @@ class AlarmHandler {
 		this.tracker = tracker;
 		this.grouper = grouper;
 		this.pruner = pruner;
-		this.autoPrune = options[StorageKeys.AUTO_PRUNE];
 		this.pruneThreshold = options[StorageKeys.AUTO_PRUNE_THRESHOLD] * ONE_DAY_IN_MS;
-		this.autoGroup = options[StorageKeys.AUTO_GROUP];
 		this.autoGroupThreshold =
 			options[StorageKeys.AUTO_GROUP_THRESHOLD] * ONE_DAY_IN_MS;
 		this.autoGroupName = options[StorageKeys.AUTO_GROUP_NAME];
-		this.autoBookmark = options[StorageKeys.AUTO_PRUNE_BOOKMARK];
 		this.config = config;
+		this.options = options;
 	}
 
 	async execute() {
@@ -67,13 +64,16 @@ class AlarmHandler {
 		console.debug({ exceeding })
 		await this.tracker.removeTabs(exceeding)
 
+		// remove any tabs which are exempt from pruning
+		openTabs = openTabs.filter((tab) => !tabExemptionsApply(this.options, tab));
+
 		const group = {
 			title: this.autoGroupName,
 			color: 'yellow',
 			collapsed: true,
 		};
 
-		if (this.autoPrune) {
+		if (this.options[StorageKeys.AUTO_PRUNE]) {
 			console.debug('finding tabs exceeding threshold to group', { openTabs, threshold: this.pruneThreshold });
 			let result = this.tracker.findTabsExceedingThreshold(
 				openTabs,
@@ -92,7 +92,7 @@ class AlarmHandler {
 				},
 			);
 
-			if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
+			if (this.options['auto-group'] && this.config.featureSupported(Features.TabGroups)) {
 				const groups = await chrome.tabGroups.query({
 					title: group['title'],
 				});
@@ -111,7 +111,7 @@ class AlarmHandler {
 		}
 		console.debug('open tabs not being pruned', { openTabs });
 
-		if (this.autoGroup && this.config.featureSupported(Features.TabGroups)) {
+		if (this.options['auto-group'] && this.config.featureSupported(Features.TabGroups)) {
 			const [toGroup] = this.tracker.findTabsExceedingThreshold(
 				openTabs,
 				this.autoGroupThreshold,

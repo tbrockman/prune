@@ -4,8 +4,8 @@ import PersistedInput from "./PersistedInput";
 import LabelWithHint from "./LabelWithHint";
 import { StorageKeys } from "~enums";
 import useOptions from "~hooks/useOptions";
-import ProductivitySettings from "./ProductivitySettings";
-import { ExemptPageSettings } from "./ExemptPageSettings";
+import { ExemptPagesBlock } from "./ExemptPagesBlock";
+import ProductivityBlock from "./ProductivityBlock";
 
 export function AdvancedSettingsBlock() {
     const { options } = useOptions();
@@ -20,7 +20,7 @@ export function AdvancedSettingsBlock() {
                     control={
                         <PersistedInput
                             component="checkbox"
-                            storageKey={StorageKeys.SHOW_ADVANCED_SETTINGS}
+                            storageKey={StorageKeys.ENABLED_ADVANCED_SETTINGS}
                         />
                     }
                     label={
@@ -31,8 +31,8 @@ export function AdvancedSettingsBlock() {
                     }
                 />
             </FormOption>
-            {options['show-advanced-settings'] && <ProductivitySettings />}
-            {options['show-advanced-settings'] && <ExemptPageSettings />}
+            {options['show-advanced-settings'] && <ExemptPagesBlock />}
+            {options['show-advanced-settings'] && <ProductivityBlock />}
         </>
 
     )

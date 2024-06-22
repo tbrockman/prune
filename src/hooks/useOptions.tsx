@@ -1,4 +1,3 @@
-import type { StorageKeys } from '~enums';
 import { setOptionAsync, Options } from '../util';
 import { useStore as _useStore } from './useStore';
 

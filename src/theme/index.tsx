@@ -140,6 +140,12 @@ export default function createTheme() {
 			},
 			MuiAutocomplete: {
 				styleOverrides: {
+					inputRoot: {
+						maxWidth: 'unset',
+						padding: 0,
+						marginLeft: '8px',
+						paddingBottom: '4px',
+					},
 					tag: {
 						marginRight: '4px',
 						marginBottom: '4px',

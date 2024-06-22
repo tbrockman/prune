@@ -78,7 +78,23 @@
         "id": "iam@theo.lol"
       }
     },
-    "default_locale": "en"
+    "default_locale": "en",
+    "commands": {
+      "toggle-deduplicate": {
+        "suggested_key": {
+          "default": "Alt+Shift+W",
+          "mac": "Command+Shift+W"
+        },
+        "description": "Toggle tab deduplication feature"
+      },
+      "toggle-productivity-mode": {
+        "suggested_key": {
+          "default": "Alt+Shift+D",
+          "mac": "Command+Shift+D"
+        },
+        "description": "Toggle productivity mode"
+      }
+    }
   },
   "repository": {
     "type": "git",
