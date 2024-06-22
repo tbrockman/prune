@@ -96,11 +96,11 @@
         "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
     },
     "optionsTitle": {
-        "message": "options 🪴",
+        "message": "options🪴",
         "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension"
     },
     "aboutTitle": {
-        "message": "about 📚",
+        "message": "about📚",
         "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
     },
     "aboutTextStart": {
@@ -134,5 +134,21 @@
     "useSyncStorageLabel": {
         "message": "sync tab activity across your devices 🔄",
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
+    },
+    "advancedSettingsLabel": {
+        "message": "show advanced settings 🧪",
+        "description": "A label to show/hide the advanced settings section in the options"
+    },
+    "advancedSettingsHint": {
+        "message": "if you're feeling brave, you can enable some of the more experimental features of prune",
+        "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
+    },
+    "exemptPagesLabel": {
+        "message": "skip pruning any of these pages 🙅",
+        "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
+    },
+    "exemptPagesHint": {
+        "message": "adds URLs of pages you don't want prune to do anything with",
+        "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
     }
 }

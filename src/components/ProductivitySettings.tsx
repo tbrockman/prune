@@ -5,16 +5,18 @@ import useConfig from '../hooks/useConfig';
 import ProductivityBlock from './ProductivityBlock';
 import { useStorage } from '@plasmohq/storage/hook';
 import { StorageKeys } from '~enums';
+import useOptions from '~hooks/useOptions';
 
 export default function ProductivitySettings() {
 	const { config } = useConfig();
+	const { options } = useOptions();
 	const [suspendedDomains, setSuspendedDomains] = useStorage(
 		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
 		config.productivity.domains,
 	);
 
 	return (
-		<Grid container className="productivity-settings" flexDirection={'column'}>
+		<>
 			<ProductivityBlock />
 			<Grid>
 				<Autocomplete
@@ -28,6 +30,7 @@ export default function ProductivitySettings() {
 					disableClearable
 					filterSelectedOptions
 					autoHighlight
+					disabled={!options['productivity-mode-enabled']}
 					getOptionLabel={(option) => option}
 					defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
 					renderTags={(value: string[], getTagProps) =>
@@ -42,21 +45,20 @@ export default function ProductivitySettings() {
 					renderInput={(params) => (
 						<>
 							<TextField
-								{...params}
 								variant="outlined"
 								placeholder="block unproductive websites ↩"
+								{...params}
 								inputProps={{
 									...params.inputProps,
 									style: {
 										minWidth: '27ch',
 									},
 								}}
-								autoFocus
 							/>
 						</>
 					)}
 				/>
 			</Grid>
-		</Grid>
+		</>
 	);
 }

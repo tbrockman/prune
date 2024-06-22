@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControlLabel } from '@mui/material';
+import { Box, FormControlLabel, Stack } from '@mui/material';
 import { FormOption } from '../components/FormOption';
 import PersistedInput from '../components/PersistedInput';
 import LabelWithHint from '../components/LabelWithHint';
@@ -7,6 +7,7 @@ import { StorageKeys } from '~enums';
 
 import './DeduplicateBlock.css'
 import useOptions from '~hooks/useOptions';
+import { KeyShortcut } from './KeyShortcut';
 
 export function DeduplicateBlock() {
 	const { options } = useOptions();
@@ -30,12 +31,16 @@ export function DeduplicateBlock() {
 				label={
 					<LabelWithHint
 						hint={dedupHint}
-						label={dedupLabel}
+						label={
+							<Stack direction="row" spacing={1}>
+								<Box>{dedupLabel}</Box>
+								<KeyShortcut modifiers={['alt', 'shift']} keys={['w']}></KeyShortcut>
+							</Stack>}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}
 			>
-			</FormControlLabel>
+			</FormControlLabel >
 			<FormControlLabel
 				className={`sub-checkbox ${dedupMergeEnabled && 'is-checked'}`}
 				disabled={!dedupEnabled}
@@ -52,6 +57,6 @@ export function DeduplicateBlock() {
 						tooltipProps={{ placement: 'top' }}
 					/>
 				} />
-		</FormOption>
+		</FormOption >
 	);
 }

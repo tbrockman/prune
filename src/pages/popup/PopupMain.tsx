@@ -10,6 +10,7 @@ import { TabStorageBlock } from '~components/TabStorageBlock';
 import _useConfig from '~hooks/useConfig';
 import type { useConfigType } from '~hooks/useConfig';
 import { Features } from '~config';
+import { AdvancedSettingsBlock } from '~components/AdvancedSettingsBlock';
 // import StorageAreaBlock from '~components/StorageAreaBlock';
 
 type OptionsHomePageProps = {
@@ -27,6 +28,7 @@ const OptionsHomePage = ({ useConfig = _useConfig }: OptionsHomePageProps) => {
 			<RemoveTabsBlock />
 			<LRUBlock />
 			{config.featureSupported(Features.Bookmarks) && <TabStorageBlock />}
+			<AdvancedSettingsBlock />
 		</>
 	);
 };
