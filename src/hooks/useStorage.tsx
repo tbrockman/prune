@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import type { KeyValues, Values } from "~types";
-import { getStorage } from "~util/storage";
-import { defaultSyncStorage, type SyncKey } from "~util/storage";
+import type { Values } from "~types";
+import { getStorage, type SyncStorage } from "~util/storage";
+import { defaultSyncStorage } from "~util/storage";
 
+// A perhaps incorrect and overly confusing way of ensuring we only 
+// try to retrieve keys that are actually in storage (and we've specified defaults for)
 
-export function useSyncStorage<T extends SyncKey[]>(keys: T): Partial<Record<SyncKey, Values>> {
+export function useSyncStorage<T extends (keyof SyncStorage)[]>(keys: T): Partial<Record<(keyof SyncStorage), Values>> {
     return useStorageWithDefaults(keys, defaultSyncStorage);
 }
 
@@ -16,18 +18,18 @@ export function useStorageWithDefaults<T extends Record<keyof T, Values>>(keys: 
     return useStorage(obj, storageArea);
 }
 
-export function useStorage<T extends Record<keyof T, Values>>(keysWithDefaults: Partial<T>, storageArea: chrome.storage.AreaName = 'sync'): Partial<T> {
+export function useStorage<T extends Record<string, Values>>(keysWithDefaults: Partial<T>, storageArea: chrome.storage.AreaName = 'sync'): Partial<T> {
     const [state, setState] = useState<Partial<T>>(keysWithDefaults);
 
-    const listener = (event: Record<keyof KeyValues, chrome.storage.StorageChange>, area: chrome.storage.AreaName) => {
+    const listener = (event: Record<string, chrome.storage.StorageChange>, area: chrome.storage.AreaName) => {
 
         if (area !== storageArea) return;
 
-        const intersection = Object.keys(event).filter(key => keysWithDefaults.hasOwnProperty(key));
+        const intersection = Object.entries(event).filter(([key,]) => keysWithDefaults.hasOwnProperty(key));
 
         if (intersection.length == 0) return;
 
-        const newStorage: Partial<T> = Object.entries(event).reduce((acc, [key, { newValue }]) => {
+        const newStorage: Partial<T> = intersection.reduce((acc, [key, { newValue }]) => {
             if (!keysWithDefaults.hasOwnProperty(key)) return acc;
 
             return { ...acc, [key]: JSON.parse(newValue) }
