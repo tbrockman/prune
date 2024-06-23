@@ -12,20 +12,14 @@ import '@plasmohq/messaging/background';
 import { initLogging } from '~util';
 import { StorageKeys } from '~enums';
 import { Features, config } from '~config';
-import { getMatchingFilters, urlToPartialHref } from '~util/filter';
 import { tabExemptionsApply } from '~tab/util';
-import { ChromeReaderModeRounded, PlayCircleFilledWhiteTwoTone } from '@mui/icons-material';
 import type { NamedCommands } from '~types';
-import { SyncKeyValues, defaultSyncStorage, localStorage, syncStorage, type SyncStorage } from '~util/storage';
-import { getStorage, getSyncStorage, setSyncStorage } from '~hooks/useStorage';
+import { defaultSyncStorage, localStorage, syncStorage, type SyncKey, type SyncStorage } from '~util/storage';
+import { getStorage, getSyncStorage, setSyncStorage } from "~util/storage";
 
 initLogging();
 
 const lock = new Set<number>();
-
-const getStorageInterface = (area: string) => {
-
-}
 
 // Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(async (details: any) => {
@@ -67,7 +61,7 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 chrome.alarms.create({ periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener(async () => {
 	console.debug('alarm listener triggered');
-	const options = await getStorage("sync", defaultSyncStorage);
+	const options = await getSyncStorage() as SyncStorage;
 	const tracker = new TabTracker({ storage: options[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
@@ -135,8 +129,9 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	await handler.execute(activeInfo);
 });
 
-async function toggleOption(key: keyof SyncStorage) {
-	const response = await getSyncStorage([key])
+async function toggleOption(key: SyncKey) {
+	const response = await getSyncStorage([key]);
+	// @ts-ignore
 	response[key] = !response[key]
 	await setSyncStorage(response);
 }

@@ -14,7 +14,8 @@ import {
 import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg"
 import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg"
 
-import { setSyncStorage, useStorageWithDefaults, useSyncStorage } from '~hooks/useStorage';
+import { useStorageWithDefaults, useSyncStorage } from '~hooks/useStorage';
+import { setSyncStorage } from "~util/storage";
 import { SyncKeyValues, defaultSyncStorage, type SyncKey } from '~util/storage';
 
 type PersistedInputProps = {
@@ -31,14 +32,11 @@ export default function PersistedInput({
 }: PersistedInputProps) {
 	const data = useSyncStorage([storageKey]);
 
-	console.log(data, storageKey, defaultSyncStorage)
-
 	const onChangeProxy = async (event: any, ...rest: any) => {
 		if (props.onChange) {
 			props.onChange(event, rest);
 		}
 
-		console.log('onchangeproxy', event.target.checked, event.target.value, storageKey)
 		const value =
 			component === 'checkbox'
 				? event.target.checked

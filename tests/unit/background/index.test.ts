@@ -8,7 +8,7 @@ import * as alarmModule from '../../../src/handlers/alarm'
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon'
 import { StorageKeys } from '~enums'
-import { Options } from '~util'
+import { SyncKeyValues as Options } from '~util/storage'
 
 declare var global: any;
 
@@ -71,7 +71,8 @@ describe('background script', () => {
             '~tab/tracker': TabTracker,
             '~tab/deduplicator': TabDeduplicator,
             '~tab/bookmarker': TabBookmarker,
-            '~util': { getOptionsAsync: getOptionsAsyncStub, initLogging: initLoggingStub }
+            '~util/storage': { SyncKeyValues: Options, getSyncStorage: getOptionsAsyncStub },
+            '~util': { initLogging: initLoggingStub }
         })
 
         let alarmListener = chrome.alarms.onAlarm.addListener.getCall(0).args[0]

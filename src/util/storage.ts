@@ -1,7 +1,6 @@
 import { Storage } from '@plasmohq/storage';
 import { Features, config } from '~config';
-import { getStorage } from '~hooks/useStorage';
-import type { Values } from '~types';
+import type { KeyValues, Values } from '~types';
 
 class PruneStorage extends Storage {
 	async setMany(kvs: Record<string, any>) {
@@ -101,4 +100,48 @@ export async function getOptionsAsync() {
 	return await getStorage(area, defaultSyncStorage);
 }
 
-export { defaultSyncStorage, PruneStorage, syncStorage, localStorage };
+export { defaultSyncStorage, PruneStorage, syncStorage, localStorage }; function parseStorageResponse(response: Record<string, Values>): Record<string, Values> {
+	return Object.entries(response).reduce((acc, [key, value]) => {
+
+		if (typeof value !== 'string') {
+			return { ...acc, [key]: value };
+		}
+		else {
+			try {
+				return { ...acc, [key]: JSON.parse(value) };
+			} catch (e) {
+				return { ...acc, [key]: value };
+			}
+		}
+	}, {});
+}
+
+export async function setSyncStorage<T extends Partial<Record<SyncKey, Values>>>(data: T): Promise<void> {
+	return await setStorage('sync', data);
+}
+
+export async function getSyncStorage<T extends SyncKey[]>(keys?: T): Promise<{
+	[K in T[number]]: SyncStorage[K];
+} | SyncStorage> {
+	if (!keys) {
+		return await getStorage('sync', defaultSyncStorage);
+	}
+
+	return await getStorage('sync', keys.reduce((acc, key) => {
+		return { ...acc, [key]: defaultSyncStorage[key] };
+	}, {} as {
+		[K in T[number]]: SyncStorage[K];
+	}));
+}
+
+export async function getStorage<T extends Record<string, Values>>(storageArea: chrome.storage.AreaName, keysWithDefaults: T): Promise<T> {
+	return parseStorageResponse(await chrome.storage[storageArea].get(keysWithDefaults)) as T;
+}
+
+export async function setStorage<T extends Record<string, Values>>(storageArea: chrome.storage.AreaName, data: T): Promise<void> {
+	const serialized = Object.entries(data).reduce((acc, [key, value]) => {
+		return { ...acc, [key]: JSON.stringify(value) };
+	}, {} as KeyValues);
+	return await chrome.storage[storageArea].set(serialized);
+}
+

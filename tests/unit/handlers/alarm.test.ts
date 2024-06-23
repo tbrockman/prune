@@ -10,7 +10,7 @@ import { createTab } from '~util/tabs';
 
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon';
-import { Options } from '~util';
+import { SyncKeyValues as Options } from '~util/storage';
 import { StorageKeys } from '~enums';
 
 const chrome = require('sinon-chrome/extensions');
@@ -33,11 +33,13 @@ describe('alarm handler', () => {
 
 	beforeEach(() => {
 		chrome.tabs.group = sinon.stub();
+		chrome.tabs.query = sinon.stub();
 		chrome.tabGroups = {
 			query: sinon.stub(),
 			update: sinon.stub(),
 			move: sinon.stub(),
 		};
+		chrome.tabs.query.resolves([]);
 	})
 
 	const createAlarmHandler = (options) => {

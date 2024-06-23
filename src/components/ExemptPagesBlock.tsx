@@ -3,7 +3,8 @@ import { FormOption } from "./FormOption";
 import PersistedInput from "./PersistedInput";
 import { StorageKeys } from "~enums";
 import LabelWithHint from "./LabelWithHint";
-import { setSyncStorage, useSyncStorage } from "~hooks/useStorage";
+import { useSyncStorage } from "~hooks/useStorage";
+import { setSyncStorage } from "~util/storage";
 
 export function ExemptPagesBlock() {
 

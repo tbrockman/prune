@@ -1,7 +1,6 @@
 import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';
 import TabTracker from '~tab/tracker';
-import { type Tab } from '../types';
 import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
 import { tabExemptionsApply } from '~tab/util';

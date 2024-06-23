@@ -34,7 +34,7 @@ export function AdvancedSettingsBlock() {
                 </AccordionSummary>
                 <AccordionDetails className='advanced-settings-details'>
                     <ExemptPagesBlock />
-                    <ProductivityBlock />
+                    {/* TODO: <ProductivityBlock /> */}
                 </AccordionDetails>
             </Accordion >
         </>
