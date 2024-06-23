@@ -1,13 +1,16 @@
 import React from 'react'
 import { FormControlLabel } from '@mui/material'
 import { FormOption } from './FormOption'
-import _useOptions from '../hooks/useOptions'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
 import { StorageKeys } from '~enums'
+import { useStorageWithDefaults } from '~hooks/useStorage'
+import { SyncKeyValues, defaultSyncStorage } from '~util/storage'
 
-export function GroupTabsBlock({ useOptions = _useOptions }) {
-	const { options } = useOptions()
+export function GroupTabsBlock() {
+	const storage = useStorageWithDefaults<SyncKeyValues>([
+		StorageKeys.AUTO_GROUP,
+	], defaultSyncStorage)
 
 	const hideLabel = chrome.i18n.getMessage('hideTabsLabel')
 	const hideHint = chrome.i18n.getMessage('hideTabsHint')
@@ -44,8 +47,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 							},
 
 						}}
-						disabled={!options[StorageKeys.AUTO_GROUP]}
-						value={options[StorageKeys.AUTO_GROUP_THRESHOLD]}
+						disabled={!storage[StorageKeys.AUTO_GROUP]}
 					/>
 				}
 				label={<LabelWithHint hint={groupNameHint} label={groupNameLabel} />}
@@ -60,8 +62,7 @@ export function GroupTabsBlock({ useOptions = _useOptions }) {
 						size="small"
 						variant="filled"
 						color="secondary"
-						disabled={!options[StorageKeys.AUTO_GROUP]}
-						value={options[StorageKeys.AUTO_GROUP_NAME]}
+						disabled={!storage[StorageKeys.AUTO_GROUP]}
 					/>
 				}
 				label=""

@@ -1,28 +1,21 @@
 import React from 'react';
 import { Tooltip } from '@mui/material';
-import _useOptions from '../hooks/useOptions';
-import { Options } from '../util';
 import { StorageKeys } from '~enums';
+import { useSyncStorage } from '~hooks/useStorage';
 
-type useOptionsReturn = {
-	options: Options;
-	setOptionAsync: Function;
-};
 
 type LabelWithHintProps = {
 	label: string | JSX.Element;
 	hint: string;
-	tooltipProps?: any;
-	useOptions?: () => useOptionsReturn;
+	tooltipProps?: any
 };
 
 export default function LabelWithHint({
 	label,
 	hint,
-	tooltipProps,
-	useOptions = _useOptions,
+	tooltipProps
 }: LabelWithHintProps) {
-	const { options } = useOptions();
+	const { [StorageKeys.SHOW_HINTS]: showHints } = useSyncStorage([StorageKeys.SHOW_HINTS]);
 
 	return (
 		<Tooltip
@@ -31,7 +24,7 @@ export default function LabelWithHint({
 			enterDelay={1000}
 			enterNextDelay={750}
 			{...tooltipProps}
-			title={options[StorageKeys.SHOW_HINTS] ? hint : ''}
+			title={showHints ? hint : ''}
 		>
 			<div>{label}</div>
 		</Tooltip>

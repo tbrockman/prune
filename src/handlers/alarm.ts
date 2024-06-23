@@ -4,8 +4,8 @@ import TabTracker from '~tab/tracker';
 import { type Tab } from '../types';
 import { Features, type PruneConfig } from '~config';
 import { StorageKeys } from '~enums';
-import type { Options } from '~util';
 import { tabExemptionsApply } from '~tab/util';
+import type { SyncKeyValues } from '~util/storage';
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -13,7 +13,7 @@ type AlarmHandlerArgs = {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
-	options: Options;
+	options: SyncKeyValues;
 	config: PruneConfig;
 };
 
@@ -22,7 +22,7 @@ class AlarmHandler {
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	config: PruneConfig;
-	options: Options;
+	options: SyncKeyValues;
 	pruneThreshold: number;
 	autoGroupThreshold: number;
 	autoGroupName: string;

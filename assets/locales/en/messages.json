@@ -144,7 +144,7 @@
         "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
     },
     "exemptPagesLabel": {
-        "message": "don't run prune for certain websites 🛡️",
+        "message": "don't run prune on certain websites 🛡️",
         "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
     },
     "exemptPagesHint": {
@@ -152,7 +152,7 @@
         "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
     },
     "exemptPagesInputPlaceholder": {
-        "message": "skip pages ↩",
+        "message": "keep pages safe ↩",
         "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
     },
     "productivityModeLabel": {

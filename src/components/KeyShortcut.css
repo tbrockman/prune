@@ -4,6 +4,7 @@
     border-radius: 4px;
     align-items: center;
     display: flex;
+    text-transform: lowercase;
 }
 
 .keyboard-shortcut-plus {}

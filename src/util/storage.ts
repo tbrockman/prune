@@ -1,4 +1,7 @@
 import { Storage } from '@plasmohq/storage';
+import { Features, config } from '~config';
+import { getStorage } from '~hooks/useStorage';
+import type { Values } from '~types';
 
 class PruneStorage extends Storage {
 	async setMany(kvs: Record<string, any>) {
@@ -63,4 +66,39 @@ const localStorage = new PruneStorage({
 	area: 'local',
 });
 
-export { PruneStorage, syncStorage, localStorage };
+export type SyncKey = 'auto-deduplicate' | 'auto-deduplicate-close' | 'auto-prune' | 'prune-threshold' | 'auto-group' | 'auto-group-threshold' | 'auto-group-name' | 'auto-prune-bookmark' | 'auto-prune-bookmark-name' | 'tab-lru-enabled' | 'tab-lru-size' | 'tab-lru-destination' | 'show-hints' | 'productivity-mode-enabled' | 'productivity-suspend-domains' | 'productivity-suspend-exemptions' | 'use-sync-storage' | 'productivity-last-productive-tab' | 'show-advanced-settings' | 'skip-exempt-pages' | 'exempt-pages';
+export type SyncStorage = {
+	[K in SyncKey]: SyncKeyValues[K];
+}
+export class SyncKeyValues implements Record<SyncKey, Values> {
+	'auto-deduplicate' = true;
+	'auto-deduplicate-close' = true;
+	'auto-prune' = true;
+	'prune-threshold' = config.featureSupported(Features.TabGroups) ? 7 : 4;
+	'auto-group' = true;
+	'auto-group-threshold' = 2;
+	'auto-group-name' = '🕒 old tabs';
+	'auto-prune-bookmark' = true;
+	'auto-prune-bookmark-name' = '🌱 pruned';
+	'tab-lru-enabled' = false;
+	'tab-lru-size' = 16;
+	'tab-lru-destination': 'group' | 'close' = 'group';
+	'show-hints' = true;
+	'productivity-mode-enabled' = false;
+	'productivity-suspend-domains' = config.productivity?.domains;
+	'productivity-suspend-exemptions' = {};
+	'use-sync-storage' = false;
+	'productivity-last-productive-tab' = 0;
+	'show-advanced-settings' = false;
+	'skip-exempt-pages' = false;
+	'exempt-pages' = config.exemptions || [];
+}
+
+const defaultSyncStorage = new SyncKeyValues() as SyncStorage;
+
+export async function getOptionsAsync() {
+	const area = defaultSyncStorage['use-sync-storage'] ? 'sync' : 'local';
+	return await getStorage(area, defaultSyncStorage);
+}
+
+export { defaultSyncStorage, PruneStorage, syncStorage, localStorage };

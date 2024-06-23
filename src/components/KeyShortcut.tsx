@@ -1,23 +1,24 @@
 import { Box, Stack, Typography } from "@mui/material";
 import './KeyShortcut.css';
-import useOptions from "~hooks/useOptions";
+import { useStore } from "~hooks/useStore";
+import type { NamedCommands } from "~types";
 
 export type KeyShortcutProps = {
-    modifiers: string[];
-    keys: string[];
+    commandName: NamedCommands;
 }
 
-export function KeyShortcut({ modifiers, keys }: KeyShortcutProps) {
+export function KeyShortcut({ commandName }: KeyShortcutProps) {
+    const command = useStore((state) => state.commands[commandName]);
 
-    const concat = modifiers.concat(keys);
     let elements = [];
+    let keys = command?.shortcut?.split('+') || [];
 
-    concat.forEach((item, index) => {
+    keys.forEach((item, index) => {
         elements.push(
             <Box key={`${item}_${index}`} className="keyboard-shortcut-key"><Typography fontSize={'12px'}>{item}</Typography></Box>
         )
 
-        if (index < concat.length - 1 && concat.length > 1) {
+        if (index < keys.length - 1 && keys.length > 1) {
             elements.push(
                 <Box key={`plus_${index}`} className="keyboard-shortcut-plus"><Typography>+</Typography></Box>
             )

@@ -5,18 +5,19 @@ import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
 import { StorageKeys } from '~enums';
 import useConfig from '~hooks/useConfig';
-import useOptions from '~hooks/useOptions';
-import { useStorage } from '@plasmohq/storage/hook';
 import { KeyShortcut } from './KeyShortcut';
+import { useSyncStorage } from '~hooks/useStorage';
 
 export default function ProductivityBlock() {
 
 	const { config } = useConfig();
-	const { options } = useOptions();
-	const [suspendedDomains, setSuspendedDomains] = useStorage(
+	const {
+		[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
+		[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+	} = useSyncStorage([
 		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
-		config.productivity.domains,
-	);
+		StorageKeys.PRODUCTIVITY_MODE_ENABLED
+	]);
 	const productivityModeLabel = chrome.i18n.getMessage('productivityModeLabel');
 	const productivityModeHint = chrome.i18n.getMessage('productivityModeHint');
 
@@ -35,20 +36,20 @@ export default function ProductivityBlock() {
 						label={
 							<Stack direction="row" spacing={1}>
 								<Box>{productivityModeLabel}</Box>
-								<KeyShortcut modifiers={['alt', 'shift']} keys={['d']}></KeyShortcut>
+								<KeyShortcut commandName='toggle-productivity-mode' />
 							</Stack>}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}
 			/>
 			<Autocomplete
-				value={suspendedDomains}
+				value={suspendedDomains as string[]}
 				onChange={(_, newValue, reason) => {
 
 					if (reason === 'blur') {
 						return;
 					}
-					setSuspendedDomains(newValue);
+					chrome.storage.sync.set({ [StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
 				}}
 				multiple
 				freeSolo
@@ -56,7 +57,7 @@ export default function ProductivityBlock() {
 				disableClearable
 				filterSelectedOptions
 				autoHighlight
-				disabled={!options['productivity-mode-enabled']}
+				disabled={!productivityModeEnabled}
 				getOptionLabel={(option) => option}
 				defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
 				renderTags={(value: string[], getTagProps) =>

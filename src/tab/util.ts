@@ -1,7 +1,7 @@
-import type { Options } from "~util";
 import { getMatchingFilters, urlToPartialHref } from "~util/filter";
+import type { SyncKeyValues } from "~util/storage";
 
-export function tabExemptionsApply(options: Options, tab: chrome.tabs.Tab) {
+export function tabExemptionsApply(options: SyncKeyValues, tab: chrome.tabs.Tab) {
     let matches = []
 
     if (options['skip-exempt-pages']) {

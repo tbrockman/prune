@@ -14,12 +14,12 @@ import {
 import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg"
 import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg"
 
-import useOptions from '../hooks/useOptions';
-import { Options } from '../util/';
+import { setSyncStorage, useStorageWithDefaults, useSyncStorage } from '~hooks/useStorage';
+import { SyncKeyValues, defaultSyncStorage, type SyncKey } from '~util/storage';
 
 type PersistedInputProps = {
 	component: 'checkbox' | 'select' | 'textfield' | 'switch';
-	storageKey: keyof Options;
+	storageKey: SyncKey;
 	children?: React.ReactNode;
 } & (CheckboxProps | SelectProps | TextFieldProps | SwitchProps);
 
@@ -29,17 +29,21 @@ export default function PersistedInput({
 	children,
 	...props
 }: PersistedInputProps) {
-	const { options, setOptionAsync } = useOptions();
+	const data = useSyncStorage([storageKey]);
+
+	console.log(data, storageKey, defaultSyncStorage)
 
 	const onChangeProxy = async (event: any, ...rest: any) => {
 		if (props.onChange) {
 			props.onChange(event, rest);
 		}
+
+		console.log('onchangeproxy', event.target.checked, event.target.value, storageKey)
 		const value =
 			component === 'checkbox'
 				? event.target.checked
 				: event.target.value;
-		await setOptionAsync(storageKey, value);
+		await setSyncStorage({ [storageKey]: value })
 	};
 
 	let without = Object.assign({}, props) as any;
@@ -53,7 +57,7 @@ export default function PersistedInput({
 					onChange={onChangeProxy}
 					icon={<SvgIcon><CheckBoxOutlineBlankSharpIcon /></SvgIcon>}
 					checkedIcon={<SvgIcon><CheckBoxSharpIcon /></SvgIcon>}
-					checked={options[storageKey] as boolean}
+					checked={data[storageKey]}
 				>
 					{children}
 				</Checkbox>
@@ -66,7 +70,7 @@ export default function PersistedInput({
 				<TextField
 					{...without}
 					onChange={onChangeProxy}
-					value={options[storageKey]}
+					value={data[storageKey]}
 				>
 					{children}
 				</TextField>
@@ -79,7 +83,7 @@ export default function PersistedInput({
 				<Select
 					{...without}
 					onChange={onChangeProxy}
-					value={options[storageKey]}
+					value={data[storageKey]}
 				>
 					{children}
 				</Select>
@@ -90,7 +94,7 @@ export default function PersistedInput({
 				<Switch
 					{...without}
 					onChange={onChangeProxy}
-					value={options[storageKey]}
+					value={data[storageKey]}
 				/>
 			);
 		}
