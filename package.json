@@ -37,7 +37,7 @@
     "@plasmohq/messaging": "^0.5.0",
     "@plasmohq/storage": "^1.9.0",
     "plasmo": "0.88.0",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-dom": "18.2.0",
     "zustand": "^4.5.2"
   },
@@ -48,7 +48,7 @@
     "@types/chrome": "0.0.268",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.8.9",
-    "@types/react": "18.2.31",
+    "@types/react": "18.3.3",
     "@types/react-dom": "18.2.14",
     "@types/sinon": "^17.0.3",
     "chai": "^5.1.1",
