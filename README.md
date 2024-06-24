@@ -4,7 +4,7 @@ A small [Plasmo](https://docs.plasmo.com/)-based brower extension to help you ma
 
 ## Available on
 
-[🌈 Chrome](https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh) - [🔶 Firefox](https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/) - [🧭 Safari](https://apps.apple.com/us/app/prune-your-tabs/id6503263467) - [🌊 Edge](https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd) - [🎭 Opera](https://addons.opera.com/en/extensions/details/prune/)
+[🌈 Chrome](https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh) - [🦊 Firefox](https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/) - [🧭 Safari](https://apps.apple.com/us/app/prune-your-tabs/id6503263467) - [🌊 Edge](https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd) - [🎭 Opera](https://addons.opera.com/en/extensions/details/prune/)
 
 ## Features
 
