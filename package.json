@@ -62,7 +62,7 @@
     "sinon-chrome": "^3.0.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.7.0",
+    "tsx": "^4.15.7",
     "typescript": "5.0.4"
   },
   "manifest": {
