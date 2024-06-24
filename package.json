@@ -39,7 +39,7 @@
     "plasmo": "0.88.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zustand": "^4.4.4"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "4.0.1",
