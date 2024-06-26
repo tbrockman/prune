@@ -47,9 +47,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		review: {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
 		},
-		// DEPRECATED: dead config from attempting to allow prune to block sites
-		// maybe revisit when incremental permissions makes this a bit less scary for users
-		exemptions: ['bing'],
+		exemptions: ['bing', 'docs.google'],
 		productivity: {
 			domains: [
 				'youtube',

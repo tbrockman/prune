@@ -4,22 +4,24 @@ import ProductivityBlock from "./ProductivityBlock";
 import { AccordionDetails, AccordionSummary, Tooltip, Typography } from '@mui/material';
 
 import './AdvancedSettingsBlock.css';
-import { useStorage } from '@plasmohq/storage/hook';
 import { StorageKeys } from '~enums';
 import type React from 'react';
 import LabelWithHint from './LabelWithHint';
+import { useSyncStorage } from '~hooks/useStorage';
+import { setSyncStorage } from '~util/storage';
 
 export function AdvancedSettingsBlock() {
-    const [showAdvancedSettings, setShowAdvancedSettings] = useStorage(
+    const {
+        [StorageKeys.SHOW_ADVANCED_SETTINGS]: showAdvancedSettings,
+    } = useSyncStorage([
         StorageKeys.SHOW_ADVANCED_SETTINGS,
-        false,
-    );
+    ]);
 
     const advancedSettingsLabel = chrome.i18n.getMessage('advancedSettingsLabel');
     const advancedSettingsHint = chrome.i18n.getMessage('advancedSettingsHint');
 
     const handleAdvancedSettingsChange = (_: React.SyntheticEvent, isExpanded: boolean) => {
-        setShowAdvancedSettings(isExpanded);
+        setSyncStorage({ [StorageKeys.SHOW_ADVANCED_SETTINGS]: isExpanded })
     }
 
     return (
