@@ -41,8 +41,7 @@ const configs: { [key: string]: IPruneConfig } = {
 			backend: 'http://127.0.0.1:8787',
 		},
 		share: {
-			// TODO: Create a proxy that detects your browser and redirects you to the appropriate extension store?
-			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
+			url: 'https://download.prune.lol',
 		},
 		review: {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
@@ -84,10 +83,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		},
 	},
 	edge: {
-		// Even though sharing functionality doesn't work in Edge
-		share: {
-			url: 'https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd'
-		},
+		// Note: sharing functionality doesn't seem to work in Edge extensions
 		review: {
 			url: 'https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd'
 		},
@@ -95,26 +91,17 @@ const configs: { [key: string]: IPruneConfig } = {
 	},
 	safari: {
 		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks, Features.SyncStorage]),
-		share: {
-			url: 'https://apps.apple.com/us/app/prune-your-tabs/id6503263467'
-		},
 		review: {
 			url: 'https://apps.apple.com/us/app/prune-your-tabs/id6503263467?action=write-review'
 		}
 	},
 	firefox: {
-		share: {
-			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
-		},
 		review: {
 			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
 		},
 		unsupportedFeatures: new Set([Features.TabGroups]),
 	},
 	opera: {
-		share: {
-			url: 'https://addons.opera.com/en/extensions/details/prune/',
-		},
 		review: {
 			url: 'https://addons.opera.com/en/extensions/details/prune/'
 		},
