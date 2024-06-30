@@ -16,7 +16,7 @@ export default function createTheme() {
 			},
 		},
 		typography: {
-			fontFamily: 'Emoji, Consolas, Adjusted Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif',
+			fontFamily: 'Emoji, Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif',
 			button: {
 				fontSize: '1rem',
 			},
