@@ -57,6 +57,7 @@ body {
 	margin: 0 32px 32px;
 	padding: 16px;
 	max-width: fit-content;
+	overflow-x: auto;
 }
 
 .form-group-section.options-form-group {
@@ -67,7 +68,7 @@ body {
 .form-group-section>.form-option {
 	display: flex;
 	align-items: center;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	max-width: 100%;
 }
 

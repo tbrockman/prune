@@ -111,7 +111,7 @@ export default function createTheme() {
 			MuiTooltip: {
 				styleOverrides: {
 					tooltip: {
-						fontSize: '16px',
+						fontSize: '1rem',
 						padding: '8px',
 					},
 				},
@@ -128,7 +128,7 @@ export default function createTheme() {
 							right: '-4px',
 							backgroundColor: 'white',
 						},
-						fontSize: '16px',
+						fontSize: '1rem',
 					},
 					deleteIcon: {
 						color: '#dc2e2e',
