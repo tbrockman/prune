@@ -1,4 +1,4 @@
-import { createTheme as muiCreateTheme, styled } from '@mui/material/styles'
+import { createTheme as muiCreateTheme } from '@mui/material/styles'
 
 import './index.css'
 
@@ -16,7 +16,7 @@ export default function createTheme() {
 			},
 		},
 		typography: {
-			fontFamily: 'Emoji, Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif',
+			fontFamily: 'Emoji, Consolas, Adjusted Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif',
 			button: {
 				fontSize: '1rem',
 			},

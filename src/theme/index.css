@@ -6,4 +6,11 @@
     font-family: 'Emoji';
     src: local('Apple Color Emoji');
     unicode-range: U+2600-2714;
+    size-adjust: 120%;
+}
+
+@font-face {
+    font-family: 'Adjusted Menlo';
+    src: local("Menlo-Regular");
+    size-adjust: 87.5%;
 }
