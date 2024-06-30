@@ -52,8 +52,8 @@ importers:
         specifier: ^1.44.1
         version: 1.45.0
       '@types/chai':
-        specifier: ^4.3.9
-        version: 4.3.9
+        specifier: ^4.3.16
+        version: 4.3.16
       '@types/chrome':
         specifier: 0.0.268
         version: 0.0.268
@@ -1743,8 +1743,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@types/chai@4.3.9':
-    resolution: {integrity: sha512-69TtiDzu0bcmKQv3yg1Zx409/Kd7r0b5F1PfpYJfSHzLGtB53547V4u+9iqKYsTu/O2ai6KTb0TInNpvuQ3qmg==}
+  '@types/chai@4.3.16':
+    resolution: {integrity: sha512-PatH4iOdyh3MyWtmHVFXLWCCIhUbopaltqddG9BzB+gMIzee2MJrvd+jouii9Z3wzQJruGWAm7WOMjgfG8hQlQ==}
 
   '@types/chrome@0.0.268':
     resolution: {integrity: sha512-7N1QH9buudSJ7sI8Pe4mBHJr5oZ48s0hcanI9w3wgijAlv1OZNUZve9JR4x42dn5lJ5Sm87V1JNfnoh10EnQlA==}
@@ -3626,9 +3626,11 @@ packages:
 
   sinon@7.5.0:
     resolution: {integrity: sha512-AoD0oJWerp0/rY9czP/D6hDTTUYGpObhZjMpd7Cl/A6+j0xBE+ayL/ldfggkBXUs0IkvIiM1ljM8+WkOc5k78Q==}
+    deprecated: 16.1.1
 
   sinon@9.2.4:
     resolution: {integrity: sha512-zljcULZQsJxVra28qIAL6ow1Z9tpattkCTEJR4RBP3TGc00FcttsP5pK284Nas5WjMZU5Yzy3kAIp3B3KRf5Yg==}
+    deprecated: 16.1.1
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -5986,7 +5988,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@types/chai@4.3.9': {}
+  '@types/chai@4.3.16': {}
 
   '@types/chrome@0.0.268':
     dependencies:
