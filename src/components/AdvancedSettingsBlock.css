@@ -6,15 +6,15 @@
         justify-content: center;
 
         & > p {
-            display: flex;
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
+            position: relative;
 
             & > span {
                 display: inline-block;
                 font-size: inherit;
-                line-height: normal;
-                transform-origin: center;
+                vertical-align: middle; /* Vertically center within text */
+                position: relative; /* Ensure relative positioning */
+                top: 0.1em; /* Adjust vertical alignment */
+                transform-origin: center; /* Ensure rotation happens around the center */
             }
         }
     }
