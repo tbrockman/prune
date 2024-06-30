@@ -201,7 +201,7 @@ export default function createTheme() {
 					root: {
 						flexDirection: 'row-reverse',
 						'& .MuiAccordionSummary-content': {
-							marginLeft: '10px'
+							marginLeft: '8px'
 						}
 					},
 				}

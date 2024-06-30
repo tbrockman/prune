@@ -1,5 +1,10 @@
 .MuiAccordionSummary-root.advanced-settings-summary {
     padding: 0 0 0 8px;
+
+    & > .MuiAccordionSummary-expandIconWrapper {
+        min-width: 24px;
+        justify-content: center;
+    }
 }
 
 .MuiAccordionDetails-root.advanced-settings-details {

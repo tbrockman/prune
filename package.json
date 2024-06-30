@@ -83,14 +83,14 @@
       "toggle-deduplicate": {
         "suggested_key": {
           "default": "Alt+Shift+W",
-          "mac": "Command+Shift+W"
+          "mac": "Command+MacCtrl+W"
         },
         "description": "Toggle tab deduplication feature"
       },
       "toggle-productivity-mode": {
         "suggested_key": {
           "default": "Alt+Shift+D",
-          "mac": "Command+Shift+D"
+          "mac": "Command+MacCtrl+D"
         },
         "description": "Toggle productivity mode"
       }

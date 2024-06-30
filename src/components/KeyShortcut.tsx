@@ -13,6 +13,11 @@ export function KeyShortcut({ commandName }: KeyShortcutProps) {
     let elements = [];
     let keys = command?.shortcut?.split('+') || [];
 
+    // handle mac which seems to not use '+' as a separator for keys
+    if (keys.length === 1) {
+        keys = Array.from(command?.shortcut) || [];
+    }
+
     keys.forEach((item, index) => {
         elements.push(
             <Box key={`${item}_${index}`} className="keyboard-shortcut-key"><Typography fontSize={'12px'}>{item}</Typography></Box>

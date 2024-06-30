@@ -14,9 +14,9 @@ import {
 import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg"
 import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg"
 
-import { useStorageWithDefaults, useSyncStorage } from '~hooks/useStorage';
+import { useSyncStorage } from '~hooks/useStorage';
 import { setSyncStorage } from "~util/storage";
-import { SyncKeyValues, defaultSyncStorage, type SyncKey } from '~util/storage';
+import { type SyncKey } from '~util/storage';
 
 type PersistedInputProps = {
 	component: 'checkbox' | 'select' | 'textfield' | 'switch';
