@@ -30,8 +30,8 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2(react@18.3.1)
       '@plasmohq/storage':
-        specifier: ^1.9.0
-        version: 1.9.0(react@18.3.1)
+        specifier: ^1.11.0
+        version: 1.11.0(react@18.3.1)
       plasmo:
         specifier: 0.88.0
         version: 0.88.0(@swc/core@1.3.91(@swc/helpers@0.5.2))(@swc/helpers@0.5.2)(lodash@4.17.21)(postcss@8.4.31)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(srcset@4.0.0)(ts-node@10.9.1(@swc/core@1.3.91(@swc/helpers@0.5.2))(@types/node@20.8.9)(typescript@5.5.2))
@@ -1452,8 +1452,8 @@ packages:
     peerDependencies:
       prettier: 3.x
 
-  '@plasmohq/storage@1.9.0':
-    resolution: {integrity: sha512-mntoJ0EVh7JfYyMKWKnt6yqVlJnwavEkwdXssSOxS1CEeyNX2GPkXQfChvlGhuEJplqcRhLaym6rEc690Ao0fg==}
+  '@plasmohq/storage@1.11.0':
+    resolution: {integrity: sha512-JLu8cCjn+yzbaIK2Gw+NDuDJgiTle3nj1HbMC/irnnUTc7lnJSiCEN/EsUcWcwNtv9BJM2r8DAk1stsQ8dCKug==}
     peerDependencies:
       react: ^16.8.6 || ^17 || ^18
     peerDependenciesMeta:
@@ -5744,7 +5744,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@plasmohq/storage@1.9.0(react@18.3.1)':
+  '@plasmohq/storage@1.11.0(react@18.3.1)':
     dependencies:
       pify: 6.1.0
     optionalDependencies:
