@@ -1,23 +1,5 @@
 .MuiAccordionSummary-root.advanced-settings-summary {
-    padding: 0 0 0 8px;
-
-    & > .MuiAccordionSummary-expandIconWrapper {
-        min-width: 24px;
-        justify-content: center;
-
-        & > p {
-            position: relative;
-
-            & > span {
-                display: inline-block;
-                font-size: inherit;
-                vertical-align: middle; /* Vertically center within text */
-                position: relative; /* Ensure relative positioning */
-                top: 0.1em; /* Adjust vertical alignment */
-                transform-origin: center; /* Ensure rotation happens around the center */
-            }
-        }
-    }
+    padding: 0 0 0 7px;
 }
 
 .MuiAccordionDetails-root.advanced-settings-details {
