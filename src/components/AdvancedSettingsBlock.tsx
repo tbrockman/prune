@@ -27,7 +27,7 @@ export function AdvancedSettingsBlock() {
     return (
         <>
             <Accordion expanded={showAdvancedSettings} onChange={handleAdvancedSettingsChange} disableGutters elevation={0} square>
-                <AccordionSummary className='advanced-settings-summary' expandIcon={<Typography>⚙️</Typography>}>
+                <AccordionSummary className='advanced-settings-summary' expandIcon={<Typography><span>⚙️</span></Typography>}>
                     <LabelWithHint label={
                         <Typography>
                             {advancedSettingsLabel}

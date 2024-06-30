@@ -4,6 +4,19 @@
     & > .MuiAccordionSummary-expandIconWrapper {
         min-width: 24px;
         justify-content: center;
+
+        & > p {
+            display: flex;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+
+            & > span {
+                display: inline-block;
+                font-size: inherit;
+                line-height: normal;
+                transform-origin: center;
+            }
+        }
     }
 }
 
