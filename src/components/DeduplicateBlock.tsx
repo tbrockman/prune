@@ -1,17 +1,19 @@
 import React from 'react';
-import { FormControlLabel } from '@mui/material';
+import { Box, FormControlLabel, Stack } from '@mui/material';
 import { FormOption } from '../components/FormOption';
 import PersistedInput from '../components/PersistedInput';
 import LabelWithHint from '../components/LabelWithHint';
 import { StorageKeys } from '~enums';
 
 import './DeduplicateBlock.css'
-import useOptions from '~hooks/useOptions';
+import { KeyShortcut } from './KeyShortcut';
+import { useSyncStorage } from '~hooks/useStorage';
 
 export function DeduplicateBlock() {
-	const { options } = useOptions();
-	const dedupEnabled = options[StorageKeys.AUTO_DEDUPLICATE];
-	const dedupMergeEnabled = options[StorageKeys.AUTO_DEDUPLICATE_CLOSE];
+	const storage = useSyncStorage([
+		StorageKeys['AUTO_DEDUPLICATE'],
+		StorageKeys['AUTO_DEDUPLICATE_CLOSE'],
+	])
 	// IDEA: type-safe i18n message keys
 	const dedupHint = chrome.i18n.getMessage('deduplicateHint');
 	const dedupLabel = chrome.i18n.getMessage('deduplicateLabel');
@@ -24,21 +26,25 @@ export function DeduplicateBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_DEDUPLICATE}
+						storageKey={StorageKeys['AUTO_DEDUPLICATE']}
 					/>
 				}
 				label={
 					<LabelWithHint
 						hint={dedupHint}
-						label={dedupLabel}
+						label={
+							<Stack direction="row" spacing={1}>
+								<Box>{dedupLabel}</Box>
+								<KeyShortcut commandName={'toggle-deduplicate'}></KeyShortcut>
+							</Stack>}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}
 			>
-			</FormControlLabel>
+			</FormControlLabel >
 			<FormControlLabel
-				className={`sub-checkbox ${dedupMergeEnabled && 'is-checked'}`}
-				disabled={!dedupEnabled}
+				className={`sub-checkbox ${storage[StorageKeys.AUTO_DEDUPLICATE_CLOSE] && 'is-checked'}`}
+				disabled={!storage[StorageKeys.AUTO_DEDUPLICATE]}
 				control={
 					<PersistedInput
 						component="checkbox"
@@ -52,6 +58,6 @@ export function DeduplicateBlock() {
 						tooltipProps={{ placement: 'top' }}
 					/>
 				} />
-		</FormOption>
+		</FormOption >
 	);
 }

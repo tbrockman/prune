@@ -1,29 +1,25 @@
 import React from 'react';
-import { FormControlLabel, IconButton, Tooltip } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Autocomplete, Box, Chip, FormControlLabel, Stack, TextField } from '@mui/material';
 import { FormOption } from './FormOption';
 import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
-import { useStore, Page } from '../hooks/useStore';
 import { StorageKeys } from '~enums';
+import useConfig from '~hooks/useConfig';
+import { KeyShortcut } from './KeyShortcut';
+import { useSyncStorage } from '~hooks/useStorage';
 
 export default function ProductivityBlock() {
-	const setPage = useStore((state) => state.setPage);
-	const page = useStore((state) => state.page);
 
-	const hint =
-		'helps keep your browsing productive by blocking use of typical time wasting websites.';
-	const label = 'turn on productivity mode 👨‍💻';
-	const settingsHint = 'change which websites to block.';
-
-	const settingsIconClicked = () => {
-		setPage(Page.ProductivitySettings);
-	};
-
-	const backButtonClicked = () => {
-		setPage(Page.Home);
-	};
+	const { config } = useConfig();
+	const {
+		[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
+		[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+	} = useSyncStorage([
+		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
+		StorageKeys.PRODUCTIVITY_MODE_ENABLED
+	]);
+	const productivityModeLabel = chrome.i18n.getMessage('productivityModeLabel');
+	const productivityModeHint = chrome.i18n.getMessage('productivityModeHint');
 
 	return (
 		<FormOption>
@@ -36,25 +32,59 @@ export default function ProductivityBlock() {
 				}
 				label={
 					<LabelWithHint
-						hint={hint}
-						label={label}
+						hint={productivityModeHint}
+						label={
+							<Stack direction="row" spacing={1}>
+								<Box>{productivityModeLabel}</Box>
+								<KeyShortcut commandName='toggle-productivity-mode' />
+							</Stack>}
 						tooltipProps={{ placement: 'top' }}
 					/>
 				}
 			/>
-			{page !== Page.ProductivitySettings ? (
-				<Tooltip placement="top" arrow={true} title={settingsHint}>
-					<IconButton aria-label="settings" onClick={settingsIconClicked}>
-						<SettingsIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip placement="top" arrow={true} title="back to main options">
-					<IconButton aria-label="main options" onClick={backButtonClicked}>
-						<ArrowBackIcon />
-					</IconButton>
-				</Tooltip>
-			)}
+			<Autocomplete
+				value={suspendedDomains as string[]}
+				onChange={(_, newValue, reason) => {
+
+					if (reason === 'blur') {
+						return;
+					}
+					chrome.storage.sync.set({ [StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
+				}}
+				multiple
+				freeSolo
+				options={config.productivity?.domains ?? []}
+				disableClearable
+				filterSelectedOptions
+				autoHighlight
+				disabled={!productivityModeEnabled}
+				getOptionLabel={(option) => option}
+				defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
+				renderTags={(value: string[], getTagProps) =>
+					value.map((option: string, index: number) => (
+						<Chip
+							variant="outlined"
+							label={option}
+							{...getTagProps({ index })}
+						/>
+					))
+				}
+				renderInput={(params) => (
+					<>
+						<TextField
+							variant="filled"
+							placeholder="block unproductive websites ↩"
+							{...params}
+							inputProps={{
+								...params.inputProps,
+								style: {
+									minWidth: '31ch'
+								},
+							}}
+						/>
+					</>
+				)}
+			/>
 		</FormOption>
 	);
 }

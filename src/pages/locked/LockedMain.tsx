@@ -12,7 +12,7 @@ export function LockedMain({ matchingFilters }) {
 					{'page locked 🔒'}
 				</Link>
 			</Breadcrumbs>
-			<FormGroup className="main-form-group">
+			<FormGroup className="form-group-section">
 				<Grid container>
 					<PausedDialog
 						matchingFilters={matchingFilters}

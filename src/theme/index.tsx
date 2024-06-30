@@ -1,4 +1,4 @@
-import { createTheme as muiCreateTheme } from '@mui/material/styles'
+import { createTheme as muiCreateTheme, styled } from '@mui/material/styles'
 
 import './index.css'
 
@@ -140,6 +140,12 @@ export default function createTheme() {
 			},
 			MuiAutocomplete: {
 				styleOverrides: {
+					inputRoot: {
+						maxWidth: 'unset',
+						padding: 0,
+						marginLeft: '8px',
+						paddingBottom: '4px',
+					},
 					tag: {
 						marginRight: '4px',
 						marginBottom: '4px',
@@ -181,6 +187,25 @@ export default function createTheme() {
 					},
 				},
 			},
+			MuiAccordion: {
+				styleOverrides: {
+					root: {
+						'&::before': {
+							display: 'none',
+						},
+					},
+				}
+			},
+			MuiAccordionSummary: {
+				styleOverrides: {
+					root: {
+						flexDirection: 'row-reverse',
+						'& .MuiAccordionSummary-content': {
+							marginLeft: '10px'
+						}
+					},
+				}
+			}
 		},
 	})
 }

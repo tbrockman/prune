@@ -1,15 +1,15 @@
 {
   "name": "prune",
   "displayName": "prune",
-  "version": "3.4.11",
-  "description": "An extension to help you trim your garden of tabs.",
+  "version": "3.4.12",
+  "description": "A browser extension to help you trim your garden of tabs.",
   "author": "theodore brockman",
   "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/tbrockman/prune/issues"
   },
   "homepage": "https://github.com/tbrockman/prune#readme",
-  "packageManager": "pnpm@8.6.0",
+  "packageManager": "pnpm@9.4.0",
   "scripts": {
     "postinstall": "pnpm install:playwright",
     "install:playwright": "npx playwright install --with-deps",
@@ -78,7 +78,23 @@
         "id": "iam@theo.lol"
       }
     },
-    "default_locale": "en"
+    "default_locale": "en",
+    "commands": {
+      "toggle-deduplicate": {
+        "suggested_key": {
+          "default": "Alt+Shift+W",
+          "mac": "Command+Shift+W"
+        },
+        "description": "Toggle tab deduplication feature"
+      },
+      "toggle-productivity-mode": {
+        "suggested_key": {
+          "default": "Alt+Shift+D",
+          "mac": "Command+Shift+D"
+        },
+        "description": "Toggle productivity mode"
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -88,6 +104,7 @@
     "prune",
     "tabs",
     "browser",
-    "extension"
+    "extension",
+    "browser-extension"
   ]
 }

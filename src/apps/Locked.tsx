@@ -6,7 +6,6 @@ import { LockedMain } from '~pages/locked/LockedMain';
 
 function Locked({ matchingFilters, useStore = _useStore }) {
 	const init = useStore((state) => state.init);
-	console.log('content script init');
 	const theme = createTheme();
 
 	useEffect(() => {

@@ -72,7 +72,7 @@
         "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
     },
     "leastRecentlyUsedTabsSizeLabel": {
-        "message": "tabs are open",
+        "message": "tabs are open 📈",
         "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken"
     },
     "leastRecentlyUsedTabsHint": {
@@ -96,11 +96,11 @@
         "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
     },
     "optionsTitle": {
-        "message": "options 🪴",
+        "message": "options🪴",
         "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension"
     },
     "aboutTitle": {
-        "message": "about 📚",
+        "message": "about📚",
         "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
     },
     "aboutTextStart": {
@@ -134,5 +134,33 @@
     "useSyncStorageLabel": {
         "message": "sync tab activity across your devices 🔄",
         "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
+    },
+    "advancedSettingsLabel": {
+        "message": "advanced settings 🧪",
+        "description": "A label to toggle the advanced settings section in the options"
+    },
+    "advancedSettingsHint": {
+        "message": "if you're feeling brave, you can check out some of the more experimental features of prune",
+        "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
+    },
+    "exemptPagesLabel": {
+        "message": "don't run prune on certain websites 🛡️",
+        "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
+    },
+    "exemptPagesHint": {
+        "message": "if you want prune to leave your tabs alone for specific websites, you can add them here",
+        "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
+    },
+    "exemptPagesInputPlaceholder": {
+        "message": "keep pages safe ↩",
+        "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
+    },
+    "productivityModeLabel": {
+        "message": "turn on productivity mode 🚀",
+        "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature"
+    },
+    "productivityModeHint": {
+        "message": "helps keep your browsing productive by making it harder for you to open time-wasting websites (of your choosing)",
+        "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
     }
 }

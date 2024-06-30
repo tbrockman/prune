@@ -5,16 +5,17 @@ import {
 	MenuItem,
 } from '@mui/material'
 import { FormOption } from './FormOption'
-import _useOptions from '../hooks/useOptions'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
 import { StorageKeys } from '~enums'
 import _useConfig from '~hooks/useConfig'
 import { Features } from '~config'
+import { useStorageWithDefaults } from '~hooks/useStorage'
+import { SyncKeyValues, defaultSyncStorage } from '~util/storage'
 
-export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
-	const { options } = useOptions()
+export function LRUBlock({ useConfig = _useConfig }) {
 	const { config } = useConfig()
+	const storage = useStorageWithDefaults<SyncKeyValues>([StorageKeys.TAB_LRU_ENABLED], defaultSyncStorage)
 
 	const lruTabsHint = chrome.i18n.getMessage('leastRecentlyUsedTabsHint')
 	let lruTabsLabel = chrome.i18n.getMessage('leastRecentlyUsedTabsLabel')
@@ -34,7 +35,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							{config.featureSupported(Features.TabGroups) && <PersistedInput
 								component="select"
 								storageKey={StorageKeys.TAB_LRU_DESTINATION}
-								disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
+								disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
 							>
 								<MenuItem value={'group'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationGroup')}</MenuItem>
 								<MenuItem value={'close'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationClose')}</MenuItem>
@@ -47,7 +48,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							label={lruTabsLabel}
 						/>
 					}
-					disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
+					disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
 				/>
 				<FormControlLabel
 					control={
@@ -60,7 +61,7 @@ export function LRUBlock({ useOptions = _useOptions, useConfig = _useConfig }) {
 							type="number"
 							style={{ width: '10ch' }}
 							storageKey={StorageKeys.TAB_LRU_SIZE}
-							disabled={!options[StorageKeys.TAB_LRU_ENABLED]}
+							disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
 							color="secondary"
 							InputProps={{
 								inputProps: {
