@@ -27,8 +27,8 @@ importers:
         specifier: ^5.15.20
         version: 5.15.21(@emotion/react@11.11.1(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.1(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
       '@plasmohq/messaging':
-        specifier: ^0.5.0
-        version: 0.5.0(react@18.3.1)
+        specifier: ^0.6.2
+        version: 0.6.2(react@18.3.1)
       '@plasmohq/storage':
         specifier: ^1.9.0
         version: 1.9.0(react@18.3.1)
@@ -1376,8 +1376,8 @@ packages:
   '@plasmohq/init@0.7.0':
     resolution: {integrity: sha512-P75g48dqOGneJ+n0AcqnLE/TYflcaPc3B7h6EopnCBBYUDnCNBMwYmKAkaf5pnhsEB0ybPS6TU1C2DTGfqaW7A==}
 
-  '@plasmohq/messaging@0.5.0':
-    resolution: {integrity: sha512-cYF750rguJDvnyJls2IHVAJTPVFtCEaMHMhnRsENfGaNqcRfXVfzwBGOABPg3k1iSBWBYLySh3Ht7QvFSnB3RQ==}
+  '@plasmohq/messaging@0.6.2':
+    resolution: {integrity: sha512-CGfcvfVE0wsN/Y/i/jV0nwjkwh2gBCEujZFhLoxJ12N0ScoP3JVEIvUxJSFsAD4ylBQ8IjD2FyjQozwiSxWc4Q==}
     peerDependencies:
       react: ^16.8.6 || ^17 || ^18
     peerDependenciesMeta:
@@ -3119,9 +3119,9 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@4.0.2:
-    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
-    engines: {node: ^14 || ^16 || >=18}
+  nanoid@5.0.3:
+    resolution: {integrity: sha512-I7X2b22cxA4LIHXPSqbBCEQSL+1wv8TuoefejsX4HFWyC6jc5JG7CEaxOltiKjc1M+YCS2YkrZZcj4+dytw9GA==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   napi-build-utils@1.0.2:
@@ -3626,9 +3626,11 @@ packages:
 
   sinon@7.5.0:
     resolution: {integrity: sha512-AoD0oJWerp0/rY9czP/D6hDTTUYGpObhZjMpd7Cl/A6+j0xBE+ayL/ldfggkBXUs0IkvIiM1ljM8+WkOc5k78Q==}
+    deprecated: 16.1.1
 
   sinon@9.2.4:
     resolution: {integrity: sha512-zljcULZQsJxVra28qIAL6ow1Z9tpattkCTEJR4RBP3TGc00FcttsP5pK284Nas5WjMZU5Yzy3kAIp3B3KRf5Yg==}
+    deprecated: 16.1.1
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -5427,9 +5429,9 @@ snapshots:
 
   '@plasmohq/init@0.7.0': {}
 
-  '@plasmohq/messaging@0.5.0(react@18.3.1)':
+  '@plasmohq/messaging@0.6.2(react@18.3.1)':
     dependencies:
-      nanoid: 4.0.2
+      nanoid: 5.0.3
     optionalDependencies:
       react: 18.3.1
 
@@ -7424,7 +7426,7 @@ snapshots:
 
   nanoid@3.3.6: {}
 
-  nanoid@4.0.2: {}
+  nanoid@5.0.3: {}
 
   napi-build-utils@1.0.2: {}
 
