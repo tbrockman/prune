@@ -8,39 +8,46 @@ import { assert } from 'chai';
 describe('filter utils', () => {
 	describe('getMatchingFilters', () => {
 		it('should return an empty array if no filters match', () => {
-			const host = 'google.com';
+			const url = 'google.com';
 			const filters = ['facebook', 'twitter', 'not.google'];
-			const result = getMatchingFilters(host, filters);
+			const result = getMatchingFilters(url, filters);
 			assert.equal(result.length, 0);
 		});
 
 		it('should return an array of matching filters', () => {
-			const host = 'google.com';
+			const url = 'google.com';
 			const filters = ['facebook', 'twitter', 'google'];
-			const result = getMatchingFilters(host, filters);
+			const result = getMatchingFilters(url, filters);
 			assert.equal(result.length, 1);
 		});
 
 		it('should return an array of matching filters (when one is a regex)', () => {
-			const host = 'google.com';
+			const url = 'google.com';
 			const filters = ['facebook', 'twitter', '.*gle'];
-			const result = getMatchingFilters(host, filters);
+			const result = getMatchingFilters(url, filters);
 			assert.equal(result.length, 1);
 		});
 
 		it('should return an array of matching filters (when multiple are matching)', () => {
-			const host = 'google.com';
+			const url = 'google.com';
 			const filters = ['facebook', 'goog', '.*gle'];
-			const result = getMatchingFilters(host, filters);
+			const result = getMatchingFilters(url, filters);
 			assert.equal(result.length, 2);
 		});
 
 		it('should match www subdomains', () => {
-			const host = 'www.google.com';
+			const url = 'www.google.com';
 			const filters = ['facebook', 'twitter', 'google'];
-			const result = getMatchingFilters(host, filters);
+			const result = getMatchingFilters(url, filters);
 			assert.equal(result.length, 1);
 		});
+
+		it('should strip protocol from filters and allow non-regex matching', () => {
+			const url = 'www.themisbar.com/learners/index.php?service=course'
+			const filters = ['https://www.themisbar.com/learners/index.php?service=course'];
+			const result = getMatchingFilters(url, filters);
+			assert.equal(result.length, 1);
+		})
 	});
 
 	describe('getExemptFilters', () => {

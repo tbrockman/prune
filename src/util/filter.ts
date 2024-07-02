@@ -1,8 +1,13 @@
-export function getMatchingFilters(host, filters: string[]): string[] {
-	console.debug('trying to match filters on host', host, filters);
+import { removeTrailingSlashes } from "./string";
+
+export function getMatchingFilters(url: string, filters: string[]): string[] {
+	url = removeTrailingSlashes(url);
 	return filters.filter((f) => {
+		// strip protocol and any trailing slashes
+		f = removeTrailingSlashes(f.split('://').pop());
 		const regex = new RegExp(`^(?:www\\.)?${f}`);
-		return host.match(regex);
+		// attempt to match the url as either a regex or a string
+		return url.match(regex) || url.indexOf(f) > -1;
 	});
 }
 
