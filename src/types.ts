@@ -1,11 +1,9 @@
-import type { SyncKey } from "~util/storage";
-
 export type Tab = chrome.tabs.Tab
 export type Primitive = string | number | boolean | null | undefined | object;
 export type Values = Primitive | Primitive[] | KeyValueStructure
 
 export type KeyValueStructure = {
-    [key in keyof SyncKey]: Values;
+    [key in string]: Values;
 };
 
 export type KeyValues = KeyValueStructure;

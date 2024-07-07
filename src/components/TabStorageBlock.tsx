@@ -3,7 +3,7 @@ import { FormControlLabel } from '@mui/material';
 import { FormOption } from './FormOption';
 import PersistedInput from './PersistedInput';
 import LabelWithHint from './LabelWithHint';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import _useConfig from '~hooks/useConfig';
 import { Features } from '~config';
 import { useSyncStorage } from '~hooks/useStorage';
@@ -11,19 +11,19 @@ import { useSyncStorage } from '~hooks/useStorage';
 export function TabStorageBlock({ useConfig = _useConfig }) {
 	const storage = useSyncStorage(
 		[
-			StorageKeys.AUTO_PRUNE,
-			StorageKeys.TAB_LRU_ENABLED,
-			StorageKeys.TAB_LRU_DESTINATION,
-			StorageKeys.AUTO_PRUNE_BOOKMARK,
+			SyncStorageKeys.AUTO_PRUNE,
+			SyncStorageKeys.TAB_LRU_ENABLED,
+			SyncStorageKeys.TAB_LRU_DESTINATION,
+			SyncStorageKeys.AUTO_PRUNE_BOOKMARK,
 		]
 	)
 
 	const { config } = useConfig();
 	const tabStorageEnabled =
-		storage[StorageKeys.AUTO_PRUNE] ||
-		(storage[StorageKeys.TAB_LRU_DESTINATION] === 'close' &&
-			storage[StorageKeys.TAB_LRU_ENABLED]) ||
-		(storage[StorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
+		storage[SyncStorageKeys.AUTO_PRUNE] ||
+		(storage[SyncStorageKeys.TAB_LRU_DESTINATION] === 'close' &&
+			storage[SyncStorageKeys.TAB_LRU_ENABLED]) ||
+		(storage[SyncStorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
 	const bookmarkHint = chrome.i18n.getMessage('bookmarkHint');
 	const bookmarkLabel = chrome.i18n.getMessage('bookmarkLabel');
 
@@ -33,7 +33,7 @@ export function TabStorageBlock({ useConfig = _useConfig }) {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_PRUNE_BOOKMARK}
+						storageKey={SyncStorageKeys.AUTO_PRUNE_BOOKMARK}
 						disabled={!tabStorageEnabled}
 					/>
 				}
@@ -47,13 +47,13 @@ export function TabStorageBlock({ useConfig = _useConfig }) {
 						// @ts-ignore
 						hiddenLabel
 						size="small"
-						placeholder="🌱 pruned"
+						placeholder="🍃 pruned"
 						variant="filled"
 						color="secondary"
 						fullWidth={false}
-						storageKey={StorageKeys.AUTO_PRUNE_BOOKMARK_NAME}
+						storageKey={SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME}
 						disabled={
-							!storage[StorageKeys.AUTO_PRUNE_BOOKMARK] || !tabStorageEnabled
+							!storage[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] || !tabStorageEnabled
 						}
 					/>
 				}

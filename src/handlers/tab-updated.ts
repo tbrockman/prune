@@ -1,5 +1,5 @@
 import { Features, type PruneConfig } from '~config';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import TabDeduplicator from '~tab/deduplicator';
 import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';
@@ -43,7 +43,7 @@ class TabUpdatedHandler {
 		let openTabs = await chrome.tabs.query({});
 		let deduplicated = false;
 
-		if (this.options[StorageKeys.AUTO_DEDUPLICATE]) {
+		if (this.options[SyncStorageKeys.AUTO_DEDUPLICATE]) {
 			deduplicated = await this.deduplicator.deduplicateTab(
 				tab,
 				openTabs,
@@ -62,28 +62,28 @@ class TabUpdatedHandler {
 			await this.tracker.track(tab);
 		}
 
-		if (this.options[StorageKeys.TAB_LRU_ENABLED]) {
+		if (this.options[SyncStorageKeys.TAB_LRU_ENABLED]) {
 			const group = {
-				title: this.options[StorageKeys.AUTO_GROUP_NAME],
+				title: this.options[SyncStorageKeys.AUTO_GROUP_NAME],
 				color: 'yellow',
 				collapsed: true,
 			};
 			console.debug('open tabs to filter: ', openTabs);
 			openTabs = openTabs.filter((tab) => tab.groupId === -1);
 			console.debug('open tabs post-filter:', openTabs);
-			const size = this.options[StorageKeys.TAB_LRU_SIZE];
+			const size = this.options[SyncStorageKeys.TAB_LRU_SIZE];
 			const [open, hidden] = this.tracker.limitNumberOfVisibleTabs(
 				openTabs,
 				size,
 			);
 
 			if (
-				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'close' ||
+				this.options[SyncStorageKeys.TAB_LRU_DESTINATION] === 'close' ||
 				!this.config.featureSupported(Features.TabGroups)
 			) {
 				await this.pruner.pruneTabs(hidden);
 			} else if (
-				this.options[StorageKeys.TAB_LRU_DESTINATION] === 'group'
+				this.options[SyncStorageKeys.TAB_LRU_DESTINATION] === 'group'
 			) {
 				await this.grouper.groupTabs(hidden, group);
 			}

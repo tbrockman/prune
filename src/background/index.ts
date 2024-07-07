@@ -10,12 +10,13 @@ import TabTracker from '~tab/tracker';
 import '@plasmohq/messaging/background';
 
 import { initLogging } from '~util';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import { Features, config } from '~config';
-import { tabExemptionsApply } from '~tab/util';
+import { getSuspendPageRedirectUrl, tabExemptionsApply } from '~tab/util';
 import type { NamedCommands } from '~types';
-import { defaultSyncStorage, localStorage, syncStorage, type SyncKey, type SyncStorage } from '~util/storage';
+import { defaultSyncStorage, localStorage, syncStorage, type SyncStorage } from '~util/storage';
 import { getStorage, getSyncStorage, setSyncStorage } from "~util/storage";
+import { getMatchingFilters, getNonExemptFilters } from '~util/filter';
 
 initLogging();
 
@@ -40,11 +41,11 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 	}
 
 	const options = await getStorage("sync", defaultSyncStorage);
-	const tracker = new TabTracker({ storage: options[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
+	const tracker = new TabTracker({ storage: options[SyncStorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
+		options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
 	);
 	const pruner = new TabPruner(bookmarker);
 	const handler = new AlarmHandler({
@@ -58,15 +59,30 @@ chrome.runtime.onInstalled.addListener(async (details: any) => {
 });
 
 // Ran every minute
-chrome.alarms.create({ periodInMinutes: 1 });
-chrome.alarms.onAlarm.addListener(async () => {
+chrome.alarms.create('check-tab-age', { periodInMinutes: 1 });
+chrome.alarms.onAlarm.addListener(async (alarm) => {
+	const isExpiration = alarm.name.startsWith('filter-expired-');
+
+	if (!isExpiration) {
+		return
+	}
+
+	console.debug('filter expired');
+	// TODO: clean this up
+})
+chrome.alarms.onAlarm.addListener(async (alarm) => {
 	console.debug('alarm listener triggered');
+
+	// TODO: clean this up
+	if (alarm.name !== 'check-tab-age') {
+		return;
+	}
 	const options = await getSyncStorage() as SyncStorage;
-	const tracker = new TabTracker({ storage: options[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
+	const tracker = new TabTracker({ storage: options[SyncStorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
 	const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 	const bookmarker = new TabBookmarker(
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-		options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
+		options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+		options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
 	);
 	const pruner = new TabPruner(bookmarker);
 	const handler = new AlarmHandler({
@@ -76,33 +92,44 @@ chrome.alarms.onAlarm.addListener(async () => {
 		options,
 		config
 	});
-	await handler.execute();
+	await handler.execute(alarm);
 });
 
 // When a new tab is created, or a navigation occurs in an existing tab
 chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 	console.debug('tab updated', updatedInfo, tab);
+	const options = await getStorage("sync", defaultSyncStorage);
 
 	// TODO: handle when updatedInfo is tab being ungrouped
 	if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
-		const options = await getStorage("sync", defaultSyncStorage);
 
 		if (tabExemptionsApply(options, tab)) {
 			console.debug('exempt page', tab.url);
 			return;
 		}
 
-		const tracker = new TabTracker({ storage: options[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
+		if (options[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]) {
+			const url = getSuspendPageRedirectUrl(tab,
+				options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS],
+				options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])
+
+			if (url) {
+				chrome.tabs.update(tab.id, { url })
+				return;
+			}
+		}
+
+		const tracker = new TabTracker({ storage: options[SyncStorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
 		const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
 		const bookmarker = new TabBookmarker(
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
-			options[StorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
+			options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+			options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
 		);
 		const pruner = new TabPruner(bookmarker);
 		const deduplicator = new TabDeduplicator(
 			lock,
 			config.featureSupported(Features.TabHighlighting),
-			options[StorageKeys.AUTO_DEDUPLICATE_CLOSE]
+			options[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE]
 		);
 		const handler = new TabUpdatedHandler({
 			tracker,
@@ -119,17 +146,35 @@ chrome.tabs.onUpdated.addListener(async (tabId, updatedInfo, tab) => {
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	console.debug('tab activated listener', activeInfo);
+	const tab = await chrome.tabs.get(activeInfo.tabId);
 
 	const options = await getSyncStorage();
-	const tracker = new TabTracker({ storage: options[StorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
+
+	if (tabExemptionsApply(options, tab)) {
+		console.debug('exempt page', tab.url);
+		return;
+	}
+
+	if (options[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]) {
+		const url = getSuspendPageRedirectUrl(tab,
+			options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS],
+			options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])
+
+		if (url) {
+			chrome.tabs.update(tab.id, { url })
+			return;
+		}
+	}
+
+	const tracker = new TabTracker({ storage: options[SyncStorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
 	const handler = new TabFocusedHandler({
 		tracker,
 		options,
 	});
-	await handler.execute(activeInfo);
+	await handler.execute(tab);
 });
 
-async function toggleOption(key: SyncKey) {
+async function toggleOption(key: SyncStorageKeys) {
 	const response = await getSyncStorage([key]);
 	// @ts-ignore
 	response[key] = !response[key]
@@ -141,10 +186,10 @@ chrome.commands.onCommand.addListener(async (command: NamedCommands) => {
 
 	switch (command) {
 		case 'toggle-deduplicate':
-			await toggleOption(StorageKeys.AUTO_DEDUPLICATE);
+			await toggleOption(SyncStorageKeys.AUTO_DEDUPLICATE);
 			break;
 		case 'toggle-productivity-mode':
-			await toggleOption(StorageKeys.PRODUCTIVITY_MODE_ENABLED);
+			await toggleOption(SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED);
 			break;
 	};
 });

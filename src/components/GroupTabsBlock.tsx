@@ -3,13 +3,13 @@ import { FormControlLabel } from '@mui/material'
 import { FormOption } from './FormOption'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
-import { StorageKeys } from '~enums'
+import { SyncStorageKeys } from '~enums'
 import { useStorageWithDefaults } from '~hooks/useStorage'
 import { SyncKeyValues, defaultSyncStorage } from '~util/storage'
 
 export function GroupTabsBlock() {
 	const storage = useStorageWithDefaults<SyncKeyValues>([
-		StorageKeys.AUTO_GROUP,
+		SyncStorageKeys.AUTO_GROUP,
 	], defaultSyncStorage)
 
 	const hideLabel = chrome.i18n.getMessage('hideTabsLabel')
@@ -23,7 +23,7 @@ export function GroupTabsBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_GROUP}
+						storageKey={SyncStorageKeys.AUTO_GROUP}
 					/>
 				}
 				label={<LabelWithHint hint={hideHint} label={hideLabel} />}
@@ -32,7 +32,7 @@ export function GroupTabsBlock() {
 				control={
 					<PersistedInput
 						component="textfield"
-						storageKey={StorageKeys.AUTO_GROUP_THRESHOLD}
+						storageKey={SyncStorageKeys.AUTO_GROUP_THRESHOLD}
 						// @ts-ignore
 						hiddenLabel
 						size="small"
@@ -40,6 +40,7 @@ export function GroupTabsBlock() {
 						type="number"
 						color="secondary"
 						style={{ width: '8ch' }}
+						// @ts-ignore
 						InputProps={{
 							inputProps: {
 								max: 100,
@@ -47,7 +48,7 @@ export function GroupTabsBlock() {
 							},
 
 						}}
-						disabled={!storage[StorageKeys.AUTO_GROUP]}
+						disabled={!storage[SyncStorageKeys.AUTO_GROUP]}
 					/>
 				}
 				label={<LabelWithHint hint={groupNameHint} label={groupNameLabel} />}
@@ -56,13 +57,13 @@ export function GroupTabsBlock() {
 				control={
 					<PersistedInput
 						component="textfield"
-						storageKey={StorageKeys.AUTO_GROUP_NAME}
+						storageKey={SyncStorageKeys.AUTO_GROUP_NAME}
 						// @ts-ignore
 						hiddenLabel
 						size="small"
 						variant="filled"
 						color="secondary"
-						disabled={!storage[StorageKeys.AUTO_GROUP]}
+						disabled={!storage[SyncStorageKeys.AUTO_GROUP]}
 					/>
 				}
 				label=""

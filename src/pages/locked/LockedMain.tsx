@@ -1,21 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Breadcrumbs, FormGroup, Grid, Link } from '@mui/material';
 import PausedDialog from '../../components/PauseDialog';
 import { PruneHeader } from '../../components/PruneHeader';
+import { useSyncStorage } from '~hooks/useStorage';
+import { SyncStorageKeys } from '~enums';
 
-export function LockedMain({ matchingFilters }) {
+export function LockedMain() {
+	const { [SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: filters } =
+		useSyncStorage([SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])
+
+	const params = new URLSearchParams(window.location.search);
+	const matchingFilters = params.get('matched_by')?.split(',') || [];
+	const url = params.get('url');
+	const pageLockedTitle = chrome.i18n.getMessage('pageLockedTitle');
+	document.title = url
+
+	useEffect(() => {
+		const tabExempt = matchingFilters.every((filter) => {
+			const expiration = filters[filter];
+			return expiration && expiration > new Date().getTime();
+		})
+
+		if (tabExempt) {
+			window.location.href = url;
+		}
+	}, [filters])
+
 	return (
 		<Grid width="620px">
 			<PruneHeader></PruneHeader>
 			<Breadcrumbs className="section-title">
 				<Link underline="none" color="black">
-					{'page locked 🔒'}
+					{pageLockedTitle}
 				</Link>
 			</Breadcrumbs>
 			<FormGroup className="form-group-section">
 				<Grid container>
 					<PausedDialog
 						matchingFilters={matchingFilters}
+						url={url}
 					></PausedDialog>
 				</Grid>
 			</FormGroup>

@@ -77,8 +77,15 @@ export default function createTheme() {
 			MuiMenuItem: {
 				styleOverrides: {
 					root: {
-						'&.Mui-selected, &:hover, &:visited': {
-							backgroundColor: '#eeeeee',
+						'&:hover, &:visited': {
+							backgroundColor: '#eee'
+						},
+						'&.Mui-selected': {
+							backgroundColor: 'black !important',
+							color: 'white',
+						},
+						'&.Mui-selected:hover': {
+							backgroundColor: 'black',
 						},
 						'&:focus': {
 							backgroundColor: 'black !important',
@@ -93,6 +100,9 @@ export default function createTheme() {
 						paddingLeft: '0',
 						paddingBottom: '0',
 						paddingTop: '0',
+						'&:focus': {
+							backgroundColor: 'unset',
+						}
 					},
 				},
 			},

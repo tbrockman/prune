@@ -11,7 +11,7 @@ import { createTab } from '~util/tabs';
 import sinon from 'sinon/pkg/sinon-esm';
 import type { SinonStubbedInstance } from 'sinon';
 import { SyncKeyValues as Options } from '~util/storage';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 
 const chrome = require('sinon-chrome/extensions');
 

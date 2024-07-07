@@ -6,7 +6,9 @@ import { defaultSyncStorage } from "~util/storage";
 // A perhaps incorrect and overly confusing way of ensuring we only 
 // try to retrieve keys that are actually in storage (and we've specified defaults for)
 
-export function useSyncStorage<T extends (keyof SyncStorage)[]>(keys: T): Partial<SyncStorage> {
+export function useSyncStorage<T extends (keyof SyncStorage)[]>(keys: T): {
+    [K in T[number]]: SyncStorage[K];
+} {
     return useStorageWithDefaults(keys, defaultSyncStorage);
 }
 

@@ -1,6 +1,6 @@
 import type { PlasmoMessaging } from '@plasmohq/messaging'
 import { Storage } from '@plasmohq/storage'
-import { StorageKeys } from '~enums'
+import { SyncStorageKeys } from '~enums'
 import TabTracker from '~tab/tracker'
 import { getMatchingFilters } from '~util/filter'
 import { config as _config, type PruneConfig } from '~config'
@@ -21,18 +21,20 @@ class ProductivityPortHandler {
 		let productiveTabs = await chrome.tabs.query({})
 		await this.tracker.init(productiveTabs)
 		let domainFilters = await this.storage.get<string[]>(
-			StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
+			SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
 		)
 
 		if (domainFilters == undefined) {
 			domainFilters = this.config.productivity.domains
 		}
+		const extensionUrlPrefix = chrome.runtime.getURL('')
+		console.debug('extensionUrlPrefix', extensionUrlPrefix)
 		productiveTabs = productiveTabs.filter((tab) => {
 			const matchingFilters = getMatchingFilters(
 				new URL(tab.url),
 				domainFilters,
 			)
-			return matchingFilters.length == 0
+			return matchingFilters.length == 0 && !tab.url.startsWith(extensionUrlPrefix)
 		})
 		productiveTabs = productiveTabs.sort((a, b) => {
 			return (

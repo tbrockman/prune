@@ -3,7 +3,7 @@ import { Box, FormControlLabel, Stack } from '@mui/material';
 import { FormOption } from '../components/FormOption';
 import PersistedInput from '../components/PersistedInput';
 import LabelWithHint from '../components/LabelWithHint';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 
 import './DeduplicateBlock.css'
 import { KeyShortcut } from './KeyShortcut';
@@ -11,8 +11,8 @@ import { useSyncStorage } from '~hooks/useStorage';
 
 export function DeduplicateBlock() {
 	const storage = useSyncStorage([
-		StorageKeys['AUTO_DEDUPLICATE'],
-		StorageKeys['AUTO_DEDUPLICATE_CLOSE'],
+		SyncStorageKeys['AUTO_DEDUPLICATE'],
+		SyncStorageKeys['AUTO_DEDUPLICATE_CLOSE'],
 	])
 	// IDEA: type-safe i18n message keys
 	const dedupHint = chrome.i18n.getMessage('deduplicateHint');
@@ -26,7 +26,7 @@ export function DeduplicateBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys['AUTO_DEDUPLICATE']}
+						storageKey={SyncStorageKeys['AUTO_DEDUPLICATE']}
 					/>
 				}
 				label={
@@ -43,12 +43,12 @@ export function DeduplicateBlock() {
 			>
 			</FormControlLabel >
 			<FormControlLabel
-				className={`sub-checkbox ${storage[StorageKeys.AUTO_DEDUPLICATE_CLOSE] && 'is-checked'}`}
-				disabled={!storage[StorageKeys.AUTO_DEDUPLICATE]}
+				className={`sub-checkbox ${storage[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE] && 'is-checked'}`}
+				disabled={!storage[SyncStorageKeys.AUTO_DEDUPLICATE]}
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_DEDUPLICATE_CLOSE}
+						storageKey={SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE}
 					/>
 				}
 				label={

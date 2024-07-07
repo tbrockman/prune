@@ -1,7 +1,7 @@
 import { FormOption } from './FormOption';
 import { FormControlLabel } from '@mui/material';
 import PersistedInput from './PersistedInput';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import LabelWithHint from './LabelWithHint';
 
 export default function StorageAreaBlock() {
@@ -14,7 +14,7 @@ export default function StorageAreaBlock() {
                 control={
                     <PersistedInput
                         component="checkbox"
-                        storageKey={StorageKeys.USE_SYNC_STORAGE}
+                        storageKey={SyncStorageKeys.USE_SYNC_STORAGE}
                     />
                 }
                 label={<LabelWithHint hint={hint} label={label} />}

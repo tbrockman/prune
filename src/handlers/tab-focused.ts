@@ -17,12 +17,11 @@ class TabFocusedHandler {
 		this.options = options;
 	}
 
-	async execute(activeInfo: chrome.tabs.TabActiveInfo) {
+	async execute(tab: chrome.tabs.Tab) {
 		const openTabs = await chrome.tabs.query({});
 		console.debug('tab focused open tabs: ', openTabs);
 
 		try {
-			const tab = await chrome.tabs.get(activeInfo.tabId);
 			await this.tracker.init(openTabs);
 			await this.tracker.track(tab);
 		} catch (e) {

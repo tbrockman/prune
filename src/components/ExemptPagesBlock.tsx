@@ -1,7 +1,7 @@
 import { Autocomplete, Chip, FormControlLabel, TextField } from "@mui/material";
 import { FormOption } from "./FormOption";
 import PersistedInput from "./PersistedInput";
-import { StorageKeys } from "~enums";
+import { SyncStorageKeys } from "~enums";
 import LabelWithHint from "./LabelWithHint";
 import { useSyncStorage } from "~hooks/useStorage";
 import { setSyncStorage } from "~util/storage";
@@ -9,8 +9,8 @@ import { setSyncStorage } from "~util/storage";
 export function ExemptPagesBlock() {
 
     const storage = useSyncStorage([
-        StorageKeys.SKIP_EXEMPT_PAGES,
-        StorageKeys.EXEMPT_PAGES
+        SyncStorageKeys.SKIP_EXEMPT_PAGES,
+        SyncStorageKeys.EXEMPT_PAGES
     ])
 
     const exemptPagesInputPlaceholder = chrome.i18n.getMessage('exemptPagesInputPlaceholder');
@@ -23,7 +23,7 @@ export function ExemptPagesBlock() {
                 control={
                     <PersistedInput
                         component="checkbox"
-                        storageKey={StorageKeys.SKIP_EXEMPT_PAGES}
+                        storageKey={SyncStorageKeys.SKIP_EXEMPT_PAGES}
                     />
                 }
                 label={
@@ -34,13 +34,13 @@ export function ExemptPagesBlock() {
                 }
             />
             <Autocomplete
-                value={storage[StorageKeys.EXEMPT_PAGES] as string[]}
+                value={storage[SyncStorageKeys.EXEMPT_PAGES] as string[]}
                 onChange={(_, newValue, reason) => {
 
                     if (reason === 'blur') {
                         return;
                     }
-                    setSyncStorage({ [StorageKeys.EXEMPT_PAGES]: newValue });
+                    setSyncStorage({ [SyncStorageKeys.EXEMPT_PAGES]: newValue });
                 }}
                 multiple
                 freeSolo
@@ -48,7 +48,7 @@ export function ExemptPagesBlock() {
                 disableClearable
                 filterSelectedOptions
                 autoHighlight
-                disabled={!storage[StorageKeys.SKIP_EXEMPT_PAGES]}
+                disabled={!storage[SyncStorageKeys.SKIP_EXEMPT_PAGES]}
                 getOptionLabel={(option) => option}
                 renderTags={(value: string[], getTagProps) =>
                     value.map((option: string, index: number) => (

@@ -2,7 +2,7 @@ import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';
 import TabTracker from '~tab/tracker';
 import { Features, type PruneConfig } from '~config';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import { tabExemptionsApply } from '~tab/util';
 import type { SyncKeyValues } from '~util/storage';
 
@@ -36,16 +36,16 @@ class AlarmHandler {
 		this.tracker = tracker;
 		this.grouper = grouper;
 		this.pruner = pruner;
-		this.pruneThreshold = options[StorageKeys.AUTO_PRUNE_THRESHOLD] * ONE_DAY_IN_MS;
+		this.pruneThreshold = options[SyncStorageKeys.AUTO_PRUNE_THRESHOLD] * ONE_DAY_IN_MS;
 		this.autoGroupThreshold =
-			options[StorageKeys.AUTO_GROUP_THRESHOLD] * ONE_DAY_IN_MS;
-		this.autoGroupName = options[StorageKeys.AUTO_GROUP_NAME];
+			options[SyncStorageKeys.AUTO_GROUP_THRESHOLD] * ONE_DAY_IN_MS;
+		this.autoGroupName = options[SyncStorageKeys.AUTO_GROUP_NAME];
 		this.config = config;
 		this.options = options;
 	}
 
-	async execute() {
-		console.debug('alarm handler executing', this);
+	async execute(alarm: chrome.alarms.Alarm) {
+		console.debug('alarm handler executing', this, alarm);
 		let openTabs = await chrome.tabs.query({});
 		console.debug({ openTabs });
 
@@ -72,7 +72,7 @@ class AlarmHandler {
 			collapsed: true,
 		};
 
-		if (this.options[StorageKeys.AUTO_PRUNE]) {
+		if (this.options[SyncStorageKeys.AUTO_PRUNE]) {
 			console.debug('finding tabs exceeding threshold to group', { openTabs, threshold: this.pruneThreshold });
 			let result = this.tracker.findTabsExceedingThreshold(
 				openTabs,

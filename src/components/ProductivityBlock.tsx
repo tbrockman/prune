@@ -3,7 +3,7 @@ import { Autocomplete, Box, Chip, FormControlLabel, Stack, TextField } from '@mu
 import { FormOption } from './FormOption';
 import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import useConfig from '~hooks/useConfig';
 import { KeyShortcut } from './KeyShortcut';
 import { useSyncStorage } from '~hooks/useStorage';
@@ -12,14 +12,17 @@ export default function ProductivityBlock() {
 
 	const { config } = useConfig();
 	const {
-		[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
-		[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
+		[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: exemptions
 	} = useSyncStorage([
-		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
-		StorageKeys.PRODUCTIVITY_MODE_ENABLED
+		SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
+		SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED,
+		SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS
 	]);
 	const productivityModeLabel = chrome.i18n.getMessage('productivityModeLabel');
 	const productivityModeHint = chrome.i18n.getMessage('productivityModeHint');
+	const now = new Date().getTime();
 
 	return (
 		<FormOption>
@@ -27,7 +30,7 @@ export default function ProductivityBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.PRODUCTIVITY_MODE_ENABLED}
+						storageKey={SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED}
 					/>
 				}
 				label={
@@ -49,7 +52,7 @@ export default function ProductivityBlock() {
 					if (reason === 'blur') {
 						return;
 					}
-					chrome.storage.sync.set({ [StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
+					chrome.storage.sync.set({ [SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
 				}}
 				multiple
 				freeSolo
@@ -61,13 +64,19 @@ export default function ProductivityBlock() {
 				getOptionLabel={(option) => option}
 				defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
 				renderTags={(value: string[], getTagProps) =>
-					value.map((option: string, index: number) => (
-						<Chip
+					value.map((option: string, index: number) => {
+
+						let label: string | JSX.Element = option;
+						if (exemptions.hasOwnProperty(option) && exemptions[option] > now) {
+							label = (<><span>⌛</span><span>{label}</span></>)
+						}
+
+						return <Chip
 							variant="outlined"
-							label={option}
+							label={label}
 							{...getTagProps({ index })}
 						/>
-					))
+					})
 				}
 				renderInput={(params) => (
 					<>

@@ -4,18 +4,27 @@ import { Button, Grid, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useStorage as _useStorage } from '@plasmohq/storage/hook'
 import { usePort as _usePort } from '@plasmohq/messaging/hook'
-import { Ports, StorageKeys } from '~enums'
+import { Ports, SyncStorageKeys } from '~enums'
+import { useSyncStorage } from '~hooks/useStorage'
+import { setSyncStorage } from '~util/storage'
+
+import './PauseDialog.css'
+
+export type PausedDialogProps = {
+	matchingFilters: string[]
+	url?: string
+	useStorage?: typeof _useStorage
+	usePort?: typeof _usePort
+}
 
 export default function PausedDialog({
 	matchingFilters,
-	useStorage = _useStorage,
+	url,
 	usePort = _usePort,
-}) {
+}: PausedDialogProps) {
 	const productivityPort = usePort(Ports.PRODUCTIVITY)
-	const [exemptions, setExemptions] = useStorage<{ [key: string]: string }>(
-		StorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS,
-		{},
-	)
+	const { [SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: exemptions } =
+		useSyncStorage([SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])
 	const [unlockMinutes, setUnlockMinutes] = useState('15')
 	const [current, setCurrent] = useState<HTMLElement>(null)
 	const ref = useRef<HTMLElement>()
@@ -24,14 +33,18 @@ export default function PausedDialog({
 		setUnlockMinutes(event.target.value as string)
 	}
 
-	const unlockClicked = () => {
-		const end =
-			new Date().getTime() + Number.parseInt(unlockMinutes) * 60 * 1000
+	const unlockClicked = async () => {
+		const end = new Date().getTime() + Number.parseInt(unlockMinutes) * 60 * 1000
 		const newExemptions = {}
 		matchingFilters.forEach((filter) => {
 			newExemptions[filter] = end
 		})
-		setExemptions({ ...exemptions, ...newExemptions })
+		const merged = { ...exemptions, ...newExemptions }
+		await setSyncStorage({
+			[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: merged,
+		})
+
+		if (url) { window.location.href = url }
 	}
 
 	const beProductiveClicked = () => {
@@ -68,7 +81,7 @@ export default function PausedDialog({
 					<Button
 						onClick={unlockClicked}
 						color="info"
-						variant="outlined"
+						variant="contained"
 						endIcon={<>🔓</>}
 					>
 						unlock

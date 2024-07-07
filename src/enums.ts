@@ -1,4 +1,4 @@
-enum StorageKeys {
+enum SyncStorageKeys {
 	AUTO_DEDUPLICATE = 'auto-deduplicate',
 	AUTO_DEDUPLICATE_CLOSE = 'auto-deduplicate-close',
 	AUTO_PRUNE = 'auto-prune',
@@ -26,4 +26,4 @@ enum Ports {
 	PRODUCTIVITY = 'productivity',
 }
 
-export { StorageKeys, Ports };
+export { SyncStorageKeys, Ports };

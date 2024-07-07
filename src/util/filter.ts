@@ -25,6 +25,13 @@ export function getMatchingFilters(url: URL, filters: string[]): string[] {
 	})
 }
 
+export function getNonExemptFilters(filters: string[], exemptions: { [key: string]: any }) {
+	return filters.filter((filter) => {
+		const now = new Date().getTime();
+		return !exemptions.hasOwnProperty(filter) || exemptions[filter] < now;
+	});
+}
+
 export function getExemptFilters(
 	filters: string[],
 	exemptions: { [key: string]: any },

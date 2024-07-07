@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from '@mui/material';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import { useSyncStorage } from '~hooks/useStorage';
 
 
@@ -15,7 +15,7 @@ export default function LabelWithHint({
 	hint,
 	tooltipProps
 }: LabelWithHintProps) {
-	const { [StorageKeys.SHOW_HINTS]: showHints } = useSyncStorage([StorageKeys.SHOW_HINTS]);
+	const { [SyncStorageKeys.SHOW_HINTS]: showHints } = useSyncStorage([SyncStorageKeys.SHOW_HINTS]);
 
 	return (
 		<Tooltip

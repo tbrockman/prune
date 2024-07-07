@@ -162,5 +162,9 @@
     "productivityModeHint": {
         "message": "helps keep your browsing productive by making it harder for you to open time-wasting websites (of your choosing)",
         "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
+    },
+    "pageLockedTitle": {
+        "message": "page locked🔒",
+        "description": "Title for the page locked dialog"
     }
 }
