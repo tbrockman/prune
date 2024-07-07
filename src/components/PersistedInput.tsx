@@ -9,64 +9,67 @@ import {
 	type TextFieldProps,
 	type SwitchProps,
 	SvgIcon,
+	Autocomplete,
+	type AutocompleteProps,
 } from '@mui/material';
 
-import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg"
-import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg"
+import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg";
+import CheckBoxOutlineBlankSharpIcon from "react:~assets/checkbox-unchecked.svg";
 
 import { useSyncStorage } from '~hooks/useStorage';
 import { setSyncStorage } from "~util/storage";
-import { type SyncKey } from '~util/storage';
+import type { SyncStorageKeys } from '~enums';
 
-type PersistedInputProps = {
-	component: 'checkbox' | 'select' | 'textfield' | 'switch';
-	storageKey: SyncKey;
+type ComponentTypeMap = {
+	'checkbox': CheckboxProps;
+	'select': SelectProps;
+	'textfield': TextFieldProps;
+	'switch': SwitchProps;
+	'autocomplete': AutocompleteProps<any, any, any, any>;
+};
+export type PersistedInputProps<T extends keyof ComponentTypeMap, S extends ComponentTypeMap[T]> = {
+	component: T;
+	storageKey: SyncStorageKeys;
 	children?: React.ReactNode;
-} & (CheckboxProps | SelectProps | TextFieldProps | SwitchProps);
+} & Omit<S, 'component'>;
 
-export default function PersistedInput({
+export default function PersistedInput<T extends keyof ComponentTypeMap>({
 	component,
 	storageKey,
 	children,
 	...props
-}: PersistedInputProps) {
+}: PersistedInputProps<T, ComponentTypeMap[T]>) {
 	const data = useSyncStorage([storageKey]);
 
-	const onChangeProxy = async (event: any, ...rest: any) => {
+	const onChangeProxy = async (event: any, ...rest: any[]) => {
 		if (props.onChange) {
-			props.onChange(event, rest);
+			// @ts-ignore
+			props.onChange(event, ...rest);
 		}
 
 		const value =
 			component === 'checkbox'
 				? event.target.checked
 				: event.target.value;
-		await setSyncStorage({ [storageKey]: value })
+		await setSyncStorage({ [storageKey]: value });
 	};
-
-	let without = Object.assign({}, props) as any;
-	let element = <></>;
 
 	switch (component) {
 		case 'checkbox': {
 			return (
 				<Checkbox
-					{...without}
+					{...(props as CheckboxProps)}
 					onChange={onChangeProxy}
 					icon={<SvgIcon><CheckBoxOutlineBlankSharpIcon /></SvgIcon>}
 					checkedIcon={<SvgIcon><CheckBoxSharpIcon /></SvgIcon>}
-					checked={data[storageKey]}
-				>
-					{children}
-				</Checkbox>
+					checked={data[storageKey] as boolean}
+				/>
 			);
 		}
 		case 'textfield': {
-			delete without.children;
-
 			return (
 				<TextField
-					{...without}
+					{...(props as TextFieldProps)}
 					onChange={onChangeProxy}
 					value={data[storageKey]}
 				>
@@ -75,11 +78,9 @@ export default function PersistedInput({
 			);
 		}
 		case 'select': {
-			delete without.children;
-
 			return (
 				<Select
-					{...without}
+					{...(props as SelectProps)}
 					onChange={onChangeProxy}
 					value={data[storageKey]}
 				>
@@ -90,12 +91,22 @@ export default function PersistedInput({
 		case 'switch': {
 			return (
 				<Switch
-					{...without}
+					{...(props as SwitchProps)}
 					onChange={onChangeProxy}
-					value={data[storageKey]}
+					checked={data[storageKey] as boolean}
 				/>
 			);
 		}
+		case 'autocomplete': {
+			return (
+				<Autocomplete
+					// @ts-ignore
+					{...(props as AutocompleteProps<any, any, any, any>)}
+					onChange={onChangeProxy}
+					value={data[storageKey]}
+				/>
+			)
+		}
 	}
-	return element;
+	return null;
 }

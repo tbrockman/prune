@@ -43,6 +43,7 @@ export function RemoveTabsBlock() {
 						style={{ width: '8ch' }}
 						storageKey={SyncStorageKeys.AUTO_PRUNE_THRESHOLD}
 						disabled={!storage[SyncStorageKeys.AUTO_PRUNE]}
+						// @ts-ignore
 						InputProps={{
 							inputProps: {
 								max: 1024,

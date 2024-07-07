@@ -8,7 +8,7 @@ import _useConfig from '~hooks/useConfig';
 import { Features } from '~config';
 import { useSyncStorage } from '~hooks/useStorage';
 
-export function TabStorageBlock({ useConfig = _useConfig }) {
+export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 	const storage = useSyncStorage(
 		[
 			SyncStorageKeys.AUTO_PRUNE,

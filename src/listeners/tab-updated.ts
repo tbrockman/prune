@@ -1,26 +1,79 @@
-import { Features, type PruneConfig } from '~config';
+import { config, Features, type PruneConfig } from '~config';
 import { SyncStorageKeys } from '~enums';
+import TabBookmarker from '~tab/bookmarker';
 import TabDeduplicator from '~tab/deduplicator';
 import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';
 import TabTracker from '~tab/tracker';
-import type { Options } from '~util';
+import { getSuspendPageRedirectUrl, tabExemptionsApply } from '~tab/util';
+import { getSyncStorage, localStorage, syncStorage, type SyncKeyValues } from '~util/storage';
 
 type TabUpdatedHandlerArgs = {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	deduplicator: TabDeduplicator;
-	options: Options;
+	options: SyncKeyValues;
 	config: PruneConfig;
 };
 
-class TabUpdatedHandler {
+export const createListener = (tabLock: Set<number>) => {
+	return async (_: number, updatedInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+		console.debug('tab updated', updatedInfo, tab);
+		const options = await getSyncStorage();
+
+		// TODO: this method should probably just be initialization, handler should contain any logic
+		// TODO: handle when updatedInfo is tab being ungrouped
+		if (updatedInfo.status == 'complete' || (updatedInfo.status && updatedInfo.url)) {
+
+			if (tabExemptionsApply(options, tab)) {
+				console.debug('exempt page', tab.url);
+				return;
+			}
+
+			if (options[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]) {
+				const url = getSuspendPageRedirectUrl(tab,
+					options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS],
+					options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])
+
+				if (url) {
+					chrome.tabs.update(tab.id, { url })
+					return;
+				}
+			}
+
+			// TODO: dependency injection?
+			const tracker = new TabTracker({ storage: options[SyncStorageKeys.USE_SYNC_STORAGE] ? syncStorage : localStorage });
+			const grouper = new TabGrouper(config.featureSupported(Features.TabGroups));
+			const bookmarker = new TabBookmarker(
+				options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME],
+				options[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] && config.featureSupported(Features.Bookmarks),
+			);
+			const pruner = new TabPruner(bookmarker);
+			const deduplicator = new TabDeduplicator(
+				tabLock,
+				config.featureSupported(Features.TabHighlighting),
+				options[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE]
+			);
+			const handler = new TabUpdatedHandler({
+				tracker,
+				grouper,
+				pruner,
+				deduplicator,
+				options,
+				config
+			});
+			await handler.execute(tab);
+		}
+	}
+}
+
+export class TabUpdatedHandler {
 	tracker: TabTracker;
 	grouper: TabGrouper;
 	pruner: TabPruner;
 	deduplicator: TabDeduplicator;
-	options: Options;
+	options: SyncKeyValues;
 	config: PruneConfig;
 
 	constructor({
@@ -90,5 +143,3 @@ class TabUpdatedHandler {
 		}
 	}
 }
-
-export default TabUpdatedHandler;

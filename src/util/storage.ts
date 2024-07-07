@@ -120,18 +120,21 @@ export async function setSyncStorage<T extends Partial<SyncKeyValues>>(data: T):
 	return await setStorage('sync', data);
 }
 
-export async function getSyncStorage<T extends (keyof SyncStorage)[]>(keys?: T): Promise<{
-	[K in T[number]]: SyncStorage[K];
-} | SyncStorage> {
+type ExtractKeys<T extends (keyof SyncStorage)[] | undefined> = T extends undefined
+	? SyncStorage
+	: { [K in T[number]]: SyncStorage[K] };
+
+export async function getSyncStorage<T extends (keyof SyncStorage)[] | undefined>(keys?: T): Promise<ExtractKeys<T>> {
 	if (!keys) {
-		return await getStorage('sync', defaultSyncStorage);
+		return await getStorage('sync', defaultSyncStorage) as ExtractKeys<T>;
 	}
 
-	return await getStorage('sync', keys.reduce((acc, key) => {
-		return { ...acc, [key]: defaultSyncStorage[key] };
-	}, {} as {
-		[K in T[number]]: SyncStorage[K];
-	}));
+	const selectedStorage = keys.reduce((acc, key) => {
+		acc[key] = defaultSyncStorage[key];
+		return acc;
+	}, {} as { [K in T[number]]: SyncStorage[K] });
+
+	return await getStorage('sync', selectedStorage) as ExtractKeys<T>;
 }
 
 export async function getStorage<T extends Record<string, Values>>(storageArea: chrome.storage.AreaName, keysWithDefaults: T): Promise<T> {
