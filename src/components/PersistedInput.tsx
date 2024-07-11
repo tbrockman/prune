@@ -9,8 +9,6 @@ import {
 	type TextFieldProps,
 	type SwitchProps,
 	SvgIcon,
-	Autocomplete,
-	type AutocompleteProps,
 } from '@mui/material';
 
 import CheckBoxSharpIcon from "react:~assets/checkbox-checked.svg";
@@ -25,7 +23,6 @@ type ComponentTypeMap = {
 	'select': SelectProps;
 	'textfield': TextFieldProps;
 	'switch': SwitchProps;
-	'autocomplete': AutocompleteProps<any, any, any, any>;
 };
 export type PersistedInputProps<T extends keyof ComponentTypeMap, S extends ComponentTypeMap[T]> = {
 	component: T;
@@ -96,16 +93,6 @@ export default function PersistedInput<T extends keyof ComponentTypeMap>({
 					checked={data[storageKey] as boolean}
 				/>
 			);
-		}
-		case 'autocomplete': {
-			return (
-				<Autocomplete
-					// @ts-ignore
-					{...(props as AutocompleteProps<any, any, any, any>)}
-					onChange={onChangeProxy}
-					value={data[storageKey]}
-				/>
-			)
 		}
 	}
 	return null;

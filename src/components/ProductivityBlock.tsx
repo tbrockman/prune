@@ -7,6 +7,7 @@ import { SyncStorageKeys } from '~enums';
 import useConfig from '~hooks/useConfig';
 import { KeyShortcut } from './KeyShortcut';
 import { useSyncStorage } from '~hooks/useStorage';
+import { setSyncStorage } from '~util/storage';
 
 export default function ProductivityBlock() {
 
@@ -52,7 +53,7 @@ export default function ProductivityBlock() {
 					if (reason === 'blur') {
 						return;
 					}
-					chrome.storage.sync.set({ [SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
+					setSyncStorage({ [SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
 				}}
 				multiple
 				freeSolo
@@ -68,7 +69,7 @@ export default function ProductivityBlock() {
 
 						let label: string | JSX.Element = option;
 						if (exemptions.hasOwnProperty(option) && exemptions[option] > now) {
-							label = (<><span>⌛</span><span>{label}</span></>)
+							label = (<><span>🔓</span><span>{label}</span></>)
 						}
 
 						return <Chip

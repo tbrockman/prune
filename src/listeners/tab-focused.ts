@@ -20,7 +20,7 @@ export const createListener = () => {
 			return;
 		}
 
-		if (options[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]) {
+		if (options[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED] && tab.url) {
 			const url = getSuspendPageRedirectUrl(tab,
 				options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS],
 				options[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS])

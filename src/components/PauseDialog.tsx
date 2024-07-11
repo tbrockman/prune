@@ -7,8 +7,10 @@ import { usePort as _usePort } from '@plasmohq/messaging/hook'
 import { Ports, SyncStorageKeys } from '~enums'
 import { useSyncStorage } from '~hooks/useStorage'
 import { setSyncStorage } from '~util/storage'
+import parse from 'html-react-parser';
 
 import './PauseDialog.css'
+import { Tooltip } from 'node_modules/@mui/material/index'
 
 export type PausedDialogProps = {
 	matchingFilters: string[]
@@ -28,6 +30,15 @@ export default function PausedDialog({
 	const [unlockMinutes, setUnlockMinutes] = useState('15')
 	const [current, setCurrent] = useState<HTMLElement>(null)
 	const ref = useRef<HTMLElement>()
+	const pageLockedDialog = chrome.i18n.getMessage('pageLockedDialog')
+	const beProductiveButtonText = chrome.i18n.getMessage('beProductiveButtonText')
+	const beProductiveButtonHint = chrome.i18n.getMessage('beProductiveButtonHint')
+	const pageLockedOptionSeparatorText = chrome.i18n.getMessage('pageLockedOptionSeparatorText')
+	const unlockButtonText = chrome.i18n.getMessage('unlockButtonText')
+	const pageLockedTimeSelectorPrecursor = chrome.i18n.getMessage('pageLockedTimeSelectorPrecursor')
+	const fifteenMinutesText = chrome.i18n.getMessage('fifteenMinutesText')
+	const oneHourText = chrome.i18n.getMessage('oneHourText')
+	const oneDayText = chrome.i18n.getMessage('oneDayText')
 
 	const handleUnlockTimeChange = (event: SelectChangeEvent) => {
 		setUnlockMinutes(event.target.value as string)
@@ -58,24 +69,29 @@ export default function PausedDialog({
 	return (
 		<>
 			<Typography gutterBottom padding={'16px 0'}>
-				This website can't be accessed right now because you're in{' '}
-				<b>productivity mode</b>. You can make a temporary exception if
-				you <i>really</i> want to, but you should probably just go back
-				to being productive. 💁‍♀️
+				{parse(pageLockedDialog)}
 			</Typography>
 			<Grid container spacing={1} alignItems={'center'}>
 				<Grid item>
-					<Button
-						color="secondary"
-						variant="contained"
-						endIcon={<>👨‍💻</>}
-						onClick={beProductiveClicked}
+					<Tooltip
+						placement="top"
+						arrow={true}
+						enterDelay={1500}
+						enterNextDelay={750}
+						title={beProductiveButtonHint}
 					>
-						be productive
-					</Button>
+						<Button
+							color="secondary"
+							variant="contained"
+							endIcon={<>👨‍💻</>}
+							onClick={beProductiveClicked}
+						>
+							{beProductiveButtonText}
+						</Button>
+					</Tooltip>
 				</Grid>
 				<Grid item>
-					<Typography>or</Typography>
+					<Typography>{pageLockedOptionSeparatorText}</Typography>
 				</Grid>
 				<Grid item>
 					<Button
@@ -84,11 +100,11 @@ export default function PausedDialog({
 						variant="contained"
 						endIcon={<>🔓</>}
 					>
-						unlock
+						{unlockButtonText}
 					</Button>
 				</Grid>
 				<Grid item>
-					<Typography>for</Typography>
+					<Typography>{pageLockedTimeSelectorPrecursor}</Typography>
 				</Grid>
 				<Grid item width={'87px'} height={'100%'}>
 					<Select
@@ -106,9 +122,9 @@ export default function PausedDialog({
 							container: current,
 						}}
 					>
-						<MenuItem value={15}>15 min</MenuItem>
-						<MenuItem value={60}>1 hour</MenuItem>
-						<MenuItem value={1440}>1 day</MenuItem>
+						<MenuItem value={15}>{fifteenMinutesText}</MenuItem>
+						<MenuItem value={60}>{oneHourText}</MenuItem>
+						<MenuItem value={1440}>{oneDayText}</MenuItem>
 					</Select>
 				</Grid>
 			</Grid>

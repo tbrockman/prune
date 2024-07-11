@@ -77,8 +77,8 @@ export default function createTheme() {
 			MuiMenu: {
 				styleOverrides: {
 					paper: {
-						'border-top-left-radius': 0,
-						'border-top-right-radius': 0,
+						borderTopLeftRadius: 0,
+						borderTopRightRadius: 0,
 					},
 				},
 			},
@@ -163,6 +163,9 @@ export default function createTheme() {
 						padding: 0,
 						marginLeft: '8px',
 						paddingBottom: '4px',
+						'& > .MuiAutocomplete-input.MuiFilledInput-input': {
+							padding: '7px 4px',
+						}
 					},
 					tag: {
 						marginRight: '4px',

@@ -13,7 +13,7 @@ export function LockedMain() {
 	const matchingFilters = params.get('matched_by')?.split(',') || [];
 	const url = params.get('url');
 	const pageLockedTitle = chrome.i18n.getMessage('pageLockedTitle');
-	document.title = url
+	document.title = '🔒 | ' + url
 
 	useEffect(() => {
 		const tabExempt = matchingFilters.every((filter) => {
