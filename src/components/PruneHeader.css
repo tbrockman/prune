@@ -12,7 +12,7 @@
 }
 
 .prune-header {
-    &>svg {
+    &>a>svg {
         width: 200px;
     }
 }

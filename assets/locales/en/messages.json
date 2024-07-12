@@ -162,5 +162,49 @@
     "productivityModeHint": {
         "message": "helps keep your browsing productive by making it harder for you to open time-wasting websites (of your choosing)",
         "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
+    },
+    "productivityModeInputPlaceholder": {
+        "message": "block unproductive websites ↩",
+        "description": "Placeholder text for the input box to enter URLs to block in productivity mode"
+    },
+    "pageLockedTitle": {
+        "message": "page locked🔒",
+        "description": "Title for the page locked dialog"
+    },
+    "pageLockedDialog": {
+        "message": "This website can't be accessed right now because you're in <b>productivity mode</b>. You can make a temporary exception if you <i>really</i> want to, but you should probably just go back to being productive. 💁‍♀️",
+        "description": "Text for the page locked dialog"
+    },
+    "beProductiveButtonText": {
+        "message": "be productive",
+        "description": "Text for the button to go back to being productive in the page locked dialog"
+    },
+    "beProductiveButtonHint": {
+        "message": "for now this just takes you back to your last unproductive tab (if you have one), maybe one day it'll be more interesting",
+        "description": "A hint to explain the be productive button in the page locked dialog, displayed on hover over the button"
+    },
+    "pageLockedOptionSeparatorText": {
+        "message": "or",
+        "description": "Text to separate the two options in the page locked dialog"
+    },
+    "unlockButtonText": {
+        "message": "unlock",
+        "description": "Text for the button to unlock the page in the page locked dialog"
+    },
+    "pageLockedTimeSelectorPrecursor": {
+        "message": "for",
+        "description": "Text to precede the time selector in the page locked dialog"
+    },
+    "fifteenMinutesText": {
+        "message": "15 min",
+        "description": "Text for the 15 minutes option in the time selector in the page locked dialog"
+    },
+    "oneHourText": {
+        "message": "1 hour",
+        "description": "Text for the 1 hour option in the time selector in the page locked dialog"
+    },
+    "oneDayText": {
+        "message": "1 day",
+        "description": "Text for the 1 day option in the time selector in the page locked dialog"
     }
 }

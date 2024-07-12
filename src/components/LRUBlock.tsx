@@ -7,15 +7,14 @@ import {
 import { FormOption } from './FormOption'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
-import { StorageKeys } from '~enums'
+import { SyncStorageKeys } from '~enums'
 import _useConfig from '~hooks/useConfig'
 import { Features } from '~config'
-import { useStorageWithDefaults } from '~hooks/useStorage'
-import { SyncKeyValues, defaultSyncStorage } from '~util/storage'
+import { useSyncStorage } from '~hooks/useStorage'
 
 export function LRUBlock({ useConfig = _useConfig }) {
 	const { config } = useConfig()
-	const storage = useStorageWithDefaults<SyncKeyValues>([StorageKeys.TAB_LRU_ENABLED], defaultSyncStorage)
+	const storage = useSyncStorage([SyncStorageKeys.TAB_LRU_ENABLED])
 
 	const lruTabsHint = chrome.i18n.getMessage('leastRecentlyUsedTabsHint')
 	let lruTabsLabel = chrome.i18n.getMessage('leastRecentlyUsedTabsLabel')
@@ -30,12 +29,12 @@ export function LRUBlock({ useConfig = _useConfig }) {
 						<>
 							<PersistedInput
 								component="checkbox"
-								storageKey={StorageKeys.TAB_LRU_ENABLED}
+								storageKey={SyncStorageKeys.TAB_LRU_ENABLED}
 							/>
 							{config.featureSupported(Features.TabGroups) && <PersistedInput
 								component="select"
-								storageKey={StorageKeys.TAB_LRU_DESTINATION}
-								disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
+								storageKey={SyncStorageKeys.TAB_LRU_DESTINATION}
+								disabled={!storage[SyncStorageKeys.TAB_LRU_ENABLED]}
 							>
 								<MenuItem value={'group'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationGroup')}</MenuItem>
 								<MenuItem value={'close'}>{chrome.i18n.getMessage('leastRecentlyUsedTabsDestinationClose')}</MenuItem>
@@ -48,7 +47,7 @@ export function LRUBlock({ useConfig = _useConfig }) {
 							label={lruTabsLabel}
 						/>
 					}
-					disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
+					disabled={!storage[SyncStorageKeys.TAB_LRU_ENABLED]}
 				/>
 				<FormControlLabel
 					control={
@@ -60,9 +59,10 @@ export function LRUBlock({ useConfig = _useConfig }) {
 							variant="filled"
 							type="number"
 							style={{ width: '10ch' }}
-							storageKey={StorageKeys.TAB_LRU_SIZE}
-							disabled={!storage[StorageKeys.TAB_LRU_ENABLED]}
+							storageKey={SyncStorageKeys.TAB_LRU_SIZE}
+							disabled={!storage[SyncStorageKeys.TAB_LRU_ENABLED]}
 							color="secondary"
+							// @ts-ignore
 							InputProps={{
 								inputProps: {
 									max: 255,

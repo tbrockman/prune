@@ -1,11 +1,11 @@
 import Accordion from '@mui/material/Accordion';
 import { ExemptPagesBlock } from "./ExemptPagesBlock";
 import ProductivityBlock from "./ProductivityBlock";
-import { AccordionDetails, AccordionSummary, Tooltip, Typography } from '@mui/material';
+import { AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import './AdvancedSettingsBlock.css';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import type React from 'react';
 import LabelWithHint from './LabelWithHint';
 import { useSyncStorage } from '~hooks/useStorage';
@@ -13,16 +13,16 @@ import { setSyncStorage } from '~util/storage';
 
 export function AdvancedSettingsBlock() {
     const {
-        [StorageKeys.SHOW_ADVANCED_SETTINGS]: showAdvancedSettings,
+        [SyncStorageKeys.SHOW_ADVANCED_SETTINGS]: showAdvancedSettings,
     } = useSyncStorage([
-        StorageKeys.SHOW_ADVANCED_SETTINGS,
+        SyncStorageKeys.SHOW_ADVANCED_SETTINGS,
     ]);
 
     const advancedSettingsLabel = chrome.i18n.getMessage('advancedSettingsLabel');
     const advancedSettingsHint = chrome.i18n.getMessage('advancedSettingsHint');
 
     const handleAdvancedSettingsChange = (_: React.SyntheticEvent, isExpanded: boolean) => {
-        setSyncStorage({ [StorageKeys.SHOW_ADVANCED_SETTINGS]: isExpanded })
+        setSyncStorage({ [SyncStorageKeys.SHOW_ADVANCED_SETTINGS]: isExpanded })
     }
 
     return (
@@ -37,7 +37,7 @@ export function AdvancedSettingsBlock() {
                 </AccordionSummary>
                 <AccordionDetails className='advanced-settings-details'>
                     <ExemptPagesBlock />
-                    {/* TODO: <ProductivityBlock /> */}
+                    <ProductivityBlock />
                 </AccordionDetails>
             </Accordion >
         </>

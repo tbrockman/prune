@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './FormOption.css';
 
 export function FormOption(props: any) {

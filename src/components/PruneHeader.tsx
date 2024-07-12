@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Link } from '@mui/material';
 import React from 'react';
 import PruneLogo from 'react:~assets/prune-banner.svg';
 
@@ -21,7 +21,7 @@ export function PruneHeader({ showLinkSection = true }: PruneHeaderProps) {
 			alignItems="center"
 			justifyContent="space-between"
 		>
-			<PruneLogo />
+			<Link href="https://prune.lol" target="_blank"><PruneLogo /></Link>
 			{showLinkSection && <LinkSection />}
 		</Grid>
 	);

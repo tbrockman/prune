@@ -1,5 +1,6 @@
 import { Storage } from '@plasmohq/storage';
 import { Features, config } from '~config';
+import { SyncStorageKeys } from '~enums';
 import type { KeyValues, Values } from '~types';
 
 class PruneStorage extends Storage {
@@ -65,32 +66,31 @@ const localStorage = new PruneStorage({
 	area: 'local',
 });
 
-export type SyncKey = 'auto-deduplicate' | 'auto-deduplicate-close' | 'auto-prune' | 'prune-threshold' | 'auto-group' | 'auto-group-threshold' | 'auto-group-name' | 'auto-prune-bookmark' | 'auto-prune-bookmark-name' | 'tab-lru-enabled' | 'tab-lru-size' | 'tab-lru-destination' | 'show-hints' | 'productivity-mode-enabled' | 'productivity-suspend-domains' | 'productivity-suspend-exemptions' | 'use-sync-storage' | 'productivity-last-productive-tab' | 'show-advanced-settings' | 'skip-exempt-pages' | 'exempt-pages';
 export type SyncStorage = {
-	[K in SyncKey]: SyncKeyValues[K];
+	[K in SyncStorageKeys]: SyncKeyValues[K];
 }
-export class SyncKeyValues implements Record<SyncKey, Values> {
-	'auto-deduplicate' = true;
-	'auto-deduplicate-close' = true;
-	'auto-prune' = true;
-	'prune-threshold' = config.featureSupported(Features.TabGroups) ? 7 : 4;
-	'auto-group' = true;
-	'auto-group-threshold' = 2;
-	'auto-group-name' = '🕒 old tabs';
-	'auto-prune-bookmark' = true;
-	'auto-prune-bookmark-name' = '🌱 pruned';
-	'tab-lru-enabled' = false;
-	'tab-lru-size' = 16;
-	'tab-lru-destination': 'group' | 'close' = 'group';
-	'show-hints' = true;
-	'productivity-mode-enabled' = false;
-	'productivity-suspend-domains' = config.productivity?.domains;
-	'productivity-suspend-exemptions' = {};
-	'use-sync-storage' = false;
-	'productivity-last-productive-tab' = 0;
-	'show-advanced-settings' = false;
-	'skip-exempt-pages' = false;
-	'exempt-pages' = config.exemptions || [];
+export class SyncKeyValues implements Record<SyncStorageKeys, Values> {
+	[SyncStorageKeys.AUTO_DEDUPLICATE] = true;
+	[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE] = true;
+	[SyncStorageKeys.AUTO_PRUNE] = true;
+	[SyncStorageKeys.AUTO_PRUNE_THRESHOLD] = config.featureSupported(Features.TabGroups) ? 7 : 4;
+	[SyncStorageKeys.AUTO_GROUP] = true;
+	[SyncStorageKeys.AUTO_GROUP_THRESHOLD] = 2;
+	[SyncStorageKeys.AUTO_GROUP_NAME] = '🕒 old tabs';
+	[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] = true;
+	[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME] = '🍃 pruned';
+	[SyncStorageKeys.TAB_LRU_ENABLED] = false;
+	[SyncStorageKeys.TAB_LRU_SIZE] = 16;
+	[SyncStorageKeys.TAB_LRU_DESTINATION] = 'group';
+	[SyncStorageKeys.SHOW_HINTS] = true;
+	[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED] = false;
+	[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS] = config.productivity?.domains;
+	[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS] = {};
+	[SyncStorageKeys.USE_SYNC_STORAGE] = false;
+	[SyncStorageKeys.PRODUCTIVITY_LAST_PRODUCTIVE_TAB] = 0;
+	[SyncStorageKeys.SHOW_ADVANCED_SETTINGS] = false;
+	[SyncStorageKeys.SKIP_EXEMPT_PAGES] = false;
+	[SyncStorageKeys.EXEMPT_PAGES] = config.exemptions || [];
 }
 
 const defaultSyncStorage = new SyncKeyValues() as SyncStorage;
@@ -116,22 +116,25 @@ export { defaultSyncStorage, PruneStorage, syncStorage, localStorage }; function
 	}, {});
 }
 
-export async function setSyncStorage<T extends Partial<Record<SyncKey, Values>>>(data: T): Promise<void> {
+export async function setSyncStorage<T extends Partial<SyncKeyValues>>(data: T): Promise<void> {
 	return await setStorage('sync', data);
 }
 
-export async function getSyncStorage<T extends SyncKey[]>(keys?: T): Promise<{
-	[K in T[number]]: SyncStorage[K];
-} | SyncStorage> {
+type ExtractKeys<T extends (keyof SyncStorage)[] | undefined> = T extends undefined
+	? SyncStorage
+	: { [K in T[number]]: SyncStorage[K] };
+
+export async function getSyncStorage<T extends (keyof SyncStorage)[] | undefined>(keys?: T): Promise<ExtractKeys<T>> {
 	if (!keys) {
-		return await getStorage('sync', defaultSyncStorage);
+		return await getStorage('sync', defaultSyncStorage) as ExtractKeys<T>;
 	}
 
-	return await getStorage('sync', keys.reduce((acc, key) => {
-		return { ...acc, [key]: defaultSyncStorage[key] };
-	}, {} as {
-		[K in T[number]]: SyncStorage[K];
-	}));
+	const selectedStorage = keys.reduce((acc, key) => {
+		acc[key] = defaultSyncStorage[key];
+		return acc;
+	}, {} as { [K in T[number]]: SyncStorage[K] });
+
+	return await getStorage('sync', selectedStorage) as ExtractKeys<T>;
 }
 
 export async function getStorage<T extends Record<string, Values>>(storageArea: chrome.storage.AreaName, keysWithDefaults: T): Promise<T> {

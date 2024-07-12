@@ -3,12 +3,12 @@ import { FormControlLabel } from '@mui/material'
 import { FormOption } from './FormOption'
 import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
-import { StorageKeys } from '~enums'
+import { SyncStorageKeys } from '~enums'
 import { useSyncStorage } from '~hooks/useStorage'
 
 export function RemoveTabsBlock() {
 	const storage = useSyncStorage([
-		StorageKeys.AUTO_PRUNE,
+		SyncStorageKeys.AUTO_PRUNE,
 	])
 	const closeTabsHint =
 		"prune can also clean up any pages you haven't looked at in awhile. don't worry, you won't miss them"
@@ -20,7 +20,7 @@ export function RemoveTabsBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.AUTO_PRUNE}
+						storageKey={SyncStorageKeys.AUTO_PRUNE}
 					/>
 				}
 				label={
@@ -41,8 +41,9 @@ export function RemoveTabsBlock() {
 						type="number"
 						color="secondary"
 						style={{ width: '8ch' }}
-						storageKey={StorageKeys.AUTO_PRUNE_THRESHOLD}
-						disabled={!storage[StorageKeys.AUTO_PRUNE]}
+						storageKey={SyncStorageKeys.AUTO_PRUNE_THRESHOLD}
+						disabled={!storage[SyncStorageKeys.AUTO_PRUNE]}
+						// @ts-ignore
 						InputProps={{
 							inputProps: {
 								max: 1024,

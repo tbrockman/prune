@@ -68,7 +68,7 @@ class TabTracker {
 
 		tabs.forEach((tab) => {
 			const now = Date.now();
-			const lastViewed = this.getTabLastViewed(tab.url ?? '') ?? now;
+			const lastViewed = this.getTabLastViewed(tab.url) ?? 0;
 			const passesThreshold = now - lastViewed >= threshold;
 
 			if (passesThreshold) {
@@ -80,8 +80,8 @@ class TabTracker {
 		return [exceeds, remaining];
 	}
 
-	getTabLastViewed(tabUrl: string): number | undefined {
-		return this.tabs.get(tabUrl);
+	getTabLastViewed(tabUrl: string | undefined): number | undefined {
+		return tabUrl ? this.tabs.get(tabUrl) : undefined;
 	}
 
 	getTabLastViewedWithDefault(tabUrl: string, def: number = 0) {
@@ -111,7 +111,7 @@ class TabTracker {
 		await this.saveStateAsync(this.tabsStorageKey)
 	}
 
-	async getClosedTabs(openTabs: Tab[]): Promise<Tab[]> {
+	getClosedTabs(openTabs: Tab[]): Tab[] {
 		const openTabSet: Set<string> = new Set();
 		const closedTabs: Tab[] = [];
 		console.debug('currently open tabs when retrieving closed tabs: ', openTabs);
@@ -124,18 +124,20 @@ class TabTracker {
 
 		console.debug('open tabs set: ', openTabSet);
 
-		this.tabs.forEach((tabId, url) => {
+		this.tabs.forEach((_, url) => {
 			if (!openTabSet.has(url)) {
-				console.debug('found no longer opened tab:', { url, tabId });
-				closedTabs.push(createTab({ url, id: tabId }));
+				const tab = createTab({ url })
+				closedTabs.push(tab);
 			}
 		});
+
+		console.debug('closed tabs:', closedTabs)
 
 		return closedTabs;
 	}
 
 	async filterClosedTabs(openTabs: Tab[]) {
-		const closedTabs = await this.getClosedTabs(openTabs);
+		const closedTabs = this.getClosedTabs(openTabs);
 		console.debug('found closed tabs', closedTabs);
 		await this.removeTabs(closedTabs);
 	}

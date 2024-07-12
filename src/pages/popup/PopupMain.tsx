@@ -6,7 +6,7 @@ import { DeduplicateBlock } from '~components/DeduplicateBlock';
 import { GroupTabsBlock } from '~components/GroupTabsBlock';
 import { RemoveTabsBlock } from '~components/RemoveTabsBlock';
 import { LRUBlock } from '~components/LRUBlock';
-import { TabStorageBlock } from '~components/TabStorageBlock';
+import { BookmarkStorageBlock } from '~components/BookmarkStorageBlock';
 import _useConfig from '~hooks/useConfig';
 import type { useConfigType } from '~hooks/useConfig';
 import { Features } from '~config';
@@ -27,7 +27,7 @@ const OptionsSection = ({ useConfig = _useConfig }: OptionsProps) => {
 			{config.featureSupported(Features.TabGroups) && <GroupTabsBlock />}
 			<RemoveTabsBlock />
 			<LRUBlock />
-			{config.featureSupported(Features.Bookmarks) && <TabStorageBlock />}
+			{config.featureSupported(Features.Bookmarks) && <BookmarkStorageBlock />}
 			<AdvancedSettingsBlock />
 		</>
 	);

@@ -3,23 +3,30 @@ import { Autocomplete, Box, Chip, FormControlLabel, Stack, TextField } from '@mu
 import { FormOption } from './FormOption';
 import LabelWithHint from './LabelWithHint';
 import PersistedInput from './PersistedInput';
-import { StorageKeys } from '~enums';
+import { SyncStorageKeys } from '~enums';
 import useConfig from '~hooks/useConfig';
 import { KeyShortcut } from './KeyShortcut';
 import { useSyncStorage } from '~hooks/useStorage';
+import { setSyncStorage } from '~util/storage';
+import { useTabs } from '~hooks/useTabs';
+import { getSuggestedUrls } from '~util/url';
 
 export default function ProductivityBlock() {
-
+	const tabs = useTabs();
 	const { config } = useConfig();
 	const {
-		[StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
-		[StorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
+		[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
+		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: exemptions,
 	} = useSyncStorage([
-		StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
-		StorageKeys.PRODUCTIVITY_MODE_ENABLED
+		SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
+		SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED,
+		SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS
 	]);
 	const productivityModeLabel = chrome.i18n.getMessage('productivityModeLabel');
 	const productivityModeHint = chrome.i18n.getMessage('productivityModeHint');
+	const productivityModeInputPlaceholder = chrome.i18n.getMessage('productivityModeInputPlaceholder');
+	const now = new Date().getTime();
 
 	return (
 		<FormOption>
@@ -27,7 +34,7 @@ export default function ProductivityBlock() {
 				control={
 					<PersistedInput
 						component="checkbox"
-						storageKey={StorageKeys.PRODUCTIVITY_MODE_ENABLED}
+						storageKey={SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED}
 					/>
 				}
 				label={
@@ -49,11 +56,11 @@ export default function ProductivityBlock() {
 					if (reason === 'blur') {
 						return;
 					}
-					chrome.storage.sync.set({ [StorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
+					setSyncStorage({ [SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: newValue });
 				}}
 				multiple
 				freeSolo
-				options={config.productivity?.domains ?? []}
+				options={getSuggestedUrls(tabs) ?? config.productivity?.domains ?? []}
 				disableClearable
 				filterSelectedOptions
 				autoHighlight
@@ -61,19 +68,26 @@ export default function ProductivityBlock() {
 				getOptionLabel={(option) => option}
 				defaultValue={[suspendedDomains ? suspendedDomains[0] : 'youtube']}
 				renderTags={(value: string[], getTagProps) =>
-					value.map((option: string, index: number) => (
-						<Chip
+					value.map((option: string, index: number) => {
+
+						let label: string | JSX.Element = option;
+						if (exemptions.hasOwnProperty(option) && exemptions[option] > now) {
+							label = (<><span>🔓</span><span>{label}</span></>)
+						}
+
+						return <Chip
 							variant="outlined"
-							label={option}
+							label={label}
 							{...getTagProps({ index })}
+							key={option + index}
 						/>
-					))
+					})
 				}
 				renderInput={(params) => (
 					<>
 						<TextField
 							variant="filled"
-							placeholder="block unproductive websites ↩"
+							placeholder={productivityModeInputPlaceholder}
 							{...params}
 							inputProps={{
 								...params.inputProps,

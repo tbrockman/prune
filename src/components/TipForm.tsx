@@ -1,10 +1,9 @@
-import React, { type ChangeEvent, useState, useRef } from 'react';
+import React, { type ChangeEvent, useState } from 'react';
 
 import { LoadingButton } from '@mui/lab';
 import {
 	Button,
 	ButtonGroup,
-	FormControl,
 	FormGroup,
 	InputAdornment,
 	InputBase,
