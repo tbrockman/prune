@@ -82,20 +82,6 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 								style={{ width: '26ch' }} />
 						}
 					/>
-					// <PersistedInput
-					// 	component="textfield"
-					// 	// @ts-ignore
-					// 	hiddenLabel
-					// 	size="small"
-					// 	placeholder="🍃 pruned"
-					// 	variant="filled"
-					// 	color="secondary"
-					// 	fullWidth={false}
-					// 	storageKey={SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME}
-					// 	disabled={
-					// 		!storage[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] || !tabStorageEnabled
-					// 	}
-					// />
 				}
 				label=""
 			/>
