@@ -1,7 +1,7 @@
 import Accordion from '@mui/material/Accordion';
 import { ExemptPagesBlock } from "./ExemptPagesBlock";
 import ProductivityBlock from "./ProductivityBlock";
-import { AccordionDetails, AccordionSummary, Tooltip, Typography } from '@mui/material';
+import { AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import './AdvancedSettingsBlock.css';

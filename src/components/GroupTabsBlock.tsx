@@ -6,7 +6,7 @@ import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
 import { SyncStorageKeys } from '~enums'
 import { useSyncStorage } from '~hooks/useStorage'
-import { SyncKeyValues, defaultSyncStorage, setSyncStorage } from '~util/storage'
+import { setSyncStorage } from '~util/storage'
 import { useTabGroups } from '~hooks/useTabGroups';
 
 const filter = createFilterOptions<string>();
