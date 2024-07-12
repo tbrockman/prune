@@ -79,6 +79,7 @@ export default function ProductivityBlock() {
 							variant="outlined"
 							label={label}
 							{...getTagProps({ index })}
+							key={option + index}
 						/>
 					})
 				}

@@ -18,8 +18,8 @@ class ProductivityPortHandler {
 
 	async handle(req, res) {
 		console.debug('received req', req)
-		let productiveTabs = await chrome.tabs.query({})
-		await this.tracker.init(productiveTabs)
+		let openTabs = await chrome.tabs.query({})
+		await this.tracker.init(openTabs)
 		let domainFilters = await this.storage.get<string[]>(
 			SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
 		)
@@ -29,26 +29,26 @@ class ProductivityPortHandler {
 		}
 		const extensionUrlPrefix = chrome.runtime.getURL('')
 		console.debug('extensionUrlPrefix', extensionUrlPrefix)
-		productiveTabs = productiveTabs.filter((tab) => {
+		openTabs = openTabs.filter((tab) => {
 			const matchingFilters = getMatchingFilters(
 				new URL(tab.url),
 				domainFilters,
 			)
 			return matchingFilters.length == 0 && !tab.url.startsWith(extensionUrlPrefix)
 		})
-		productiveTabs = productiveTabs.sort((a, b) => {
+		openTabs = openTabs.sort((a, b) => {
 			return (
 				this.tracker.getTabLastViewedWithDefault(a.url) -
 				this.tracker.getTabLastViewedWithDefault(b.url)
 			)
 		})
 
-		if (productiveTabs.length > 0) {
+		if (openTabs.length > 0) {
 			console.debug(
 				'focusing last productive tab',
-				productiveTabs.at(-1),
+				openTabs.at(-1),
 			)
-			chrome.tabs.update(productiveTabs.at(-1).id, { active: true })
+			chrome.tabs.update(openTabs.at(-1).id, { active: true })
 		} else {
 			console.debug('didnt find a productive tab to focus')
 		}

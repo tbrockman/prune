@@ -58,6 +58,7 @@ export function ExemptPagesBlock() {
                             variant="outlined"
                             label={option}
                             {...getTagProps({ index })}
+                            key={option + index}
                         />
                     ))
                 }

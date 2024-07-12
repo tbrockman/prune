@@ -1,7 +1,7 @@
 import { removeTrailingSlashes } from "./string";
 
 export function isSystemUrl(url: string) {
-    return url.startsWith('chrome') || url.startsWith('about') || url.startsWith('edge');
+    return url.startsWith('chrome') || url.startsWith('about') || url.startsWith('edge') || url.startsWith('moz-extension');
 }
 
 export function getSuggestedUrls(tabs: chrome.tabs.Tab[]) {
