@@ -49,9 +49,9 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 			<FormControlLabel
 				control={
 					<Autocomplete
+						autoHighlight
 						value={storage[SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME]}
 						onChange={async (_, newValue) => {
-							console.log('new val', newValue)
 							await setSyncStorage({ [SyncStorageKeys.AUTO_PRUNE_BOOKMARK_NAME]: newValue });
 						}}
 						filterOptions={(options, params) => {
@@ -77,6 +77,7 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 							<TextField
 								{...params}
 								hiddenLabel
+								placeholder='🍃 pruned'
 								variant="filled"
 								style={{ width: '26ch' }} />
 						}

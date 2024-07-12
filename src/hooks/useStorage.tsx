@@ -9,15 +9,13 @@ import { defaultSyncStorage } from "~util/storage";
 export function useSyncStorage<T extends (keyof SyncStorage)[]>(keys: T): {
     [K in T[number]]: SyncStorage[K];
 } {
-    return useStorageWithDefaults(keys, defaultSyncStorage)
-}
-
-export function useStorageWithDefaults<T extends Record<keyof T, Values>>(keys: (keyof T)[], defaults: T, storageArea: chrome.storage.AreaName = 'sync'): T {
     const obj = keys.reduce((acc, key) => {
-        return { ...acc, [key]: defaults[key] }
-    }, {} as T);
+        return { ...acc, [key]: defaultSyncStorage[key] }
+    }, {} as {
+        [K in T[number]]: SyncStorage[K];
+    });
 
-    return useStorage(obj, storageArea);
+    return useStorage(obj, 'sync');
 }
 
 export function useStorage<T extends Record<string, Values>>(keysWithDefaults: T, storageArea: chrome.storage.AreaName = 'sync'): T {

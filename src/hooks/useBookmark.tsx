@@ -49,19 +49,14 @@ export function useBookmarks() {
     const [bookmarks, setBookmarks] = useState<Bookmarks>({ folders: [], bookmarks: [] })
 
     useEffect(() => {
-        const fn = async () => {
-            setBookmarks(await getBookmarks())
-        }
-        fn()
-    }, [])
-
-    useEffect(() => {
         const listener = async () => {
             setBookmarks(await getBookmarks())
         }
         chrome.bookmarks.onCreated.addListener(listener)
         chrome.bookmarks.onRemoved.addListener(listener)
         chrome.bookmarks.onChanged.addListener(listener)
+
+        listener()
 
         return () => {
             chrome.bookmarks.onCreated.removeListener(listener)

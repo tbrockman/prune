@@ -15,8 +15,6 @@ const useStore = create<Store>((set) => ({
 			acc[command.name] = command;
 			return acc;
 		}, {} as Commands);
-
-		console.log('have commands:', commands)
 		set({ platformInfo, commands });
 	}
 }));

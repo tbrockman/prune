@@ -10,12 +10,11 @@ import LabelWithHint from './LabelWithHint'
 import { SyncStorageKeys } from '~enums'
 import _useConfig from '~hooks/useConfig'
 import { Features } from '~config'
-import { useStorageWithDefaults } from '~hooks/useStorage'
-import { SyncKeyValues, defaultSyncStorage } from '~util/storage'
+import { useSyncStorage } from '~hooks/useStorage'
 
 export function LRUBlock({ useConfig = _useConfig }) {
 	const { config } = useConfig()
-	const storage = useStorageWithDefaults<SyncKeyValues>([SyncStorageKeys.TAB_LRU_ENABLED], defaultSyncStorage)
+	const storage = useSyncStorage([SyncStorageKeys.TAB_LRU_ENABLED])
 
 	const lruTabsHint = chrome.i18n.getMessage('leastRecentlyUsedTabsHint')
 	let lruTabsLabel = chrome.i18n.getMessage('leastRecentlyUsedTabsLabel')

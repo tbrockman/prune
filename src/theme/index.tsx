@@ -1,4 +1,4 @@
-import { createTheme as muiCreateTheme } from '@mui/material/styles'
+import { createTheme as muiCreateTheme, withTheme } from '@mui/material/styles'
 
 import './index.css'
 
@@ -6,10 +6,10 @@ export default function createTheme() {
 	return muiCreateTheme({
 		palette: {
 			primary: {
-				main: '#51bc4e',
+				main: '#00a152',
 			},
 			secondary: {
-				main: '#472966',
+				main: '#330e62',
 			},
 			info: {
 				main: '#fff',
@@ -33,7 +33,11 @@ export default function createTheme() {
 						color: '#000',
 						border: '1px solid',
 						borderColor: 'rgba(0, 0, 0, 0.5)',
-						boxShadow: 'none'
+						boxShadow: 'none',
+						'&:hover': {
+							color: 'white',
+							backgroundColor: '#6fbf73',
+						},
 					},
 				},
 			},
@@ -77,26 +81,33 @@ export default function createTheme() {
 			MuiMenu: {
 				styleOverrides: {
 					paper: {
-						borderTopLeftRadius: 0,
-						borderTopRightRadius: 0,
+						borderRadius: 0,
 					},
 				},
+			},
+			MuiPaper: {
+				styleOverrides: {
+					root: {
+						borderRadius: 0,
+					},
+				}
 			},
 			MuiMenuItem: {
 				styleOverrides: {
 					root: {
-						'&:hover, &:visited': {
-							backgroundColor: '#eee'
-						},
 						'&.Mui-selected': {
-							backgroundColor: 'black !important',
+							backgroundColor: '#330e62',
 							color: 'white',
 						},
 						'&.Mui-selected:hover': {
-							backgroundColor: 'black',
+							backgroundColor: '#330e62',
 						},
 						'&:focus': {
-							backgroundColor: 'black !important',
+							backgroundColor: '#6e43a3 !important',
+							color: 'white',
+						},
+						'&:hover': {
+							backgroundColor: '#6e43a3',
 							color: 'white',
 						},
 					},
@@ -172,7 +183,26 @@ export default function createTheme() {
 						marginBottom: '4px',
 						marginLeft: '0',
 						marginTop: '0',
+						maxWidth: '30ch',
 					},
+					option: {
+						'&[aria-selected="true"]': {
+							backgroundColor: '#330e62 !important',
+							color: 'white',
+						},
+						'&.Mui-focused': {
+							backgroundColor: '#6e43a3',
+							color: 'white',
+						}
+					},
+					listbox: {
+						paddingTop: 0,
+						paddingBottom: 0,
+						'& > .MuiAutocomplete-option.Mui-focused': {
+							backgroundColor: '#6e43a3',
+							color: 'white',
+						}
+					}
 				},
 			},
 			MuiSvgIcon: {

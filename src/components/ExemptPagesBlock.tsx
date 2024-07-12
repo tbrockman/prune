@@ -5,9 +5,11 @@ import { SyncStorageKeys } from "~enums";
 import LabelWithHint from "./LabelWithHint";
 import { useSyncStorage } from "~hooks/useStorage";
 import { setSyncStorage } from "~util/storage";
+import { useTabs } from "~hooks/useTabs";
+import { getSuggestedUrls } from "~util/url";
 
 export function ExemptPagesBlock() {
-
+    const tabs = useTabs();
     const storage = useSyncStorage([
         SyncStorageKeys.SKIP_EXEMPT_PAGES,
         SyncStorageKeys.EXEMPT_PAGES
@@ -44,7 +46,7 @@ export function ExemptPagesBlock() {
                 }}
                 multiple
                 freeSolo
-                options={[]} // TODO: pre-fill options with currently open pages
+                options={getSuggestedUrls(tabs) || []} // TODO: pre-fill options with currently open pages
                 disableClearable
                 filterSelectedOptions
                 autoHighlight

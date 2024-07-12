@@ -8,14 +8,16 @@ import useConfig from '~hooks/useConfig';
 import { KeyShortcut } from './KeyShortcut';
 import { useSyncStorage } from '~hooks/useStorage';
 import { setSyncStorage } from '~util/storage';
+import { useTabs } from '~hooks/useTabs';
+import { getSuggestedUrls } from '~util/url';
 
 export default function ProductivityBlock() {
-
+	const tabs = useTabs();
 	const { config } = useConfig();
 	const {
 		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS]: suspendedDomains,
 		[SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED]: productivityModeEnabled,
-		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: exemptions
+		[SyncStorageKeys.PRODUCTIVITY_SUSPEND_EXEMPTIONS]: exemptions,
 	} = useSyncStorage([
 		SyncStorageKeys.PRODUCTIVITY_SUSPEND_DOMAINS,
 		SyncStorageKeys.PRODUCTIVITY_MODE_ENABLED,
@@ -23,6 +25,7 @@ export default function ProductivityBlock() {
 	]);
 	const productivityModeLabel = chrome.i18n.getMessage('productivityModeLabel');
 	const productivityModeHint = chrome.i18n.getMessage('productivityModeHint');
+	const productivityModeInputPlaceholder = chrome.i18n.getMessage('productivityModeInputPlaceholder');
 	const now = new Date().getTime();
 
 	return (
@@ -57,7 +60,7 @@ export default function ProductivityBlock() {
 				}}
 				multiple
 				freeSolo
-				options={config.productivity?.domains ?? []}
+				options={getSuggestedUrls(tabs) ?? config.productivity?.domains ?? []}
 				disableClearable
 				filterSelectedOptions
 				autoHighlight
@@ -83,7 +86,7 @@ export default function ProductivityBlock() {
 					<>
 						<TextField
 							variant="filled"
-							placeholder="block unproductive websites ↩"
+							placeholder={productivityModeInputPlaceholder}
 							{...params}
 							inputProps={{
 								...params.inputProps,

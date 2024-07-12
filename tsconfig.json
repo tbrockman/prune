@@ -20,6 +20,8 @@
 		"baseUrl": ".",
 		"module": "ES6",
 		"target": "ES6",
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
 	},
 }
