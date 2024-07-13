@@ -1,4 +1,4 @@
-import { createTheme as muiCreateTheme, withTheme } from '@mui/material/styles'
+import { createTheme as muiCreateTheme } from '@mui/material/styles'
 
 import './index.css'
 
@@ -36,7 +36,7 @@ export default function createTheme() {
 						boxShadow: 'none',
 						'&:hover': {
 							color: 'white',
-							backgroundColor: '#6fbf73',
+							backgroundColor: '#3e3e3e',
 						},
 					},
 				},
