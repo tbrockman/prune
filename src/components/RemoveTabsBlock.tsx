@@ -10,9 +10,9 @@ export function RemoveTabsBlock() {
 	const storage = useSyncStorage([
 		SyncStorageKeys.AUTO_PRUNE,
 	])
-	const closeTabsHint =
-		"prune can also clean up any pages you haven't looked at in awhile. don't worry, you won't miss them"
-	const closeTabsLabel = 'close old tabs after'
+	const closeTabsHint = chrome.i18n.getMessage('closeTabsHint')
+	const closeTabsLabel = chrome.i18n.getMessage('closeTabsLabel')
+	const closeTabsTimeUnit = chrome.i18n.getMessage('closeTabsTimeUnit')
 
 	return (
 		<FormOption>
@@ -52,7 +52,7 @@ export function RemoveTabsBlock() {
 						}}
 					/>
 				}
-				label="days 🗑️"
+				label={closeTabsTimeUnit}
 			/>
 		</FormOption>
 	)

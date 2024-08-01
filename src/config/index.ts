@@ -48,6 +48,8 @@ const configs: { [key: string]: IPruneConfig } = {
 		},
 		exemptions: ['bing', 'docs.google'],
 		productivity: {
+			// TODO: for domains like youtube and reddit
+			// maybe determine whether the contents are actually productive or not
 			domains: [
 				'youtube',
 				'facebook',
@@ -55,7 +57,6 @@ const configs: { [key: string]: IPruneConfig } = {
 				'reddit',
 				'tiktok',
 				'buzzfeed',
-				'amazon',
 				'netflix',
 				'news.ycombinator',
 				'hbomax',

@@ -32,6 +32,8 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 		(storage[SyncStorageKeys.TAB_LRU_ENABLED] && !config.featureSupported(Features.TabGroups));
 	const bookmarkHint = chrome.i18n.getMessage('bookmarkHint');
 	const bookmarkLabel = chrome.i18n.getMessage('bookmarkLabel');
+	const defaultBookmarkName = '🍃 pruned'
+	const options = Array.from(new Set(bookmarks.folders.map((folder) => folder.title)).add(defaultBookmarkName));
 
 	return (
 		<FormOption>
@@ -66,7 +68,7 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 						}}
 						getOptionLabel={(option) => option}
 						fullWidth
-						options={bookmarks.folders.map((folder) => folder.title)}
+						options={options}
 						color="secondary"
 						disabled={
 							!storage[SyncStorageKeys.AUTO_PRUNE_BOOKMARK] || !tabStorageEnabled
@@ -77,7 +79,7 @@ export function BookmarkStorageBlock({ useConfig = _useConfig }) {
 							<TextField
 								{...params}
 								hiddenLabel
-								placeholder='🍃 pruned'
+								placeholder={defaultBookmarkName}
 								variant="filled"
 								style={{ width: '26ch' }} />
 						}

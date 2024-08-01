@@ -58,6 +58,7 @@ body {
 	padding: 16px;
 	max-width: fit-content;
 	overflow-x: auto;
+	background-color: white;
 }
 
 .form-group-section.options-form-group {

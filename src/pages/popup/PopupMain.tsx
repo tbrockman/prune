@@ -13,6 +13,8 @@ import { Features } from '~config';
 import { AdvancedSettingsBlock } from '~components/AdvancedSettingsBlock';
 // import StorageAreaBlock from '~components/StorageAreaBlock';
 
+import './PopupMain.css';
+
 type OptionsProps = {
 	useConfig?: () => useConfigType;
 };
@@ -41,7 +43,7 @@ export function PopupMain() {
 	const aboutTextEnd = chrome.i18n.getMessage('aboutTextEnd');
 
 	return (
-		<Grid width="100%">
+		<Grid width="100%" className='prune-main'>
 			<PruneHeader />
 			<Typography className="section-title">{optionsTitle}</Typography>
 			<FormGroup ref={ref} className="form-group-section options-form-group">

@@ -1,0 +1,350 @@
+{
+    "beProductiveButtonHint": {
+        "message": "pour l'instant, cela vous ramène simplement à votre dernier onglet improductif (si vous en avez un), peut-être qu'un jour ce sera plus intéressant",
+        "description": "A hint to explain the be productive button in the page locked dialog, displayed on hover over the button"
+    },
+    "hideTabsLabel": {
+        "message": "cacher les onglets après",
+        "description": "Visible label displayed next to a check to enable feature to hide/group tabs after a certain time, with a box to its other side to enter the time (followed by another label)"
+    },
+    "fifteenMinutesText": {
+        "message": "15 min",
+        "description": "Text for the 15 minutes option in the time selector in the page locked dialog"
+    },
+    "tipButtonHint": {
+        "message": "je vais probablement survivre sans cela, mais j'apprécie toujours le soutien!",
+        "description": "A hint to happily elaborate that tips are not necessary, but still appreciated, displayed on hover over the tip button"
+    },
+    "oneHourText": {
+        "message": "1 heure",
+        "description": "Text for the 1 hour option in the time selector in the page locked dialog"
+    },
+    "closeTabsHint": {
+        "message": "$APP_NAME$ peut aussi nettoyer les pages que vous n'avez pas regardées depuis un moment (ne vous inquiétez pas, elles ne vous manqueront pas)",
+        "description": "A hint to explain the close tabs feature to the user, displayed on hover over the close tabs label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "oneDayText": {
+        "message": "1 jour",
+        "description": "Text for the 1 day option in the time selector in the page locked dialog"
+    },
+    "closeDuplicateLabel": {
+        "message": "fermer les doublons lors de la navigation vers des onglets existants $BROOM_EMOJI$",
+        "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them",
+        "placeholders": {
+            "broom_emoji": {
+                "content": "🧹"
+            }
+        }
+    },
+    "aboutTextEnd": {
+        "message": "pour vous aider à rendre votre navigation moins encombrée et plus productive.",
+        "description": "Text to conclude the about section of the extension popup (preceded by the creator's name)"
+    },
+    "reviewButtonText": {
+        "message": "$STAR_EMOJI$ laisser un avis",
+        "description": "Text for the button to leave a review for the extension",
+        "placeholders": {
+            "star_emoji": {
+                "content": "⭐"
+            }
+        }
+    },
+    "hideTabsHint": {
+        "message": "vous pouvez choisir de ranger vos onglets négligés jusqu'à ce que vous soyez prêt à les revoir.",
+        "description": "A hint to explain the hide tabs feature to the user, displayed on hover over the hide tabs label"
+    },
+    "productivityModeHint": {
+        "message": "contribue à rendre votre navigation plus productive en vous empêchant d'ouvrir des sites web qui vous font perdre du temps (de votre choix)",
+        "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
+    },
+    "groupNameHint": {
+        "message": "si le groupe n'existe pas encore, il sera créé pour vous.",
+        "description": "A hint to explain more about the group name feature to the user, displayed on hover over the group name label"
+    },
+    "beProductiveButtonText": {
+        "message": "être productif",
+        "description": "Text for the button to go back to being productive in the page locked dialog"
+    },
+    "deduplicateLabel": {
+        "message": "concentrez-vous sur les onglets existants au lieu d'en ouvrir de nouveaux $RECYCLE_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the tab focus+deduplicate feature",
+        "placeholders": {
+            "recycle_emoji": {
+                "content": "♻️"
+            }
+        }
+    },
+    "closeTabsLabel": {
+        "message": "fermez les anciens onglets après",
+        "description": "Visible label displayed next to a checkbox to enable/disable the feature to close tabs after a certain time, with a box to its other side to enter the time"
+    },
+    "shareTooltipTitle": {
+        "message": "partager",
+        "description": "Tooltip shown when hovering over the share icon button"
+    },
+    "leastRecentlyUsedTabsLabel": {
+        "message": "les onglets les moins récemment utilisés ne sont utilisés qu'une seule fois",
+        "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
+    },
+    "deduplicateHint": {
+        "message": "lorsqu'il est activé, si vous essayez de naviguer vers un site web que vous avez déjà ouvert, il annulera la navigation et vous montrera l'onglet d'origine à la place, $APP_NAME$ annule la navigation et affiche l'onglet d'origine à la place (sauf s'il s'agit d'un nouvel onglet vierge, auquel cas nous le fermons pour vous).",
+        "description": "A hint to explain the tab deduplicate feature to the user, displayed on hover over the deduplicate label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "exemptPagesLabel": {
+        "message": "ne pas exécuter $APP_NAME$ sur certains sites web $SHIELD_EMOJI$",
+        "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning",
+        "placeholders": {
+            "shield_emoji": {
+                "content": "🛡️"
+            },
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "optionsTitle": {
+        "message": "options$PLANT_POT_EMOJI$",
+        "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension",
+        "placeholders": {
+            "plant_pot_emoji": {
+                "content": "🪴"
+            }
+        }
+    },
+    "exemptPagesHint": {
+        "message": "si vous souhaitez $APP_NAME$ laisser vos onglets seuls pour des sites web spécifiques, vous pouvez les ajouter ici",
+        "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "unlockButtonText": {
+        "message": "déverrouiller",
+        "description": "Text for the button to unlock the page in the page locked dialog"
+    },
+    "exemptPagesInputPlaceholder": {
+        "message": "préserver la sécurité des pages",
+        "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
+    },
+    "linkCopiedToClipboardError": {
+        "message": "erreur de copie dans le presse-papiers/partage",
+        "description": "A message to popover the share button when the link for sharing fails to be copied to the clipboard"
+    },
+    "pageLockedOptionSeparatorText": {
+        "message": "ou",
+        "description": "Text to separate the two options in the page locked dialog"
+    },
+    "useSyncStorageHint": {
+        "message": "utiliser le même historique d'onglets sur tous vos appareils, en conservant les onglets lorsque vous les avez consultés ailleurs (remarque: peut ne pas fonctionner comme prévu en fonction du volume/de l'activité des onglets).",
+        "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
+    },
+    "leastRecentlyUsedTabsHint": {
+        "message": "vous pouvez laisser $APP_NAME$ regrouper ou fermer vos onglets les plus anciens une fois que vous avez dépassé votre limite",
+        "description": "A hint to explain the least recently used tabs feature to the user, displayed on hover over the least recently used tabs label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "pageLockedTimeSelectorPrecursor": {
+        "message": "pour",
+        "description": "Text to precede the time selector in the page locked dialog"
+    },
+    "advancedSettingsLabel": {
+        "message": "paramètres avancés $TESTTUBE_EMOJI$",
+        "description": "A label to toggle the advanced settings section in the options",
+        "placeholders": {
+            "testtube_emoji": {
+                "content": "🧪"
+            }
+        }
+    },
+    "advancedSettingsHint": {
+        "message": "si vous vous sentez courageux, vous pouvez tester certaines des fonctionnalités les plus expérimentales de $APP_NAME$",
+        "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "sharePruneTitle": {
+        "message": "Partager $APP_NAME$",
+        "description": "Title for the share prune dialog",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "productivityModeLabel": {
+        "message": "activer le mode productivité $ROCKET_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature",
+        "placeholders": {
+            "rocket_emoji": {
+                "content": "🚀"
+            }
+        }
+    },
+    "closeTabsTimeUnit": {
+        "message": "jours $TRASHCAN_EMOJI$",
+        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of days a tab can be open without activity before it is closed",
+        "placeholders": {
+            "trashcan_emoji": {
+                "content": "🗑️"
+            }
+        }
+    },
+    "linkCopiedToClipboardSuccess": {
+        "message": "lien copié dans le presse-papiers!",
+        "description": "A message to popover the share button when the link for sharing is successfully copied to the clipboard"
+    },
+    "leastRecentlyUsedTabsDestinationGroup": {
+        "message": "groupe",
+        "description": "Value of a select option to choose to send least recently used tabs to a tab group"
+    },
+    "leastRecentlyUsedTabsDestinationClose": {
+        "message": "fermer",
+        "description": "Value of a select option to choose to close least recently used tabs"
+    },
+    "sharePruneText": {
+        "message": "Aider un ami à élaguer ses onglets",
+        "description": "Text for the share prune dialog"
+    },
+    "pageLockedTitle": {
+        "message": "page verrouillée$LOCK_EMOJI$",
+        "description": "Title for the page locked dialog",
+        "placeholders": {
+            "lock_emoji": {
+                "content": "🔒"
+            }
+        }
+    },
+    "pageLockedDialog": {
+        "message": "Ce site web n'est pas accessible pour l'instant car vous êtes en mode <b>productivité</b>. Vous pouvez faire une exception temporaire si vous <i>voulez vraiment</i> le faire, mais vous devriez probablement retourner à votre mode de productivité. 💁‍♀️",
+        "description": "Text for the page locked dialog"
+    },
+    "groupNameDefault": {
+        "message": "$STOPWATCH_EMOJI$ anciens onglets",
+        "description": "The default value for the group name input box, to be used as a group for storing tabs which the user hasn't interacted with in awhile",
+        "placeholders": {
+            "stopwatch_emoji": {
+                "content": "🕒"
+            }
+        }
+    },
+    "creatorTooltipTitle": {
+        "message": "créateur",
+        "description": "Tooltip shown when hovering over the creator icon button"
+    },
+    "bookmarkLabel": {
+        "message": "marque-page des onglets fermés sous",
+        "description": "Visible label displayed next to a checkbox to enable/disable the bookmark feature, with a box to its other side to enter the name of the folder"
+    },
+    "useSyncStorageLabel": {
+        "message": "synchroniser l'activité des onglets sur tous vos appareils $SYNC_EMOJI$",
+        "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices",
+        "placeholders": {
+            "sync_emoji": {
+                "content": "🔄"
+            }
+        }
+    },
+    "groupNameLabel": {
+        "message": "jours dans un groupe nommé",
+        "description": "Visible label succeeding a box to enter the number of days to group tabs, followed by a box to enter the name of the group"
+    },
+    "githubTooltipTitle": {
+        "message": "github",
+        "description": "Tooltip shown when hovering over the GitHub icon button"
+    },
+    "leastRecentlyUsedTabsLabelAction": {
+        "message": "fermer",
+        "description": "Action text (close) prefixing the leastRecentlyUsedTabsLabel when there is no tab grouping feature support in the browser"
+    },
+    "aboutTitle": {
+        "message": "à propos$BOOKS_EMOJI$",
+        "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension",
+        "placeholders": {
+            "books_emoji": {
+                "content": "📚"
+            }
+        }
+    },
+    "closeDuplicateHint": {
+        "message": "si vous naviguez de \"$1\" à \"$2\" dans un onglet, et que \"$2\" était déjà ouvert dans un autre, l'onglet \"$1\" serait fermé",
+        "description": "A hint to explain the close duplicate feature to the user, displayed on hover over the close duplicate label",
+        "placeholders": {
+            "website_b": {
+                "content": "$2",
+                "example": "xyz.com"
+            },
+            "website_a": {
+                "content": "$1",
+                "example": "abc.com"
+            }
+        }
+    },
+    "tipButtonText": {
+        "message": "$HEART_EMOJI$ donner un conseil à l'auteur",
+        "description": "Text for the button to send a monetary donation to the author of the extension",
+        "placeholders": {
+            "heart_emoji": {
+                "content": "❤️"
+            }
+        }
+    },
+    "reviewButtonHint": {
+        "message": "mais s'il vous plaît, ne vous moquez pas de mon amour pour les ombres des boîtes $PUPPY_DOG_EYES_EMOJI$",
+        "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button",
+        "placeholders": {
+            "puppy_dog_eyes_emoji": {
+                "content": "🥺"
+            }
+        }
+    },
+    "bookmarkHint": {
+        "message": "si vous avez peur de perdre vos onglets pour toujours, $APP_NAME$ vous pouvez les enregistrer en tant que signets avant de les fermer",
+        "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "leastRecentlyUsedTabsSizeLabel": {
+        "message": "les onglets sont ouverts $GRAPH_EMOJI$",
+        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken",
+        "placeholders": {
+            "graph_emoji": {
+                "content": "📈"
+            }
+        }
+    },
+    "aboutTextStart": {
+        "message": "est une extension de navigateur gratuite et open-source créée par",
+        "description": "Text to introduce the creator of the extension in the about section of the extension popup (followed by the creator's name)"
+    },
+    "productivityModeInputPlaceholder": {
+        "message": "bloquer les sites web improductifs $ENTER_SYMBOL$",
+        "description": "Placeholder text for the input box to enter URLs to block in productivity mode",
+        "placeholders": {
+            "enter_symbol": {
+                "content": "↩"
+            }
+        }
+    }
+}

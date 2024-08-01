@@ -1,19 +1,44 @@
 {
     "deduplicateHint": {
-        "message": "when turned on, if you try to navigate to a website you already have open, prune will undo the navigation and show you the original tab instead (unless it was a blank new tab, in which case we close it for you)",
-        "description": "A hint to explain the tab deduplicate feature to the user, displayed on hover over the deduplicate label"
+        "message": "when turned on, if you try to navigate to a website you already have open, $APP_NAME$ will undo the navigation and show you the original tab instead (unless it was a blank new tab, in which case we close it for you)",
+        "description": "A hint to explain the tab deduplicate feature to the user, displayed on hover over the deduplicate label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "deduplicateLabel": {
-        "message": "focus existing tabs instead of opening new ones ♻️",
-        "description": "Visible label displayed next to a checkbox to enable/disable the tab focus+deduplicate feature"
+        "message": "focus existing tabs instead of opening new ones $RECYCLE_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the tab focus+deduplicate feature",
+        "placeholders": {
+            "recycle_emoji": {
+                "content": "♻️"
+            }
+        }
     },
     "closeDuplicateLabel": {
-        "message": "close duplicates when navigating to existing tabs 🧹",
-        "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them"
+        "message": "close duplicates when navigating to existing tabs $BROOM_EMOJI$",
+        "description": "Visible label displayed next to a checkbox which is a child of the deduplicate checkbox, to enable/disable closing of duplicate tabs after focusing them",
+        "placeholders": {
+            "broom_emoji": {
+                "content": "🧹"
+            }
+        }
     },
     "closeDuplicateHint": {
-        "message": "if you were navigating from \"abc.com\" to \"xyz.com\" in one tab, and \"xyz.com\" was already open in another, the \"abc.com\" tab would be closed",
-        "description": "A hint to explain the close duplicate feature to the user, displayed on hover over the close duplicate label"
+        "message": "if you were navigating from \"$1\" to \"$2\" in one tab, and \"$2\" was already open in another, the \"$1\" tab would be closed",
+        "description": "A hint to explain the close duplicate feature to the user, displayed on hover over the close duplicate label",
+        "placeholders": {
+            "website_a": {
+                "content": "$1",
+                "example": "abc.com"
+            },
+            "website_b": {
+                "content": "$2",
+                "example": "xyz.com"
+            }
+        }
     },
     "hideTabsLabel": {
         "message": "hide tabs after",
@@ -32,8 +57,35 @@
         "description": "A hint to explain more about the group name feature to the user, displayed on hover over the group name label"
     },
     "groupNameDefault": {
-        "message": "🕒 old tabs",
-        "description": "The default value for the group name input box, to be used as a group for storing tabs which the user hasn't interacted with in awhile"
+        "message": "$STOPWATCH_EMOJI$ old tabs",
+        "description": "The default value for the group name input box, to be used as a group for storing tabs which the user hasn't interacted with in awhile",
+        "placeholders": {
+            "stopwatch_emoji": {
+                "content": "🕒"
+            }
+        }
+    },
+    "closeTabsHint": {
+        "message": "$APP_NAME$ can also clean up any pages you haven't looked at in awhile (don't worry, you won't miss them)",
+        "description": "A hint to explain the close tabs feature to the user, displayed on hover over the close tabs label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
+    "closeTabsLabel": {
+        "message": "close old tabs after",
+        "description": "Visible label displayed next to a checkbox to enable/disable the feature to close tabs after a certain time, with a box to its other side to enter the time"
+    },
+    "closeTabsTimeUnit": {
+        "message": "days $TRASHCAN_EMOJI$",
+        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of days a tab can be open without activity before it is closed",
+        "placeholders": {
+            "trashcan_emoji": {
+                "content": "🗑️"
+            }
+        }
     },
     "linkCopiedToClipboardSuccess": {
         "message": "link copied to clipboard!",
@@ -44,8 +96,13 @@
         "description": "A message to popover the share button when the link for sharing fails to be copied to the clipboard"
     },
     "sharePruneTitle": {
-        "message": "Share prune",
-        "description": "Title for the share prune dialog"
+        "message": "Share $APP_NAME$",
+        "description": "Title for the share prune dialog",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "sharePruneText": {
         "message": "Help a friend prune their tabs",
@@ -72,12 +129,22 @@
         "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
     },
     "leastRecentlyUsedTabsSizeLabel": {
-        "message": "tabs are open 📈",
-        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken"
+        "message": "tabs are open $GRAPH_EMOJI$",
+        "description": "Visible label to follow the value entered in a number input to indicate the limit on number of tabs that can be open before the user chosen action is taken",
+        "placeholders": {
+            "graph_emoji": {
+                "content": "📈"
+            }
+        }
     },
     "leastRecentlyUsedTabsHint": {
-        "message": "you can let prune group or close your oldest tabs once you go over your limit",
-        "description": "A hint to explain the least recently used tabs feature to the user, displayed on hover over the least recently used tabs label"
+        "message": "you can let $APP_NAME$ group or close your oldest tabs once you go over your limit",
+        "description": "A hint to explain the least recently used tabs feature to the user, displayed on hover over the least recently used tabs label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "leastRecentlyUsedTabsDestinationGroup": {
         "message": "group",
@@ -92,16 +159,31 @@
         "description": "Visible label displayed next to a checkbox to enable/disable the bookmark feature, with a box to its other side to enter the name of the folder"
     },
     "bookmarkHint": {
-        "message": "if you're afraid of losing your tabs forever, prune can store them as bookmarks before closing them",
-        "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label"
+        "message": "if you're afraid of losing your tabs forever, $APP_NAME$ can store them as bookmarks before closing them",
+        "description": "A hint to explain the bookmark feature to the user, displayed on hover over the bookmark label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "optionsTitle": {
-        "message": "options🪴",
-        "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension"
+        "message": "options$PLANT_POT_EMOJI$",
+        "description": "Title for the 'options' section in the extension popup, which contains all the settings to configure the extension",
+        "placeholders": {
+            "plant_pot_emoji": {
+                "content": "🪴"
+            }
+        }
     },
     "aboutTitle": {
-        "message": "about📚",
-        "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension"
+        "message": "about$BOOKS_EMOJI$",
+        "description": "Title for the 'about' section in the extension popup, which contains information about the extension and its creator, as well as buttons to tip the author and review the extension",
+        "placeholders": {
+            "books_emoji": {
+                "content": "📚"
+            }
+        }
     },
     "aboutTextStart": {
         "message": "is a free, open-source browser extension made by",
@@ -112,64 +194,122 @@
         "description": "Text to conclude the about section of the extension popup (preceded by the creator's name)"
     },
     "tipButtonText": {
-        "message": "❤️ tip the author",
-        "description": "Text for the button to send a monetary donation to the author of the extension"
+        "message": "$HEART_EMOJI$ tip the author",
+        "description": "Text for the button to send a monetary donation to the author of the extension",
+        "placeholders": {
+            "heart_emoji": {
+                "content": "❤️"
+            }
+        }
     },
     "tipButtonHint": {
         "message": "i'll probably survive without it, but still appreciate the support!",
         "description": "A hint to happily elaborate that tips are not necessary, but still appreciated, displayed on hover over the tip button"
     },
     "reviewButtonText": {
-        "message": "🌟 leave a review",
-        "description": "Text for the button to leave a review for the extension"
+        "message": "$STAR_EMOJI$ leave a review",
+        "description": "Text for the button to leave a review for the extension",
+        "placeholders": {
+            "star_emoji": {
+                "content": "⭐"
+            }
+        }
     },
     "reviewButtonHint": {
-        "message": "but please don't make fun of how much i like box shadows 🥺",
-        "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button"
+        "message": "but please don't make fun of how much i like box shadows $PUPPY_DOG_EYES_EMOJI$",
+        "description": "A hint to jokingly be vulnerable in encouraging users for primarily positive feedback, displayed on hover over the review button",
+        "placeholders": {
+            "puppy_dog_eyes_emoji": {
+                "content": "🥺"
+            }
+        }
     },
     "useSyncStorageHint": {
         "message": "use the same tab history across all your devices, keeping tabs around when you've viewed them elsewhere (note: may not work as intended depending on tab volume/activity)",
         "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
     },
     "useSyncStorageLabel": {
-        "message": "sync tab activity across your devices 🔄",
-        "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices"
+        "message": "sync tab activity across your devices $SYNC_EMOJI$",
+        "description": "A label to enable/disable the experimental feature to synchronize tab activity across devices",
+        "placeholders": {
+            "sync_emoji": {
+                "content": "🔄"
+            }
+        }
     },
     "advancedSettingsLabel": {
-        "message": "advanced settings 🧪",
-        "description": "A label to toggle the advanced settings section in the options"
+        "message": "advanced settings $TESTTUBE_EMOJI$",
+        "description": "A label to toggle the advanced settings section in the options",
+        "placeholders": {
+            "testtube_emoji": {
+                "content": "🧪"
+            }
+        }
     },
     "advancedSettingsHint": {
-        "message": "if you're feeling brave, you can check out some of the more experimental features of prune",
-        "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label"
+        "message": "if you're feeling brave, you can check out some of the more experimental features of $APP_NAME$",
+        "description": "A hint to explain the advanced settings feature to the user, displayed on hover over the advanced settings label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "exemptPagesLabel": {
-        "message": "don't run prune on certain websites 🛡️",
-        "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning"
+        "message": "don't run $APP_NAME$ on certain websites $SHIELD_EMOJI$",
+        "description": "Visible label displayed next to a box to enter a list of URLs to exempt from the tab pruning",
+        "placeholders": {
+            "shield_emoji": {
+                "content": "🛡️"
+            },
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "exemptPagesHint": {
-        "message": "if you want prune to leave your tabs alone for specific websites, you can add them here",
-        "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label"
+        "message": "if you want $APP_NAME$ to leave your tabs alone for specific websites, you can add them here",
+        "description": "A hint to explain the exempt pages feature to the user, displayed on hover over the exempt pages label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     },
     "exemptPagesInputPlaceholder": {
         "message": "keep pages safe ↩",
         "description": "Placeholder text for the input box to enter URLs to exempt from the tab pruning"
     },
     "productivityModeLabel": {
-        "message": "turn on productivity mode 🚀",
-        "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature"
+        "message": "turn on productivity mode $ROCKET_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the productivity mode feature",
+        "placeholders": {
+            "rocket_emoji": {
+                "content": "🚀"
+            }
+        }
     },
     "productivityModeHint": {
         "message": "helps keep your browsing productive by making it harder for you to open time-wasting websites (of your choosing)",
         "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
     },
     "productivityModeInputPlaceholder": {
-        "message": "block unproductive websites ↩",
-        "description": "Placeholder text for the input box to enter URLs to block in productivity mode"
+        "message": "block unproductive websites $ENTER_SYMBOL$",
+        "description": "Placeholder text for the input box to enter URLs to block in productivity mode",
+        "placeholders": {
+            "enter_symbol": {
+                "content": "↩"
+            }
+        }
     },
     "pageLockedTitle": {
-        "message": "page locked🔒",
-        "description": "Title for the page locked dialog"
+        "message": "page locked$LOCK_EMOJI$",
+        "description": "Title for the page locked dialog",
+        "placeholders": {
+            "lock_emoji": {
+                "content": "🔒"
+            }
+        }
     },
     "pageLockedDialog": {
         "message": "This website can't be accessed right now because you're in <b>productivity mode</b>. You can make a temporary exception if you <i>really</i> want to, but you should probably just go back to being productive. 💁‍♀️",

@@ -18,7 +18,7 @@ export function DeduplicateBlock() {
 	const dedupHint = chrome.i18n.getMessage('deduplicateHint');
 	const dedupLabel = chrome.i18n.getMessage('deduplicateLabel');
 	const closeDuplicateLabel = chrome.i18n.getMessage('closeDuplicateLabel');
-	const closeDuplicateHint = chrome.i18n.getMessage('closeDuplicateHint');
+	const closeDuplicateHint = chrome.i18n.getMessage('closeDuplicateHint', ['abc.com', 'xyz.com']);
 
 	return (
 		<FormOption className='form-option-with-subgroup'>
