@@ -24,6 +24,10 @@ As `prune` grows it might help you do _even_ more.
 
 Check out the [code of conduct](CODE_OF_CONDUCT.md) and [contributing](CONTRIBUTING.md).
 
+### Translations
+
+Speak another language and want to help others use prune? [Help translate prune](https://weblate.prune.lol/engage/prune/).
+
 ## Getting Started
 
 Install dependencies:
