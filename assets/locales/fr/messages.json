@@ -12,7 +12,7 @@
         "description": "Text for the 15 minutes option in the time selector in the page locked dialog"
     },
     "tipButtonHint": {
-        "message": "je vais probablement survivre sans cela, mais j'apprécie toujours le soutien!",
+        "message": "je vais probablement survivre sans cela, mais j'apprécie toujours le soutien !",
         "description": "A hint to happily elaborate that tips are not necessary, but still appreciated, displayed on hover over the tip button"
     },
     "oneHourText": {
@@ -55,7 +55,7 @@
         }
     },
     "hideTabsHint": {
-        "message": "vous pouvez choisir de ranger vos onglets négligés jusqu'à ce que vous soyez prêt à les revoir.",
+        "message": "vous pouvez choisir de ranger vos onglets négligés jusqu'à ce que vous soyez prêt à les revoir",
         "description": "A hint to explain the hide tabs feature to the user, displayed on hover over the hide tabs label"
     },
     "productivityModeHint": {
@@ -63,7 +63,7 @@
         "description": "A hint to explain the productivity mode feature to the user, displayed on hover over the productivity mode label"
     },
     "groupNameHint": {
-        "message": "si le groupe n'existe pas encore, il sera créé pour vous.",
+        "message": "si le groupe n'existe pas encore, il sera créé pour vous",
         "description": "A hint to explain more about the group name feature to the user, displayed on hover over the group name label"
     },
     "beProductiveButtonText": {
@@ -92,7 +92,7 @@
         "description": "Visible label displayed next to a checkbox (and potentially a dropdown or single option named 'close') to enable/disable closing least recently used tabs once they reach a certain number, with a box to its other side to enter the number"
     },
     "deduplicateHint": {
-        "message": "lorsqu'il est activé, si vous essayez de naviguer vers un site web que vous avez déjà ouvert, il annulera la navigation et vous montrera l'onglet d'origine à la place, $APP_NAME$ annule la navigation et affiche l'onglet d'origine à la place (sauf s'il s'agit d'un nouvel onglet vierge, auquel cas nous le fermons pour vous).",
+        "message": "lorsqu'il est activé, si vous essayez de naviguer vers un site web que vous avez déjà ouvert, il annulera la navigation et vous montrera l'onglet d'origine à la place, $APP_NAME$ annule la navigation et affiche l'onglet d'origine à la place (sauf s'il s'agit d'un nouvel onglet vierge, auquel cas nous le fermons pour vous)",
         "description": "A hint to explain the tab deduplicate feature to the user, displayed on hover over the deduplicate label",
         "placeholders": {
             "app_name": {
@@ -147,7 +147,7 @@
         "description": "Text to separate the two options in the page locked dialog"
     },
     "useSyncStorageHint": {
-        "message": "utiliser le même historique d'onglets sur tous vos appareils, en conservant les onglets lorsque vous les avez consultés ailleurs (remarque: peut ne pas fonctionner comme prévu en fonction du volume/de l'activité des onglets).",
+        "message": "utiliser le même historique d'onglets sur tous vos appareils, en conservant les onglets lorsque vous les avez consultés ailleurs (remarque : peut ne pas fonctionner comme prévu en fonction du volume/de l'activité des onglets)",
         "description": "A hint to explain the experimental feature to synchronize tab activity across devices, displayed on hover over the use sync storage label"
     },
     "leastRecentlyUsedTabsHint": {
@@ -209,7 +209,7 @@
         }
     },
     "linkCopiedToClipboardSuccess": {
-        "message": "lien copié dans le presse-papiers!",
+        "message": "lien copié dans le presse-papiers !",
         "description": "A message to popover the share button when the link for sharing is successfully copied to the clipboard"
     },
     "leastRecentlyUsedTabsDestinationGroup": {
