@@ -55,8 +55,8 @@ importers:
         specifier: ^1.45.3
         version: 1.45.3
       '@types/chai':
-        specifier: ^4.3.16
-        version: 4.3.16
+        specifier: ^4.3.17
+        version: 4.3.17
       '@types/chrome':
         specifier: 0.0.268
         version: 0.0.268
@@ -1802,8 +1802,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@types/chai@4.3.16':
-    resolution: {integrity: sha512-PatH4iOdyh3MyWtmHVFXLWCCIhUbopaltqddG9BzB+gMIzee2MJrvd+jouii9Z3wzQJruGWAm7WOMjgfG8hQlQ==}
+  '@types/chai@4.3.17':
+    resolution: {integrity: sha512-zmZ21EWzR71B4Sscphjief5djsLre50M6lI622OSySTmn9DB3j+C3kWroHfBQWXbOBwbgg/M8CG/hUxDLIloow==}
 
   '@types/chrome@0.0.268':
     resolution: {integrity: sha512-7N1QH9buudSJ7sI8Pe4mBHJr5oZ48s0hcanI9w3wgijAlv1OZNUZve9JR4x42dn5lJ5Sm87V1JNfnoh10EnQlA==}
@@ -6278,7 +6278,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@types/chai@4.3.16': {}
+  '@types/chai@4.3.17': {}
 
   '@types/chrome@0.0.268':
     dependencies:
