@@ -49,7 +49,7 @@
     "@types/chai": "^4.3.17",
     "@types/chrome": "0.0.270",
     "@types/mocha": "^10.0.7",
-    "@types/node": "22.4.1",
+    "@types/node": "22.5.0",
     "@types/react": "18.3.4",
     "@types/react-dom": "18.3.0",
     "@types/sinon": "^17.0.3",
