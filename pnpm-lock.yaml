@@ -33,8 +33,8 @@ importers:
         specifier: ^1.11.0
         version: 1.11.0(react@18.3.1)
       html-react-parser:
-        specifier: ^5.1.12
-        version: 5.1.12(@types/react@18.3.4)(react@18.3.1)
+        specifier: ^5.1.13
+        version: 5.1.13(@types/react@18.3.4)(react@18.3.1)
       plasmo:
         specifier: 0.88.0
         version: 0.88.0(@swc/core@1.6.13(@swc/helpers@0.5.11))(@swc/helpers@0.5.11)(lodash@4.17.21)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(ts-node@10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.11))(@types/node@22.5.0)(typescript@5.5.4))
@@ -2649,8 +2649,8 @@ packages:
   html-dom-parser@5.0.9:
     resolution: {integrity: sha512-QGeoFYwgQ582EDvrBx0+ejIz76/LuQcwwkmSR4ueKncjl2yWbciA45Kfz/LrHvWR3CgtKnxKFkr4Mpq2Sh1QNg==}
 
-  html-react-parser@5.1.12:
-    resolution: {integrity: sha512-OPv8fsIvxxv/+pLj9mYvyNu8PE5dPMowTRdd5VHpcoZpXlstp8eYCxQ5rzqAE5Tb75rhdiWUXnPltfb62zCVjg==}
+  html-react-parser@5.1.13:
+    resolution: {integrity: sha512-XTG2lbn9JDHc3DqGLpHkoArvptXMPl+Ckk5/cqRhdUmrhcPNZ5MPDrwd2PU3BePl2QmkLOb3WsWdjAotznMdUw==}
     peerDependencies:
       '@types/react': 0.14 || 15 || 16 || 17 || 18
       react: 0.14 || 15 || 16 || 17 || 18
@@ -7219,7 +7219,7 @@ snapshots:
       domhandler: 5.0.3
       htmlparser2: 9.1.0
 
-  html-react-parser@5.1.12(@types/react@18.3.4)(react@18.3.1):
+  html-react-parser@5.1.13(@types/react@18.3.4)(react@18.3.1):
     dependencies:
       domhandler: 5.0.3
       html-dom-parser: 5.0.9
