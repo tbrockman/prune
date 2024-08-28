@@ -40,6 +40,24 @@
             }
         }
     },
+    "deduplicateAcrossContainersLabel": {
+        "message": "deduplicate across firefox containers $CONTAINER_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the feature to deduplicate tabs across Firefox containers",
+        "placeholders": {
+            "container_emoji": {
+                "content": "📦"
+            }
+        }
+    },
+    "deduplicateAcrossContainersHint": {
+        "message": "if you have multiple containers open, $APP_NAME$ will try to deduplicate existing tabs across them",
+        "description": "A hint to explain the deduplicate across containers feature to the user, displayed on hover over the deduplicate across containers label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
+    },
     "hideTabsLabel": {
         "message": "hide tabs after",
         "description": "Visible label displayed next to a check to enable feature to hide/group tabs after a certain time, with a box to its other side to enter the time (followed by another label)"

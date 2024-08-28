@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { FormGroup, Grid, Link, Typography } from '@mui/material';
-import TipForm from '../../components/TipForm';
-import { PruneHeader } from '../../components/PruneHeader';
+import TipForm from '~components/TipForm';
+import { PruneHeader } from '~components/PruneHeader';
 import { DeduplicateBlock } from '~components/DeduplicateBlock';
 import { GroupTabsBlock } from '~components/GroupTabsBlock';
 import { RemoveTabsBlock } from '~components/RemoveTabsBlock';
@@ -9,7 +9,7 @@ import { LRUBlock } from '~components/LRUBlock';
 import { BookmarkStorageBlock } from '~components/BookmarkStorageBlock';
 import _useConfig from '~hooks/useConfig';
 import type { useConfigType } from '~hooks/useConfig';
-import { Features } from '~config';
+import { Features } from '~util/config';
 import { AdvancedSettingsBlock } from '~components/AdvancedSettingsBlock';
 // import StorageAreaBlock from '~components/StorageAreaBlock';
 

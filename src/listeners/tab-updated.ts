@@ -1,4 +1,4 @@
-import { config, Features, type PruneConfig } from '~config';
+import { config, Features, type PruneConfig } from '~util/config';
 import { SyncStorageKeys } from '~enums';
 import TabBookmarker from '~tab/bookmarker';
 import TabDeduplicator from '~tab/deduplicator';
@@ -53,7 +53,8 @@ export const createListener = (tabLock: Set<number>) => {
 			const deduplicator = new TabDeduplicator(
 				tabLock,
 				config.featureSupported(Features.TabHighlighting),
-				options[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE]
+				options[SyncStorageKeys.AUTO_DEDUPLICATE_CLOSE],
+				options[SyncStorageKeys.DEDUPLICATE_ACROSS_CONTAINERS],
 			);
 			const handler = new TabUpdatedHandler({
 				tracker,

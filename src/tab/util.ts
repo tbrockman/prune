@@ -7,7 +7,7 @@ export function tabExemptionsApply(options: SyncKeyValues, tab: chrome.tabs.Tab)
     if (options['skip-exempt-pages'] && tab.url) {
         const exemptPages = options['exempt-pages'];
         matches = getMatchingFilters(new URL(tab.url), exemptPages);
-        console.debug('exempt pages', exemptPages, matches, tab.url)
+        console.debug('exempt pages', exemptPages, 'matches', matches, 'checking', tab.url)
     }
     return matches.length > 0;
 }

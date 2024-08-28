@@ -3,7 +3,7 @@ import { Storage } from '@plasmohq/storage'
 import { SyncStorageKeys } from '~enums'
 import TabTracker from '~tab/tracker'
 import { getMatchingFilters } from '~util/filter'
-import { config as _config, type PruneConfig } from '~config'
+import { config as _config, type PruneConfig } from '~util/config'
 
 class ProductivityPortHandler {
 	storage: Storage

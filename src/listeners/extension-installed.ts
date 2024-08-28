@@ -1,4 +1,4 @@
-import { config, Features } from "~config";
+import { config, Features } from "~util/config";
 import { SyncStorageKeys } from "~enums";
 import TabBookmarker from "~tab/bookmarker";
 import TabGrouper from "~tab/grouper";

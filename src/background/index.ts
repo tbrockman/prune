@@ -11,7 +11,7 @@ import { createListener as createTabUpdatedListener } from '~listeners/tab-updat
 
 initLogging();
 
-const lock = new Set<number>();
+const tabLock = new Set<number>();
 
 // Executed on app installs, clears storage on major version upgrades > 3
 chrome.runtime.onInstalled.addListener(
@@ -29,7 +29,7 @@ chrome.alarms.onAlarm.addListener(
 );
 // When a new tab is created, or a navigation occurs in an existing tab
 chrome.tabs.onUpdated.addListener(
-	createTabUpdatedListener(lock)
+	createTabUpdatedListener(tabLock)
 );
 // Whenever a tab comes into focus
 chrome.tabs.onActivated.addListener(

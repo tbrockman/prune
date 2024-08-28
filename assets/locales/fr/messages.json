@@ -346,5 +346,23 @@
                 "content": "↩"
             }
         }
+    },
+    "deduplicateAcrossContainersLabel": {
+        "message": "dédoublonner à travers les conteneurs Firefox $CONTAINER_EMOJI$",
+        "description": "Visible label displayed next to a checkbox to enable/disable the feature to deduplicate tabs across Firefox containers",
+        "placeholders": {
+            "container_emoji": {
+                "content": "📦"
+            }
+        }
+    },
+    "deduplicateAcrossContainersHint": {
+        "message": "si vous avez plusieurs conteneurs ouverts, $APP_NAME$ essaiera de dédoublonner les onglets existants à travers eux",
+        "description": "A hint to explain the deduplicate across containers feature to the user, displayed on hover over the deduplicate across containers label",
+        "placeholders": {
+            "app_name": {
+                "content": "prune"
+            }
+        }
     }
 }

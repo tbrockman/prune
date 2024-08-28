@@ -2,7 +2,7 @@ import { assert } from "chai";
 import { createTab } from "~util/tabs";
 import { getSuggestedUrls } from "~util/url";
 
-describe.only('url utils', () => {
+describe('url utils', () => {
     describe('getSuggestedUrls', () => {
         it('should return suggested urls', () => {
             const tabs: chrome.tabs.Tab[] = [

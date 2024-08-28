@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormControlLabel, TextField } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import { FormOption } from './FormOption';
-import PersistedInput from './PersistedInput';
-import LabelWithHint from './LabelWithHint';
+import { FormOption } from '~components/FormOption';
+import PersistedInput from '~components/PersistedInput';
+import LabelWithHint from '~components/LabelWithHint';
 import { SyncStorageKeys } from '~enums';
 import _useConfig from '~hooks/useConfig';
-import { Features } from '~config';
+import { Features } from '~util/config';
 import { useSyncStorage } from '~hooks/useStorage';
 import { useBookmarks } from '~hooks/useBookmark';
 import { setSyncStorage } from '~util/storage';

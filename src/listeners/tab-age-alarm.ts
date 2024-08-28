@@ -1,7 +1,7 @@
 import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';
 import TabTracker from '~tab/tracker';
-import { config, Features, type PruneConfig } from '~config';
+import { config, Features, type PruneConfig } from '~util/config';
 import { SyncStorageKeys } from '~enums';
 import { tabExemptionsApply } from '~tab/util';
 import { getSyncStorage, localStorage, syncStorage, type SyncKeyValues, type SyncStorage } from '~util/storage';

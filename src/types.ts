@@ -1,4 +1,6 @@
-export type Tab = chrome.tabs.Tab
+export type Tab = chrome.tabs.Tab & {
+    cookieStoreId?: string;
+}
 export type Primitive = string | number | boolean | null | undefined | object;
 export type Values = Primitive | Primitive[] | KeyValueStructure
 

@@ -6,7 +6,7 @@ import sinon, { type SinonStubbedInstance } from 'sinon';
 import { PruneStorage } from '~util/storage';
 declare var global: any;
 
-describe('tracker', () => {
+describe('TabTracker', () => {
 	let tabTracker: TabTracker;
 	let storage: SinonStubbedInstance<PruneStorage>;
 
@@ -36,7 +36,7 @@ describe('tracker', () => {
 	it('should initialize populated tab state with no stored information', async () => {
 		const tabs: chrome.tabs.tab[] = [{ url: 'a' }, { url: 'b' }, { url: 'c' }];
 		storage.get.resolves('[]');
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(tabs);
 		assert.equal(tabTracker.tabs.size, 3);
 	});
@@ -48,7 +48,7 @@ describe('tracker', () => {
 			['c', new Date().getTime()],
 		];
 		storage.get.resolves(JSON.stringify(tabs));
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init([]);
 		await tabTracker.filterClosedTabs(tabs)
 		assert.equal(0, tabTracker.tabs.size);
@@ -62,7 +62,7 @@ describe('tracker', () => {
 			['c', new Date().getTime()],
 		];
 		storage.get.resolves(JSON.stringify(storedTabs));
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		await tabTracker.filterClosedTabs(openTabs)
 		assert.equal(1, tabTracker.tabs.size);
@@ -78,7 +78,7 @@ describe('tracker', () => {
 			['c', new Date().getTime()],
 		];
 		storage.get.resolves(JSON.stringify(storedTabs));
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		assert.equal(3, tabTracker.tabs.size);
 		assert(tabTracker.tabs.has('a'));
@@ -95,7 +95,7 @@ describe('tracker', () => {
 			['c', today.setDate(today.getDate() - 7)],
 		];
 		storage.get.resolves(JSON.stringify(storedTabs));
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		const [exceeds, remaining] = tabTracker.findTabsExceedingThreshold(
 			openTabs,
@@ -108,7 +108,7 @@ describe('tracker', () => {
 
 	it('should reorder internal map on tab track', async () => {
 		storage.get.resolves('[]');
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init([]);
 		await tabTracker.track({ url: 'a' } as chrome.tabs.tab);
 		await tabTracker.track({ url: 'b' } as chrome.tabs.tab);
@@ -150,7 +150,7 @@ describe('tracker', () => {
 			'[["47",1631084725274],["48",1631084725274],["51",1631084725274],["54",1631084725274],["58",1631084725274],["60",1631084725274],["61",1631084725274]]';
 		const expected = new Map(JSON.parse(stored));
 		storage.get.resolves(stored);
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		assert.equal(openTabs.length, tabTracker.tabs.size);
 
@@ -172,7 +172,7 @@ describe('tracker', () => {
 			['c', today.getTime()],
 		];
 		storage.get.resolves(JSON.stringify(storedTabs));
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		const limitTabs: chrome.tabs.tab[] = [{ id: 1 }, { id: 2 }];
 		const [visible, hidden] = tabTracker.limitNumberOfVisibleTabs(limitTabs, 1);
@@ -185,7 +185,7 @@ describe('tracker', () => {
 	it('should return a list of tabs to show and tabs to hide given a visible limit (without stored state)', async () => {
 		const openTabs = [];
 		storage.get.resolves('[]');
-		storage.set.resolves({});
+		storage.set.resolves();
 		await tabTracker.init(openTabs);
 		await tabTracker.track({ id: 2, url: 'a' } as chrome.tabs.tab);
 		await tabTracker.track({ id: 1, url: 'b' } as chrome.tabs.tab);

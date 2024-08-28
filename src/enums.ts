@@ -20,6 +20,7 @@ enum SyncStorageKeys {
 	SHOW_ADVANCED_SETTINGS = 'show-advanced-settings',
 	SKIP_EXEMPT_PAGES = 'skip-exempt-pages',
 	EXEMPT_PAGES = 'exempt-pages',
+	DEDUPLICATE_ACROSS_CONTAINERS = 'deduplicate-across-containers',
 }
 
 enum Ports {

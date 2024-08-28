@@ -8,11 +8,13 @@ class TabDeduplicator {
   tabLock: Set<number>
   canHighlight: boolean
   closeAllDuplicates: boolean
+  deduplicateAcrossContainers: boolean
 
-  constructor(tabLock: Set<number>, canHighlight = true, closeAllDuplicates = true) {
+  constructor(tabLock: Set<number>, canHighlight = true, closeAllDuplicates = true, deduplicateAcrossContainers = true) {
     this.tabLock = tabLock
     this.canHighlight = canHighlight
     this.closeAllDuplicates = closeAllDuplicates
+    this.deduplicateAcrossContainers = deduplicateAcrossContainers
     this.deduplicateTab = this.deduplicateTab.bind(this)
   }
 
@@ -59,7 +61,10 @@ class TabDeduplicator {
     // Chromes query pattern matching doesn't seem to work on certain exact matches
     // so we grab all opened tabs and check it ourselves
     const index = openTabs.findIndex((t) => {
-      return t.id != tab.id && url == removeTrailingSlashes(t.url) && t.status == "complete" // NEW: check that the existing tab is also already loaded
+      return t.id != tab.id &&
+        url == removeTrailingSlashes(t.url) &&
+        t.status == "complete" && // check that the existing tab is also already loaded
+        (this.deduplicateAcrossContainers || t.cookieStoreId == tab.cookieStoreId)
     })
 
     // Try-catch so we always remove the lock
