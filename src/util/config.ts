@@ -32,7 +32,8 @@ export enum Features {
 	TabHighlighting = 'tabHighlighting',
 	Sharing = 'sharing',
 	Bookmarks = 'bookmarks',
-	SyncStorage = 'syncStorage'
+	SyncStorage = 'syncStorage',
+	Containers = 'containers',
 }
 
 const configs: { [key: string]: IPruneConfig } = {
@@ -82,16 +83,17 @@ const configs: { [key: string]: IPruneConfig } = {
 		review: {
 			url: 'https://chrome.google.com/webstore/detail/prune/gblddboefgbljpngfhgekbpoigikbenh',
 		},
+		unsupportedFeatures: new Set([Features.Containers]),
 	},
 	edge: {
 		// Note: sharing functionality doesn't seem to work in Edge extensions
 		review: {
 			url: 'https://microsoftedge.microsoft.com/addons/detail/ideengngoaeoamicacnpipkdmpledphd'
 		},
-		unsupportedFeatures: new Set([Features.Sharing]),
+		unsupportedFeatures: new Set([Features.Sharing, Features.Containers]),
 	},
 	safari: {
-		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks, Features.SyncStorage]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.Bookmarks, Features.SyncStorage, Features.Containers]),
 		review: {
 			url: 'https://apps.apple.com/us/app/prune-your-tabs/id6503263467?action=write-review'
 		}
@@ -106,7 +108,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		review: {
 			url: 'https://addons.opera.com/en/extensions/details/prune/'
 		},
-		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.SyncStorage]),
+		unsupportedFeatures: new Set([Features.TabGroups, Features.TabHighlighting, Features.SyncStorage, Features.Containers]),
 	}
 };
 

@@ -4,7 +4,7 @@ import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('pruner', () => {
+describe('TabPruner', () => {
 	let tabPruner;
 	let tabBookmarker;
 

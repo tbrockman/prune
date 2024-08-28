@@ -1,6 +1,6 @@
 // TODO
 
-import { Features, type PruneConfig } from '~config';
+import { Features, type PruneConfig } from '~util/config';
 import { TabAgeAlarmListener } from '~listeners/tab-age-alarm';
 import TabGrouper from '~tab/grouper';
 import TabPruner from '~tab/pruner';

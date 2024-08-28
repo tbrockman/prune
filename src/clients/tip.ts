@@ -1,4 +1,4 @@
-import type { TipConfig } from '~config';
+import type { TipConfig } from '~util/config';
 
 class TipClient {
 	backend: string;

@@ -1,5 +1,5 @@
 import { Storage } from '@plasmohq/storage';
-import { Features, config } from '~config';
+import { Features, config } from '~util/config';
 import { SyncStorageKeys } from '~enums';
 import type { KeyValues, Values } from '~types';
 
@@ -91,6 +91,7 @@ export class SyncKeyValues implements Record<SyncStorageKeys, Values> {
 	[SyncStorageKeys.SHOW_ADVANCED_SETTINGS] = false;
 	[SyncStorageKeys.SKIP_EXEMPT_PAGES] = false;
 	[SyncStorageKeys.EXEMPT_PAGES] = config.exemptions || [];
+	[SyncStorageKeys.DEDUPLICATE_ACROSS_CONTAINERS] = true;
 }
 
 const defaultSyncStorage = new SyncKeyValues() as SyncStorage;

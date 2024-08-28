@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Breadcrumbs, FormGroup, Grid, Link } from '@mui/material';
-import PausedDialog from '../../components/PauseDialog';
-import { PruneHeader } from '../../components/PruneHeader';
+import PausedDialog from '~components/PauseDialog';
+import { PruneHeader } from '~components/PruneHeader';
 import { useSyncStorage, useStorage } from '~hooks/useStorage';
 import { SyncStorageKeys } from '~enums';
 

@@ -1,4 +1,6 @@
-const createTab = (overrides: Partial<chrome.tabs.Tab> = {}): chrome.tabs.Tab => {
+import type { Tab } from "~types";
+
+const createTab = (overrides: Partial<Tab> = {}): Tab => {
     return {
         id: 1,
         groupId: -1,

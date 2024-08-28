@@ -1,4 +1,4 @@
-import { config, type PruneConfig } from '../config';
+import { config, type PruneConfig } from '~util/config';
 
 export type useConfigType = {
 	config: PruneConfig;

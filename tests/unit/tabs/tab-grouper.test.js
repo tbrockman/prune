@@ -4,7 +4,7 @@ import { assert } from 'chai';
 
 const chrome = require('sinon-chrome/extensions');
 
-describe('grouper', () => {
+describe('TabGrouper', () => {
 	let tabGrouper;
 
 	before(() => {

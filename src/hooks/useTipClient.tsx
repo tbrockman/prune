@@ -1,5 +1,5 @@
-import useConfig from './useConfig';
-import { TipClient } from '../clients/tip';
+import useConfig from '~hooks/useConfig';
+import { TipClient } from '~clients/tip';
 
 export default function useTipClient() {
 	const { config } = useConfig();

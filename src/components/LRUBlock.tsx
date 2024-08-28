@@ -9,7 +9,7 @@ import PersistedInput from './PersistedInput'
 import LabelWithHint from './LabelWithHint'
 import { SyncStorageKeys } from '~enums'
 import _useConfig from '~hooks/useConfig'
-import { Features } from '~config'
+import { Features } from '~util/config'
 import { useSyncStorage } from '~hooks/useStorage'
 
 export function LRUBlock({ useConfig = _useConfig }) {
