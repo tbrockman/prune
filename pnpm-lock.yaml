@@ -58,8 +58,8 @@ importers:
         specifier: ^4.3.19
         version: 4.3.19
       '@types/chrome':
-        specifier: 0.0.271
-        version: 0.0.271
+        specifier: 0.0.273
+        version: 0.0.273
       '@types/mocha':
         specifier: ^10.0.8
         version: 10.0.8
@@ -1780,8 +1780,8 @@ packages:
   '@types/chai@4.3.19':
     resolution: {integrity: sha512-2hHHvQBVE2FiSK4eN0Br6snX9MtolHaTo/batnLjlGRhoQzlCL61iVpxoqO7SfFyOw+P/pwv+0zNHzKoGWz9Cw==}
 
-  '@types/chrome@0.0.271':
-    resolution: {integrity: sha512-K0qgXvkwA5ic+/eygF1xiypHEvCoBgH5lwrhg3yva2mqJuCWyYm0vpZQ22GksAxgGfo0PWev9Zx3plp2clMlwg==}
+  '@types/chrome@0.0.273':
+    resolution: {integrity: sha512-6Wp4GO07GLvti13Rf/RpYG+0COSJDOLE4iq3g1+whn1SNGUVnv6vbXqSa/WFbuVpvN1lcBLiZ40+gSeWmKb+eA==}
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -6248,7 +6248,7 @@ snapshots:
 
   '@types/chai@4.3.19': {}
 
-  '@types/chrome@0.0.271':
+  '@types/chrome@0.0.273':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.15
