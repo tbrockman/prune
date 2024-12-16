@@ -37,7 +37,7 @@
     "@mui/material": "^5.16.9",
     "@plasmohq/messaging": "^0.6.2",
     "@plasmohq/storage": "^1.13.0",
-    "html-react-parser": "^5.1.18",
+    "html-react-parser": "^5.2.1",
     "plasmo": "0.89.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
