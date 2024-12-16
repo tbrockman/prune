@@ -29,7 +29,7 @@
     "test:e2e": "npx playwright test"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.5",
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@mui/icons-material": "^5.16.9",
