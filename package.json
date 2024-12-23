@@ -33,7 +33,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^5.16.12",
-    "@mui/lab": "^5.0.0-alpha.173",
+    "@mui/lab": "^5.0.0-alpha.175",
     "@mui/material": "^5.16.9",
     "@plasmohq/messaging": "^0.6.2",
     "@plasmohq/storage": "^1.13.0",
