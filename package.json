@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "4.0.1",
-    "@playwright/test": "^1.50.0",
+    "@playwright/test": "^1.50.1",
     "@types/chai": "^5.0.1",
     "@types/chrome": "0.0.299",
     "@types/mocha": "^10.0.10",
