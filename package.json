@@ -35,7 +35,7 @@
     "@mui/icons-material": "^5.16.14",
     "@mui/lab": "^5.0.0-alpha.175",
     "@mui/material": "^5.16.14",
-    "@plasmohq/messaging": "^0.6.2",
+    "@plasmohq/messaging": "^0.7.1",
     "@plasmohq/storage": "^1.15.0",
     "html-react-parser": "^5.2.2",
     "plasmo": "0.89.4",
