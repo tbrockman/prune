@@ -58,8 +58,8 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
       '@types/chrome':
-        specifier: 0.0.309
-        version: 0.0.309
+        specifier: 0.0.310
+        version: 0.0.310
       '@types/mocha':
         specifier: ^10.0.10
         version: 10.0.10
@@ -1824,8 +1824,8 @@ packages:
   '@types/chai@5.2.0':
     resolution: {integrity: sha512-FWnQYdrG9FAC8KgPVhDFfrPL1FBsL3NtIt2WsxKvwu/61K6HiuDF3xAb7c7w/k9ML2QOUHcwTgU7dKLFPK6sBg==}
 
-  '@types/chrome@0.0.309':
-    resolution: {integrity: sha512-ZFADzcp8b+roUrux68U8pti4cmNOLJXWkShk8lfxj9SBcjYqpJt7NypBprSJUJDJVakGZgd2Tt00QePIGh7oPA==}
+  '@types/chrome@0.0.310':
+    resolution: {integrity: sha512-2+C6NKe4DxGbT6v8noDOx5APEUtSxRL0Rzm2TVGYFkPi1fO36hiN9W1QIuGI93rdM34Qy4d+7orA+vXRZk5rjA==}
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
@@ -6343,7 +6343,7 @@ snapshots:
     dependencies:
       '@types/deep-eql': 4.0.2
 
-  '@types/chrome@0.0.309':
+  '@types/chrome@0.0.310':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
