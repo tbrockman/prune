@@ -47,7 +47,7 @@
     "@plasmohq/prettier-plugin-sort-imports": "4.0.1",
     "@playwright/test": "^1.52.0",
     "@types/chai": "^5.2.1",
-    "@types/chrome": "0.0.315",
+    "@types/chrome": "0.0.317",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.15.3",
     "@types/react": "18.3.12",
