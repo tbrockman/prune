@@ -102,7 +102,7 @@ const configs: { [key: string]: IPruneConfig } = {
 		review: {
 			url: 'https://addons.mozilla.org/en-US/firefox/addon/prune-tabs/',
 		},
-		unsupportedFeatures: new Set([Features.TabGroups]),
+		unsupportedFeatures: new Set([]),
 	},
 	opera: {
 		review: {
