@@ -85,8 +85,8 @@ importers:
         specifier: ^11.7.1
         version: 11.7.1
       mocha-suppress-logs:
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.6.0
+        version: 0.6.0
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -3517,8 +3517,8 @@ packages:
   mnemonic-id@3.2.7:
     resolution: {integrity: sha512-kysx9gAGbvrzuFYxKkcRjnsg/NK61ovJOV4F1cHTRl9T5leg+bo6WI0pWIvOFh1Z/yDL0cjA5R3EEGPPLDv/XA==}
 
-  mocha-suppress-logs@0.5.1:
-    resolution: {integrity: sha512-f4BhMiCABgCt3tlXiOcRydWreNCkfvgXgNL2ZclfXPdLNcY7jfyNy3Oi5wwPuxx++UyuNiIx3F7orvckAfrKzw==}
+  mocha-suppress-logs@0.6.0:
+    resolution: {integrity: sha512-cDn7TwkxlcWeXKDYfKrQliGBljTNPKB1/k5doF4TGzAVC/edKGbAM28vsYRTA57h0Y+yaVQbgSmIqYySBNEmfQ==}
 
   mocha@11.7.1:
     resolution: {integrity: sha512-5EK+Cty6KheMS/YLPPMJC64g5V61gIR25KsRItHw6x4hEKT6Njp1n9LOlH4gpevuwMVS66SXaBBpg+RWZkza4A==}
@@ -8225,7 +8225,7 @@ snapshots:
 
   mnemonic-id@3.2.7: {}
 
-  mocha-suppress-logs@0.5.1:
+  mocha-suppress-logs@0.6.0:
     dependencies:
       clone: 2.1.2
 
