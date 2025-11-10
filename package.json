@@ -55,7 +55,7 @@
     "@types/sinon": "^17.0.4",
     "chai": "^6.2.0",
     "esm": "^3.2.25",
-    "mocha": "^11.7.4",
+    "mocha": "^11.7.5",
     "mocha-suppress-logs": "^0.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "3.6.2",
