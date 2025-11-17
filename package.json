@@ -53,7 +53,7 @@
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@types/sinon": "^17.0.4",
-    "chai": "^6.2.0",
+    "chai": "^6.2.1",
     "esm": "^3.2.25",
     "mocha": "^11.7.5",
     "mocha-suppress-logs": "^0.6.0",
